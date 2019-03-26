@@ -1,22 +1,22 @@
 import java.sql.*;
 
 public class Database {
-    public Database(){}
 
-    public void connectdatabase(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/singleschool","root","ilrichi10");
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("select * from dipart");
-            while (rs.next()) {
-                //
+    public static void main(String[] args) {
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/PROVA", "root", "ilrichi10");
+                Statement statement = con.createStatement();
+                ResultSet rs = statement.executeQuery("select * from DIPART");
+                while (rs.next()) {
+                    System.out.println(rs.getInt(1) + " " + rs.getString(2)+ " " + rs.getString(3));
+                }
+                statement.close();
+                con.close();
+            } catch (Exception e) {
+                System.out.println(e);
             }
-            statement.close();
-            con.close();
-        }catch (Exception e){
-            System.out.println(e);
-        }
 
+        }
     }
-}
