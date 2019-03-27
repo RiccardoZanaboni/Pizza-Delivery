@@ -7,10 +7,12 @@ public class Database {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/PROVA", "root", "ilrichi10");
+                PreparedStatement preparedStmt = con.prepareStatement("INSERT INTO Utenti_Pizzeria.Utenti VALUES ('MUSI',10)");
+                preparedStmt.execute();
                 Statement statement = con.createStatement();
-                ResultSet rs = statement.executeQuery("select * from DIPENDENTI");
+                ResultSet rs = statement.executeQuery("select * from Utenti_Pizzeria.Utenti");
                 while (rs.next()) {
-                    System.out.println(rs.getInt(1) + " " + rs.getString(2)+ " " + rs.getString(3));
+                    System.out.println(rs.getString(1) + " " + rs.getInt(2));
                 }
                 statement.close();
                 con.close();
