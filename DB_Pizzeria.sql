@@ -1,5 +1,5 @@
 CREATE SCHEMA `PIZZERIA` ;
 CREATE TABLE `PIZZERIA`.`Utenti` (
-  `idUtenti` INT NOT NULL,
+  `idUtenti` VARCHAR(45),
   `num_pizze` INT NULL,
   PRIMARY KEY (`idUtenti`));
