@@ -4,25 +4,25 @@ import java.util.Date;
 public class Pizzeria {
     private String nome;
     private String indirizzo;
-    private Date orario_Chiusura;
-    private Date orario_Apertura;
+    private Date orarioChiusura;
+    private Date orarioApertura;
     private Forno infornate[];
-    private DeliveryMan fattorini_tempi[];
+    private DeliveryMan fattoriniTempi[];
 
-    public Pizzeria(String nome, String indirizzo,Date orario_Apertura, Date orario_Chiusura) {
+    public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
         this.nome = nome;
         this.indirizzo = indirizzo;
-        this.orario_Chiusura = orario_Chiusura;
-        this.orario_Apertura = orario_Apertura;
-        this.infornate = new Forno[12 * (orario_Chiusura.getHours() - orario_Apertura.getHours())];
-        this.fattorini_tempi = new DeliveryMan[6 * (orario_Chiusura.getHours() - orario_Apertura.getHours())];
+        this.orarioChiusura = orarioChiusura;
+        this.orarioApertura = orarioApertura;
+        this.infornate = new Forno[12 * (orarioChiusura.getHours() - orarioApertura.getHours())];
+        this.fattoriniTempi = new DeliveryMan[6 * (orarioChiusura.getHours() - orarioApertura.getHours())];
     }
 
-    public Date getOrario_Chiusura() {
-        return orario_Chiusura;
+    public Date getOrarioChiusura() {
+        return orarioChiusura;
     }
 
-    public Date getOrario_Apertura() {
-        return orario_Apertura;
+    public Date getOrarioApertura() {
+        return orarioApertura;
     }
 }
