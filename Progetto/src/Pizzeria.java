@@ -29,7 +29,7 @@ public class Pizzeria {
     }
 
     public String stampaMenu () {
-        String s="\n"+ "    >>  MENU"+"\n";
+        String s= "    >>  MENU"+"\n";
         for (int i=0; i<menu.size(); i++) {
             s+= menu.get(i).toString();
         }
@@ -47,6 +47,7 @@ public class Pizzeria {
 
     public void makeOrder(Order order) {
       scegliPizze(order);
+      inserisciDati(order);
     }
 
     public void scegliPizze(Order order) {
@@ -56,7 +57,7 @@ public class Pizzeria {
       while(tot>0){
         System.out.println("Quale pizza desideri?");
         String nome = scan.next();
-        System.out.println("Quante ne vuoi?");
+        System.out.println("Quante " + nome + " vuoi?");
         int num = scan.nextInt();
         tot -= num;
         for(int i=0; i<num; i++) {
@@ -73,4 +74,9 @@ public class Pizzeria {
       }
       }
 
+    public void inserisciDati(Order order){
+      Scanner scan = new Scanner(System.in);
+      System.out.println("Come ti chiami?");
+      String nome = scan.next();
+    }
 }
