@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -8,6 +9,7 @@ public class Pizzeria {
     private Date orarioApertura;
     private Forno infornate[];
     private DeliveryMan fattoriniTempi[];
+    private ArrayList<Pizza> menu;
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
         this.nome = nome;
@@ -16,6 +18,14 @@ public class Pizzeria {
         this.orarioApertura = orarioApertura;
         this.infornate = new Forno[12 * (orarioChiusura.getHours() - orarioApertura.getHours())];
         this.fattoriniTempi = new DeliveryMan[6 * (orarioChiusura.getHours() - orarioApertura.getHours())];
+    }
+
+    public void AddPizza(Pizza pizza){
+        menu.add(pizza);
+    }
+
+    public ArrayList<Pizza> getMenu() {
+        return menu;
     }
 
     public Date getOrarioChiusura() {

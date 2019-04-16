@@ -8,4 +8,13 @@ public class Pizza {
         this.descrizione = descrizione;
         this.prezzo = prezzo;
     }
+
+    @Override
+    public String toString() {
+        return "Pizza{" +
+                "nome='" + nome + '\'' +
+                ", descrizione='" + descrizione + '\'' +
+                ", prezzo=" + prezzo +
+                '}';
+    }
 }
