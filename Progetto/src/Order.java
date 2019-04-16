@@ -7,7 +7,7 @@ public class Order {
     private String indirizzo;
     private Date orario;
     private ArrayList <Pizza> pizzeordinate;
-
+    private boolean completo;
 
     public Order(Customer customer,String codice, String indirizzo/*, Date orario*/) {
         this.customer = customer;
@@ -15,6 +15,7 @@ public class Order {
         this.indirizzo = indirizzo;
         this.orario = orario;
         this.pizzeordinate=new ArrayList<>();
+        this.completo = false;
     }
 
     public void AddPizza(Pizza pizza){
@@ -27,5 +28,9 @@ public class Order {
 
     public void setIndirizzo(String indirizzo){
         this.indirizzo = indirizzo;
+    }
+
+    public void setCompleto(){
+        this.completo= true;
     }
 }

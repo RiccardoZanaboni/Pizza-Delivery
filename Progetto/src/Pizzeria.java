@@ -49,20 +49,25 @@ public class Pizzeria {
         scegliPizze(order);
         inserisciDati(order);
         inserisciOrario(order);
+        order.setCompleto();
     }
 
     public void scegliPizze(Order order) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Quante pizze vuoi?");
+        System.out.println("Quante pizze vuoi ordinare?");
         int tot = scan.nextInt();
         while(tot>0){
             System.out.println("Quale pizza desideri?");
             String nome = scan.next();
-            System.out.println("Quante " + nome + " vuoi?");
-            int num = scan.nextInt();
-            tot -= num;
-            for(int i=0; i<num; i++) {
-                order.AddPizza(menu.get(nome));
+            if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione
+                System.out.println("Spiacenti: \"" + nome + "\" non presente. Riprovare:");
+            else {
+                System.out.println("Quante " + nome + " vuoi?");
+                int num = scan.nextInt();
+                tot -= num;
+                for(int i=0; i<num; i++) {
+                    order.AddPizza(menu.get(nome));
+                }
             }
         }
     }
@@ -70,11 +75,11 @@ public class Pizzeria {
     public void inserisciDati(Order order){
         Scanner scan = new Scanner(System.in);
         System.out.println("Come ti chiami?");
-        String nome = scan.next();
+        String nome = scan.nextLine();
         Customer c = new Customer(nome);
         order.setCustomer(c);
         System.out.println("Inserisci l'indirizzo di consegna:");
-        String indirizzo = scan.next();
+        String indirizzo = scan.nextLine();
         order.setIndirizzo(indirizzo);
     }
 
@@ -83,7 +88,7 @@ public class Pizzeria {
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]");
         try {
             String sDate1 = scan.next();
-            Date date1 = new SimpleDateFormat("HH:mm").parse(sDate1);
+            Date date1 = new SimpleDateFormat("HH:mm").parse(sDate1);   // attenzione: 45:45 è accettato!
             System.out.println(date1);
         } catch (Exception e){
             System.out.println("L'orario non è stato inserito correttamente: riprovare.");
