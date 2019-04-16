@@ -24,6 +24,14 @@ public class Pizzeria {
         menu.add(pizza);
     }
 
+    public String stampaMenu () {
+        String s="\n"+ "    >>  MENU"+"\n";
+        for (int i=0; i<menu.size(); i++) {
+            s+= menu.get(i).toString();
+        }
+        return s;
+    }
+
     public ArrayList<Pizza> getMenu() {
         return menu;
     }
