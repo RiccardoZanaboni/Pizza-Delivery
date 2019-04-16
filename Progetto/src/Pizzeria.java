@@ -1,3 +1,5 @@
+import com.sun.corba.se.spi.orb.ParserData;
+
 import java.util.*;
 
 public class Pizzeria {
@@ -18,11 +20,10 @@ public class Pizzeria {
         this.orarioApertura = orarioApertura;
         this.infornate = new Forno[12 * (orarioChiusura.getHours() - orarioApertura.getHours())];
         this.fattorini= new ArrayList<>();
-        this.ordini = new ArrayList<>();
     }
 
-    public void AddPizzaMenu(Pizza pizza){
-        menu.put(pizza.getNome(), pizza);
+    public void AddPizza(Pizza pizza){
+        menu.put(pizza.getNome(),pizza);
     }
 
     public String stampaMenu () {
@@ -42,15 +43,16 @@ public class Pizzeria {
         return orarioApertura;
     }
 
-    public void scegliPizza(Order order) {
+    public void scegliPizza() {
       Scanner scan = new Scanner(System.in);
 
-      System.out.println("Inserisci la pizza:");
-      String nomePizza = scan.next();
+      System.out.println("Qual è il tuo nome?");
+      String nome = scan.next();
+      System.out.println("Qual è il tuo indirizzo?");
+      String indirizzo = scan.next();
+      System.out.println("Quando vuoi ricevere il tuo ordine?");
 
-      Pizza p = menu.get(nomePizza);
-      order.AddPizza(p);
-      //Pizza pizza = new Pizza(menu.get(nomePizza), menu.get(nomePizza).getDescrizione());
-      //menu.get(nomePizza).
+
+
     }
 }
