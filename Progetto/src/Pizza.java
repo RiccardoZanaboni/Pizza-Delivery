@@ -11,10 +11,6 @@ public class Pizza {
 
     @Override
     public String toString() {
-        return "Pizza{" +
-                "nome='" + nome + '\'' +
-                ", descrizione='" + descrizione + '\'' +
-                ", prezzo=" + prezzo +
-                '}';
+        return "Pizza" + "\t" + nome + "\t" + prezzo+"€"+ "\n" + descrizione;
     }
 }
