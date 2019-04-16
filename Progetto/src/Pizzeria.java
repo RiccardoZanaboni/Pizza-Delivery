@@ -1,4 +1,4 @@
-import com.sun.corba.se.spi.orb.ParserData;
+//import com.sun.corba.se.spi.orb.ParserData;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -46,37 +46,48 @@ public class Pizzeria {
     }
 
     public void makeOrder(Order order) {
-      scegliPizze(order);
-      inserisciDati(order);
+        scegliPizze(order);
+        inserisciDati(order);
+        inserisciOrario(order);
     }
 
     public void scegliPizze(Order order) {
-      Scanner scan = new Scanner(System.in);
-      System.out.println("Quante pizze vuoi?");
-      int tot = scan.nextInt();
-      while(tot>0){
-        System.out.println("Quale pizza desideri?");
-        String nome = scan.next();
-        System.out.println("Quante " + nome + " vuoi?");
-        int num = scan.nextInt();
-        tot -= num;
-        for(int i=0; i<num; i++) {
-          order.AddPizza(menu.get(nome));
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Quante pizze vuoi?");
+        int tot = scan.nextInt();
+        while(tot>0){
+            System.out.println("Quale pizza desideri?");
+            String nome = scan.next();
+            System.out.println("Quante " + nome + " vuoi?");
+            int num = scan.nextInt();
+            tot -= num;
+            for(int i=0; i<num; i++) {
+                order.AddPizza(menu.get(nome));
+            }
         }
-      }
-      try {
-          System.out.println("Quando le vuoi ricevere?");
-          String sDate1 = scan.next();
-          Date date1 = new SimpleDateFormat("HH:mm").parse(sDate1);
-          System.out.println(date1);
-      }catch(Exception e){
-          System.out.println("porcaaa");
-      }
-      }
+    }
 
     public void inserisciDati(Order order){
-      Scanner scan = new Scanner(System.in);
-      System.out.println("Come ti chiami?");
-      String nome = scan.next();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Come ti chiami?");
+        String nome = scan.next();
+        Customer c = new Customer(nome);
+        order.setCustomer(c);
+        System.out.println("Inserisci l'indirizzo di consegna:");
+        String indirizzo = scan.next();
+        order.setIndirizzo(indirizzo);
+    }
+
+    public void inserisciOrario(Order order){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]");
+        try {
+            String sDate1 = scan.next();
+            Date date1 = new SimpleDateFormat("HH:mm").parse(sDate1);
+            System.out.println(date1);
+        } catch (Exception e){
+            System.out.println("L'orario non è stato inserito correttamente: riprovare.");
+            inserisciOrario(order);
+        }
     }
 }

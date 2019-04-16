@@ -20,4 +20,12 @@ public class Order {
     public void AddPizza(Pizza pizza){
         pizzeordinate.add(pizza);
     }
+
+    public void setCustomer(Customer c){
+        this.customer = c;
+    }
+
+    public void setIndirizzo(String indirizzo){
+        this.indirizzo = indirizzo;
+    }
 }
