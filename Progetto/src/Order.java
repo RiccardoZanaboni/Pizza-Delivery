@@ -9,11 +9,11 @@ public class Order {
     private ArrayList <Pizza> pizzeordinate;
     private boolean completo;
 
-    public Order(Customer customer,String codice, String indirizzo/*, Date orario*/) {
-        this.customer = customer;
-        this.codice = codice;
-        this.indirizzo = indirizzo;
-        this.orario = orario;
+    public Order(int codice) {
+        this.customer = null;
+        this.codice = "ORD" + codice;
+        this.indirizzo = "";
+        this.orario = null;
         this.pizzeordinate=new ArrayList<>();
         this.completo = false;
     }

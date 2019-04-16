@@ -2,9 +2,11 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
+        int seriale = 1000;
+
         Pizzeria wolfOfPizza = new Pizzeria("Wolf Of Pizza","Via de Gasperi 5, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
-        Customer customer = new Customer("Ciccio");
-        Order ordine = new Order(customer, "01", "Valle Botta nord");
+        //Customer customer = new Customer("Ciccio");
+        //Order ordine = new Order(customer, "01", "Valle Botta nord");
 
         Pizza margherita = new Pizza("Margherita", "pomodoro, mozzarella", 5);
         wolfOfPizza.AddPizza(margherita);
@@ -13,8 +15,8 @@ public class Main {
         Pizza wurstel = new Pizza("Wurstel", "pomodoro, mozzarella, wurstel", 6);
         wolfOfPizza.AddPizza(wurstel);
 
-        wolfOfPizza.makeOrder(ordine);
-
+        wolfOfPizza.makeOrder(seriale);
+        seriale +=1;
 
         //System.out.println(wolfOfPizza.stampaMenu());
     }

@@ -45,7 +45,8 @@ public class Pizzeria {
         return orarioApertura;
     }
 
-    public void makeOrder(Order order) {
+    public void makeOrder(int seriale) {
+        Order order = new Order(seriale);
         scegliPizze(order);
         inserisciDati(order);
         inserisciOrario(order);
@@ -59,8 +60,8 @@ public class Pizzeria {
         while(tot>0){
             System.out.println("Quale pizza desideri?");
             String nome = scan.next();
-            if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione
-                System.out.println("Spiacenti: \"" + nome + "\" non presente. Riprovare:");
+            if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione invece della if-else
+                System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
             else {
                 System.out.println("Quante " + nome + " vuoi?");
                 int num = scan.nextInt();
