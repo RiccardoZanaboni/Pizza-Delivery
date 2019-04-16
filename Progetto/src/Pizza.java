@@ -17,4 +17,12 @@ public class Pizza {
     public String getNome() {
         return nome;
     }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public int getPrezzo() {
+        return prezzo;
+    }
 }

@@ -18,10 +18,11 @@ public class Pizzeria {
         this.orarioApertura = orarioApertura;
         this.infornate = new Forno[12 * (orarioChiusura.getHours() - orarioApertura.getHours())];
         this.fattorini= new ArrayList<>();
+        this.ordini = new ArrayList<>();
     }
 
-    public void AddPizza(Pizza pizza){
-        menu.put(pizza);
+    public void AddPizzaMenu(Pizza pizza){
+        menu.put(pizza.getNome(), pizza);
     }
 
     public String stampaMenu () {
@@ -41,12 +42,15 @@ public class Pizzeria {
         return orarioApertura;
     }
 
-    public void scegliPizza() {
+    public void scegliPizza(Order order) {
       Scanner scan = new Scanner(System.in);
 
       System.out.println("Inserisci la pizza:");
       String nomePizza = scan.next();
 
-      menu.get(nomePizza)
+      Pizza p = menu.get(nomePizza);
+      order.AddPizza(p);
+      //Pizza pizza = new Pizza(menu.get(nomePizza), menu.get(nomePizza).getDescrizione());
+      //menu.get(nomePizza).
     }
 }
