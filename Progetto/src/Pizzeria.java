@@ -36,7 +36,6 @@ public class Pizzeria {
         return s;
     }
 
-
     public Date getOrarioChiusura() {
         return orarioChiusura;
     }
@@ -59,7 +58,7 @@ public class Pizzeria {
         int tot = scan.nextInt();
         while(tot>0){
             System.out.println("Quale pizza desideri?");
-            String nome = scan.next();
+            String nome = scan.next().toUpperCase();
             if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione invece della if-else
                 System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
             else {
