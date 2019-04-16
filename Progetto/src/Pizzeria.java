@@ -90,7 +90,8 @@ public class Pizzeria {
         try {
             String sDate1 = scan.next();
             Date date1 = new SimpleDateFormat("HH:mm").parse(sDate1);   // attenzione: 45:45 è accettato!
-            System.out.println(date1);
+            order.setOrario(date1);
+            System.out.println("Hai inserito l'orario: " + date1);
         } catch (Exception e){
             System.out.println("L'orario non è stato inserito correttamente: riprovare.");
             inserisciOrario(order);

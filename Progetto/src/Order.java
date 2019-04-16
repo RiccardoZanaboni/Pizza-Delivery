@@ -14,7 +14,7 @@ public class Order {
         this.codice = "ORD" + codice;
         this.indirizzo = "";
         this.orario = null;
-        this.pizzeordinate=new ArrayList<>();
+        this.pizzeordinate = new ArrayList<>();
         this.completo = false;
     }
 
@@ -32,5 +32,9 @@ public class Order {
 
     public void setCompleto(){
         this.completo= true;
+    }
+
+    public void setOrario(Date orario) {
+        this.orario = orario;
     }
 }
