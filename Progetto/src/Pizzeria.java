@@ -18,7 +18,6 @@ public class Pizzeria {
         this.orarioApertura = orarioApertura;
         this.infornate = new Forno[12 * (orarioChiusura.getHours() - orarioApertura.getHours())];
         this.fattorini= new ArrayList<>();
-
     }
 
     public void AddPizza(Pizza pizza){
@@ -32,10 +31,7 @@ public class Pizzeria {
         }
         return s;
     }
-
-    public ArrayList<Pizza> getMenu() {
-        ;
-    }
+    
 
     public Date getOrarioChiusura() {
         return orarioChiusura;
