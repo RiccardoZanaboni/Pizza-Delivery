@@ -8,7 +8,7 @@ public class Pizzeria {
     private Date orarioChiusura;
     private Date orarioApertura;
     private Forno infornate[];
-    private DeliveryMan fattoriniTempi[];
+    private ArrayList<DeliveryMan> fattorini;
     private ArrayList<Pizza> menu;
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
@@ -17,7 +17,8 @@ public class Pizzeria {
         this.orarioChiusura = orarioChiusura;
         this.orarioApertura = orarioApertura;
         this.infornate = new Forno[12 * (orarioChiusura.getHours() - orarioApertura.getHours())];
-        this.fattoriniTempi = new DeliveryMan[6 * (orarioChiusura.getHours() - orarioApertura.getHours())];
+        this.fattorini= new ArrayList<>();
+
     }
 
     public void AddPizza(Pizza pizza){
@@ -25,7 +26,7 @@ public class Pizzeria {
     }
 
     public ArrayList<Pizza> getMenu() {
-        return menu;
+        ;
     }
 
     public Date getOrarioChiusura() {
