@@ -31,7 +31,7 @@ public class Pizzeria {
         }
         return s;
     }
-    
+
 
     public Date getOrarioChiusura() {
         return orarioChiusura;
