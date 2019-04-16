@@ -1,10 +1,11 @@
 public class DeliveryMan {
     private String nome;
     private boolean fattoriniTempi[];
+    public final int TEMPI_FATTORINI = 6;
 
     public DeliveryMan(String nome, boolean[] fattoriniTempi,Pizzeria pizzeria) {
         this.nome = nome;
-        this.fattoriniTempi = new boolean[6*pizzeria.getOrarioChiusura().getHours() - pizzeria.getOrarioApertura().getHours()];
+        this.fattoriniTempi = new boolean[TEMPI_FATTORINI*pizzeria.getOrarioChiusura().getHours() - pizzeria.getOrarioApertura().getHours()];
     }
 
 

@@ -11,6 +11,7 @@ public class Pizzeria {
     private ArrayList<DeliveryMan> fattorini;
     private HashMap<String, Pizza> menu;
     private ArrayList<Order> ordini;
+    public final int TEMPI_FORNO = 12;
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
         this.menu = new HashMap<>();
@@ -18,7 +19,7 @@ public class Pizzeria {
         this.indirizzo = indirizzo;
         this.orarioChiusura = orarioChiusura;
         this.orarioApertura = orarioApertura;
-        this.infornate = new Forno[12 * (orarioChiusura.getHours() - orarioApertura.getHours())];
+        this.infornate = new Forno[TEMPI_FORNO * (orarioChiusura.getHours() - orarioApertura.getHours())];
         this.fattorini= new ArrayList<>();
     }
 
