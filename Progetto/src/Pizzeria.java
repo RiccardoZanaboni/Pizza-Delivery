@@ -51,7 +51,7 @@ public class Pizzeria {
       System.out.println("Qual è il tuo indirizzo?");
       String indirizzo = scan.next();
       System.out.println("Quando vuoi ricevere il tuo ordine?");
-      
+
 
 
     }
