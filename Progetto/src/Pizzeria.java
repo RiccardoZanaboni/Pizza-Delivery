@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
 public class Pizzeria {
     private String nome;
@@ -9,10 +7,11 @@ public class Pizzeria {
     private Date orarioApertura;
     private Forno infornate[];
     private ArrayList<DeliveryMan> fattorini;
-    private ArrayList<Pizza> menu;
+    private HashMap<String, Pizza> menu;
+    private ArrayList<Order> ordini;
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
-        this.menu = new ArrayList<>();
+        this.menu = new HashMap<>();
         this.nome = nome;
         this.indirizzo = indirizzo;
         this.orarioChiusura = orarioChiusura;
@@ -22,7 +21,7 @@ public class Pizzeria {
     }
 
     public void AddPizza(Pizza pizza){
-        menu.add(pizza);
+        menu.put(pizza);
     }
 
     public String stampaMenu () {
@@ -40,5 +39,14 @@ public class Pizzeria {
 
     public Date getOrarioApertura() {
         return orarioApertura;
+    }
+
+    public void scegliPizza() {
+      Scanner scan = new Scanner(System.in);
+
+      System.out.println("Inserisci la pizza:");
+      String nomePizza = scan.next();
+
+      menu.get(nomePizza)
     }
 }

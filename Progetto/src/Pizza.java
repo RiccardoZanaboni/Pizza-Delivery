@@ -13,4 +13,8 @@ public class Pizza {
     public String toString() {
         return "- Pizza"+"\t"+nome+"\t"+"\t"+"\t"+prezzo+"€"+"\n"+"\t"+"\t"+descrizione;
     }
+
+    public String getNome() {
+        return nome;
+    }
 }
