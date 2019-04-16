@@ -9,7 +9,7 @@ public class Order {
     private ArrayList <Pizza> pizzeordinate;
 
 
-    public Order(Customer customer,String codice, String indirizzo, Date orario) {
+    public Order(Customer customer,String codice, String indirizzo/*, Date orario*/) {
         this.customer = customer;
         this.codice = codice;
         this.indirizzo = indirizzo;

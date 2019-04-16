@@ -43,16 +43,24 @@ public class Pizzeria {
         return orarioApertura;
     }
 
-    public void scegliPizza() {
-      Scanner scan = new Scanner(System.in);
-
-      System.out.println("Qual è il tuo nome?");
-      String nome = scan.next();
-      System.out.println("Qual è il tuo indirizzo?");
-      String indirizzo = scan.next();
-      System.out.println("Quando vuoi ricevere il tuo ordine?");
-
-
-
+    public void makeOrder(Order order) {
+      scegliPizze(order);
     }
+
+    public void scegliPizze(Order order) {
+      Scanner scan = new Scanner(System.in);
+      System.out.println("Quante pizze vuoi?");
+      int tot = scan.nextInt();
+      while(tot>0){
+        System.out.println("Quale pizza desideri?");
+        String nome = scan.next();
+        System.out.println("Quante ne vuoi?");
+        int num = scan.nextInt();
+        tot -= num;
+        for(int i=0; i<num; i++) {
+          order.AddPizza(menu.get(nome));
+        }
+      }
+    }
+
 }
