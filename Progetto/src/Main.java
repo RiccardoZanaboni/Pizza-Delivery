@@ -6,7 +6,8 @@ public class Main {
 
         Pizza pizza = new Pizza("Margherita", "pomodoro, mozzarella", 5);
 
-        wolfOfPizza.scegliPizza();
+        Order ordine = null;
+        wolfOfPizza.scegliPizza(ordine);
         //wolfOfPizza.AddPizza(pizza);
 
         //System.out.println(wolfOfPizza.stampaMenu());
