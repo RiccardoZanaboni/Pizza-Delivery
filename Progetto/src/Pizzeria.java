@@ -12,6 +12,7 @@ public class Pizzeria {
     private ArrayList<Pizza> menu;
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
+        this.menu = new ArrayList<>();
         this.nome = nome;
         this.indirizzo = indirizzo;
         this.orarioChiusura = orarioChiusura;
