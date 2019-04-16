@@ -1,5 +1,3 @@
-import com.sun.corba.se.spi.orb.ParserData;
-
 import java.util.*;
 
 public class Pizzeria {
@@ -23,7 +21,7 @@ public class Pizzeria {
     }
 
     public void AddPizza(Pizza pizza){
-        menu.put(pizza.getNome(),pizza);
+        menu.put(pizza);
     }
 
     public String stampaMenu () {
@@ -46,13 +44,9 @@ public class Pizzeria {
     public void scegliPizza() {
       Scanner scan = new Scanner(System.in);
 
-      System.out.println("Qual è il tuo nome?");
-      String nome = scan.next();
-      System.out.println("Qual è il tuo indirizzo?");
-      String indirizzo = scan.next();
-      System.out.println("Quando vuoi ricevere il tuo ordine?");
-      
+      System.out.println("Inserisci la pizza:");
+      String nomePizza = scan.next();
 
-
+      menu.get(nomePizza)
     }
 }
