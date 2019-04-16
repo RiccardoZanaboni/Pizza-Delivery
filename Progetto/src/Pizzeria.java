@@ -1,5 +1,6 @@
 import com.sun.corba.se.spi.orb.ParserData;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Pizzeria {
@@ -62,6 +63,14 @@ public class Pizzeria {
           order.AddPizza(menu.get(nome));
         }
       }
-    }
+      try {
+          System.out.println("Quando le vuoi ricevere?");
+          String sDate1 = scan.next();
+          Date date1 = new SimpleDateFormat("HH:mm").parse(sDate1);
+          System.out.println(date1);
+      }catch(Exception e){
+          System.out.println("porcaaa");
+      }
+      }
 
 }
