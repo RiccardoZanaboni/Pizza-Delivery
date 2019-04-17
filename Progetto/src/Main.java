@@ -6,11 +6,11 @@ public class Main {
         Customer customer = new Customer("Ciccio");
         Order ordine = new Order(01);
 
-        Pizza margherita = new Pizza("Margherita", "pomodoro, mozzarella", 5);
+        Pizza margherita = new Pizza("MARGHERITA", "pomodoro, mozzarella", 5);
         wolfOfPizza.AddPizza(margherita);
-        Pizza patatine = new Pizza("Patatine", "pomodoro, mozzarella, patatine", 6);
+        Pizza patatine = new Pizza("PATATINE", "pomodoro, mozzarella, patatine", 6);
         wolfOfPizza.AddPizza(patatine);
-        Pizza wurstel = new Pizza("Wurstel", "pomodoro, mozzarella, wurstel", 6);
+        Pizza wurstel = new Pizza("WURSTEL", "pomodoro, mozzarella, wurstel", 6);
         wolfOfPizza.AddPizza(wurstel);
 
         //wolfOfPizza.makeOrder(ordine);
