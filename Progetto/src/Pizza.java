@@ -11,7 +11,7 @@ public class Pizza {
 
     @Override
     public String toString() {
-        return "- Pizza"+"\t"+nome+"\t"+"\t"+"\t"+prezzo+"€"+"\n"+"\t"+"\t"+"Ingredienti: "+descrizione;
+        return "- Pizza" + "\t" + nome + "\t\t\t" + prezzo + "€\n\t\tIngredienti: " + descrizione;
     }
 
     public String getNome() {
