@@ -103,11 +103,11 @@ public class Pizzeria {
                 System.out.println("L'orario inserito non è valido. Riprovare:"); //DA SISTEMARE LA CONDIZIONE SULL'ORARIO DI APERTURA
                 inserisciOrario(order);
             }
-            if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisponibili()>order.getNumeroPizze()){
+            /*if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisponibili()>order.getNumeroPizze()){
                 order.setOrario(d);//PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
             }else{
                 ; //LA SCELTA VIRA SULL'ORARIO PIU VICINO
-            }
+            }*/
 
         } catch (Exception e){
             System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
