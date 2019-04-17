@@ -14,9 +14,8 @@ public class Main {
         wolfOfPizza.AddPizza(wurstel);
 
 
-        //System.out.println(wolfOfPizza.stampaMenu());
         wolfOfPizza.makeOrder();
-        //wolfOfPizza.inserisciOrario(ordine);
+        wolfOfPizza.inserisciOrario(ordine);
 
 
 

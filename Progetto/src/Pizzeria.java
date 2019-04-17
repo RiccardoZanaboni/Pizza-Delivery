@@ -31,20 +31,11 @@ public class Pizzeria {
     }
 
     public String stampaMenu () {
-        String s= "    >>  MENU"+"\n";
+        String s= "    >>  MENU";
         for (String a:menu.keySet()) {
-            s+= menu.get(a).toString();
+            s+="\n"+ menu.get(a).toString();
         }
         return s;
-    }
-
-
-    public Date getOrarioChiusura() {
-        return orarioChiusura;
-    }
-
-    public Date getOrarioApertura() {
-        return orarioApertura;
     }
 
     public void makeOrder() {
@@ -110,5 +101,14 @@ public class Pizzeria {
             System.out.println("L'orario non è stato inserito correttamente: riprovare.");
             inserisciOrario(order);
         }
+    }
+
+
+    public Date getOrarioChiusura() {
+        return orarioChiusura;
+    }
+
+    public Date getOrarioApertura() {
+        return orarioApertura;
     }
 }
