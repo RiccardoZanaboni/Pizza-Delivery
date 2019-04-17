@@ -46,35 +46,72 @@ public class Pizzeria {
         return s;
     }
 
-    public void scegliPizze(Order order) {
+    /*public void scegliPizze(Order order) {
         int num=0;
-        String s=null;
+        //String s=null;
         Scanner scan = new Scanner(System.in);
         System.out.println("Quante pizze vuoi ordinare?");
         int tot = scan.nextInt();
-        if(tot==0){
+        if(tot<=0){
             System.out.println("Spiacenti: Numero di pizze errato. Ordine fallito. Riprovare:");
             scegliPizze(order);
         }
         while(tot>0){
             System.out.println("Quale pizza desideri?");
-            String nome = scan.next().toUpperCase();
+            String nome = scan.nextLine().toUpperCase();
+            if (menu.containsKey(nome)){          // qui ci vorrebbe una eccezione invece della if-else
+                System.out.println("Quante " + nome + " vuoi?");
+                try {
+                    num = scan.nextInt();
+                    if(num<=0)
+                        throw new InputMismatchException("Spiacenti");
+                    //s = "Numero di pizze ordinate massimo superato. RIPROVA";
+                    tot -= num;
+                    for (int i=0; i<num; i++) {
+                        order.AddPizza(menu.get(nome));
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Spiacenti: inserito numero di " + nome +  "non valido. Riprovare:");
+                }
+
+                //s = null;
+                //tot -= num;
+            } else {
+                if(!(nome.equals("")))
+                    System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
+            }
+        }
+    }*/
+
+    public void scegliPizze(Order order) {
+        int num;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Quante pizze vuoi ordinare?");
+        String s = scan.nextLine();         // necessario
+        int tot = Integer.parseInt(s);
+        if(tot<=0){
+            System.out.println("Spiacenti: Numero di pizze errato. Ordine fallito. Riprovare:");
+            scegliPizze(order);
+        }
+        while(tot>0){
+            System.out.println("Quale pizza desideri?");
+            String nome = scan.nextLine().toUpperCase();
             if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione invece della if-else
                 System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
             else {
-                do {
-                    if(s!=null) { System.out.println(s); }
-                    System.out.println("Quante " + nome + " vuoi?");
-                    num = scan.nextInt();
-                    s="Numero di pizze ordinate massimo superato. RIPROVA";
-                    }
-                    while (num>tot);
-
-                    s=null;
+                System.out.println("Quante " + nome + " vuoi?");
+                try {
+                    s = scan.nextLine();        // necessario
+                    num = Integer.parseInt(s);
+                    if(num<=0)
+                        throw new InputMismatchException("Spiacenti");
                     tot -= num;
-                    for(int i=0; i<num; i++) {
+                    for (int i=0; i<num; i++) {
                         order.AddPizza(menu.get(nome));
                     }
+                } catch (InputMismatchException e) {
+                    System.out.println("Spiacenti: inserito numero di \n" + nome + "\n non valido. Riprovare:");
+                }
             }
         }
     }
@@ -118,7 +155,7 @@ public class Pizzeria {
         } catch (Exception e){
             System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
             inserisciOrario(order);
-    }
+        }
     }
 
     public int trovaCasellaTempoForno(Date oraApertura,int oraDesiderata,int minutiDesiderati){
