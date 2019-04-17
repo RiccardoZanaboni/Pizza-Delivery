@@ -13,10 +13,12 @@ public class Main {
         Pizza wurstel = new Pizza("WURSTEL", "pomodoro, mozzarella, wurstel", 6);
         wolfOfPizza.AddPizza(wurstel);
 
+
+        //System.out.println(wolfOfPizza.stampaMenu());
         wolfOfPizza.makeOrder();
         //wolfOfPizza.inserisciOrario(ordine);
 
 
-        //System.out.println(wolfOfPizza.stampaMenu());
+
     }
 }

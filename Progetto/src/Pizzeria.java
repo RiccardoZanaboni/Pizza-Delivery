@@ -32,8 +32,8 @@ public class Pizzeria {
 
     public String stampaMenu () {
         String s= "    >>  MENU"+"\n";
-        for (int i=0; i<menu.size(); i++) {
-            s+= menu.get(i).toString();
+        for (String a:menu.keySet()) {
+            s+= menu.get(a).toString();
         }
         return s;
     }
@@ -49,6 +49,7 @@ public class Pizzeria {
 
     public void makeOrder() {
         Order order = new Order(this.ordiniDelGiorno);
+        System.out.println(stampaMenu());
         scegliPizze(order);
         inserisciDati(order);
         inserisciOrario(order);
