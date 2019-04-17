@@ -61,12 +61,10 @@ public class Pizzeria {
             if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione invece della if-else
                 System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
             else {
+                do {
                     System.out.println("Quante " + nome + " vuoi?");
                     num = scan.nextInt();
-                    if(num>tot){
-                        System.out.println("Spiacenti: Numero di pizze errato. Ordine fallito. Riprovare:");
-                        scegliPizze(order);
-                    }
+                    }while (num>tot);
                     tot -= num;
                     for(int i=0; i<num; i++) {
                         order.AddPizza(menu.get(nome));
