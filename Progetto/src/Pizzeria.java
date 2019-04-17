@@ -1,5 +1,3 @@
-//import com.sun.corba.se.spi.orb.ParserData;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -30,14 +28,6 @@ public class Pizzeria {
         menu.put(pizza.getNome(),pizza);
     }
 
-    public String stampaMenu () {
-        String s= "    >>  MENU di "+ this.nome;
-        for (String a:menu.keySet()) {
-            s+="\n"+ menu.get(a).toString();
-        }
-        return s;
-    }
-
     public void makeOrder() {
         Order order = new Order(this.ordiniDelGiorno);
         System.out.println(stampaMenu());
@@ -46,6 +36,14 @@ public class Pizzeria {
         inserisciOrario(order);
         order.setCompleto();
         this.ordiniDelGiorno++;
+    }
+
+    public String stampaMenu () {
+        String s= "    >>  MENU di "+ this.nome;
+        for (String a:menu.keySet()) {
+            s+="\n"+ menu.get(a).toString();
+        }
+        return s;
     }
 
     public void scegliPizze(Order order) {
@@ -103,17 +101,28 @@ public class Pizzeria {
             sDate1 = day + "/" + month + "/" + year + " " + sDate1  ;
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date d = formato.parse(sDate1);
-            if(ora >23 || minuti >59){
-                System.out.println("L'orario inserito non è valido. Riprovare:");
+            if(ora >23 || minuti >59 && ora<this.orarioApertura.getHours() && ora>this.orarioChiusura.getHours()){
+                System.out.println("L'orario inserito non è valido. Riprovare:"); //DA SISTEMARE LA CONDIZIONE SULL'ORARIO DI APERTURA
                 inserisciOrario(order);
             }
-            order.setOrario(d);
+            if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisponibili()>order.getNumeroPizze()){
+                order.setOrario(d);//PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
+            }else{
+                ; //LA SCELTA VIRA SULL'ORARIO PIU VICINO
+            }
+
         } catch (Exception e){
             System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
             inserisciOrario(order);
-        }
+    }
     }
 
+    public int trovaCasellaTempoForno(Date oraApertura,int oraDesiderata,int minutiDesiderati){
+        int casellaTempo=this.TEMPI_FORNO*(oraDesiderata - oraApertura.getHours());
+        casellaTempo+=minutiDesiderati/5;
+        return casellaTempo;
+
+    }
 
     public Date getOrarioChiusura() {
         return orarioChiusura;
@@ -123,7 +132,4 @@ public class Pizzeria {
         return orarioApertura;
     }
 
-    public ArrayList<Order> getOrdini() {
-        return ordini;
-    }
 }

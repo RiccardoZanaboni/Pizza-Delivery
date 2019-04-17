@@ -6,4 +6,8 @@ public class Forno {
         this.postiDisponibili = postiDisponibili;
         this.postiOccupati = postiOccupati;
     }
+
+    public int getPostiDisponibili() {
+        return postiDisponibili;
+    }
 }

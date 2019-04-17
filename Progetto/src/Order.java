@@ -41,4 +41,8 @@ public class Order {
     public void setOrario(Date orario) {
         this.orario = orario;
     }
+
+    public int getNumeroPizze(){
+        return pizzeordinate.size();
+    }
 }
