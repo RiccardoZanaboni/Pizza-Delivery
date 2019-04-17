@@ -31,7 +31,7 @@ public class Pizzeria {
     }
 
     public String stampaMenu () {
-        String s= "    >>  MENU";
+        String s= "    >>  MENU di "+ this.nome;
         for (String a:menu.keySet()) {
             s+="\n"+ menu.get(a).toString();
         }
@@ -46,7 +46,6 @@ public class Pizzeria {
         inserisciOrario(order);
         order.setCompleto();
         this.ordiniDelGiorno++;
-        System.out.println(order.getCodice());
     }
 
     public void scegliPizze(Order order) {
@@ -54,21 +53,26 @@ public class Pizzeria {
         Scanner scan = new Scanner(System.in);
         System.out.println("Quante pizze vuoi ordinare?");
         int tot = scan.nextInt();
+        if(tot==0){
+            System.out.println("Spiacenti: Numero di pizze errato. Ordine fallito. Riprovare:");
+            scegliPizze(order);
+        }
         while(tot>0){
             System.out.println("Quale pizza desideri?");
             String nome = scan.next().toUpperCase();
             if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione invece della if-else
                 System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
             else {
-                do {
                     System.out.println("Quante " + nome + " vuoi?");
                     num = scan.nextInt();
-                }
-                while(num>tot);
-                tot -= num;
-                for(int i=0; i<num; i++) {
-                    order.AddPizza(menu.get(nome));
-                }
+                    if(num>tot){
+                        System.out.println("Spiacenti: Numero di pizze errato. Ordine fallito. Riprovare:");
+                        scegliPizze(order);
+                    }
+                    tot -= num;
+                    for(int i=0; i<num; i++) {
+                        order.AddPizza(menu.get(nome));
+                    }
             }
         }
     }
@@ -93,12 +97,19 @@ public class Pizzeria {
         int year = calendar.get(Calendar.YEAR);
         try {
             String sDate1 = scan.next();
+            StringTokenizer st = new StringTokenizer(sDate1, ":");
+            int ora=Integer.parseInt(st.nextToken());
+            int minuti=Integer.parseInt(st.nextToken());
             sDate1 = day + "/" + month + "/" + year + " " + sDate1  ;
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            Date d = formato.parse(sDate1);         // attenzione: 45:45 è accettato
-            System.out.println(d);
+            Date d = formato.parse(sDate1);
+            if(ora >23 || minuti >59){
+                System.out.println("L'orario inserito non è valido. Riprovare:");
+                inserisciOrario(order);
+            }
+            order.setOrario(d);
         } catch (Exception e){
-            System.out.println("L'orario non è stato inserito correttamente: riprovare.");
+            System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
             inserisciOrario(order);
         }
     }
@@ -110,5 +121,9 @@ public class Pizzeria {
 
     public Date getOrarioApertura() {
         return orarioApertura;
+    }
+
+    public ArrayList<Order> getOrdini() {
+        return ordini;
     }
 }
