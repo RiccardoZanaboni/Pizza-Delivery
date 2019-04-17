@@ -101,17 +101,16 @@ public class Pizzeria {
         Scanner scan = new Scanner(System.in);
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]");
         LocalDate timePoint = LocalDate.now();
-        Month month = timePoint.getMonth();
         int day = timePoint.getDayOfMonth();
         int year = timePoint.getYear();
+        Calendar calendar = new GregorianCalendar();
+        int mese = calendar.get(Calendar.MONTH)+1;  // +1 perchè Gennaio è il mese 0
         try {
             String sDate1 = scan.next();
-            SimpleDateFormat formato = new SimpleDateFormat("HH:mm");
-            Date d = formato.parse(sDate1);
-            //Date date1 = new SimpleDateFormat("HH:mm").parse(sDate1);   // attenzione: 45:45 è accettato!
-
-
-            System.out.println(day + " " + month + " " + year +" "+  formato.format(d));
+            sDate1 = day +"/"+ mese +"/"+ year + " " + sDate1;
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date d =  formato.parse(sDate1);                // attenzione: 45:45 è accettato!
+            System.out.println(d);
         } catch (Exception e){
             System.out.println("L'orario non è stato inserito correttamente: riprovare.");
             inserisciOrario(order);
