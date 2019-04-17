@@ -48,7 +48,7 @@ public class Pizzeria {
 
     public void scegliPizze(Order order) {
         int num=0;
-        String s="";
+        String s=null;
         Scanner scan = new Scanner(System.in);
         System.out.println("Quante pizze vuoi ordinare?");
         int tot = scan.nextInt();
@@ -63,11 +63,14 @@ public class Pizzeria {
                 System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
             else {
                 do {
-                    System.out.println(s); // al primo ciclo non stampa niente
+                    if(s!=null) { System.out.println(s); }
                     System.out.println("Quante " + nome + " vuoi?");
                     num = scan.nextInt();
                     s="Numero di pizze ordinate massimo superato. RIPROVA";
-                    }while (num>tot);
+                    }
+                    while (num>tot);
+
+                    s=null;
                     tot -= num;
                     for(int i=0; i<num; i++) {
                         order.AddPizza(menu.get(nome));
