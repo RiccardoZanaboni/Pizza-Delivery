@@ -12,11 +12,13 @@ public class Pizzeria {
     private ArrayList<DeliveryMan> fattorini;
     private HashMap<String, Pizza> menu;
     private ArrayList<Order> ordini;
+    private int ordiniDelGiorno;
     public final int TEMPI_FORNO = 12;
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
         this.menu = new HashMap<>();
         this.nome = nome;
+        this.ordiniDelGiorno = 0;
         this.indirizzo = indirizzo;
         this.orarioChiusura = orarioChiusura;
         this.orarioApertura = orarioApertura;
@@ -45,12 +47,14 @@ public class Pizzeria {
         return orarioApertura;
     }
 
-    public void makeOrder(int seriale) {
-        Order order = new Order(seriale);
+    public void makeOrder() {
+        Order order = new Order(this.ordiniDelGiorno);
         scegliPizze(order);
         inserisciDati(order);
         inserisciOrario(order);
         order.setCompleto();
+        this.ordiniDelGiorno++;
+        System.out.println(order.getCodice());
     }
 
     public void scegliPizze(Order order) {
@@ -59,7 +63,7 @@ public class Pizzeria {
         int tot = scan.nextInt();
         while(tot>0){
             System.out.println("Quale pizza desideri?");
-            String nome = scan.next();
+            String nome = scan.next().toUpperCase();
             if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione invece della if-else
                 System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
             else {
