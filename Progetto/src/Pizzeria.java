@@ -87,10 +87,16 @@ public class Pizzeria {
     public void inserisciOrario(Order order){
         Scanner scan = new Scanner(System.in);
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]");
+        Calendar calendar = new GregorianCalendar();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int year = calendar.get(Calendar.YEAR);
         try {
             String sDate1 = scan.next();
-            Date date1 = new SimpleDateFormat("HH:mm").parse(sDate1);   // attenzione: 45:45 è accettato!
-            System.out.println(date1);
+            sDate1 = day + "/" + month + "/" + year + " " + sDate1  ;
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date d = formato.parse(sDate1);         // attenzione: 45:45 è accettato
+            System.out.println(d);
         } catch (Exception e){
             System.out.println("L'orario non è stato inserito correttamente: riprovare.");
             inserisciOrario(order);
