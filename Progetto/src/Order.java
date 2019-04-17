@@ -11,11 +11,15 @@ public class Order {
 
     public Order(int codice) {
         this.customer = null;
-        this.codice = "ORD" + codice;
+        this.codice = "ORD - " + codice;
         this.indirizzo = "";
         this.orario = null;
         this.pizzeordinate = new ArrayList<>();
         this.completo = false;
+    }
+
+    public String getCodice() {
+        return codice;
     }
 
     public void AddPizza(Pizza pizza){
