@@ -28,12 +28,17 @@ public class Pizzeria {
         menu.put(pizza.getNome(),pizza);
     }
 
+    public void ApriPizzeria(int postidisponibili){//INIZIALIZZA IL VETTORE DI INFORNATE CHE OGNI APERTURA VA RIPRISTINATO
+        for(int i=0;i<infornate.length;i++){
+            infornate[i]=new Forno(postidisponibili);
+        }
+    }
+
     public void makeOrder() {
         Order order = new Order(this.ordiniDelGiorno);
         System.out.println(stampaMenu());
         scegliPizze(order);
         inserisciDati(order);
-        inserisciOrario(order);
         order.setCompleto();
         this.ordiniDelGiorno++;
     }
@@ -62,6 +67,7 @@ public class Pizzeria {
             System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
             scegliPizze(order);
         }
+        this.inserisciOrario(order,tot);
         while(tot>0){
             System.out.println("Quale pizza desideri?");
             String nome = scan.nextLine().toUpperCase();
@@ -91,39 +97,6 @@ public class Pizzeria {
         }
     }
 
-    /*public void scegliPizze(Order order) {        // versione vecchia
-        int num;
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Quante pizze vuoi ordinare?");
-        String s = scan.nextLine();         // necessario
-        int tot = Integer.parseInt(s);
-        if(tot<=0){
-            System.out.println("Spiacenti: Numero di pizze errato. Ordine fallito. Riprovare:");
-            scegliPizze(order);
-        }
-        while(tot>0){
-            System.out.println("Quale pizza desideri?");
-            String nome = scan.nextLine().toUpperCase();
-            if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione invece della if-else
-                System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
-            else {
-                System.out.println("Quante " + nome + " vuoi?");
-                try {
-                    s = scan.nextLine();        // necessario
-                    num = Integer.parseInt(s);
-                    if(num<=0)
-                        throw new InputMismatchException("Spiacenti");
-                    tot -= num;
-                    for (int i=0; i<num; i++) {
-                        order.AddPizza(menu.get(nome));
-                    }
-                } catch (InputMismatchException e) {
-                    System.out.println("Spiacenti: inserito numero di \n" + nome + "\n non valido. Riprovare:");
-                }
-            }
-        }
-    }*/
-
     public void inserisciDati(Order order){
         Scanner scan = new Scanner(System.in);
         System.out.println("Come ti chiami?");
@@ -135,7 +108,7 @@ public class Pizzeria {
         order.setIndirizzo(indirizzo);
     }
 
-    public void inserisciOrario(Order order){
+    public void inserisciOrario(Order order,int tot){
         Scanner scan = new Scanner(System.in);
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]");
         Calendar calendar = new GregorianCalendar();
@@ -151,18 +124,31 @@ public class Pizzeria {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date d = formato.parse(sDate1);
             if(ora >23 || minuti >59 || ora<this.orarioApertura.getHours() || ora>this.orarioChiusura.getHours()){
-                System.out.println("L'orario inserito non è valido. Riprovare:"); //DA SISTEMARE LA CONDIZIONE SULL'ORARIO DI APERTURA
-                inserisciOrario(order);
+                System.out.println("L'orario inserito non è valido. Riprovare:"); //DA SISTEMARE SE SI CHIUDE ALLE 02:00
+                inserisciOrario(order,tot);
             }
-            /*if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisponibili()>order.getNumeroPizze()){
-                order.setOrario(d);//PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
+            if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisp()>=tot){
+                order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
+                infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].inserisciInfornate(tot);
             }else{
-                ; //LA SCELTA VIRA SULL'ORARIO PIU VICINO
-            }*/
+                System.out.println("Orario desiderato non disponibile,ecco gli orari disponibili: ");
+                for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti);i<this.infornate.length ;i++) {
+                    if (infornate[i].getPostiDisp() >= tot) {
+                        int oraNew = this.orarioApertura.getHours() + i / 12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1 RISCHIO ECCEZZIONE
+                        int min = 5 * (i - 12 * (i / 12));
+                        if(min<=5){
+                            System.out.println(oraNew + ":0" + min);
+                        }else {
+                            System.out.println(oraNew + ":" + min);
+                        }
+                    }
+                }
+                this.inserisciOrario(order,tot);
+            }
 
-        } catch (Exception e){
+        } catch (java.text.ParseException | NumberFormatException e){
             System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
-            inserisciOrario(order);
+            inserisciOrario(order,tot);
         }
     }
 
