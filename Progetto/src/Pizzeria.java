@@ -47,49 +47,70 @@ public class Pizzeria {
     }
 
     public void scegliPizze(Order order) {
-        int num=0;
-        int tot=0;
+        order.setPizzeSceltePerTipo(0);
+        order.setPizzeScelte(0);
         String line;   // necessaria per usare nextLine() ovunque (per evitare problemi con letture errate di newlines)
-        String s = null;
         Scanner scan = new Scanner(System.in);
         System.out.println("Quante pizze vuoi ordinare?");
         line = scan.nextLine();
         try {
-            tot = Integer.parseInt(line);
-            if(tot<=0)
+            order.setPizzeScelte(Integer.parseInt(line));
+            if (order.getPizzeScelte() <= 0)
                 throw new NumberFormatException();
         } catch (NumberFormatException e) {
             System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
             scegliPizze(order);
         }
-        while(tot>0){
-            System.out.println("Quale pizza desideri?");
-            String nome = scan.nextLine().toUpperCase();
-            if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione invece della if-else
-                System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
-            else {
-                try{
-                    do {
-                        if(s!=null) { System.out.println(s); }
-                        System.out.println("Quante " + nome + " vuoi?");
-                        line = scan.nextLine();
-                        num = Integer.parseInt(line);
-                        if(num<=0)
-                            throw new NumberFormatException();
-                        s = "Numero di pizze ordinate massimo superato. Riprova:";
-                    } while (num>tot);
-                } catch (NumberFormatException e) {
-                    System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-                    num=0;
-                }
-                s = null;
-                tot -= num;
-                for(int i=0; i<num; i++) {
-                    order.AddPizza(menu.get(nome));
-                }
-            }
+        while (order.getPizzeScelte() > 0) {
+            pizzaRichiesta(order);
         }
     }
+
+    public void pizzaRichiesta (Order order) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Quale pizza desideri?" + "      Inserisci 'F' per tornare indietro.");
+        String nomePizza = scan.nextLine().toUpperCase();
+        if (nomePizza.equals("F"))                      // nel caso si voglia tornare indietro
+            scegliPizze(order);
+        if(!(menu.containsKey(nomePizza)))           // qui ci vorrebbe una eccezione invece della if-else
+            System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
+        else {
+            numeroPizzaRichiesta(order, nomePizza);
+        }
+    }
+
+
+    public void numeroPizzaRichiesta(Order order, String nome) {
+        Scanner scan = new Scanner(System.in);
+        try{
+            do {
+                System.out.println("Quante " + nome + " vuoi?" + "      Inserisci 'F' per tornare indietro.");
+                String line = scan.nextLine();
+                if (line.equals("F"))               // nel caso si voglia tornare indietro
+                    scegliPizze(order);
+                order.setPizzeSceltePerTipo(Integer.parseInt(line));
+                if(order.getPizzeSceltePerTipo()<=0)
+                    throw new NumberFormatException();
+            } while (order.getPizzeScelte()>order.getPizzeSceltePerTipo());
+        } catch (NumberFormatException e) {
+            System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
+            order.setPizzeScelte(0);
+        }
+        order.setPizzeScelte(order.getPizzeScelte()-order.getPizzeSceltePerTipo());
+        try {
+            if (order.getPizzeSceltePerTipo() > order.getPizzeScelte()) {
+                throw new Exception("Il numero di pizze inserito supera il totale!"+"\n"+"Inserisci il numero di pizze corretto.");
+            } else {for(int i=0; i<order.getPizzeSceltePerTipo(); i++) {
+                order.AddPizza(menu.get(nome));
+                }
+            }
+        } catch (Exception a) {
+            System.err.println(a.getMessage());
+            scegliPizze(order);
+        }
+
+    }
+
 
     /*public void scegliPizze(Order order) {        // versione vecchia
         int num;

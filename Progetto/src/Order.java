@@ -9,6 +9,9 @@ public class Order {
     private ArrayList <Pizza> pizzeordinate;
     private boolean completo;
 
+    private int pizzeScelte;
+    private int pizzeSceltePerTipo;
+
     public Order(int codice) {
         this.customer = null;
         this.codice = "ORD - " + codice;
@@ -16,6 +19,9 @@ public class Order {
         this.orario = null;
         this.pizzeordinate = new ArrayList<>();
         this.completo = false;
+
+        this.pizzeScelte=0;
+        this.pizzeSceltePerTipo=0;
     }
 
     public String getCodice() {
@@ -44,5 +50,21 @@ public class Order {
 
     public int getNumeroPizze(){
         return pizzeordinate.size();
+    }
+
+    public int getPizzeScelte() {
+        return pizzeScelte;
+    }
+
+    public int getPizzeSceltePerTipo() {
+        return pizzeSceltePerTipo;
+    }
+
+    public void setPizzeScelte(int pizzeScelte) {
+        this.pizzeScelte = pizzeScelte;
+    }
+
+    public void setPizzeSceltePerTipo(int pizzeSceltePerTipo) {
+        this.pizzeSceltePerTipo = pizzeSceltePerTipo;
     }
 }
