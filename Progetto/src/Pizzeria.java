@@ -46,44 +46,52 @@ public class Pizzeria {
         return s;
     }
 
-    /*public void scegliPizze(Order order) {
+    public void scegliPizze(Order order) {
         int num=0;
-        //String s=null;
+        int tot=0;
+        String line;   // necessaria per usare nextLine() ovunque (per evitare problemi con letture errate di newlines)
+        String s = null;
         Scanner scan = new Scanner(System.in);
         System.out.println("Quante pizze vuoi ordinare?");
-        int tot = scan.nextInt();
-        if(tot<=0){
-            System.out.println("Spiacenti: Numero di pizze errato. Ordine fallito. Riprovare:");
+        line = scan.nextLine();
+        try {
+            tot = Integer.parseInt(line);
+            if(tot<=0)
+                throw new NumberFormatException();
+        } catch (NumberFormatException e) {
+            System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
             scegliPizze(order);
         }
         while(tot>0){
             System.out.println("Quale pizza desideri?");
             String nome = scan.nextLine().toUpperCase();
-            if (menu.containsKey(nome)){          // qui ci vorrebbe una eccezione invece della if-else
-                System.out.println("Quante " + nome + " vuoi?");
-                try {
-                    num = scan.nextInt();
-                    if(num<=0)
-                        throw new InputMismatchException("Spiacenti");
-                    //s = "Numero di pizze ordinate massimo superato. RIPROVA";
-                    tot -= num;
-                    for (int i=0; i<num; i++) {
-                        order.AddPizza(menu.get(nome));
-                    }
-                } catch (InputMismatchException e) {
-                    System.out.println("Spiacenti: inserito numero di " + nome +  "non valido. Riprovare:");
+            if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione invece della if-else
+                System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
+            else {
+                try{
+                    do {
+                        if(s!=null) { System.out.println(s); }
+                        System.out.println("Quante " + nome + " vuoi?");
+                        line = scan.nextLine();
+                        num = Integer.parseInt(line);
+                        if(num<=0)
+                            throw new NumberFormatException();
+                        s = "Numero di pizze ordinate massimo superato. Riprova:";
+                    } while (num>tot);
+                } catch (NumberFormatException e) {
+                    System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
+                    num=0;
                 }
-
-                //s = null;
-                //tot -= num;
-            } else {
-                if(!(nome.equals("")))
-                    System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
+                s = null;
+                tot -= num;
+                for(int i=0; i<num; i++) {
+                    order.AddPizza(menu.get(nome));
+                }
             }
         }
-    }*/
+    }
 
-    public void scegliPizze(Order order) {
+    /*public void scegliPizze(Order order) {        // versione vecchia
         int num;
         Scanner scan = new Scanner(System.in);
         System.out.println("Quante pizze vuoi ordinare?");
@@ -114,7 +122,7 @@ public class Pizzeria {
                 }
             }
         }
-    }
+    }*/
 
     public void inserisciDati(Order order){
         Scanner scan = new Scanner(System.in);
