@@ -150,7 +150,7 @@ public class Pizzeria {
             sDate1 = day + "/" + month + "/" + year + " " + sDate1  ;
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date d = formato.parse(sDate1);
-            if(ora >23 || minuti >59 && ora<this.orarioApertura.getHours() && ora>this.orarioChiusura.getHours()){
+            if(ora >23 || minuti >59 || ora<this.orarioApertura.getHours() || ora>this.orarioChiusura.getHours()){
                 System.out.println("L'orario inserito non è valido. Riprovare:"); //DA SISTEMARE LA CONDIZIONE SULL'ORARIO DI APERTURA
                 inserisciOrario(order);
             }
