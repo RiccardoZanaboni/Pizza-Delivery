@@ -188,8 +188,7 @@ public class Pizzeria {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date d = formato.parse(sDate1);
             if(ora >23 || minuti >59 || ora<this.orarioApertura.getHours() || ora>this.orarioChiusura.getHours()){
-                System.out.println("L'orario inserito non è valido. Riprovare:"); //DA SISTEMARE SE SI CHIUDE ALLE 02:00
-                inserisciOrario(order,tot);
+                throw new OutOfTIme(); //DA SISTEMARE SE SI CHIUDE ALLE 02:00
             }
             if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisp()>=tot){
                 order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
@@ -210,7 +209,7 @@ public class Pizzeria {
                 this.inserisciOrario(order,tot);
             }
 
-        } catch (java.text.ParseException | NumberFormatException e){
+        } catch (java.text.ParseException | NumberFormatException | NoSuchElementException | OutOfTIme e){
             System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
             inserisciOrario(order,tot);
         }
