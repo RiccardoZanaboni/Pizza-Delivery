@@ -41,9 +41,6 @@ public class Pizzeria {
         Order order = new Order(this.ordiniDelGiorno);
         System.out.println(stampaMenu());
         scegliPizze(order);
-        inserisciDati(order);
-        order.setCompleto();
-        this.ordiniDelGiorno++;
         //scan.close();
     }
 
@@ -72,7 +69,6 @@ public class Pizzeria {
             scegliPizze(order);
         }
         this.inserisciOrario(order, tot);
-        pizzaRichiesta(order, tot);
     }
 
     public void pizzaRichiesta (Order order, int tot) {
@@ -181,13 +177,13 @@ public class Pizzeria {
     public void inserisciOrario(Order order,int tot){
         //Scanner scan = new Scanner(System.in);
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
-        //if(scan.nextLine().toUpperCase().equals("F")){ scegliPizze(order);}
         Calendar calendar = new GregorianCalendar();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH)+1;
         int year = calendar.get(Calendar.YEAR);
         try {
             String sDate1 = scan.nextLine();
+            if(sDate1.toUpperCase().equals("F")){ scegliPizze(order);}
             StringTokenizer st = new StringTokenizer(sDate1, ":");
             int ora=Integer.parseInt(st.nextToken());
             int minuti=Integer.parseInt(st.nextToken());
@@ -198,8 +194,15 @@ public class Pizzeria {
                 throw new OutOfTIme(); //DA SISTEMARE SE SI CHIUDE ALLE 02:00
             }
             if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisp()>=tot){
-                order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
-                infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].inserisciInfornate(tot);
+                pizzaRichiesta(order, tot);
+                inserisciDati(order);
+                System.out.println("Confermi l'ordine? Premere s per confermare");
+                if (scan.nextLine().equals("s")) {
+                    order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
+                    infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].inserisciInfornate(tot);
+                    order.setCompleto();
+                    this.ordiniDelGiorno++;
+                }
             } else{
                 System.out.println("Orario desiderato non disponibile, ecco gli orari disponibili: ");
                 for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti); i<this.infornate.length; i++) {
@@ -207,9 +210,9 @@ public class Pizzeria {
                         int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
                         int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
                         if(min<=5){
-                            System.out.print(oraNew + ":0" + min + " ");
+                            System.out.print(oraNew + ":0" + min + "\n");
                         }else {
-                            System.out.print(oraNew + ":" + min + " ");
+                            System.out.print(oraNew + ":" + min + "\n");
                         }
                     }
                 }
