@@ -1,3 +1,5 @@
+import exceptions.OutOfTIme;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -11,8 +13,8 @@ public class Pizzeria {
     private HashMap<String, Pizza> menu;
     private ArrayList<Order> ordini;
     private int ordiniDelGiorno;
-    public final int TEMPI_FORNO = 12;      // ogni 5 minuti
-    public Scanner scan;
+    private final int TEMPI_FORNO = 12;      // ogni 5 minuti
+    private Scanner scan = new Scanner(System.in);
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
         this.menu = new HashMap<>();
@@ -38,7 +40,6 @@ public class Pizzeria {
     public void makeOrder() {
         Order order = new Order(this.ordiniDelGiorno);
         System.out.println(stampaMenu());
-        scan = new Scanner(System.in);
         scegliPizze(order);
         inserisciDati(order);
         order.setCompleto();
