@@ -93,11 +93,11 @@ public class Pizzeria {
         try {
             do {
                 if(s!=null) { System.out.println(s); }
-                System.out.println("Quante " + pizza + " vuoi?\t\t(Inserisci 'F' per tornare indietro)");
+                System.out.println("Quante " + pizza + " vuoi?\t\t(Inserisci 'F' per annullare e ricominciare)");
                 String line = scan.nextLine();
                 if(line.toUpperCase().equals("F")){ scegliPizze(order);}
                 num = Integer.parseInt(line);
-                if(num<=0)
+                if(num<0)       // c'è la possibilità di mettere 0, se uno non voleva quella pizza, senza creare casini
                     throw new NumberFormatException();
                 s = "Numero di pizze ordinate massimo superato. Riprova:";
             } while (num>tot);
@@ -114,9 +114,6 @@ public class Pizzeria {
             pizzaRichiesta(order, tot);
         }
     }
-
-
-
 
  /*   public void scegliPizze(Order order) {
         int num=0;
@@ -162,16 +159,16 @@ public class Pizzeria {
                 }
             }
         }
-    }
-*/
+    }*/
+
     public void inserisciDati(Order order){
         //Scanner scan = new Scanner(System.in);
-        System.out.println("Come ti chiami?\t\t(Inserisci 'F' per tornare indietro)");
+        System.out.println("Come ti chiami?\t\t(Inserisci 'F' per annullare e ricominciare)");
         String nome = scan.nextLine();
         if(nome.toUpperCase().equals("F")){ makeOrder();}
         Customer c = new Customer(nome);
         order.setCustomer(c);
-        System.out.println("Inserisci l'indirizzo di consegna:\t\t(Inserisci 'F' per tornare indietro)");
+        System.out.println("Inserisci l'indirizzo di consegna:\t\t(Inserisci 'F' per annullare e ricominciare)");
         String indirizzo = scan.nextLine();
         if(indirizzo.toUpperCase().equals("F")){makeOrder();}
         order.setIndirizzo(indirizzo);
@@ -179,7 +176,7 @@ public class Pizzeria {
 
     public void inserisciOrario(Order order,int tot){
         //Scanner scan = new Scanner(System.in);
-        System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per tornare indietro)");
+        System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
         //if(scan.nextLine().toUpperCase().equals("F")){ scegliPizze(order);}
         Calendar calendar = new GregorianCalendar();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -200,15 +197,15 @@ public class Pizzeria {
                 order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
                 infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].inserisciInfornate(tot);
             } else{
-                System.out.println("Orario desiderato non disponibile,ecco gli orari disponibili: ");
-                for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti);i<this.infornate.length ;i++) {
+                System.out.println("Orario desiderato non disponibile, ecco gli orari disponibili: ");
+                for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti); i<this.infornate.length; i++) {
                     if (infornate[i].getPostiDisp() >= tot) {
-                        int oraNew = this.orarioApertura.getHours() + i / 12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1 RISCHIO ECCEZIONE
-                        int min = 5 * (i - 12 * (i / 12));
+                        int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
+                        int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
                         if(min<=5){
-                            System.out.printf(oraNew + ":0" + min + " ");
+                            System.out.print(oraNew + ":0" + min + " ");
                         }else {
-                            System.out.printf(oraNew + ":" + min + " ");
+                            System.out.print(oraNew + ":" + min + " ");
                         }
                     }
                 }
