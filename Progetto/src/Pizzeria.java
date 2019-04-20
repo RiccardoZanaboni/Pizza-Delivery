@@ -176,7 +176,7 @@ public class Pizzeria {
             Date d = formato.parse(sDate1);
             if(ora >23 || minuti >59)
                 throw new NumberFormatException();
-            if(ora<this.orarioApertura.getHours() || ora>this.orarioChiusura.getHours()){
+            if(ora<this.orarioApertura.getHours() || ora>this.orarioChiusura.getHours() || (ora==this.orarioChiusura.getHours() && minuti>this.orarioChiusura.getMinutes()) || (ora==this.orarioApertura.getHours() && minuti<this.orarioApertura.getMinutes())){
                 throw new OutOfTimeExc(); //DA SISTEMARE SE SI CHIUDE ALLE 02:00
             }
             if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisp()>=tot){
@@ -210,13 +210,13 @@ public class Pizzeria {
         } catch (java.text.ParseException | NumberFormatException | NoSuchElementException e) {
             System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
             inserisciOrario(order, tot);
-        } catch (OutOfTimeExc | ArrayIndexOutOfBoundsException e){
+        } catch (OutOfTimeExc e){
             System.out.println("La pizzeria è chiusa nell'orario inserito. Riprovare:");
             inserisciOrario(order,tot);
         }
     }
 
-    public int trovaCasellaTempoForno(Date oraApertura,int oraDesiderata,int minutiDesiderati){
+    public int trovaCasellaTempoForno(Date oraApertura, int oraDesiderata, int minutiDesiderati){
         int casellaTempo = this.TEMPI_FORNO*(oraDesiderata - oraApertura.getHours());
         casellaTempo += minutiDesiderati/5;
         return casellaTempo;
