@@ -102,7 +102,7 @@ public class Pizzeria {
 
     public void numeroPizzaRichiesta(Order order, String pizza, int tot) {
         //Scanner scan = new Scanner(System.in);
-        int num;
+        int num=0;
         String err = null;
         try {
             do {
@@ -113,67 +113,20 @@ public class Pizzeria {
                 if(num<0) {       // c'è la possibilità di mettere 0, se uno non voleva quella pizza, senza creare casini
                     throw new NumberFormatException();
                 }
-                err = "Massimo numero di pizze ordinate superato. Riprova:";
+                err = "Massimo numero di pizze ordinate superato. Riprovare:";
             } while (num>tot);
+            tot -= num;
+            for (int i = 0; i < num; i++) {
+                order.AddPizza(menu.get(pizza));
+            }
+            if (tot != 0) {
+                pizzaRichiesta(order, tot);
+            }
         } catch (NumberFormatException e) {
-            num=0;
+            num = 0;
             System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-        }
-        //err = null;
-        tot -= num;
-        for(int i=0; i<num; i++) {
-            order.AddPizza(menu.get(pizza));
-        }
-        if (tot!=0) {
-            pizzaRichiesta(order, tot);
         }
     }
-
- /*   public void scegliPizze(Order order) {
-        int num=0;
-        int tot=0;
-        String line;   // necessaria per usare nextLine() ovunque (per evitare problemi con letture errate di newlines)
-        String s = null;
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Quante pizze vuoi ordinare?");
-        line = scan.nextLine();
-        try {
-            tot = Integer.parseInt(line);
-            if(tot<=0)
-                throw new NumberFormatException();
-        } catch (NumberFormatException e) {
-            System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-            scegliPizze(order);
-        }
-        this.inserisciOrario(order,tot);
-        while(tot>0){
-            System.out.println("Quale pizza desideri?");
-            String nome = scan.nextLine().toUpperCase();
-            if(!(menu.containsKey(nome)))           // qui ci vorrebbe una eccezione invece della if-else
-                System.out.println("Spiacenti: \"" + nome + "\" non presente sul menu. Riprovare:");
-            else {
-                try{
-                    do {
-                        if(s!=null) { System.out.println(s); }
-                        System.out.println("Quante " + nome + " vuoi?");
-                        line = scan.nextLine();
-                        num = Integer.parseInt(line);
-                        if(num<=0)
-                            throw new NumberFormatException();
-                        s = "Numero di pizze ordinate massimo superato. Riprova:";
-                    } while (num>tot);
-                } catch (NumberFormatException e) {
-                    System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-                    num=0;
-                }
-                s = null;
-                tot -= num;
-                for(int i=0; i<num; i++) {
-                    order.AddPizza(menu.get(nome));
-                }
-            }
-        }
-    }*/
 
     public void inserisciDati(Order order){
         //Scanner scan = new Scanner(System.in);
@@ -199,6 +152,7 @@ public class Pizzeria {
     public void inserisciOrario(Order order,int tot){
         //Scanner scan = new Scanner(System.in);
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
+        String token= null;
         Calendar calendar = new GregorianCalendar();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH)+1;
@@ -209,12 +163,20 @@ public class Pizzeria {
                 throw new RestartOrderExc();
             }
             StringTokenizer st = new StringTokenizer(sDate1, ":");
-            int ora=Integer.parseInt(st.nextToken());
-            int minuti=Integer.parseInt(st.nextToken());
+            token = st.nextToken();
+            if(token.length()!=2)
+                throw new NumberFormatException();
+            int ora = Integer.parseInt(token);
+            token = st.nextToken();
+            if(token.length()!=2)
+                throw new NumberFormatException();
+            int minuti = Integer.parseInt(token);
             sDate1 = day + "/" + month + "/" + year + " " + sDate1  ;
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date d = formato.parse(sDate1);
-            if(ora >23 || minuti >59 || ora<this.orarioApertura.getHours() || ora>this.orarioChiusura.getHours()){
+            if(ora >23 || minuti >59)
+                throw new NumberFormatException();
+            if(ora<this.orarioApertura.getHours() || ora>this.orarioChiusura.getHours()){
                 throw new OutOfTimeExc(); //DA SISTEMARE SE SI CHIUDE ALLE 02:00
             }
             if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisp()>=tot){
@@ -222,7 +184,7 @@ public class Pizzeria {
                 inserisciDati(order);
                 System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
                 if (scan.nextLine().toUpperCase().equals("S")) {
-                    order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
+                    order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
                     infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].inserisciInfornate(tot);
                     order.setCompleto();
                 } else
@@ -245,11 +207,12 @@ public class Pizzeria {
 
         } catch (RestartOrderExc e){
             makeOrder();
-        } catch (java.text.ParseException | NumberFormatException | NoSuchElementException e){
+        } catch (java.text.ParseException | NumberFormatException | NoSuchElementException e) {
             System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
+            inserisciOrario(order, tot);
+        } catch (OutOfTimeExc | ArrayIndexOutOfBoundsException e){
+            System.out.println("La pizzeria è chiusa nell'orario inserito. Riprovare:");
             inserisciOrario(order,tot);
-        } catch (OutOfTimeExc e){
-            System.out.println("Spiacenti: la pizzeria è chiusa alle .........");   // aggiungere ore
         }
     }
 
