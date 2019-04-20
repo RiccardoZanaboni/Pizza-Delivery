@@ -199,10 +199,6 @@ public class Pizzeria {
     public void inserisciOrario(Order order,int tot){
         //Scanner scan = new Scanner(System.in);
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
-        /*if(scan.nextLine().toUpperCase().equals("F")){
-            order = new Order(ordiniDelGiorno);
-            scegliPizze(order);
-        }*/
         Calendar calendar = new GregorianCalendar();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH)+1;
@@ -210,6 +206,7 @@ public class Pizzeria {
         try {
             String sDate1 = scan.nextLine();
             if(sDate1.toUpperCase().equals("F")){
+                order = new Order(ordiniDelGiorno);
                 scegliPizze(order);
             }
             StringTokenizer st = new StringTokenizer(sDate1, ":");
@@ -224,8 +221,8 @@ public class Pizzeria {
             if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisp()>=tot){
                 pizzaRichiesta(order, tot);
                 inserisciDati(order);
-                System.out.println("Confermi l'ordine? Premere s per confermare");
-                if (scan.nextLine().equals("s")) {
+                System.out.println("Confermi l'ordine? Premere 'S' per confermare");
+                if (scan.nextLine().toUpperCase().equals("S")) {
                     order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
                     infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].inserisciInfornate(tot);
                     order.setCompleto();
