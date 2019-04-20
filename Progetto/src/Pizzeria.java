@@ -1,4 +1,4 @@
-import exceptions.OutOfTImeExc;
+import exceptions.OutOfTimeExc;
 import exceptions.RestartOrderExc;
 
 import java.text.SimpleDateFormat;
@@ -81,7 +81,6 @@ public class Pizzeria {
             scegliPizze(order);
         }
         this.inserisciOrario(order, tot);
-        //pizzaRichiesta(order, tot);
     }
 
     public void pizzaRichiesta (Order order, int tot) {
@@ -90,7 +89,6 @@ public class Pizzeria {
         try {
             String nomePizza = scan.nextLine().toUpperCase();
             if (nomePizza.equals("F")) {
-                order = new Order(ordiniDelGiorno);
                 throw new RestartOrderExc();
             } else if (!(menu.containsKey(nomePizza))) {         // qui ci vorrebbe una eccezione invece della if-else
                 System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
@@ -98,7 +96,7 @@ public class Pizzeria {
             } else
                 numeroPizzaRichiesta(order, nomePizza, tot);
         } catch (RestartOrderExc e){
-            scegliPizze(order);
+            makeOrder();
         }
     }
 
@@ -109,12 +107,8 @@ public class Pizzeria {
         try {
             do {
                 if(err!=null) { System.out.println(err); }
-                System.out.println("Quante " + pizza + " vuoi? \t\t[0..n]");//\t\t(Inserisci 'F' per annullare e ricominciare)");
+                System.out.println("Quante " + pizza + " vuoi?\t[0..n]");
                 String line = scan.nextLine();
-                /*if(line.toUpperCase().equals("F")){
-                    order = new Order(ordiniDelGiorno);
-                    scegliPizze(order);
-                }*/
                 num = Integer.parseInt(line);
                 if(num<0) {       // c'è la possibilità di mettere 0, se uno non voleva quella pizza, senza creare casini
                     throw new NumberFormatException();
@@ -221,7 +215,7 @@ public class Pizzeria {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date d = formato.parse(sDate1);
             if(ora >23 || minuti >59 || ora<this.orarioApertura.getHours() || ora>this.orarioChiusura.getHours()){
-                throw new OutOfTImeExc(); //DA SISTEMARE SE SI CHIUDE ALLE 02:00
+                throw new OutOfTimeExc(); //DA SISTEMARE SE SI CHIUDE ALLE 02:00
             }
             if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisp()>=tot){
                 pizzaRichiesta(order, tot);
@@ -250,11 +244,13 @@ public class Pizzeria {
                 this.inserisciOrario(order,tot);
             }
 
-        } catch (java.text.ParseException | NumberFormatException | NoSuchElementException | OutOfTImeExc e){
-            System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
-            inserisciOrario(order,tot);
         } catch (RestartOrderExc e){
             scegliPizze(order);
+        } catch (java.text.ParseException | NumberFormatException | NoSuchElementException e){
+            System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
+            inserisciOrario(order,tot);
+        } catch (OutOfTimeExc e){
+            System.out.println("Spiacenti: la pizzeria è chiusa alle .........");   // aggiungere ore
         }
     }
 
@@ -272,5 +268,4 @@ public class Pizzeria {
     public Date getOrarioApertura() {
         return orarioApertura;
     }
-
 }
