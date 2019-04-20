@@ -52,8 +52,9 @@ public class Pizzeria {
     }
 
     public String helloThere(){         // da sistemare orario apertura-chiusura!!!
-        String r = "\nPIZZERIA \"" + this.nome + "\"\n\t" + this.indirizzo + "\n\tApertura: "+ this.orarioApertura.getHours() + ":00 - " + this.orarioChiusura.getHours() + ":00";
-        return "\n--------------------------------------------------------------------------------------\n" + r;
+        String dati = "\nPIZZERIA \"" + this.nome + "\"\n\t" + this.indirizzo;
+        String open = "\n\tApertura: "+ this.orarioApertura.getHours() + ":00 - " + this.orarioChiusura.getHours() + ":00";
+        return "\n--------------------------------------------------------------------------------------\n" + dati + open;
     }
 
     public String stampaMenu() {
@@ -64,7 +65,6 @@ public class Pizzeria {
         }
         return line+s+line;
     }
-
 
     public void scegliPizze(Order order) {
         int tot=0;
@@ -225,7 +225,6 @@ public class Pizzeria {
                     order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
                     infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].inserisciInfornate(tot);
                     order.setCompleto();
-                    this.ordiniDelGiorno++;
                 } else
                     System.out.println("L'ordine è stato annullato.");
             } else{
@@ -245,7 +244,7 @@ public class Pizzeria {
             }
 
         } catch (RestartOrderExc e){
-            scegliPizze(order);
+            makeOrder();
         } catch (java.text.ParseException | NumberFormatException | NoSuchElementException e){
             System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
             inserisciOrario(order,tot);
