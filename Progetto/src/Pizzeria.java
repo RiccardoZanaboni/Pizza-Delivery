@@ -77,7 +77,9 @@ public class Pizzeria {
             if (nomePizza.equals("F"))                      // nel caso si voglia tornare indietro
                 scegliPizze(order);
             if (!(menu.containsKey(nomePizza)))           // qui ci vorrebbe una eccezione invece della if-else
-                System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
+               {
+                   System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
+                   pizzaRichiesta(order,tot);}
             else {
                 numeroPizzaRichiesta(order, nomePizza, tot);
             }
@@ -91,8 +93,9 @@ public class Pizzeria {
         try{
             do {
                 if(s!=null) { System.out.println(s); }
-                System.out.println("Quante " + nome + " vuoi?");
+                System.out.println("Quante " + nome + " vuoi?"+ "      Inserisci 'F' per tornare indietro.");
                 String line = scan.nextLine();
+                if(line.toUpperCase().equals("F")){ scegliPizze(order);}
                 num = Integer.parseInt(line);
                 if(num<=0)
                     throw new NumberFormatException();
@@ -163,18 +166,21 @@ public class Pizzeria {
 */
     public void inserisciDati(Order order){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Come ti chiami?");
+        System.out.println("Come ti chiami?"+ "      Inserisci 'F' per tornare indietro.");
         String nome = scan.nextLine();
+        if(nome.toUpperCase().equals("F")){ makeOrder();}
         Customer c = new Customer(nome);
         order.setCustomer(c);
-        System.out.println("Inserisci l'indirizzo di consegna:");
+        System.out.println("Inserisci l'indirizzo di consegna:"+ "      Inserisci 'F' per tornare indietro.");
         String indirizzo = scan.nextLine();
+        if(indirizzo.toUpperCase().equals("F")){makeOrder();}
         order.setIndirizzo(indirizzo);
     }
 
     public void inserisciOrario(Order order,int tot){
         Scanner scan = new Scanner(System.in);
-        System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]");
+        System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]"+ "      Inserisci 'F' per tornare indietro.");
+        //if(scan.nextLine().toUpperCase().equals("F")){ scegliPizze(order);}
         Calendar calendar = new GregorianCalendar();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH)+1;
