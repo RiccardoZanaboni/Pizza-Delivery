@@ -12,7 +12,7 @@ public class Pizzeria {
     private ArrayList<Order> ordini;
     private int ordiniDelGiorno;
     public final int TEMPI_FORNO = 12;      // ogni 5 minuti
-    Scanner scan = new Scanner(System.in);
+    public Scanner scan;
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
         this.menu = new HashMap<>();
@@ -38,11 +38,12 @@ public class Pizzeria {
     public void makeOrder() {
         Order order = new Order(this.ordiniDelGiorno);
         System.out.println(stampaMenu());
+        scan = new Scanner(System.in);
         scegliPizze(order);
         inserisciDati(order);
         order.setCompleto();
         this.ordiniDelGiorno++;
-        scan.close();
+        //scan.close();
     }
 
     public String stampaMenu() {
@@ -170,7 +171,9 @@ public class Pizzeria {
         order.setCustomer(c);
         System.out.println("Inserisci l'indirizzo di consegna:\t\t(Inserisci 'F' per annullare e ricominciare)");
         String indirizzo = scan.nextLine();
-        if(indirizzo.toUpperCase().equals("F")){makeOrder();}
+        if(indirizzo.toUpperCase().equals("F")){
+            makeOrder();
+        }
         order.setIndirizzo(indirizzo);
     }
 
