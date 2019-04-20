@@ -43,10 +43,10 @@ public class Pizzeria {
         this.ordiniDelGiorno++;
         System.out.println(helloThere());
         System.out.println(stampaMenu());
-        quantePizze(order);     // si potrebbe fare un metodo scegliPizze() che racchiude quanteP, richiestaP, richiestaNumeroP.
-        inserisciDati(order);
-        order.setCompleto();
-        ordini.add(order);
+        scegliPizze(order);     // si potrebbe fare un metodo scegliPizze() che racchiude quanteP, richiestaP, richiestaNumeroP.
+        //inserisciDati(order);
+        //order.setCompleto();
+        //ordini.add(order);
         //scan.close();
     }
 
@@ -65,7 +65,7 @@ public class Pizzeria {
     }
 
 
-    public void quantePizze(Order order) {
+    public void scegliPizze(Order order) {
         int tot=0;
         String line;   // necessaria per usare nextLine() ovunque (per evitare problemi con letture errate di newlines)
         //Scanner scan = new Scanner(System.in);
@@ -77,10 +77,10 @@ public class Pizzeria {
                 throw new NumberFormatException();
         } catch (NumberFormatException e) {
             System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-            quantePizze(order);
+            scegliPizze(order);
         }
         this.inserisciOrario(order, tot);
-        pizzaRichiesta(order, tot);
+        //pizzaRichiesta(order, tot);
     }
 
     public void pizzaRichiesta (Order order, int tot) {
@@ -89,7 +89,7 @@ public class Pizzeria {
         String nomePizza = scan.nextLine().toUpperCase();
         if (nomePizza.equals("F")) {
             order = new Order(ordiniDelGiorno);
-            quantePizze(order);
+            scegliPizze(order);
         }
         else if (!(menu.containsKey(nomePizza))) {         // qui ci vorrebbe una eccezione invece della if-else
             System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
@@ -109,7 +109,7 @@ public class Pizzeria {
                 String line = scan.nextLine();
                 if(line.toUpperCase().equals("F")){
                     order = new Order(ordiniDelGiorno);
-                    quantePizze(order);
+                    scegliPizze(order);
                 }
                 num = Integer.parseInt(line);
                 if(num<0) {       // c'è la possibilità di mettere 0, se uno non voleva quella pizza, senza creare casini
@@ -209,6 +209,9 @@ public class Pizzeria {
         int year = calendar.get(Calendar.YEAR);
         try {
             String sDate1 = scan.nextLine();
+            if(sDate1.toUpperCase().equals("F")){
+                scegliPizze(order);
+            }
             StringTokenizer st = new StringTokenizer(sDate1, ":");
             int ora=Integer.parseInt(st.nextToken());
             int minuti=Integer.parseInt(st.nextToken());
@@ -219,8 +222,15 @@ public class Pizzeria {
                 throw new OutOfTIme(); //DA SISTEMARE SE SI CHIUDE ALLE 02:00
             }
             if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisp()>=tot){
-                order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
-                infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].inserisciInfornate(tot);
+                pizzaRichiesta(order, tot);
+                inserisciDati(order);
+                System.out.println("Confermi l'ordine? Premere s per confermare");
+                if (scan.nextLine().equals("s")) {
+                    order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
+                    infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].inserisciInfornate(tot);
+                    order.setCompleto();
+                    this.ordiniDelGiorno++;
+                }
             } else{
                 System.out.println("Orario desiderato non disponibile, ecco gli orari disponibili: ");
                 for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti); i<this.infornate.length; i++) {
@@ -228,9 +238,9 @@ public class Pizzeria {
                         int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
                         int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
                         if(min<=5){
-                            System.out.print(oraNew + ":0" + min + " ");
+                            System.out.print(oraNew + ":0" + min + "\n");
                         } else {
-                            System.out.print(oraNew + ":" + min + " ");
+                            System.out.print(oraNew + ":" + min + "\n");
                         }
                     }
                 }
