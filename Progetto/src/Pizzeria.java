@@ -20,6 +20,7 @@ public class Pizzeria {
         this.menu = new HashMap<>();
         this.nome = nome;
         this.ordiniDelGiorno = 0;
+        this.ordini = new ArrayList<>();
         this.indirizzo = indirizzo;
         this.orarioChiusura = orarioChiusura;
         this.orarioApertura = orarioApertura;
@@ -39,15 +40,16 @@ public class Pizzeria {
 
     public void makeOrder() {
         Order order = new Order(this.ordiniDelGiorno);
+        this.ordiniDelGiorno++;
         System.out.println(stampaMenu());
-        scegliPizze(order);
+        quantePizze(order);     // si dovrebbe fare un metodo scegliPizze() che racchiude quanteP, richiestaP, richiestaNumeroP.
         inserisciDati(order);
         order.setCompleto();
-        this.ordiniDelGiorno++;
+        ordini.add(order);
         //scan.close();
     }
 
-    public String stampaMenu() {
+    public String stampaMenu() {        // da sistemare orario apertura-chiusura!!!
         String line= "\n--------------------------------------------------------------------------------------\n";
         String s= "    >>  MENU di \""+ this.nome + "\"\t\t(apertura: " + this.orarioApertura + " - " + this.orarioChiusura + ")";
         for (String a:menu.keySet()) {
@@ -57,7 +59,7 @@ public class Pizzeria {
     }
 
 
-    public void scegliPizze(Order order) {
+    public void quantePizze(Order order) {
         int tot=0;
         String line;   // necessaria per usare nextLine() ovunque (per evitare problemi con letture errate di newlines)
         //Scanner scan = new Scanner(System.in);
@@ -69,7 +71,7 @@ public class Pizzeria {
                 throw new NumberFormatException();
         } catch (NumberFormatException e) {
             System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-            scegliPizze(order);
+            quantePizze(order);
         }
         this.inserisciOrario(order, tot);
         pizzaRichiesta(order, tot);
@@ -80,7 +82,7 @@ public class Pizzeria {
         System.out.println("Quale pizza desideri?\t\t(Inserisci 'F' per annullare e ricominciare)");
         String nomePizza = scan.nextLine().toUpperCase();
         if (nomePizza.equals("F"))      // nel caso si voglia tornare indietro
-            scegliPizze(order);
+            quantePizze(order);
         else if (!(menu.containsKey(nomePizza))) {         // qui ci vorrebbe una eccezione invece della if-else
             System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
             pizzaRichiesta(order, tot);
@@ -91,23 +93,27 @@ public class Pizzeria {
     public void numeroPizzaRichiesta(Order order, String pizza, int tot) {
         //Scanner scan = new Scanner(System.in);
         int num;
-        String s = null;
+        String err = null;
         try {
             do {
-                if(s!=null) { System.out.println(s); }
+                if(err!=null) { System.out.println(err); }
                 System.out.println("Quante " + pizza + " vuoi?\t\t(Inserisci 'F' per annullare e ricominciare)");
                 String line = scan.nextLine();
-                if(line.toUpperCase().equals("F")){ scegliPizze(order);}
+                if(line.toUpperCase().equals("F")){
+                    order = new Order(ordiniDelGiorno);
+                    quantePizze(order);
+                }
                 num = Integer.parseInt(line);
-                if(num<0)       // c'è la possibilità di mettere 0, se uno non voleva quella pizza, senza creare casini
+                if(num<0) {       // c'è la possibilità di mettere 0, se uno non voleva quella pizza, senza creare casini
                     throw new NumberFormatException();
-                s = "Numero di pizze ordinate massimo superato. Riprova:";
+                }
+                err = "Massimo numero di pizze ordinate superato. Riprova:";
             } while (num>tot);
         } catch (NumberFormatException e) {
             num=0;
             System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
         }
-        s = null;
+        //err = null;
         tot -= num;
         for(int i=0; i<num; i++) {
             order.AddPizza(menu.get(pizza));
@@ -167,12 +173,16 @@ public class Pizzeria {
         //Scanner scan = new Scanner(System.in);
         System.out.println("Come ti chiami?\t\t(Inserisci 'F' per annullare e ricominciare)");
         String nome = scan.nextLine();
-        if(nome.toUpperCase().equals("F")){ makeOrder();}
+        if(nome.toUpperCase().equals("F")){
+            order = new Order(ordiniDelGiorno);
+            makeOrder();
+        }
         Customer c = new Customer(nome);
         order.setCustomer(c);
         System.out.println("Inserisci l'indirizzo di consegna:\t\t(Inserisci 'F' per annullare e ricominciare)");
         String indirizzo = scan.nextLine();
         if(indirizzo.toUpperCase().equals("F")){
+            order = new Order(ordiniDelGiorno);
             makeOrder();
         }
         order.setIndirizzo(indirizzo);
@@ -181,7 +191,9 @@ public class Pizzeria {
     public void inserisciOrario(Order order,int tot){
         //Scanner scan = new Scanner(System.in);
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
-        //if(scan.nextLine().toUpperCase().equals("F")){ scegliPizze(order);}
+        /*if(scan.nextLine().toUpperCase().equals("F")){
+            order = new Order(ordiniDelGiorno);
+            scegliPizze(order);}*/
         Calendar calendar = new GregorianCalendar();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH)+1;
@@ -208,7 +220,7 @@ public class Pizzeria {
                         int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
                         if(min<=5){
                             System.out.print(oraNew + ":0" + min + " ");
-                        }else {
+                        } else {
                             System.out.print(oraNew + ":" + min + " ");
                         }
                     }
