@@ -1,4 +1,5 @@
 import exceptions.OutOfTIme;
+import exceptions.RestartOrder;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -206,8 +207,7 @@ public class Pizzeria {
         try {
             String sDate1 = scan.nextLine();
             if(sDate1.toUpperCase().equals("F")){
-                order = new Order(ordiniDelGiorno);
-                scegliPizze(order);
+                throw new RestartOrder();
             }
             StringTokenizer st = new StringTokenizer(sDate1, ":");
             int ora=Integer.parseInt(st.nextToken());
@@ -247,6 +247,8 @@ public class Pizzeria {
         } catch (java.text.ParseException | NumberFormatException | NoSuchElementException | OutOfTIme e){
             System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
             inserisciOrario(order,tot);
+        }catch (RestartOrder e){
+            scegliPizze(order);
         }
     }
 
