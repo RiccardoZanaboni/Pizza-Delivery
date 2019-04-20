@@ -41,17 +41,23 @@ public class Pizzeria {
     public void makeOrder() {
         Order order = new Order(this.ordiniDelGiorno);
         this.ordiniDelGiorno++;
+        System.out.println(helloThere());
         System.out.println(stampaMenu());
-        quantePizze(order);     // si dovrebbe fare un metodo scegliPizze() che racchiude quanteP, richiestaP, richiestaNumeroP.
+        quantePizze(order);     // si potrebbe fare un metodo scegliPizze() che racchiude quanteP, richiestaP, richiestaNumeroP.
         inserisciDati(order);
         order.setCompleto();
         ordini.add(order);
         //scan.close();
     }
 
-    public String stampaMenu() {        // da sistemare orario apertura-chiusura!!!
+    public String helloThere(){         // da sistemare orario apertura-chiusura!!!
+        String r = "\nPIZZERIA \"" + this.nome + "\"\n\t" + this.indirizzo + "\n\tApertura: "+ this.orarioApertura + " - " + this.orarioChiusura + ")";
+        return "\n--------------------------------------------------------------------------------------\n" + r;
+    }
+
+    public String stampaMenu() {
         String line= "\n--------------------------------------------------------------------------------------\n";
-        String s= "    >>  MENU di \""+ this.nome + "\"\t\t(apertura: " + this.orarioApertura + " - " + this.orarioChiusura + ")";
+        String s= "    >>  MENU\n";
         for (String a:menu.keySet()) {
             s += "\n"+ menu.get(a).toString();
         }
@@ -193,7 +199,8 @@ public class Pizzeria {
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
         /*if(scan.nextLine().toUpperCase().equals("F")){
             order = new Order(ordiniDelGiorno);
-            scegliPizze(order);}*/
+            scegliPizze(order);
+        }*/
         Calendar calendar = new GregorianCalendar();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH)+1;

@@ -36,7 +36,7 @@ public class Order {
 
     public void setCompleto(){
         this.completo= true;
-        System.out.println("Grazie! L'ordine è stato effettuato correttamente.");
+        System.out.println("\nGrazie! L'ordine è stato effettuato correttamente.");
     }
 
     public void setOrario(Date orario) {
