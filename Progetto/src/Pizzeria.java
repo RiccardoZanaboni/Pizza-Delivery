@@ -6,12 +6,13 @@ public class Pizzeria {
     private String indirizzo;
     private Date orarioChiusura;
     private Date orarioApertura;
-    private Forno infornate[];
+    private Forno[] infornate;
     private ArrayList<DeliveryMan> fattorini;
     private HashMap<String, Pizza> menu;
     private ArrayList<Order> ordini;
     private int ordiniDelGiorno;
-    public final int TEMPI_FORNO = 12;
+    public final int TEMPI_FORNO = 12;      // ogni 5 minuti
+    Scanner scan = new Scanner(System.in);
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
         this.menu = new HashMap<>();
@@ -28,7 +29,7 @@ public class Pizzeria {
         menu.put(pizza.getNome(),pizza);
     }
 
-    public void ApriPizzeria(int postidisponibili){//INIZIALIZZA IL VETTORE DI INFORNATE CHE OGNI APERTURA VA RIPRISTINATO
+    public void ApriPizzeria(int postidisponibili){     // ripristina il vettore di infornate ad ogni apertura della pizzeria
         for(int i=0;i<infornate.length;i++){
             infornate[i]=new Forno(postidisponibili);
         }
@@ -41,21 +42,23 @@ public class Pizzeria {
         inserisciDati(order);
         order.setCompleto();
         this.ordiniDelGiorno++;
+        scan.close();
     }
 
-    public String stampaMenu () {
-        String s= "    >>  MENU di "+ this.nome;
+    public String stampaMenu() {
+        String line= "\n--------------------------------------------------------------------------------------\n";
+        String s= "    >>  MENU di \""+ this.nome + "\"\t\t(apertura: " + this.orarioApertura + " - " + this.orarioChiusura + ")";
         for (String a:menu.keySet()) {
-            s+="\n"+ menu.get(a).toString();
+            s += "\n"+ menu.get(a).toString();
         }
-        return s;
+        return line+s+line;
     }
 
 
     public void scegliPizze(Order order) {
         int tot=0;
         String line;   // necessaria per usare nextLine() ovunque (per evitare problemi con letture errate di newlines)
-        Scanner scan = new Scanner(System.in);
+        //Scanner scan = new Scanner(System.in);
         System.out.println("Quante pizze vuoi ordinare?");
         line = scan.nextLine();
         try {
@@ -66,46 +69,46 @@ public class Pizzeria {
             System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
             scegliPizze(order);
         }
-        this.inserisciOrario(order,tot);
+        this.inserisciOrario(order, tot);
         pizzaRichiesta(order, tot);
     }
 
     public void pizzaRichiesta (Order order, int tot) {
-            Scanner scan = new Scanner(System.in);
-            System.out.println("Quale pizza desideri?" + "      Inserisci 'F' per tornare indietro.");
-            String nomePizza = scan.nextLine().toUpperCase();
-            if (nomePizza.equals("F"))                      // nel caso si voglia tornare indietro
-                scegliPizze(order);
-            if (!(menu.containsKey(nomePizza)))           // qui ci vorrebbe una eccezione invece della if-else
-                System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
-            else {
-                numeroPizzaRichiesta(order, nomePizza, tot);
-            }
+        //Scanner scan = new Scanner(System.in);
+        System.out.println("Quale pizza desideri?\t\t(Inserisci 'F' per annullare e ricominciare)");
+        String nomePizza = scan.nextLine().toUpperCase();
+        if (nomePizza.equals("F"))      // nel caso si voglia tornare indietro
+            scegliPizze(order);
+        else if (!(menu.containsKey(nomePizza))) {         // qui ci vorrebbe una eccezione invece della if-else
+            System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
+            pizzaRichiesta(order, tot);
+        } else
+            numeroPizzaRichiesta(order, nomePizza, tot);
     }
 
-
-    public void numeroPizzaRichiesta(Order order, String nome, int tot) {
-        Scanner scan = new Scanner(System.in);
-        int num=0;
-        String s=null;
-        try{
+    public void numeroPizzaRichiesta(Order order, String pizza, int tot) {
+        //Scanner scan = new Scanner(System.in);
+        int num;
+        String s = null;
+        try {
             do {
                 if(s!=null) { System.out.println(s); }
-                System.out.println("Quante " + nome + " vuoi?");
+                System.out.println("Quante " + pizza + " vuoi?\t\t(Inserisci 'F' per tornare indietro)");
                 String line = scan.nextLine();
+                if(line.toUpperCase().equals("F")){ scegliPizze(order);}
                 num = Integer.parseInt(line);
                 if(num<=0)
                     throw new NumberFormatException();
                 s = "Numero di pizze ordinate massimo superato. Riprova:";
             } while (num>tot);
         } catch (NumberFormatException e) {
-            System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
             num=0;
+            System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
         }
         s = null;
         tot -= num;
         for(int i=0; i<num; i++) {
-            order.AddPizza(menu.get(nome));
+            order.AddPizza(menu.get(pizza));
         }
         if (tot!=0) {
             pizzaRichiesta(order, tot);
@@ -162,25 +165,28 @@ public class Pizzeria {
     }
 */
     public void inserisciDati(Order order){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Come ti chiami?");
+        //Scanner scan = new Scanner(System.in);
+        System.out.println("Come ti chiami?\t\t(Inserisci 'F' per tornare indietro)");
         String nome = scan.nextLine();
+        if(nome.toUpperCase().equals("F")){ makeOrder();}
         Customer c = new Customer(nome);
         order.setCustomer(c);
-        System.out.println("Inserisci l'indirizzo di consegna:");
+        System.out.println("Inserisci l'indirizzo di consegna:\t\t(Inserisci 'F' per tornare indietro)");
         String indirizzo = scan.nextLine();
+        if(indirizzo.toUpperCase().equals("F")){makeOrder();}
         order.setIndirizzo(indirizzo);
     }
 
     public void inserisciOrario(Order order,int tot){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]");
+        //Scanner scan = new Scanner(System.in);
+        System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per tornare indietro)");
+        //if(scan.nextLine().toUpperCase().equals("F")){ scegliPizze(order);}
         Calendar calendar = new GregorianCalendar();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH)+1;
         int year = calendar.get(Calendar.YEAR);
         try {
-            String sDate1 = scan.next();
+            String sDate1 = scan.nextLine();
             StringTokenizer st = new StringTokenizer(sDate1, ":");
             int ora=Integer.parseInt(st.nextToken());
             int minuti=Integer.parseInt(st.nextToken());
@@ -193,16 +199,16 @@ public class Pizzeria {
             if(infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].getPostiDisp()>=tot){
                 order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE ,SUCCESSIVA SUI FATTORINI
                 infornate[trovaCasellaTempoForno(this.orarioApertura,ora,minuti)].inserisciInfornate(tot);
-            }else{
+            } else{
                 System.out.println("Orario desiderato non disponibile,ecco gli orari disponibili: ");
                 for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti);i<this.infornate.length ;i++) {
                     if (infornate[i].getPostiDisp() >= tot) {
-                        int oraNew = this.orarioApertura.getHours() + i / 12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1 RISCHIO ECCEZZIONE
+                        int oraNew = this.orarioApertura.getHours() + i / 12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1 RISCHIO ECCEZIONE
                         int min = 5 * (i - 12 * (i / 12));
                         if(min<=5){
-                            System.out.println(oraNew + ":0" + min);
+                            System.out.printf(oraNew + ":0" + min + " ");
                         }else {
-                            System.out.println(oraNew + ":" + min);
+                            System.out.printf(oraNew + ":" + min + " ");
                         }
                     }
                 }
@@ -216,8 +222,8 @@ public class Pizzeria {
     }
 
     public int trovaCasellaTempoForno(Date oraApertura,int oraDesiderata,int minutiDesiderati){
-        int casellaTempo=this.TEMPI_FORNO*(oraDesiderata - oraApertura.getHours());
-        casellaTempo+=minutiDesiderati/5;
+        int casellaTempo = this.TEMPI_FORNO*(oraDesiderata - oraApertura.getHours());
+        casellaTempo += minutiDesiderati/5;
         return casellaTempo;
 
     }
