@@ -87,8 +87,10 @@ public class Pizzeria {
         //Scanner scan = new Scanner(System.in);
         System.out.println("Quale pizza desideri?\t\t(Inserisci 'F' per annullare e ricominciare)");
         String nomePizza = scan.nextLine().toUpperCase();
-        if (nomePizza.equals("F"))      // nel caso si voglia tornare indietro
+        if (nomePizza.equals("F")) {
+            order = new Order(ordiniDelGiorno);
             quantePizze(order);
+        }
         else if (!(menu.containsKey(nomePizza))) {         // qui ci vorrebbe una eccezione invece della if-else
             System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
             pizzaRichiesta(order, tot);
