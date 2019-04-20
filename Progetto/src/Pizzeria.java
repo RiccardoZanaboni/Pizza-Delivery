@@ -51,7 +51,7 @@ public class Pizzeria {
     }
 
     public String helloThere(){         // da sistemare orario apertura-chiusura!!!
-        String r = "\nPIZZERIA \"" + this.nome + "\"\n\t" + this.indirizzo + "\n\tApertura: "+ this.orarioApertura + " - " + this.orarioChiusura + ")";
+        String r = "\nPIZZERIA \"" + this.nome + "\"\n\t" + this.indirizzo + "\n\tApertura: "+ this.orarioApertura.getHours() + ":00 - " + this.orarioChiusura.getHours() + ":00";
         return "\n--------------------------------------------------------------------------------------\n" + r;
     }
 
