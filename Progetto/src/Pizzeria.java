@@ -59,7 +59,8 @@ public class Pizzeria {
 
         do {
             nomePizza = qualePizza();
-            if(nomePizza.equals("F")) break;
+            if(nomePizza.equals("F"))
+                break;
             num = quantePizzaSpecifica(order,nomePizza,tot-ordinate);
             System.out.println("ordinate " + num + " " + nomePizza);
             ordinate += num;
@@ -90,28 +91,28 @@ public class Pizzeria {
         System.out.println(line + codice + dati + prodotti + line);
     }
 
-    public int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {
+    public int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
         boolean ok=false;
         int num=0;
         do{
+            System.out.println("Quante " + nomePizza + " vuoi?\t[0..n]");
+            String line = scan.nextLine();
             try {
-                System.out.println("Quante " + nomePizza + " vuoi?\t[0..n]");
-                String line = scan.nextLine();
                 num = Integer.parseInt(line);
                 if(num<0){
                     throw new NumberFormatException();
                 }
-                if(num>disponibili){
-                    System.out.println("Massimo numero di pizze ordinate superato. Puoi ordinare ancora " + disponibili + " pizze:");
-                    quantePizzaSpecifica(order,nomePizza,disponibili);
-                }
-                for (int i = 0; i < num; i++) {
+                else if(num>disponibili){
+                    throw new RiprovaExc();
+                } else
+                    ok=true;
+                for (int i=0; i<num; i++) {
                     order.AddPizza(menu.get(nomePizza));
                 }
-                ok=true;
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-                quantePizzaSpecifica(order,nomePizza,disponibili);
+            } catch (RiprovaExc e) {
+                System.out.println("Massimo numero di pizze ordinate superato. Puoi ordinare ancora " + disponibili + " pizze:");
             }
         } while(!ok);
         return num;
