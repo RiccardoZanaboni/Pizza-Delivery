@@ -70,7 +70,8 @@ public class Pizzeria {
             ok=inserisciDati(order);
             if (ok) {
                 recapOrdine(order);
-                chiediConferma(order,orario,tot); }
+                chiediConferma(order,orario,tot);
+            }
         }
     }
 
@@ -155,13 +156,13 @@ public class Pizzeria {
         String nomePizza=null;
         boolean ok=false;
         do {
+            System.out.println("Quale pizza desideri?\t\t(Inserisci 'F' per annullare e ricominciare)");
+            nomePizza = scan.nextLine().toUpperCase();
             try {
-                System.out.println("Quale pizza desideri?\t\t(Inserisci 'F' per annullare e ricominciare)");
-                nomePizza = scan.nextLine().toUpperCase();
                 if (nomePizza.equals("F")) {
                     ok=true;
                     throw new RestartOrderExc();
-                }else if (!(menu.containsKey(nomePizza)))         // qui ci vorrebbe una eccezione invece della if-else
+                } else if (!(menu.containsKey(nomePizza)))         // qui ci vorrebbe una eccezione invece della if-else
                     throw new RiprovaExc();
                 else
                     ok = true;
@@ -198,35 +199,37 @@ public class Pizzeria {
         return ok;
     }
 
-    public Date inserisciOrario(Order order,int tot){
+    public Date inserisciOrario (Order order,int tot){
         Date d = null;
         boolean ok = false;
         do {
+            System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
+            String sDate1 = scan.nextLine();
             try {
-                System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
-                String sDate1 = scan.nextLine();
                 if (sDate1.toUpperCase().equals("F")) {
-                    throw new RestartOrderExc();
-                }
-                d = controllaOrario(sDate1, order, tot);          // SISTEMA ORARIO!!!
-                if(d==null)
-                    throw new NumberFormatException();
-                int ora = d.getHours();
-                int minuti = d.getMinutes();
-                if(!controllaApertura(ora,minuti))
-                    throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
-                if (infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp() >= tot) {
                     ok=true;
-                } else
-                    OrarioNonDisponibile(order, tot, ora, minuti);
+                    throw new RestartOrderExc();
+                } else {
+                    d = controllaOrario(sDate1, order, tot);          // CHECK ORARIO!!!
+                    if(d==null)
+                        throw new NumberFormatException();
+                    else {
+                        int ora = d.getHours();
+                        int minuti = d.getMinutes();
+                        if (!controllaApertura(ora, minuti))
+                            throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
+                        else if (infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp() < tot)
+                            OrarioNonDisponibile(order, tot, ora, minuti);
+                        else
+                            ok = true;
+                    }
+                }
             } catch (RestartOrderExc e) {
                 makeOrder();
             } catch (NumberFormatException | NoSuchElementException e) {
                 System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
-                //inserisciOrario(order, tot);
             } catch (OutOfTimeExc e) {
                 System.out.println("La pizzeria è chiusa nell'orario inserito. Riprovare:");
-                //inserisciOrario(order,tot);
             }
         } while(!ok);
         return d;
@@ -274,21 +277,19 @@ public class Pizzeria {
             int month = calendar.get(Calendar.MONTH) + 1;
             int year = calendar.get(Calendar.YEAR);
             String token = st.nextToken();
-            if (token.length() != 2)
+            if (token.length() != 2) {
                 return null;
+            }
             int ora = Integer.parseInt(token);
             token = st.nextToken();
             if (token.length() != 2)
                 return null;
             int minuti = Integer.parseInt(token);
+            if (ora > 23 || minuti > 59)
+                return null;
             sDate1 = day + "/" + month + "/" + year + " " + sDate1;
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             d = formato.parse(sDate1);
-            if (ora > 23 || minuti > 59)
-                return null;
-            /*else if (ora < this.orarioApertura.getHours() || ora > this.orarioChiusura.getHours() || (ora == this.orarioChiusura.getHours() && minuti > this.orarioChiusura.getMinutes()) || (ora == this.orarioApertura.getHours() && minuti < this.orarioApertura.getMinutes())) {
-            //    throw new OutOfTimeExc(); //DA SISTEMARE SE SI CHIUDE ALLE 02:00
-            }*/
         } catch (java.text.ParseException | NumberFormatException | NoSuchElementException e) {
             return null;
         }
