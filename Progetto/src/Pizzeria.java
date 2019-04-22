@@ -42,6 +42,8 @@ public class Pizzeria {
     public void makeOrder() {
         int num=0;
         int ordinate=0;
+        boolean ok=true;
+        String nomePizza;
 
         Order order = new Order(this.ordiniDelGiorno);
         this.ordiniDelGiorno++;
@@ -56,15 +58,19 @@ public class Pizzeria {
         System.out.println(orario);
 
         do {
-            String nomePizza = qualePizza();
+            nomePizza = qualePizza();
+            if(nomePizza.equals("F")) break;
             num = quantePizzaSpecifica(order,nomePizza,tot-ordinate);
             System.out.println("ordinate " + num + " " + nomePizza);
             ordinate += num;
         } while(ordinate<tot);
 
-        inserisciDati(order);
-        recapOrdine(order);
-        chiediConferma(order,orario,tot);
+        if(!nomePizza.equals("F")) {
+            ok=inserisciDati(order);
+            if (ok) {
+                recapOrdine(order);
+                chiediConferma(order,orario,tot); }
+        }
     }
 
     public void recapOrdine(Order order){
@@ -151,9 +157,10 @@ public class Pizzeria {
             try {
                 System.out.println("Quale pizza desideri?\t\t(Inserisci 'F' per annullare e ricominciare)");
                 nomePizza = scan.nextLine().toUpperCase();
-                if (nomePizza.equals("F"))
+                if (nomePizza.equals("F")) {
+                    ok=true;
                     throw new RestartOrderExc();
-                else if (!(menu.containsKey(nomePizza)))         // qui ci vorrebbe una eccezione invece della if-else
+                }else if (!(menu.containsKey(nomePizza)))         // qui ci vorrebbe una eccezione invece della if-else
                     throw new RiprovaExc();
                 else
                     ok = true;
@@ -166,11 +173,13 @@ public class Pizzeria {
         return nomePizza;
     }
 
-    public void inserisciDati(Order order){
+    public boolean inserisciDati(Order order){
+        boolean ok=true;
         try {
             System.out.println("Come ti chiami?\t\t(Inserisci 'F' per annullare e ricominciare)");
             String nome = scan.nextLine();
             if (nome.toUpperCase().equals("F")) {
+                ok=false;
                 throw new RestartOrderExc();
             }
             Customer c = new Customer(nome);
@@ -178,12 +187,14 @@ public class Pizzeria {
             System.out.println("Inserisci l'indirizzo di consegna:\t\t(Inserisci 'F' per annullare e ricominciare)");
             String indirizzo = scan.nextLine();
             if (indirizzo.toUpperCase().equals("F")) {
+                ok=false;
                 throw new RestartOrderExc();
             }
             order.setIndirizzo(indirizzo);
         } catch (RestartOrderExc e){
             makeOrder();
         }
+        return ok;
     }
 
     public Date inserisciOrario(Order order,int tot){
