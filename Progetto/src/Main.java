@@ -26,6 +26,8 @@ public class Main {
         wolfOfPizza.AddPizza(capricciosa);
         Pizza italia = new Pizza("ITALIA", "pomodorini, bufala, rucola", 7.5);
         wolfOfPizza.AddPizza(italia);
+        Pizza allaMusi = new Pizza("ALLA MUSI", "pomodoro, mozzarella, galanteria e belle donne", 100000);
+        wolfOfPizza.AddPizza(allaMusi);
 
         wolfOfPizza.ApriPizzeria(8);
         wolfOfPizza.makeOrder();
