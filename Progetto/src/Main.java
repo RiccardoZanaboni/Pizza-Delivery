@@ -29,6 +29,6 @@ public class Main {
 
         wolfOfPizza.ApriPizzeria(8);
         wolfOfPizza.makeOrder();
-        wolfOfPizza.makeOrder(); //utilizzare due make order per testare vettore data
+        //wolfOfPizza.makeOrder(); //utilizzare due make order per testare vettore data
     }
 }

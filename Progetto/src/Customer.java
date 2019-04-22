@@ -4,4 +4,8 @@ public class Customer {
     public Customer(String username) {
         this.username = username;
     }
+
+    public String getUsername() {
+        return username;
+    }
 }

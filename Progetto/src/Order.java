@@ -18,6 +18,22 @@ public class Order {
         this.completo = false;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public String getIndirizzo() {
+        return indirizzo;
+    }
+
+    public Date getOrario() {
+        return orario;
+    }
+
+    public ArrayList<Pizza> getPizzeordinate() {
+        return pizzeordinate;
+    }
+
     public String getCodice() {
         return codice;
     }
@@ -32,6 +48,10 @@ public class Order {
 
     public void setIndirizzo(String indirizzo){
         this.indirizzo = indirizzo;
+    }
+
+    public boolean isCompleto() {
+        return completo;
     }
 
     public void setCompleto(){
