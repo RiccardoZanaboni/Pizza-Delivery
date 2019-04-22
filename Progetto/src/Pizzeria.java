@@ -54,23 +54,25 @@ public class Pizzeria {
         System.out.println(tot);
 
         Date orario = inserisciOrario(order,tot);
-        order.setOrario(orario);
-        System.out.println(orario);
+        if(orario!=null) {
+                order.setOrario(orario);
+                System.out.println(orario);
 
-        do {
-            nomePizza = qualePizza();
-            if(nomePizza.equals("F"))
-                break;
-            num = quantePizzaSpecifica(order,nomePizza,tot-ordinate);
-            System.out.println("ordinate " + num + " " + nomePizza);
-            ordinate += num;
-        } while(ordinate<tot);
+            do {
+                nomePizza = qualePizza();
+                if(nomePizza.equals("F"))
+                    break;
+                num = quantePizzaSpecifica(order,nomePizza,tot-ordinate);
+                System.out.println("ordinate " + num + " " + nomePizza);
+                ordinate += num;
+            } while(ordinate<tot);
 
-        if(!nomePizza.equals("F")) {
-            ok=inserisciDati(order);
-            if (ok) {
-                recapOrdine(order);
-                chiediConferma(order,orario,tot);
+            if(!nomePizza.equals("F")) {
+                ok=inserisciDati(order);
+                if (ok) {
+                    recapOrdine(order);
+                    chiediConferma(order,orario,tot);
+                }
             }
         }
     }
