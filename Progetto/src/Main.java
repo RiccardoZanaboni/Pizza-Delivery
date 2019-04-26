@@ -33,11 +33,15 @@ public class Main {
         Pizza marvel = new Pizza("RIP TONY STARK", "semplicemente: grazie di aver salvato l'universo.", 1000);
         wolfOfPizza.AddPizza(marvel);
 
+        //wolfOfPizza.AddFattorino(new DeliveryMan("Marco",wolfOfPizza));
+        wolfOfPizza.AddFattorino(new DeliveryMan("Musi",wolfOfPizza));
+
         wolfOfPizza.ApriPizzeria(8);
         wolfOfPizza.makeOrder();
-        //wolfOfPizza.makeOrder(); //utilizzare due make order per testare vettore data
-        System.out.print(margherita.getDescrizione()+"\n");
-        System.out.print(napoli.getDescrizione()+"\n");
-        System.out.print(cotto.getDescrizione());
+        wolfOfPizza.makeOrder(); //utilizzare due make order per testare vettore data
+        wolfOfPizza.makeOrder();
+        //System.out.print(margherita.getDescrizione()+"\n");
+        //System.out.print(napoli.getDescrizione()+"\n");
+        //System.out.print(cotto.getDescrizione());
     }
 }

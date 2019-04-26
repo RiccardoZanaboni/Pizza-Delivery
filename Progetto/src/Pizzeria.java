@@ -14,6 +14,7 @@ public class Pizzeria {
     private ArrayList<Order> ordini;
     private int ordiniDelGiorno;
     private final int TEMPI_FORNO = 12;      // ogni 5 minuti
+    private final int TEMPI_FATTORINI = 6;   // ogni 10 minuti
     private Scanner scan = new Scanner(System.in);
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
@@ -30,6 +31,10 @@ public class Pizzeria {
 
     public void AddPizza(Pizza pizza){
         menu.put(pizza.getNome(),pizza);
+    }
+
+    public void AddFattorino(DeliveryMan deliveryMan){
+        fattorini.add(deliveryMan);
     }
 
     public void ApriPizzeria(int postidisponibili){     // ripristina il vettore di infornate ad ogni apertura della pizzeria
@@ -127,7 +132,7 @@ public class Pizzeria {
                         int minuti = d.getMinutes();
                         if (!controllaApertura(ora, minuti))
                             throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
-                        else if (infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp() < tot)
+                        else if (infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp() < tot || fattorinoLibero(this.orarioApertura,ora,minuti)==null)
                             OrarioNonDisponibile(order, tot, ora, minuti);
                         else
                             ok = true;
@@ -182,16 +187,36 @@ public class Pizzeria {
                 return casellaTempo;
             }
 
+            private int trovaCasellaTempoFattorino(Date oraApertura, int oraDesiderata, int minutiDesiderati){
+                int casellaTempo=this.TEMPI_FATTORINI*(oraDesiderata - oraApertura.getHours());
+                casellaTempo+=minutiDesiderati/10;
+                return casellaTempo;
+            }
+
+            private DeliveryMan fattorinoLibero(Date oraApertura, int oraDesiderata, int minutiDesiderati){
+                for(DeliveryMan a:this.fattorini){
+                    if(!a.getFattoriniTempi()[trovaCasellaTempoFattorino(oraApertura,oraDesiderata,minutiDesiderati)]){
+                        return a;
+                    }
+                }
+                return null;
+            }
+
             private void OrarioNonDisponibile(Order order, int tot, int ora, int minuti){
                 System.out.println("Orario desiderato non disponibile, ecco gli orari disponibili:");
                 for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti); i<this.infornate.length; i++) {
                     if (infornate[i].getPostiDisp() >= tot) {
-                        int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
-                        int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
-                        if(min<=5){
-                            System.out.print(oraNew + ":0" + min + "\n");
-                        } else {
-                            System.out.print(oraNew + ":" + min + "\n");
+                        for(DeliveryMan a:this.fattorini){
+                            if(!a.getFattoriniTempi()[i/2]){
+                                int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
+                                int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
+                                if(min<=5){
+                                    System.out.print(oraNew + ":0" + min + "\n");
+                                } else {
+                                    System.out.print(oraNew + ":" + min + "\n");
+                                }
+                                break;
+                            }
                         }
                     }
                 }
@@ -296,6 +321,7 @@ public class Pizzeria {
         if (scan.nextLine().toUpperCase().equals("S")) {
             //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
             infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(tot);
+            fattorinoLibero(this.orarioApertura,d.getHours(),d.getMinutes()).setFattoriniTempi(trovaCasellaTempoFattorino(this.orarioApertura, d.getHours(), d.getMinutes()));
             order.setCompleto();
             ordini.add(order);
             return true;
