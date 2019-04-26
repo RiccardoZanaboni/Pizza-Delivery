@@ -22,6 +22,10 @@ public class Pizza {
         return descrizione;
     }
 
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
     public double getPrezzo() {
         return prezzo;
     }

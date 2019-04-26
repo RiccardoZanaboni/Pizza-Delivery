@@ -36,5 +36,6 @@ public class Main {
         wolfOfPizza.ApriPizzeria(8);
         wolfOfPizza.makeOrder();
         //wolfOfPizza.makeOrder(); //utilizzare due make order per testare vettore data
+        System.out.print("\n"+margherita.getDescrizione());
     }
 }
