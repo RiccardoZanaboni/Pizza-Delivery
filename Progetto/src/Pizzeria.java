@@ -108,7 +108,7 @@ public class Pizzeria {
         return tot;
     }
 
-    private Date inserisciOrario (Order order,int tot){
+    private Date inserisciOrario (Order order, int tot){
         Date d = null;
         boolean ok = false;
         do {
@@ -198,7 +198,7 @@ public class Pizzeria {
             }
 
     private String qualePizza(){
-        String nomePizza=null;
+        String nomePizza;
         boolean ok=false;
         do {
             System.out.println("Quale pizza desideri?\t\t(Inserisci 'F' per annullare e ricominciare)");
@@ -236,7 +236,7 @@ public class Pizzeria {
                 } else
                     ok=true;
                 for (int i=0; i<num; i++) {
-                    order.AddPizza(menu.get(nomePizza));
+                    order.addPizza(menu.get(nomePizza));
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
@@ -275,8 +275,8 @@ public class Pizzeria {
         String line = "\n---------------------------------------------\n";
         String codice = "ORDINE N. " + order.getCodice() + "\n";
         String dati = "SIG. " + order.getCustomer().getUsername() + "\tINDIRIZZO: " + order.getIndirizzo() + "\tORARIO: " + order.getOrario() + "\n";
-        String prodotti="";
-        int totale=0;
+        String prodotti = "";
+        double totale = 0;
         for (Pizza p: menu.values()) {
             int num = 0;
             for (int i = 0; i < order.getPizzeordinate().size(); i++) {
@@ -305,7 +305,6 @@ public class Pizzeria {
         }
     }
 
-
     public Date getOrarioChiusura() {
         return orarioChiusura;
     }
@@ -316,36 +315,32 @@ public class Pizzeria {
 
 
     private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
-        boolean ok=false;
-        int num=0;
-        int o=-1;
-        do{
+        boolean ok = false;
+        int num = 0;
+        String modifiche="";
+        do {
             System.out.println("Quante " + nomePizza + " vuoi?\t[0..n]");
             String line = scan.nextLine();
             try {
                 num = Integer.parseInt(line);
-                if(num<0){
+                if(num<0)
                     throw new NumberFormatException();
-                }
-                else if(num>disponibili){
+                else if(num>disponibili)
                     throw new RiprovaExc();
-                } else {
+                else
                     ok = true;
-                    o++;
+                System.out.print("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N)");
+                if(scan.nextLine().toUpperCase().equals("S")) {
+                    System.out.print("Inserisci le modifiche:\t\t('+ ...' per le aggiunte, '- ...' per le rimozioni, 'ok' per terminare)\n");
+                   do {
+                        modifiche += scan.nextLine();
+                   } while (!(scan.nextLine().toUpperCase().equals("OK")));
                 }
                 for (int i=0; i<num; i++) {
-                    order.AddPizza(menu.get(nomePizza));
-                }
-
-                System.out.print("Vuoi apportare modifiche alle "+num+" "+nomePizza+"?"+"\tsi o no?");
-                if(scan.nextLine().toUpperCase().equals("SI"))
-                {
-                    System.out.print("Inserisci le modifiche\t\t+ per le aggiunte - per le modifiche\t ok per terminare ");
-                   do {
-                        String s = order.getPizzeordinate().get(o).getDescrizione();
-                        order.getPizzeordinate().get(o).setDescrizione(s + scan.nextLine());
-                    }while (!(scan.nextLine().toUpperCase().equals("OK")));
-
+                    if(modifiche.equals(""))
+                        order.addPizza(menu.get(nomePizza));
+                    else
+                        order.addPizza(menu.get(nomePizza), modifiche);
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
@@ -401,7 +396,7 @@ public class Pizzeria {
         this.fattorini= new ArrayList<>();
     }
 
-    public void AddPizza(Pizza pizza){
+    public void addPizza(Pizza pizza){
         menu.put(pizza.getNome(),pizza);
     }
 
@@ -489,7 +484,7 @@ public class Pizzeria {
             } while (num>tot);
             tot -= num;
             for (int i = 0; i < num; i++) {
-                order.AddPizza(menu.get(pizza));
+                order.addPizza(menu.get(pizza));
             }
             if (tot != 0) {
                 pizzaRichiesta(order, tot);

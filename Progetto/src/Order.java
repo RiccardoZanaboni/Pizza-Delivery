@@ -38,8 +38,13 @@ public class Order {
         return codice;
     }
 
-    public void AddPizza(Pizza pizza){
+    public void addPizza(Pizza pizza){
         pizzeordinate.add(pizza);
+    }
+
+    public void addPizza(Pizza pizza, String descriz){
+        pizzeordinate.add(pizza);
+        pizzeordinate.get(pizzeordinate.size()-1).setDescrizione(pizzeordinate.get(pizzeordinate.size()-1).getDescrizione() + " " + descriz);
     }
 
     public void setCustomer(Customer c){
