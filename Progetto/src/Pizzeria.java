@@ -318,7 +318,7 @@ public class Pizzeria {
     private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
         boolean ok=false;
         int num=0;
-        int o=0;
+        int o=-1;
         do{
             System.out.println("Quante " + nomePizza + " vuoi?\t[0..n]");
             String line = scan.nextLine();
@@ -329,22 +329,24 @@ public class Pizzeria {
                 }
                 else if(num>disponibili){
                     throw new RiprovaExc();
-                } else
-                    ok=true;
-                o++;
+                } else {
+                    ok = true;
+                    o++;
+                }
                 for (int i=0; i<num; i++) {
                     order.AddPizza(menu.get(nomePizza));
                 }
-                System.out.print("Vuoi apportare modifiche alle "+num+" "+nomePizza+"?"+"------ si o no?");
+
+                System.out.print("Vuoi apportare modifiche alle "+num+" "+nomePizza+"?"+"\tsi o no?");
                 if(scan.nextLine().toUpperCase().equals("SI"))
                 {
                     System.out.print("Inserisci le modifiche\t\t+ per le aggiunte - per le modifiche\t ok per terminare ");
-                    while(!(scan.nextLine().toUpperCase().equals("OK"))) {
+                   do {
                         String s = order.getPizzeordinate().get(o).getDescrizione();
                         order.getPizzeordinate().get(o).setDescrizione(s + scan.nextLine());
-                    }
-                }
+                    }while (!(scan.nextLine().toUpperCase().equals("OK")));
 
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
             } catch (RiprovaExc e) {
