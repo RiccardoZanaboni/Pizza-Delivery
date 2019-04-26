@@ -28,6 +28,10 @@ public class Main {
         wolfOfPizza.AddPizza(italia);
         Pizza allaMusi = new Pizza("ALLA MUSI", "pomodoro, mozzarella, galanteria e belle donne", 100000);
         wolfOfPizza.AddPizza(allaMusi);
+        Pizza thanos = new Pizza("THANOS", "pomodoro, mozzarella di bufala, 6 gemme, onnipotenza, origano", 0.50);
+        wolfOfPizza.AddPizza(thanos);
+        Pizza marvel = new Pizza("RIP TONY STARK", "semplicemente: grazie di aver salvato l'universo.", exp(10);
+        wolfOfPizza.AddPizza(marvel);
 
         wolfOfPizza.ApriPizzeria(8);
         wolfOfPizza.makeOrder();
