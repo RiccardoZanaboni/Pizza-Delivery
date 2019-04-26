@@ -7,6 +7,4 @@ public class DeliveryMan {
         this.nome = nome;
         this.fattoriniTempi = new boolean[TEMPI_FATTORINI * pizzeria.getOrarioChiusura().getHours() - pizzeria.getOrarioApertura().getHours()];
     }
-
-
 }

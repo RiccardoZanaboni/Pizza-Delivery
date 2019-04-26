@@ -284,7 +284,7 @@ public class Pizzeria {
                     num++;
             }
             if (num > 0) {
-                prodotti += "\t" + num + "\t" + p.getNome() + "\t\t" +p.getDescrizione()+ "\t\t"+ num * p.getPrezzo() + "€\n";
+                prodotti += "\t" + num + "\t" + p.getNome() + "\t\t" +p.getModifiche()+ "\t\t"+ num * p.getPrezzo() + "€\n";
                 totale += num*p.getPrezzo();
             }
         }
@@ -331,7 +331,7 @@ public class Pizzeria {
                     ok = true;
                 System.out.print("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N)");
                 if(scan.nextLine().toUpperCase().equals("S")) {
-                    System.out.print("Inserisci le modifiche:\t\t('+ ...' per le aggiunte, '- ...' per le rimozioni, 'ok' per terminare)\n");
+                    System.out.print("Inserisci le modifiche:\t\t('+ ...' per le aggiunte, '- ...' per le rimozioni, digita invio e 'ok' per terminare)\n");
                    do {
                         modifiche += scan.nextLine();
                    } while (!(scan.nextLine().toUpperCase().equals("OK")));

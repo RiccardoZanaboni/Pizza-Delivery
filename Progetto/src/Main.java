@@ -36,5 +36,8 @@ public class Main {
         wolfOfPizza.ApriPizzeria(8);
         wolfOfPizza.makeOrder();
         //wolfOfPizza.makeOrder(); //utilizzare due make order per testare vettore data
+        System.out.print(margherita.getDescrizione()+"\n");
+        System.out.print(napoli.getDescrizione()+"\n");
+        System.out.print(cotto.getDescrizione());
     }
 }

@@ -44,7 +44,8 @@ public class Order {
 
     public void addPizza(Pizza pizza, String descriz){
         pizzeordinate.add(pizza);
-        pizzeordinate.get(pizzeordinate.size()-1).setDescrizione(pizzeordinate.get(pizzeordinate.size()-1).getDescrizione() + " " + descriz);
+        //pizzeordinate.get(pizzeordinate.size()-1).setDescrizione(pizzeordinate.get(pizzeordinate.size()-1).getDescrizione() + " " + descriz);
+        pizzeordinate.get(pizzeordinate.size()-1).setModifiche(pizzeordinate.get(pizzeordinate.size()-1).getDescrizione() + " " + descriz);
     }
 
     public void setCustomer(Customer c){

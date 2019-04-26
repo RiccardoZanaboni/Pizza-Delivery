@@ -2,11 +2,13 @@ public class Pizza {
     private String nome;
     private String descrizione;
     private double prezzo;
+    private String modifiche;
 
     public Pizza(String nome, String descrizione, double prezzo) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
+        this.modifiche=descrizione;
     }
 
     @Override
@@ -22,8 +24,12 @@ public class Pizza {
         return descrizione;
     }
 
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    public String getModifiche() {
+        return modifiche;
+    }
+
+    public void setModifiche(String modifiche) {
+        this.modifiche = modifiche;
     }
 
     public double getPrezzo() {
