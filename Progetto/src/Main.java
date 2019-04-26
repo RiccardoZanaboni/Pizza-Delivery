@@ -30,7 +30,7 @@ public class Main {
         wolfOfPizza.AddPizza(allaMusi);
         Pizza thanos = new Pizza("THANOS", "pomodoro, mozzarella di bufala, 6 gemme, onnipotenza, origano", 0.50);
         wolfOfPizza.AddPizza(thanos);
-        Pizza marvel = new Pizza("RIP TONY STARK", "semplicemente: grazie di aver salvato l'universo.", exp(10);
+        Pizza marvel = new Pizza("RIP TONY STARK", "semplicemente: grazie di aver salvato l'universo.", Math.exp(10));
         wolfOfPizza.AddPizza(marvel);
 
         wolfOfPizza.ApriPizzeria(8);
