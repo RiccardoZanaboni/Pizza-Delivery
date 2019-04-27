@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 
+
 public class Order {
     private Customer customer;
     private String codice;
@@ -38,14 +39,21 @@ public class Order {
         return codice;
     }
 
-    public void addPizza(Pizza pizza){
-        pizzeordinate.add(pizza);
+    public void addPizza(Pizza pizza)  {
+        Pizza p=new Pizza(pizza.getNome(),pizza.getDescrizione(),pizza.getPrezzo());
+        pizzeordinate.add(p);
     }
 
-    public void addPizza(Pizza pizza, String descriz){
-        pizzeordinate.add(pizza);
+    public void addPizza(Pizza pizza, String descriz)  {
+
+        //Pizza p= (Pizza) pizza.clone();
+        Pizza p=new Pizza(pizza.getNome(),pizza.getDescrizione(),pizza.getPrezzo());
+
+        pizzeordinate.add(p);
+
         //pizzeordinate.get(pizzeordinate.size()-1).setDescrizione(pizzeordinate.get(pizzeordinate.size()-1).getDescrizione() + " " + descriz);
         pizzeordinate.get(pizzeordinate.size()-1).setModifiche(pizzeordinate.get(pizzeordinate.size()-1).getDescrizione() + " " + descriz);
+        System.out.println(p.getModifiche());
     }
 
     public void setCustomer(Customer c){

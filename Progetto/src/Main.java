@@ -37,7 +37,7 @@ public class Main {
         wolfOfPizza.AddFattorino(new DeliveryMan("Musi",wolfOfPizza));
 
         wolfOfPizza.ApriPizzeria(8);
-        wolfOfPizza.makeOrder();
+        //wolfOfPizza.makeOrder();
         wolfOfPizza.makeOrder(); //utilizzare due make order per testare vettore data
         wolfOfPizza.makeOrder();
         //System.out.print(margherita.getDescrizione()+"\n");
