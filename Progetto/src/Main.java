@@ -17,7 +17,8 @@ public class Main {
         Pizza cotto = new Pizza("COTTO", "pomodoro, mozzarella, prosciutto cotto", 6);
         wolfOfPizza.AddPizza(cotto);
         Pizza cottoFunghi = new Pizza("COTTO E FUNGHI", "pomodoro, mozzarella, prosciutto cotto, funghi", 7);
-        wolfOfPizza.AddPizza(cottoFunghi);
+
+    wolfOfPizza.AddPizza(cottoFunghi);
         Pizza salamePicc = new Pizza("SALAME PICCANTE", "pomodoro, mozzarella, salame piccante", 5.5);
         wolfOfPizza.AddPizza(salamePicc);
         Pizza americana = new Pizza("AMERICANA", "pomodoro, mozzarella, salsiccia e peperoni", 7);
@@ -39,7 +40,7 @@ public class Main {
         wolfOfPizza.ApriPizzeria(8);
         //wolfOfPizza.makeOrder();
         wolfOfPizza.makeOrder(); //utilizzare due make order per testare vettore data
-        wolfOfPizza.makeOrder();
+        //wolfOfPizza.makeOrder();
         //System.out.print(margherita.getDescrizione()+"\n");
         //System.out.print(napoli.getDescrizione()+"\n");
         //System.out.print(cotto.getDescrizione());
