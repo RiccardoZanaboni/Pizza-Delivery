@@ -162,6 +162,9 @@ public class Pizzeria {
         boolean ok = false;
         do {
             System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
+            for(String s:OrariDisponibili(tot)){
+                System.out.print(s);
+            }
             String sDate1 = scan.nextLine();
             try {
                 if (sDate1.toUpperCase().equals("F")) {
@@ -176,16 +179,8 @@ public class Pizzeria {
                         int minuti = d.getMinutes();
                         if (!controllaApertura(ora, minuti))
                             throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
-                        if (infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp() < tot || fattorinoLibero(this.orarioApertura,ora,minuti,0)==null) {
-                            int postiDispTot = infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti) - 1].getPostiDisp() + infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp();
-                            if (postiDispTot < tot || fattorinoLibero(this.orarioApertura, ora, minuti, 0) == null) {
-                                OrarioNonDisponibile(order, tot, ora, minuti);
-                            }else {
-                                ok = true;
-                            }
-                        }else{
+                        else
                             ok =true;
-                        }
                     }
                 }
             } catch (RestartOrderExc e) {
@@ -227,7 +222,7 @@ public class Pizzeria {
                 return d;
             }
 
-            private boolean controllaApertura(int ora, int minuti){
+            public boolean controllaApertura(int ora, int minuti){
                 return !(ora < this.orarioApertura.getHours() || ora > this.orarioChiusura.getHours() || (ora == this.orarioChiusura.getHours() && minuti > this.orarioChiusura.getMinutes()) || (ora == this.orarioApertura.getHours() && minuti < this.orarioApertura.getMinutes()));
             }
 
@@ -252,24 +247,26 @@ public class Pizzeria {
                 return null;
             }
 
-            private void OrarioNonDisponibile(Order order, int tot, int ora, int minuti){
-                System.out.println("Orario desiderato non disponibile, ecco gli orari disponibili:");
-                for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti); i<this.infornate.length; i++) {
+            public ArrayList<String> OrariDisponibili(int tot){
+                ArrayList<String> disp=new ArrayList<>();
+                for(int i=1; i<this.infornate.length; i++) {
                     if (infornate[i].getPostiDisp()+infornate[i-1].getPostiDisp() >= tot) {
                         for(DeliveryMan a:this.fattorini){
                             if(!a.getFattoriniTempi()[i/2]){
                                 int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
                                 int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
                                 if(min<=5){
-                                    System.out.print(oraNew + ":0" + min + "\n");
+                                    disp.add(oraNew + ":0" + min + "\n");
                                 } else {
-                                    System.out.print(oraNew + ":" + min + "\n");
+                                    disp.add(oraNew + ":" + min + "\n");
                                 }
+
                                 break;
                             }
                         }
                     }
                 }
+                return disp;
             }
 
     private String qualePizza(){
