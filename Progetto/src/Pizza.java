@@ -16,6 +16,11 @@ public class Pizza {
         return "- Pizza" + "\t" + nome + "\t\t\t" + prezzo + "€\n\t\tIngredienti: " + descrizione;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public String getNome() {
         return nome;
     }
