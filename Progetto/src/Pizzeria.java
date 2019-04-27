@@ -141,6 +141,8 @@ public class Pizzeria {
                             }else {
                                 ok = true;
                             }
+                        }else{
+                            ok =true;
                         }
                     }
                 }
