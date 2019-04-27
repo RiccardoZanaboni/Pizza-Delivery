@@ -14,6 +14,7 @@ public class Pizzeria {
     private ArrayList<Order> ordini;
     private int ordiniDelGiorno;
     private final int TEMPI_FORNO = 12;      // ogni 5 minuti
+    private final int TEMPI_FATTORINI = 6;   // ogni 10 minuti
     private Scanner scan = new Scanner(System.in);
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
@@ -30,6 +31,10 @@ public class Pizzeria {
 
     public void AddPizza(Pizza pizza){
         menu.put(pizza.getNome(),pizza);
+    }
+
+    public void AddFattorino(DeliveryMan deliveryMan){
+        fattorini.add(deliveryMan);
     }
 
     public void ApriPizzeria(int postidisponibili){     // ripristina il vettore di infornate ad ogni apertura della pizzeria
@@ -108,7 +113,7 @@ public class Pizzeria {
         return tot;
     }
 
-    private Date inserisciOrario (Order order,int tot){
+    private Date inserisciOrario (Order order, int tot){
         Date d = null;
         boolean ok = false;
         do {
@@ -127,7 +132,7 @@ public class Pizzeria {
                         int minuti = d.getMinutes();
                         if (!controllaApertura(ora, minuti))
                             throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
-                        else if (infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp() < tot)
+                        else if (infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp() < tot || fattorinoLibero(this.orarioApertura,ora,minuti)==null)
                             OrarioNonDisponibile(order, tot, ora, minuti);
                         else
                             ok = true;
@@ -182,23 +187,43 @@ public class Pizzeria {
                 return casellaTempo;
             }
 
+            private int trovaCasellaTempoFattorino(Date oraApertura, int oraDesiderata, int minutiDesiderati){
+                int casellaTempo=this.TEMPI_FATTORINI*(oraDesiderata - oraApertura.getHours());
+                casellaTempo+=minutiDesiderati/10;
+                return casellaTempo;
+            }
+
+            private DeliveryMan fattorinoLibero(Date oraApertura, int oraDesiderata, int minutiDesiderati){
+                for(DeliveryMan a:this.fattorini){
+                    if(!a.getFattoriniTempi()[trovaCasellaTempoFattorino(oraApertura,oraDesiderata,minutiDesiderati)]){
+                        return a;
+                    }
+                }
+                return null;
+            }
+
             private void OrarioNonDisponibile(Order order, int tot, int ora, int minuti){
                 System.out.println("Orario desiderato non disponibile, ecco gli orari disponibili:");
                 for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti); i<this.infornate.length; i++) {
                     if (infornate[i].getPostiDisp() >= tot) {
-                        int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
-                        int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
-                        if(min<=5){
-                            System.out.print(oraNew + ":0" + min + "\n");
-                        } else {
-                            System.out.print(oraNew + ":" + min + "\n");
+                        for(DeliveryMan a:this.fattorini){
+                            if(!a.getFattoriniTempi()[i/2]){
+                                int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
+                                int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
+                                if(min<=5){
+                                    System.out.print(oraNew + ":0" + min + "\n");
+                                } else {
+                                    System.out.print(oraNew + ":" + min + "\n");
+                                }
+                                break;
+                            }
                         }
                     }
                 }
             }
 
     private String qualePizza(){
-        String nomePizza=null;
+        String nomePizza;
         boolean ok=false;
         do {
             System.out.println("Quale pizza desideri?\t\t(Inserisci 'F' per annullare e ricominciare)");
@@ -220,7 +245,7 @@ public class Pizzeria {
         return nomePizza;
     }
 
-    private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
+   /* private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
         boolean ok=false;
         int num=0;
         do{
@@ -236,7 +261,7 @@ public class Pizzeria {
                 } else
                     ok=true;
                 for (int i=0; i<num; i++) {
-                    order.AddPizza(menu.get(nomePizza));
+                    order.addPizza(menu.get(nomePizza));
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
@@ -246,7 +271,7 @@ public class Pizzeria {
         } while(!ok);
         return num;
     }
-
+*/
     private boolean inserisciDati(Order order){
         boolean ok=true;
         try {
@@ -275,8 +300,8 @@ public class Pizzeria {
         String line = "\n---------------------------------------------\n";
         String codice = "ORDINE N. " + order.getCodice() + "\n";
         String dati = "SIG. " + order.getCustomer().getUsername() + "\tINDIRIZZO: " + order.getIndirizzo() + "\tORARIO: " + order.getOrario() + "\n";
-        String prodotti="";
-        int totale=0;
+        String prodotti = "";
+        double totale = 0;
         for (Pizza p: menu.values()) {
             int num = 0;
             for (int i = 0; i < order.getPizzeordinate().size(); i++) {
@@ -284,7 +309,7 @@ public class Pizzeria {
                     num++;
             }
             if (num > 0) {
-                prodotti += "\t" + num + "\t" + p.getNome() + "\t\t" + num * p.getPrezzo() + "€\n";
+                prodotti += "\t" + num + "\t" + p.getNome() + "\t\t" +p.getModifiche()+ "\t\t"+ num * p.getPrezzo() + "€\n";
                 totale += num*p.getPrezzo();
             }
         }
@@ -296,6 +321,7 @@ public class Pizzeria {
         if (scan.nextLine().toUpperCase().equals("S")) {
             //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
             infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(tot);
+            fattorinoLibero(this.orarioApertura,d.getHours(),d.getMinutes()).setFattoriniTempi(trovaCasellaTempoFattorino(this.orarioApertura, d.getHours(), d.getMinutes()));
             order.setCompleto();
             ordini.add(order);
             return true;
@@ -305,7 +331,6 @@ public class Pizzeria {
         }
     }
 
-
     public Date getOrarioChiusura() {
         return orarioChiusura;
     }
@@ -313,6 +338,45 @@ public class Pizzeria {
     public Date getOrarioApertura() {
         return orarioApertura;
     }
+
+
+    private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
+        boolean ok = false;
+        int num = 0;
+        String modifiche="";
+        do {
+            System.out.println("Quante " + nomePizza + " vuoi?\t[0..n]");
+            String line = scan.nextLine();
+            try {
+                num = Integer.parseInt(line);
+                if(num<0)
+                    throw new NumberFormatException();
+                else if(num>disponibili)
+                    throw new RiprovaExc();
+                else
+                    ok = true;
+                System.out.print("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N)");
+                if(scan.nextLine().toUpperCase().equals("S")) {
+                    System.out.print("Inserisci le modifiche:\t\t('+ ...' per le aggiunte, '- ...' per le rimozioni, digita invio e 'ok' per terminare)\n");
+                   do {
+                        modifiche += scan.nextLine();
+                   } while (!(scan.nextLine().toUpperCase().equals("OK")));
+                }
+                for (int i=0; i<num; i++) {
+                    if(modifiche.equals(""))
+                        order.addPizza(menu.get(nomePizza));
+                    else
+                        order.addPizza(menu.get(nomePizza), modifiche);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
+            } catch (RiprovaExc e) {
+                System.out.println("Massimo numero di pizze ordinate superato. Puoi ordinare ancora " + disponibili + " pizze:");
+            }
+        } while(!ok);
+        return num;
+    }
+
 }
 
 
@@ -358,7 +422,7 @@ public class Pizzeria {
         this.fattorini= new ArrayList<>();
     }
 
-    public void AddPizza(Pizza pizza){
+    public void addPizza(Pizza pizza){
         menu.put(pizza.getNome(),pizza);
     }
 
@@ -446,7 +510,7 @@ public class Pizzeria {
             } while (num>tot);
             tot -= num;
             for (int i = 0; i < num; i++) {
-                order.AddPizza(menu.get(pizza));
+                order.addPizza(menu.get(pizza));
             }
             if (tot != 0) {
                 pizzaRichiesta(order, tot);

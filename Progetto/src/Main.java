@@ -28,9 +28,20 @@ public class Main {
         wolfOfPizza.AddPizza(italia);
         Pizza allaMusi = new Pizza("ALLA MUSI", "pomodoro, mozzarella, galanteria e belle donne", 100000);
         wolfOfPizza.AddPizza(allaMusi);
+        Pizza thanos = new Pizza("THANOS", "pomodoro, mozzarella di bufala, 6 gemme, onnipotenza, origano", 0.50);
+        wolfOfPizza.AddPizza(thanos);
+        Pizza marvel = new Pizza("RIP TONY STARK", "semplicemente: grazie di aver salvato l'universo.", 1000);
+        wolfOfPizza.AddPizza(marvel);
+
+        //wolfOfPizza.AddFattorino(new DeliveryMan("Marco",wolfOfPizza));
+        wolfOfPizza.AddFattorino(new DeliveryMan("Musi",wolfOfPizza));
 
         wolfOfPizza.ApriPizzeria(8);
         wolfOfPizza.makeOrder();
-        //wolfOfPizza.makeOrder(); //utilizzare due make order per testare vettore data
+        wolfOfPizza.makeOrder(); //utilizzare due make order per testare vettore data
+        wolfOfPizza.makeOrder();
+        //System.out.print(margherita.getDescrizione()+"\n");
+        //System.out.print(napoli.getDescrizione()+"\n");
+        //System.out.print(cotto.getDescrizione());
     }
 }
