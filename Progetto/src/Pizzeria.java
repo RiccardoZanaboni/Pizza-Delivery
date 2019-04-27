@@ -43,8 +43,6 @@ public class Pizzeria {
         }
     }
 
-
-
     public void makeOrder() {
         int num;
         int ordinate=0;
@@ -312,29 +310,6 @@ public class Pizzeria {
         return ok;
     }
 
-    /*private void recapOrdine(Order order){
-        String line = "\n---------------------------------------------\n";
-        String codice = "ORDINE N. " + order.getCodice() + "\n";
-        String dati = "SIG. " + order.getCustomer().getUsername() + "\tINDIRIZZO: " + order.getIndirizzo() + "\tORARIO: " + order.getOrario() + "\n";
-        String prodotti = "";
-        double totale = 0;
-        for (Pizza p: menu.values()) {
-            int num = 0;
-            for (int i = 0; i < order.getPizzeordinate().size(); i++) {
-                if (order.getPizzeordinate().get(i).getNome().equals(p.getNome()))
-                    num++;
-
-            }
-            if (num > 0) {
-
-                prodotti += "\t" + num + "\t" + p.getNome() + "\t\t" +p.getModifiche()+ "\t\t"+ num * p.getPrezzo() + "€\n";
-                totale += num*p.getPrezzo();
-            }
-        }
-        System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totale + line);
-    }
-*/
-
     private void recapOrdine(Order order){
         String line = "\n---------------------------------------------\n";
         String codice = "ORDINE N. " + order.getCodice() + "\n";
@@ -348,6 +323,7 @@ public class Pizzeria {
             }
         System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totale + line);
     }
+
     private boolean chiediConferma(Order order, Date d, int tot){
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
         if (scan.nextLine().toUpperCase().equals("S")) {
@@ -415,5 +391,27 @@ public class Pizzeria {
             }
         } while(!ok);
         return num;
+    }
+
+    private void recapOrdine(Order order){
+        String line = "\n---------------------------------------------\n";
+        String codice = "ORDINE N. " + order.getCodice() + "\n";
+        String dati = "SIG. " + order.getCustomer().getUsername() + "\tINDIRIZZO: " + order.getIndirizzo() + "\tORARIO: " + order.getOrario() + "\n";
+        String prodotti = "";
+        double totale = 0;
+        for (Pizza p: menu.values()) {
+            int num = 0;
+            for (int i = 0; i < order.getPizzeordinate().size(); i++) {
+                if (order.getPizzeordinate().get(i).getNome().equals(p.getNome()))
+                    num++;
+
+            }
+            if (num > 0) {
+
+                prodotti += "\t" + num + "\t" + p.getNome() + "\t\t" +p.getModifiche()+ "\t\t"+ num * p.getPrezzo() + "€\n";
+                totale += num*p.getPrezzo();
+            }
+        }
+        System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totale + line);
     }
 */
