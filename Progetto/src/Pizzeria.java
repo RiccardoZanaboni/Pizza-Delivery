@@ -43,7 +43,49 @@ public class Pizzeria {
         }
     }
 
+    public void creaMenu(){
+        Pizza marinara = new Pizza("MARINARA", "pomodoro, origano", 3.5);
+        AddPizza(marinara);
+        Pizza margherita = new Pizza("MARGHERITA", "pomodoro, mozzarella", 4.5);
+        AddPizza(margherita);
+        Pizza patatine = new Pizza("PATATINE", "pomodoro, mozzarella, patatine", 6);
+        AddPizza(patatine);
+        Pizza wurstel = new Pizza("WURSTEL", "pomodoro, mozzarella, wurstel", 6);
+        AddPizza(wurstel);
+        Pizza napoli = new Pizza("NAPOLI", "pomodoro, mozzarella, alici", 6.5);
+        AddPizza(napoli);
+        Pizza cotto = new Pizza("COTTO", "pomodoro, mozzarella, prosciutto cotto", 6);
+        AddPizza(cotto);
+        Pizza cottoFunghi = new Pizza("COTTO E FUNGHI", "pomodoro, mozzarella, prosciutto cotto, funghi", 7);
 
+        AddPizza(cottoFunghi);
+        Pizza salamePicc = new Pizza("SALAME PICCANTE", "pomodoro, mozzarella, salame piccante", 5.5);
+        AddPizza(salamePicc);
+        Pizza americana = new Pizza("AMERICANA", "pomodoro, mozzarella, salsiccia e peperoni", 7);
+        AddPizza(americana);
+        Pizza capricciosa = new Pizza("CAPRICCIOSA", "pomodoro, prosciutto cotto, carciofi, funghi, olive", 7);
+        AddPizza(capricciosa);
+        Pizza italia = new Pizza("ITALIA", "pomodorini, bufala, rucola", 7.5);
+        AddPizza(italia);
+        Pizza allaMusi = new Pizza("ALLA MUSI", "pomodoro, mozzarella, galanteria e belle donne", 100000);
+        AddPizza(allaMusi);
+        Pizza thanos = new Pizza("THANOS", "pomodoro, mozzarella di bufala, 6 gemme, onnipotenza, origano", 0.50);
+        AddPizza(thanos);
+        Pizza marvel = new Pizza("RIP TONY STARK", "semplicemente: grazie di aver salvato l'universo.", 1000);
+        AddPizza(marvel);
+    }
+
+    public HashMap<String, Pizza> getMenu() {
+        return menu;
+    }
+
+    public int getOrdiniDelGiorno() {
+        return ordiniDelGiorno;
+    }
+
+    public void setOrdiniDelGiorno(int ordiniDelGiorno) {
+        this.ordiniDelGiorno = ordiniDelGiorno++;
+    }
 
     public void makeOrder() {
         int num;
@@ -290,7 +332,7 @@ public class Pizzeria {
         return num;
     }
 
-    private boolean inserisciDati(Order order){
+    public boolean inserisciDati(Order order){
         boolean ok=true;
         try {
             System.out.println("Come ti chiami?\t\t(Inserisci 'F' per annullare e ricominciare)");
@@ -314,30 +356,7 @@ public class Pizzeria {
         return ok;
     }
 
-    /*private void recapOrdine(Order order){
-        String line = "\n---------------------------------------------\n";
-        String codice = "ORDINE N. " + order.getCodice() + "\n";
-        String dati = "SIG. " + order.getCustomer().getUsername() + "\tINDIRIZZO: " + order.getIndirizzo() + "\tORARIO: " + order.getOrario() + "\n";
-        String prodotti = "";
-        double totale = 0;
-        for (Pizza p: menu.values()) {
-            int num = 0;
-            for (int i = 0; i < order.getPizzeordinate().size(); i++) {
-                if (order.getPizzeordinate().get(i).getNome().equals(p.getNome()))
-                    num++;
-
-            }
-            if (num > 0) {
-
-                prodotti += "\t" + num + "\t" + p.getNome() + "\t\t" +p.getModifiche()+ "\t\t"+ num * p.getPrezzo() + "€\n";
-                totale += num*p.getPrezzo();
-            }
-        }
-        System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totale + line);
-    }
-*/
-
-    private void recapOrdine(Order order){
+    public void recapOrdine(Order order){
         String line = "\n---------------------------------------------\n";
         String codice = "ORDINE N. " + order.getCodice() + "\n";
         String dati = "SIG. " + order.getCustomer().getUsername() + "\tINDIRIZZO: " + order.getIndirizzo() + "\tORARIO: " + order.getOrario() + "\n";
@@ -350,6 +369,7 @@ public class Pizzeria {
             }
         System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totale + line);
     }
+
     private boolean chiediConferma(Order order, Date d, int tot){
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
         if (scan.nextLine().toUpperCase().equals("S")) {
@@ -379,9 +399,15 @@ public class Pizzeria {
         return orarioApertura;
     }
 
-    public HashMap<String, Pizza> getMenu() {
-        return menu;
+    public void success(Order order, int num, String nomePizza, String modifiche) {
+        for (int i=0; i<num; i++) {
+            if(modifiche.equals(""))
+                order.addPizza(menu.get(nomePizza));
+            else
+                order.addPizza(menu.get(nomePizza), modifiche);
+        }
     }
+
 }
 
 

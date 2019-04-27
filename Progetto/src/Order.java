@@ -45,15 +45,9 @@ public class Order {
     }
 
     public void addPizza(Pizza pizza, String descriz)  {
-
-        //Pizza p= (Pizza) pizza.clone();
         Pizza p=new Pizza(pizza.getNome(),pizza.getDescrizione(),pizza.getPrezzo());
-
         pizzeordinate.add(p);
-
-        //pizzeordinate.get(pizzeordinate.size()-1).setDescrizione(pizzeordinate.get(pizzeordinate.size()-1).getDescrizione() + " " + descriz);
         pizzeordinate.get(pizzeordinate.size()-1).setModifiche(pizzeordinate.get(pizzeordinate.size()-1).getDescrizione() + " " + descriz);
-        System.out.println(p.getModifiche());
     }
 
     public void setCustomer(Customer c){
