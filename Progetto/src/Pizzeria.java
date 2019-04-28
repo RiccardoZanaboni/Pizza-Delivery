@@ -10,11 +10,12 @@ public class Pizzeria {
     private Date orarioApertura;
     private Forno[] infornate;
     private ArrayList<DeliveryMan> fattorini;
-    private HashMap<String, Pizza> menu;
+    private HashMap<String, PizzaMenu> menu;
     private ArrayList<Order> ordini;
     private int ordiniDelGiorno;
     private final int TEMPI_FORNO = 12;      // ogni 5 minuti
     private final int TEMPI_FATTORINI = 6;   // ogni 10 minuti
+    private final double PREZZO_SUPPL = 0.5;    // costo singolo ingrediente
     private Scanner scan = new Scanner(System.in);
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
@@ -29,7 +30,7 @@ public class Pizzeria {
         this.fattorini= new ArrayList<>();
     }
 
-    public void AddPizza(Pizza pizza){
+    public void AddPizza(PizzaMenu pizza){
         menu.put(pizza.getNome(),pizza);
     }
 
@@ -44,43 +45,113 @@ public class Pizzeria {
     }
 
     public void creaMenu(){
-        Pizza marinara = new Pizza("MARINARA", "pomodoro, origano", 3.5);
+        HashMap i1 = new HashMap <String, Ingredienti>();
+        i1.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i1.put(Ingredienti.ORIGANO.name(), Ingredienti.ORIGANO);
+        PizzaMenu marinara = new PizzaMenu("MARINARA", i1, 3.5);
         AddPizza(marinara);
-        Pizza margherita = new Pizza("MARGHERITA", "pomodoro, mozzarella", 4.5);
-        AddPizza(margherita);
-        Pizza patatine = new Pizza("PATATINE", "pomodoro, mozzarella, patatine", 6);
-        AddPizza(patatine);
-        Pizza wurstel = new Pizza("WURSTEL", "pomodoro, mozzarella, wurstel", 6);
-        AddPizza(wurstel);
-        Pizza napoli = new Pizza("NAPOLI", "pomodoro, mozzarella, alici", 6.5);
-        AddPizza(napoli);
-        Pizza cotto = new Pizza("COTTO", "pomodoro, mozzarella, prosciutto cotto", 6);
-        AddPizza(cotto);
-        Pizza cottoFunghi = new Pizza("COTTO E FUNGHI", "pomodoro, mozzarella, prosciutto cotto, funghi", 7);
 
+        HashMap i2 = new HashMap <String, Ingredienti>();
+        i2.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i2.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
+        PizzaMenu margherita = new PizzaMenu("MARGHERITA", i2, 4.5);
+        AddPizza(margherita);
+
+        HashMap i3 = new HashMap <String, Ingredienti>();
+        i3.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i3.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
+        i3.put(Ingredienti.PATATINE.name(), Ingredienti.PATATINE);
+        PizzaMenu patatine = new PizzaMenu("PATATINE", i3, 5.5);
+        AddPizza(patatine);
+
+        HashMap i4 = new HashMap <String, Ingredienti>();
+        i4.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i4.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
+        i4.put(Ingredienti.WURSTEL.name(), Ingredienti.WURSTEL);
+        PizzaMenu wurstel = new PizzaMenu("WURSTEL", i4, 5.5);
+        AddPizza(wurstel);
+
+        HashMap i5 = new HashMap <String, Ingredienti>();
+        i5.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i5.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
+        i5.put(Ingredienti.ALICI.name(), Ingredienti.ALICI);
+        PizzaMenu napoli = new PizzaMenu("NAPOLI", i5, 5.5);
+        AddPizza(napoli);
+
+        HashMap i6 = new HashMap <String, Ingredienti>();
+        i6.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i6.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
+        i6.put(Ingredienti.COTTO.name(), Ingredienti.COTTO);
+        PizzaMenu cotto = new PizzaMenu("COTTO", i6, 5.5);
+        AddPizza(cotto);
+
+        HashMap i7 = new HashMap <String, Ingredienti>();
+        i7.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i7.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
+        i7.put(Ingredienti.COTTO.name(), Ingredienti.COTTO);
+        i7.put(Ingredienti.FUNGHI.name(), Ingredienti.FUNGHI);
+        PizzaMenu cottoFunghi = new PizzaMenu("COTTO E FUNGHI", i7, 6);
         AddPizza(cottoFunghi);
-        Pizza salamePicc = new Pizza("SALAME PICCANTE", "pomodoro, mozzarella, salame piccante", 5.5);
+
+        HashMap i8 = new HashMap <String, Ingredienti>();
+        i8.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i8.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
+        i8.put(Ingredienti.SALAME_PICCANTE.name(), Ingredienti.SALAME_PICCANTE);
+        PizzaMenu salamePicc = new PizzaMenu("SALAME PICCANTE", i8, 5.5);
         AddPizza(salamePicc);
-        Pizza americana = new Pizza("AMERICANA", "pomodoro, mozzarella, salsiccia e peperoni", 7);
+
+        HashMap i9 = new HashMap <String, Ingredienti>();
+        i9.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i9.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
+        i9.put(Ingredienti.SALSICCIA.name(), Ingredienti.SALSICCIA);
+        i9.put(Ingredienti.PEPERONI.name(), Ingredienti.PEPERONI);
+        PizzaMenu americana = new PizzaMenu("AMERICANA", i9, 6.5);
         AddPizza(americana);
-        Pizza capricciosa = new Pizza("CAPRICCIOSA", "pomodoro, prosciutto cotto, carciofi, funghi, olive", 7);
+
+        HashMap i10 = new HashMap <String, Ingredienti>();
+        i10.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i10.put(Ingredienti.COTTO.name(), Ingredienti.COTTO);
+        i10.put(Ingredienti.CARCIOFI.name(), Ingredienti.CARCIOFI);
+        i10.put(Ingredienti.FUNGHI.name(), Ingredienti.FUNGHI);
+        i10.put(Ingredienti.OLIVE_NERE.name(), Ingredienti.OLIVE_NERE);
+        PizzaMenu capricciosa = new PizzaMenu("CAPRICCIOSA", i10, 7);
         AddPizza(capricciosa);
-        Pizza italia = new Pizza("ITALIA", "pomodorini, bufala, rucola", 7.5);
+
+        HashMap i11 = new HashMap <String, Ingredienti>();
+        i11.put(Ingredienti.POMODORINI.name(), Ingredienti.POMODORINI);
+        i11.put(Ingredienti.MOZZARELLA_DI_BUFALA.name(), Ingredienti.MOZZARELLA_DI_BUFALA);
+        i11.put(Ingredienti.RUCOLA.name(), Ingredienti.RUCOLA);
+        PizzaMenu italia = new PizzaMenu("ITALIA", i11, 7.5);
         AddPizza(italia);
-        Pizza allaMusi = new Pizza("ALLA MUSI", "pomodoro, mozzarella, galanteria e belle donne", 100000);
+
+        HashMap i12 = new HashMap <String, Ingredienti>();
+        i12.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i12.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
+        i12.put(Ingredienti.GALANTERIA.name(), Ingredienti.GALANTERIA);
+        i12.put(Ingredienti.BELLE_DONNE.name(), Ingredienti.BELLE_DONNE);
+        PizzaMenu allaMusi = new PizzaMenu("ALLA MUSI", i12, 100000);
         AddPizza(allaMusi);
-        Pizza thanos = new Pizza("THANOS", "pomodoro, mozzarella di bufala, 6 gemme, onnipotenza, origano", 0.50);
+
+        HashMap i13 = new HashMap <String, Ingredienti>();
+        i13.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
+        i13.put(Ingredienti.MOZZARELLA_DI_BUFALA.name(), Ingredienti.MOZZARELLA_DI_BUFALA);
+        i13.put(Ingredienti.GEMME_DELL_INFINITO.name(), Ingredienti.GEMME_DELL_INFINITO);
+        i13.put(Ingredienti.ONNIPOTENZA.name(), Ingredienti.ONNIPOTENZA);
+        i13.put(Ingredienti.ORIGANO.name(), Ingredienti.ORIGANO);
+        PizzaMenu thanos = new PizzaMenu("THANOS", i13, 0.50);
         AddPizza(thanos);
-        Pizza marvel = new Pizza("RIP TONY STARK", "semplicemente: grazie di aver salvato l'universo.", 1000);
-        AddPizza(marvel);
     }
 
-    public HashMap<String, Pizza> getMenu() {
+    public HashMap<String, PizzaMenu> getMenu() {
         return menu;
     }
 
     public int getOrdiniDelGiorno() {
         return ordiniDelGiorno;
+    }
+
+    public double getPREZZO_SUPPL() {
+        return PREZZO_SUPPL;
     }
 
     public void setOrdiniDelGiorno(int ordiniDelGiorno) {
@@ -133,8 +204,8 @@ public class Pizzeria {
 
     public String stampaMenu() {
         String line= "\n--------------------------------------------------------------------------------------\n";
-        String s= "    >>  MENU\n";
-        for (String a:menu.keySet()) {
+        String s = "    >>  MENU\n";
+        for (String a : menu.keySet()) {
             s += "\n"+ menu.get(a).toString();
         }
         return line+s+line;
@@ -162,6 +233,9 @@ public class Pizzeria {
         boolean ok = false;
         do {
             System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
+            for(String s:OrariDisponibili(tot)){
+                System.out.print(s);
+            }
             String sDate1 = scan.nextLine();
             try {
                 if (sDate1.toUpperCase().equals("F")) {
@@ -176,16 +250,17 @@ public class Pizzeria {
                         int minuti = d.getMinutes();
                         if (!controllaApertura(ora, minuti))
                             throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
-                        if (infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp() < tot || fattorinoLibero(this.orarioApertura,ora,minuti,0)==null) {
+                        /*if (infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp() < tot || fattorinoLibero(this.orarioApertura,ora,minuti,0)==null) {
                             int postiDispTot = infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti) - 1].getPostiDisp() + infornate[trovaCasellaTempoForno(this.orarioApertura, ora, minuti)].getPostiDisp();
                             if (postiDispTot < tot || fattorinoLibero(this.orarioApertura, ora, minuti, 0) == null) {
                                 OrarioNonDisponibile(order, tot, ora, minuti);
                             }else {
                                 ok = true;
                             }
-                        }else{
+                        }else{*/
+                        else
                             ok =true;
-                        }
+                        //}
                     }
                 }
             } catch (RestartOrderExc e) {
@@ -227,11 +302,11 @@ public class Pizzeria {
                 return d;
             }
 
-            private boolean controllaApertura(int ora, int minuti){
+            public boolean controllaApertura(int ora, int minuti){
                 return !(ora < this.orarioApertura.getHours() || ora > this.orarioChiusura.getHours() || (ora == this.orarioChiusura.getHours() && minuti > this.orarioChiusura.getMinutes()) || (ora == this.orarioApertura.getHours() && minuti < this.orarioApertura.getMinutes()));
             }
 
-            private int trovaCasellaTempoForno(Date oraApertura, int oraDesiderata, int minutiDesiderati){
+            public int trovaCasellaTempoForno(Date oraApertura, int oraDesiderata, int minutiDesiderati){
                 int casellaTempo = this.TEMPI_FORNO*(oraDesiderata - oraApertura.getHours());
                 casellaTempo += minutiDesiderati/5;
                 return casellaTempo;
@@ -252,24 +327,29 @@ public class Pizzeria {
                 return null;
             }
 
-            private void OrarioNonDisponibile(Order order, int tot, int ora, int minuti){
-                System.out.println("Orario desiderato non disponibile, ecco gli orari disponibili:");
-                for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti); i<this.infornate.length; i++) {
+            //private void OrarioNonDisponibile(Order order, int tot, int ora, int minuti){
+            //    System.out.println("Orario desiderato non disponibile, ecco gli orari disponibili:");
+            //    for(int i=trovaCasellaTempoForno(this.orarioApertura,ora,minuti); i<this.infornate.length; i++) {
+            public ArrayList<String> OrariDisponibili(int tot){
+                ArrayList<String> disp=new ArrayList<>();
+                for(int i=1; i<this.infornate.length; i++) {
                     if (infornate[i].getPostiDisp()+infornate[i-1].getPostiDisp() >= tot) {
                         for(DeliveryMan a:this.fattorini){
                             if(!a.getFattoriniTempi()[i/2]){
                                 int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
                                 int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
                                 if(min<=5){
-                                    System.out.print(oraNew + ":0" + min + "\n");
+                                    disp.add(oraNew + ":0" + min + "\n");
                                 } else {
-                                    System.out.print(oraNew + ":" + min + "\n");
+                                    disp.add(oraNew + ":" + min + "\n");
                                 }
+
                                 break;
                             }
                         }
                     }
                 }
+                return disp;
             }
 
     private String qualePizza(){
@@ -298,7 +378,6 @@ public class Pizzeria {
     private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
         boolean ok = false;
         int num = 0;
-        String modifiche="";
         do {
             System.out.println("Quante " + nomePizza + " vuoi?\t[0..n]");
             String line = scan.nextLine();
@@ -308,20 +387,9 @@ public class Pizzeria {
                     throw new NumberFormatException();
                 else if(num>disponibili)
                     throw new RiprovaExc();
-                else
+                else {
                     ok = true;
-                System.out.print("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N)");
-                if(scan.nextLine().toUpperCase().equals("S")) {
-                    System.out.print("Inserisci le modifiche:\t\t('+ ...' per le aggiunte, '- ...' per le rimozioni, digita invio e 'ok' per terminare)\n");
-                    do {
-                        modifiche += scan.nextLine();
-                    } while (!(scan.nextLine().toUpperCase().equals("OK")));
-                }
-                for (int i=0; i<num; i++) {
-                    if(modifiche.equals(""))
-                        order.addPizza(menu.get(nomePizza));
-                    else
-                        order.addPizza(menu.get(nomePizza), modifiche);
+                    chiediModificaPizza(order,nomePizza,num);
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
@@ -330,6 +398,18 @@ public class Pizzeria {
             }
         } while(!ok);
         return num;
+    }
+
+    public void chiediModificaPizza(Order order, String nomePizza, int num){
+        System.out.print("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N)");
+        if(scan.nextLine().toUpperCase().equals("S")) {
+            System.out.print("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:\n");
+            String aggiunte = scan.nextLine();
+            System.out.print("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:\n");
+            String rimozioni = scan.nextLine();
+                order.addPizza(menu.get(nomePizza), aggiunte, rimozioni, num, PREZZO_SUPPL);
+        } else
+            order.addPizza(menu.get(nomePizza), num);
     }
 
     public boolean inserisciDati(Order order){
@@ -360,14 +440,9 @@ public class Pizzeria {
         String line = "\n---------------------------------------------\n";
         String codice = "ORDINE N. " + order.getCodice() + "\n";
         String dati = "SIG. " + order.getCustomer().getUsername() + "\tINDIRIZZO: " + order.getIndirizzo() + "\tORARIO: " + order.getOrario() + "\n";
-        String prodotti = "";
-        double totale = 0;
-            for (int i = 0; i < order.getPizzeordinate().size(); i++) {
-                Pizza p=order.getPizzeordinate().get(i);
-                prodotti += "\t" + "1" + "\t" + p.getNome() + "\t\t" +p.getModifiche()+ "\t\t"+ p.getPrezzo() + "€\n";
-                totale +=p.getPrezzo();
-            }
-        System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totale + line);
+        String prodotti = order.recap();
+        double totaleCosto = order.getTotaleCosto();
+        System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
     }
 
     private boolean chiediConferma(Order order, Date d, int tot){
@@ -399,14 +474,14 @@ public class Pizzeria {
         return orarioApertura;
     }
 
-    public void success(Order order, int num, String nomePizza, String modifiche) {
+    /*public void success(Order order, int num, String nomePizza, String modifiche) {
         for (int i=0; i<num; i++) {
             if(modifiche.equals(""))
                 order.addPizza(menu.get(nomePizza));
             else
                 order.addPizza(menu.get(nomePizza), modifiche);
         }
-    }
+    }*/
 
 }
 

@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 
 public class Order {
@@ -7,7 +9,7 @@ public class Order {
     private String codice;
     private String indirizzo;
     private Date orario;
-    private ArrayList <Pizza> pizzeordinate;
+    private ArrayList <PizzaOrdinata> pizzeordinate;
     private boolean completo;
 
     public Order(int codice) {
@@ -31,7 +33,7 @@ public class Order {
         return orario;
     }
 
-    public ArrayList<Pizza> getPizzeordinate() {
+    public ArrayList<PizzaOrdinata> getPizzeordinate() {
         return pizzeordinate;
     }
 
@@ -39,15 +41,37 @@ public class Order {
         return codice;
     }
 
-    public void addPizza(Pizza pizza)  {
-        Pizza p=new Pizza(pizza.getNome(),pizza.getDescrizione(),pizza.getPrezzo());
-        pizzeordinate.add(p);
+    public void addPizza(PizzaMenu p, int num) {
+        PizzaOrdinata pizza = new PizzaOrdinata(p.getNome(), p.getIngredienti(), p.getPrezzo());
+        for(int i=0; i<num; i++) {
+            pizzeordinate.add(pizza);
+        }
     }
 
-    public void addPizza(Pizza pizza, String descriz)  {
-        Pizza p=new Pizza(pizza.getNome(),pizza.getDescrizione(),pizza.getPrezzo());
-        pizzeordinate.add(p);
-        pizzeordinate.get(pizzeordinate.size()-1).setModifiche(pizzeordinate.get(pizzeordinate.size()-1).getDescrizione() + " " + descriz);
+    public void addPizza(PizzaMenu p, String aggiunte, String rimozioni, int num, double prezzoSuppl) {
+        PizzaOrdinata pizza = new PizzaOrdinata(p.getNome(), p.getIngredienti(), p.getPrezzo());
+        HashMap <String, Ingredienti> ingredientiModificati = pizza.getIngredienti();
+        StringTokenizer stAgg = new StringTokenizer(aggiunte);
+        int piu=0;
+        int meno=0;
+        while (stAgg.hasMoreTokens()) {
+            try {
+                Ingredienti ingr = Ingredienti.valueOf(stAgg.nextToken(", ").toUpperCase());
+                //ingredientiModificati.put(ingr.name(), ingr);   // è qui il problema!!! va a cambiare il menu!
+                pizza.addIngredienti(ingr);
+            } catch (Exception ignored) { ;}
+        }
+        StringTokenizer stRmv = new StringTokenizer(rimozioni);
+        while (stRmv.hasMoreTokens()) {
+            try {
+                Ingredienti ingr = Ingredienti.valueOf(stRmv.nextToken(", ").toUpperCase());
+                //ingredientiModificati.remove(ingr.name());   // è qui il problema!!! va a cambiare il menu!
+                pizza.rmvIngredienti(ingr);
+            } catch (Exception ignored) { ;}
+        }
+        for (int i = 0; i < num; i++) {
+            pizzeordinate.add(pizza);
+        }
     }
 
     public void setCustomer(Customer c){
@@ -75,4 +99,29 @@ public class Order {
         return pizzeordinate.size();
     }
 
+    public String recap(){
+        String prodotti = "";
+        ArrayList elencate = new ArrayList <PizzaMenu>();
+        for (int i = 0; i < getNumeroPizze(); i++) {
+            PizzaOrdinata p = getPizzeordinate().get(i);
+            int num = 0;
+            if (!(elencate.contains(p))) {
+                elencate.add(p);
+                for (int j = 0; j < getNumeroPizze(); j++) {
+                    if (p.equals(getPizzeordinate().get(j)))
+                        num++;
+                }
+                prodotti += "\t" + num + "\t" + p.getNome() + "\t\t" + p.getDescrizione() + "\t\t-->\t" + num*p.getPrezzo() + "€\n";
+            }
+        }
+        return prodotti;
+    }
+
+    public double getTotaleCosto() {
+        double totale = 0;
+        for(int i=0; i<getNumeroPizze(); i++){
+            totale += pizzeordinate.get(i).getPrezzo();
+        }
+        return totale;
+    }
 }
