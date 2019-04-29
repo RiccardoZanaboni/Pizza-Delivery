@@ -368,8 +368,6 @@ public class Pizzeria {
     }
 
     public boolean chiediConferma(Order order, Date d, int tot){
-        System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
-        if (scan.nextLine().toUpperCase().equals("S")) {
         //if (s.toUpperCase().equals("S")) {
             //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
             if(infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp()<tot){
@@ -383,10 +381,6 @@ public class Pizzeria {
             order.setCompleto();
             ordini.add(order);
             return true;
-        } else {
-            System.out.println("L'ordine è stato annullato.");
-            return false;
-        }
     }
 
     public Date getOrarioChiusura() {

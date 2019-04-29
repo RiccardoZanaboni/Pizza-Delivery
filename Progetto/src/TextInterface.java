@@ -29,32 +29,42 @@ public class TextInterface {
         System.out.println(wolf.stampaMenu());
 
         int tot = 0;
+        try {
             do {
-                nomePizza = qualePizza();
-                if(nomePizza.equals("F")||nomePizza.equals("AVANTI")) {
-                    nomePizza="";
+                nomePizza = qualePizza(tot);
+                if (nomePizza.equals("AVANTI")) {
                     break;
                 }
-                num = quantePizzaSpecifica(order,nomePizza);
+                num = quantePizzaSpecifica(order, nomePizza);
+                if(num==16){
+                    System.out.println("Massimo numero di pizze ordinate raggiunto. Per aggiungere altre pizze eseguire un altro ordine.");
+                    break;
+                }
                 //System.out.println("ordinate " + num + " " + nomePizza + " (" + wolf.getMenu().get(nomePizza).getDescrizione() + ")");
                 tot += num;
-            } while(true);
+            } while (true);
 
-        Date orario = inserisciOrario(order,tot);
-        if(orario!=null) {
-            order.setOrario(orario);
-            System.out.println(orario);
-        }
+            Date orario = inserisciOrario(order, tot);
+            if (orario != null) {
+                order.setOrario(orario);
+                System.out.println(orario);
 
-            if(!nomePizza.equals("F")) {
-                ok = inserisciDati(order);
-                if (ok) {
-                    wolf.recapOrdine(order);
-                    //System.out.println(order.getPizzeordinate().get(0).equals(order.getPizzeordinate().get(1)));
-                    //placeOrder(order,orario,tot);
-                }
+                    if (inserisciDati(order)) {
+                        wolf.recapOrdine(order);
+                        //System.out.println(order.getPizzeordinate().get(0).equals(order.getPizzeordinate().get(1)));
+                        //placeOrder(order,orario,tot);    NON SO COSA SIANO QUESTE DUE RIGHE VE LE LASCIO
+                        System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
+                        if (scan.nextLine().toUpperCase().equals("S")) {
+                          wolf.chiediConferma(order,orario,tot);
+                        }else {
+                            System.out.println("L'ordine è stato annullato.");
+
+                        }
+                    }
             }
-        //}
+        }catch (RestartOrderExc e){
+            makeOrderText();
+        }
 
     }
 
@@ -149,7 +159,7 @@ public class TextInterface {
         return d;
     }
 
-    private String qualePizza(){
+    private String qualePizza(int tot) throws RestartOrderExc{
         String nomePizza;
         boolean ok=false;
         do {
@@ -160,14 +170,14 @@ public class TextInterface {
                     ok=true;
                     throw new RestartOrderExc();
                 }
+                if(nomePizza.equals("AVANTI") && tot<=0 )
+                    System.out.println("Numero di pizze non valido. Riprovare:");
                 else if (nomePizza.equals("AVANTI"))
                     ok = true;
                 else if (!(wolf.getMenu().containsKey(nomePizza)))         // qui ci vorrebbe una eccezione invece della if-else
                     throw new RiprovaExc();
                 else
                     ok = true;
-            } catch (RestartOrderExc e){
-                makeOrderText();
             } catch (RiprovaExc e){
                 System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
             }
@@ -184,7 +194,7 @@ public class TextInterface {
             String line = scan.nextLine();
             try {
                 num = Integer.parseInt(line);
-                if(num<0)
+                if(num<=0)
                     throw new NumberFormatException();
                 else if(order.getNumeroPizze()+num >16)
                     throw new RiprovaExc();
@@ -245,6 +255,9 @@ class Tester {
         textInterface.wolf.AddFattorino(new DeliveryMan("Musi",textInterface.wolf));
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
+        //textInterface.makeOrderText();  Per prova vettori orario
+        //textInterface.makeOrderText();
+
 
 
 
