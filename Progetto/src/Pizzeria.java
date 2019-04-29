@@ -262,7 +262,7 @@ public class Pizzeria {
         return d;
     }
 
-    private Date controllaOrario(String sDate1, Order order, int tot){
+    public Date controllaOrario(String sDate1, Order order, int tot){
         Date d= null;
         try {
             StringTokenizer st = new StringTokenizer(sDate1, ":");
@@ -430,9 +430,10 @@ public class Pizzeria {
         System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
     }
 
-    private boolean chiediConferma(Order order, Date d, int tot){
+    public boolean chiediConferma(Order order, Date d, int tot){
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
         if (scan.nextLine().toUpperCase().equals("S")) {
+        //if (s.toUpperCase().equals("S")) {
             //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
             if(infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp()<tot){
                 int disp=infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp();

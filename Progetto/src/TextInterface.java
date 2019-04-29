@@ -1,7 +1,9 @@
+import exceptions.OutOfTimeExc;
 import exceptions.RestartOrderExc;
 import exceptions.RiprovaExc;
 
 import java.util.Date;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class TextInterface {
@@ -21,30 +23,37 @@ public class TextInterface {
         System.out.println(wolf.helloThere());
         System.out.println(wolf.stampaMenu());
 
-        int tot = quantePizze();
-        System.out.println(tot);
-
-
-        //Date orario = inserisciOrario(order,tot);
-        //if(orario!=null) {
-            //order.setOrario(orario);
-            //System.out.println(orario);
-
+        int tot = 0;
             do {
                 nomePizza = qualePizza();
-                if(nomePizza.equals("F"))
+                if(nomePizza.equals("F")||nomePizza.equals("AVANTI")) {
+                    nomePizza="";
                     break;
-                num = quantePizzaSpecifica(order,nomePizza,tot-ordinate);
-                System.out.println("ordinate " + num + " " + nomePizza + " (" + wolf.getMenu().get(nomePizza).getDescrizione() + ")");
-                ordinate += num;
-            } while(ordinate<tot);
+                }
+                num = quantePizzaSpecifica(order,nomePizza);
+                //System.out.println("ordinate " + num + " " + nomePizza + " (" + wolf.getMenu().get(nomePizza).getDescrizione() + ")");
+                tot += num;
+            } while(true);
+
+
+        //System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
+        /*for(String s:wolf.OrariDisponibili(tot)){
+            System.out.print(s);
+        }*/
+
+        /*String sDate1 = scan.nextLine();
+        Date orario = inserisciOrario(order,tot, sDate1);
+        if(orario!=null) {
+            order.setOrario(orario);
+            System.out.println(orario);
+        }*/
 
             if(!nomePizza.equals("F")) {
-                ok = wolf.inserisciDati(order);
+                ok = inserisciDati(order);
                 if (ok) {
                     wolf.recapOrdine(order);
-                    System.out.println(order.getPizzeordinate().get(0).equals(order.getPizzeordinate().get(1)));
-                //    chiediConferma(order,orario,tot);
+                    //System.out.println(order.getPizzeordinate().get(0).equals(order.getPizzeordinate().get(1)));
+                    //placeOrder(order,orario,tot);
                 }
             }
         //}
@@ -108,13 +117,16 @@ public class TextInterface {
         String nomePizza;
         boolean ok=false;
         do {
-            System.out.println("Quale pizza desideri?\t\t(Inserisci 'F' per annullare e ricominciare)");
+            System.out.println("Quale pizza desideri?\t\t(Inserisci 'Avanti' per proseguire o 'F' per annullare e ricominciare");
             nomePizza = scan.nextLine().toUpperCase();
             try {
                 if (nomePizza.equals("F")) {
                     ok=true;
                     throw new RestartOrderExc();
-                } else if (!(wolf.getMenu().containsKey(nomePizza)))         // qui ci vorrebbe una eccezione invece della if-else
+                }
+                else if (nomePizza.equals("AVANTI"))
+                    ok = true;
+                else if (!(wolf.getMenu().containsKey(nomePizza)))         // qui ci vorrebbe una eccezione invece della if-else
                     throw new RiprovaExc();
                 else
                     ok = true;
@@ -127,7 +139,7 @@ public class TextInterface {
         return nomePizza;
     }
 
-    private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
+    private int quantePizzaSpecifica(Order order, String nomePizza) {   // FUNZIONA BENE
         boolean ok = false;
         int num = 0;
         String modifiche="";
@@ -138,17 +150,17 @@ public class TextInterface {
                 num = Integer.parseInt(line);
                 if(num<0)
                     throw new NumberFormatException();
-                else if(num>disponibili)
-                    throw new RiprovaExc();
+                //else if(num>disponibili)
+                //    throw new RiprovaExc();
                 else {
                     ok = true;
                     chiediModificaPizza(order,nomePizza,num);
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-            } catch (RiprovaExc e) {
+            } /*catch (RiprovaExc e) {
                 System.out.println("Massimo numero di pizze ordinate superato. Puoi ordinare ancora " + disponibili + " pizze:");
-            }
+            }*/
         } while(!ok);
         return num;
     }
@@ -164,6 +176,72 @@ public class TextInterface {
         } else
             order.addPizza(wolf.getMenu().get(nomePizza), num);
     }
+
+    public boolean inserisciDati(Order order){
+        boolean ok=true;
+        try {
+            System.out.println("Come ti chiami?\t\t(Inserisci 'F' per annullare e ricominciare)");
+            String nome = scan.nextLine();
+            if (nome.toUpperCase().equals("F")) {
+                ok=false;
+                throw new RestartOrderExc();
+            }
+            Customer c = new Customer(nome);
+            order.setCustomer(c);
+            System.out.println("Inserisci l'indirizzo di consegna:\t\t(Inserisci 'F' per annullare e ricominciare)");
+            String indirizzo = scan.nextLine();
+            if (indirizzo.toUpperCase().equals("F")) {
+                ok=false;
+                throw new RestartOrderExc();
+            }
+            order.setIndirizzo(indirizzo);
+        } catch (RestartOrderExc e){
+            makeOrderText();
+        }
+        return ok;
+    }
+
+    /*private Date inserisciOrario (Order order, int tot, String sDate1){
+        Date d = null;
+        boolean ok = false;
+        do {
+            try {
+                if (sDate1.toUpperCase().equals("F")) {
+                    ok=true;
+                    throw new RestartOrderExc();
+                } else {
+                    d = wolf.controllaOrario(sDate1, order, tot);          // CHECK ORARIO!!!
+                    if(d==null)
+                        throw new NumberFormatException();
+                    else {
+                        int ora = d.getHours();
+                        int minuti = d.getMinutes();
+                        if (!wolf.controllaApertura(ora, minuti))
+                            throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
+                        else
+                            ok =true;
+                    }
+                }
+            } catch (RestartOrderExc e) {
+                makeOrderText();
+            } catch (NumberFormatException | NoSuchElementException e) {
+                System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
+            } catch (OutOfTimeExc e) {
+                System.out.println("La pizzeria è chiusa nell'orario inserito. Riprovare:");
+            }
+        } while(!ok);
+        return d;
+    }
+
+    public void placeOrder (Order order, Date d, int tot) {
+        System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
+        String s=scan.next();
+        if (wolf.chiediConferma(order,d,tot,s))
+            System.out.println("L'ordine è andato a buon fine");
+        else
+            System.out.println("Lìordine è stato annullato");
+
+    }*/
 }
 
 
