@@ -1,10 +1,15 @@
 import exceptions.OutOfTimeExc;
 import exceptions.RestartOrderExc;
 import exceptions.RiprovaExc;
-
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+
+
+/**
+ * * @author Javengers
+ */
 
 public class TextInterface {
 
@@ -150,17 +155,17 @@ public class TextInterface {
                 num = Integer.parseInt(line);
                 if(num<0)
                     throw new NumberFormatException();
-                //else if(num>disponibili)
-                //    throw new RiprovaExc();
+                else if(order.getNumeroPizze()+num >16)
+                    throw new RiprovaExc();
                 else {
                     ok = true;
                     chiediModificaPizza(order,nomePizza,num);
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-            } /*catch (RiprovaExc e) {
-                System.out.println("Massimo numero di pizze ordinate superato. Puoi ordinare ancora " + disponibili + " pizze:");
-            }*/
+            } catch (RiprovaExc e) {
+                System.out.println("Massimo numero di pizze ordinate superato. Puoi ordinare massimo 16 pizze:");
+            }
         } while(!ok);
         return num;
     }
