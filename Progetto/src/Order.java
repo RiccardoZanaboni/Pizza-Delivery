@@ -97,7 +97,6 @@ public class Order {
         return prodotti;
     }
 
-
     public void setCustomer(Customer c) {
         this.customer = c;
     }

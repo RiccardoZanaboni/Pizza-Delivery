@@ -154,21 +154,19 @@ public class TextInterface {
     }
 
     public void chiediModificaPizza(Order order, String nomePizza, int num){
-        PizzaOrdinata p = new PizzaOrdinata(wolf.getMenu().get(nomePizza).getNome(), wolf.getMenu().get(nomePizza).getIngredienti(), wolf.getMenu().get(nomePizza).getPrezzo());
-        System.out.print("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N):  ");
+        System.out.print("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N)");
         if(scan.nextLine().toUpperCase().equals("S")) {
             System.out.print("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:\n");
             String aggiunte = scan.nextLine();
             System.out.print("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:\n");
             String rimozioni = scan.nextLine();
             order.addPizza(wolf.getMenu().get(nomePizza), aggiunte, rimozioni, num, wolf.getPREZZO_SUPPL());
-        } else {
+        } else
             order.addPizza(wolf.getMenu().get(nomePizza), num);
-        }
     }
-
-
 }
+
+
 
 
 class Tester {
