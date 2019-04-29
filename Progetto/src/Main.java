@@ -1,4 +1,4 @@
-import java.util.Date;
+/*import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,4 +16,4 @@ public class Main {
         //System.out.print(napoli.getDescrizione()+"\n");
         //System.out.print(cotto.getDescrizione());
     }
-}
+}*/
