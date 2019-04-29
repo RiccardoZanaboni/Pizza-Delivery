@@ -155,7 +155,7 @@ public class Pizzeria {
         this.ordiniDelGiorno = ordiniDelGiorno++;
     }
 
-    public void makeOrder() {
+/*    public void makeOrder() {
         int num;
         int ordinate=0;
         boolean ok;
@@ -191,7 +191,7 @@ public class Pizzeria {
                 }
             }
         }
-    }
+    }*/
 
     public String helloThere(){         // da sistemare orario apertura-chiusura!!!
         String dati = "\nPIZZERIA \"" + this.nome + "\"\n\t" + this.indirizzo;
@@ -225,88 +225,23 @@ public class Pizzeria {
         return tot;
     }
 
-    private Date inserisciOrario (Order order, int tot){
-        Date d = null;
-        boolean ok = false;
-        do {
-            System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)");
-            for(String s:OrariDisponibili(tot)){
-                System.out.print(s);
-            }
-            String sDate1 = scan.nextLine();
-            try {
-                if (sDate1.toUpperCase().equals("F")) {
-                    ok=true;
-                    throw new RestartOrderExc();
-                } else {
-                    d = controllaOrario(sDate1, order, tot);          // CHECK ORARIO!!!
-                    if(d==null)
-                        throw new NumberFormatException();
-                    else {
-                        int ora = d.getHours();
-                        int minuti = d.getMinutes();
-                        if (!controllaApertura(ora, minuti))
-                            throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
-                        else
-                            ok =true;
-                    }
-                }
-            } catch (RestartOrderExc e) {
-                makeOrder();
-            } catch (NumberFormatException | NoSuchElementException e) {
-                System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
-            } catch (OutOfTimeExc e) {
-                System.out.println("La pizzeria è chiusa nell'orario inserito. Riprovare:");
-            }
-        } while(!ok);
-        return d;
-    }
-
-    public Date controllaOrario(String sDate1, Order order, int tot){
-        Date d= null;
-        try {
-            StringTokenizer st = new StringTokenizer(sDate1, ":");
-            Calendar calendar = new GregorianCalendar();
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            int month = calendar.get(Calendar.MONTH) + 1;
-            int year = calendar.get(Calendar.YEAR);
-            String token = st.nextToken();
-            if (token.length() != 2) {
-                return null;
-            }
-            int ora = Integer.parseInt(token);
-            token = st.nextToken();
-            if (token.length() != 2)
-                return null;
-            int minuti = Integer.parseInt(token);
-            if (ora > 23 || minuti > 59)
-                return null;
-            sDate1 = day + "/" + month + "/" + year + " " + sDate1;
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            d = formato.parse(sDate1);
-        } catch (java.text.ParseException | NumberFormatException | NoSuchElementException e) {
-            return null;
-        }
-        return d;
-    }
-
     public boolean controllaApertura(int ora, int minuti){
-        return !(ora < this.orarioApertura.getHours() || ora > this.orarioChiusura.getHours() || (ora == this.orarioChiusura.getHours() && minuti > this.orarioChiusura.getMinutes()) || (ora == this.orarioApertura.getHours() && minuti < this.orarioApertura.getMinutes()));
+        return !(ora < this.orarioApertura.getHours() || ora > this.orarioChiusura.getHours() || (ora == this.orarioChiusura.getHours() && minuti >= this.orarioChiusura.getMinutes()) || (ora == this.orarioApertura.getHours() && minuti <= this.orarioApertura.getMinutes()));
     }
 
-    private int trovaCasellaTempoForno(Date oraApertura, int oraDesiderata, int minutiDesiderati){
+    public int trovaCasellaTempoForno(Date oraApertura, int oraDesiderata, int minutiDesiderati){
         int casellaTempo = this.TEMPI_FORNO*(oraDesiderata - oraApertura.getHours());
         casellaTempo += minutiDesiderati/5;
         return casellaTempo;
     }
 
-    private int trovaCasellaTempoFattorino(Date oraApertura, int oraDesiderata, int minutiDesiderati){
+    public int trovaCasellaTempoFattorino(Date oraApertura, int oraDesiderata, int minutiDesiderati){
         int casellaTempo=this.TEMPI_FATTORINI*(oraDesiderata - oraApertura.getHours());
         casellaTempo+=minutiDesiderati/10;
         return casellaTempo;
     }
 
-    private DeliveryMan fattorinoLibero(Date oraApertura, int oraDesiderata, int minutiDesiderati,int indice){
+    public DeliveryMan fattorinoLibero(Date oraApertura, int oraDesiderata, int minutiDesiderati,int indice){
         for(DeliveryMan a:this.fattorini){
             if(!a.getFattoriniTempi()[trovaCasellaTempoFattorino(oraApertura,oraDesiderata,minutiDesiderati)-indice]){
                 return a;
@@ -337,7 +272,7 @@ public class Pizzeria {
         return disp;
     }
 
-    private String qualePizza(){
+   /* private String qualePizza(){
         String nomePizza;
         boolean ok=false;
         do {
@@ -358,7 +293,7 @@ public class Pizzeria {
             }
         } while(!ok);
         return nomePizza;
-    }
+    }*/
 
     private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
         boolean ok = false;
@@ -397,7 +332,7 @@ public class Pizzeria {
             order.addPizza(menu.get(nomePizza), num);
     }
 
-    public boolean inserisciDati(Order order){
+  /*  public boolean inserisciDati(Order order){
         boolean ok=true;
         try {
             System.out.println("Come ti chiami?\t\t(Inserisci 'F' per annullare e ricominciare)");
@@ -420,6 +355,8 @@ public class Pizzeria {
         }
         return ok;
     }
+
+   */
 
     public void recapOrdine(Order order){
         String line = "\n---------------------------------------------\n";
@@ -462,5 +399,9 @@ public class Pizzeria {
 
     public double getPREZZO_SUPPL() {
         return PREZZO_SUPPL;
+    }
+
+    public Forno[] getInfornate() {
+        return infornate;
     }
 }
