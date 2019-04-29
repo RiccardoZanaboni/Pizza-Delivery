@@ -12,9 +12,9 @@ public class Order {
     private ArrayList<PizzaMenu> pizzeordinate;
     private boolean completo;
 
-    public Order(int codice) {
+    public Order(int num) {
         this.customer = null;
-        this.codice = "ORD - " + codice;
+        this.codice = "ORD-" + num;
         this.indirizzo = "";
         this.orario = null;
         this.pizzeordinate = new ArrayList<>();
@@ -58,9 +58,7 @@ public class Order {
                 Ingredienti ingredienti = Ingredienti.valueOf(stAgg.nextToken(", ").toUpperCase());
                 piu++;
                 p.addIngredienti(ingredienti);
-            } catch (Exception ignored) {
-                ;
-            }
+            } catch (Exception ignored) { ;}
         }
         p.setPrezzo(p.getPrezzo()+piu*prezzoSupl);
         StringTokenizer stRmv = new StringTokenizer(rimozioni);
@@ -68,9 +66,7 @@ public class Order {
             try {
                 Ingredienti ingredienti = Ingredienti.valueOf(stRmv.nextToken(", ").toUpperCase());
                 p.rmvIngredienti(ingredienti);
-            } catch (Exception ignored) {
-                ;
-            }
+            } catch (Exception ignored) { ;}
         }
         for (int i = 0; i < num; i++) {
             pizzeordinate.add(p);

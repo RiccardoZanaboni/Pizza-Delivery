@@ -5,15 +5,13 @@ import exceptions.RiprovaExc;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
-
 /**
- * * @author Javengers
+ * * @authors: Javengers, 2019
  */
 
 public class TextInterface {
 
-    Pizzeria wolf = new Pizzeria("Wolf Of PizzaMenu","Via Bolzano 10, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
+    Pizzeria wolf = new Pizzeria("Wolf Of Pizza","Via Bolzano 10, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
     private Scanner scan = new Scanner(System.in);
 
 
@@ -65,7 +63,6 @@ public class TextInterface {
         }catch (RestartOrderExc e){
             makeOrderText();
         }
-
     }
 
     private int quantePizze(){
@@ -84,7 +81,6 @@ public class TextInterface {
         }
         return tot;
     }
-
 
     private Date inserisciOrario (Order order, int tot){
         Date d = null;
@@ -163,7 +159,7 @@ public class TextInterface {
         String nomePizza;
         boolean ok=false;
         do {
-            System.out.println("Quale pizza desideri?\t\t(Inserisci 'Avanti' per proseguire o 'F' per annullare e ricominciare");
+            System.out.println("Quale pizza desideri?\t\t(Inserisci 'Avanti' per proseguire o 'F' per annullare e ricominciare)");
             nomePizza = scan.nextLine().toUpperCase();
             try {
                 if (nomePizza.equals("F")) {
@@ -185,10 +181,10 @@ public class TextInterface {
         return nomePizza;
     }
 
-    private int quantePizzaSpecifica(Order order, String nomePizza) {   // FUNZIONA BENE
+    private int quantePizzaSpecifica(Order order, String nomePizza) {
         boolean ok = false;
         int num = 0;
-        String modifiche="";
+        //String modifiche="";
         do {
             System.out.println("Quante " + nomePizza + " vuoi?\t[0..n]");
             String line = scan.nextLine();

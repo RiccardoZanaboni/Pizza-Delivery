@@ -236,8 +236,8 @@ public class Pizzeria {
     }
 
     public int trovaCasellaTempoFattorino(Date oraApertura, int oraDesiderata, int minutiDesiderati){
-        int casellaTempo=this.TEMPI_FATTORINI*(oraDesiderata - oraApertura.getHours());
-        casellaTempo+=minutiDesiderati/10;
+        int casellaTempo = this.TEMPI_FATTORINI*(oraDesiderata - oraApertura.getHours());
+        casellaTempo += minutiDesiderati/10;
         return casellaTempo;
     }
 
@@ -374,7 +374,7 @@ public class Pizzeria {
                 int disp=infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp();
                 infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(disp);
                 infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())-1].inserisciInfornate(tot-disp);
-            }else{
+            } else{
                 infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(tot);
             }
             fattorinoLibero(this.orarioApertura,d.getHours(),d.getMinutes(),0).setFattoriniTempi(trovaCasellaTempoFattorino(this.orarioApertura, d.getHours(), d.getMinutes()));
