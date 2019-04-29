@@ -2,16 +2,14 @@ import java.util.HashMap;
 
 public class PizzaMenu {
     private String nome;
-    //private String descrizione;
+    private String descrizione;
     private double prezzo;
-    //private String modifiche;
+    private String modifiche;
     private HashMap <String, Ingredienti> ingredienti;
 
     public PizzaMenu(String nome, HashMap ingr, double prezzo) {
         this.nome = nome;
-        //this.descrizione = descrizione;
         this.prezzo = prezzo;
-        //this.modifiche = descrizione;
         this.ingredienti = ingr;
     }
 
@@ -48,15 +46,11 @@ public class PizzaMenu {
             ingredienti.remove(ing.name(),ing);
     }
 
-    /*public String getModifiche() {
-        return modifiche;
-    }
-
-    public void setModifiche(String modifiche) {
-        this.modifiche = modifiche;
-    }*/
-
     public double getPrezzo() {
         return prezzo;
+    }
+
+    public void setPrezzo(double prezzo) {
+        this.prezzo = prezzo;
     }
 }
