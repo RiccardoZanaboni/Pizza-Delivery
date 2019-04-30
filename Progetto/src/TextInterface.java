@@ -47,14 +47,9 @@ public class TextInterface {
                 System.out.println(orario);
                 if (inserisciDati(order)) {
                     wolf.recapOrdine(order);
+                    chiediConfermaText(order, orario, tot);
                     //System.out.println(order.getPizzeordinate().get(0).equals(order.getPizzeordinate().get(1)));
                     //placeOrder(order,orario,tot);    NON SO COSA SIANO QUESTE DUE RIGHE VE LE LASCIO
-                    System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
-                    if (scan.nextLine().toUpperCase().equals("S")) {
-                        wolf.chiediConferma(order,orario,tot);
-                    } else {
-                        System.out.println("L'ordine è stato annullato.");
-                    }
                 }
             }
         }catch (RestartOrderExc e){
@@ -239,6 +234,15 @@ public class TextInterface {
         }
         return ok;
     }
+
+    public void chiediConfermaText(Order order, Date orario, int tot){
+        System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
+        if (scan.nextLine().toUpperCase().equals("S")) {
+            wolf.chiediConferma(order,orario,tot);
+        } else {
+            System.out.println("L'ordine è stato annullato.");
+        }
+    }
 }
 
 class Tester {
@@ -246,6 +250,7 @@ class Tester {
         TextInterface textInterface = new TextInterface();
         textInterface.wolf.ApriPizzeria(8);     // ma è qui che va creata la pizzeria?
         textInterface.wolf.AddFattorino(new DeliveryMan("Musi",textInterface.wolf));
+        textInterface.wolf.AddFattorino(new DeliveryMan("Zanzatroni",textInterface.wolf));
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
         textInterface.makeOrderText();  //Per prova vettori orario

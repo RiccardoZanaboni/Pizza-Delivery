@@ -251,7 +251,7 @@ public class Pizzeria {
     }
 
     public ArrayList<String> OrariDisponibili(int tot){
-        ArrayList<String> disp=new ArrayList<>();
+        ArrayList<String> disp = new ArrayList<>();
         for(int i=1; i<this.infornate.length; i++) {
             if (infornate[i].getPostiDisp()+infornate[i-1].getPostiDisp() >= tot) {
                 for(DeliveryMan a:this.fattorini){
