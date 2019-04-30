@@ -44,32 +44,46 @@ public class Order {
         for (int i = 0; i < num; i++) {
             pizzeordinate.add(pizza);
         }
+        System.out.println("\t> Aggiunte " + num + " pizze " + pizza.getNome());
     }
 
     public void addPizza(PizzaMenu pizza, String aggiunte, String rimozioni, int num, double prezzoSupl) {
         HashMap<String, Ingredienti> ingr = new HashMap<>(pizza.getIngredienti());
-
         PizzaMenu p = new PizzaMenu(pizza.getNome(), ingr, pizza.getPrezzo());
         int piu=0;
         StringTokenizer stAgg = new StringTokenizer(aggiunte);
         while (stAgg.hasMoreTokens()) {
             try {
-                Ingredienti ingredienti = Ingredienti.valueOf(stAgg.nextToken(", ").toUpperCase());
+                String ingredienteAggiuntoString = sistemaStringaIngrediente(stAgg);
+                Ingredienti ingredienti = Ingredienti.valueOf(ingredienteAggiuntoString);
                 piu++;
                 p.addIngredienti(ingredienti);
             } catch (Exception ignored) { ;}
         }
-        p.setPrezzo(p.getPrezzo() + piu*prezzoSupl);        // aggiunto 0.50 per ogni ingrediente
+        p.setPrezzo(p.getPrezzo() + (piu * prezzoSupl));        // aggiunto 0.50 per ogni ingrediente
         StringTokenizer stRmv = new StringTokenizer(rimozioni);
         while (stRmv.hasMoreTokens()) {
             try {
-                Ingredienti ingredienti = Ingredienti.valueOf(stRmv.nextToken(", ").toUpperCase());
+                String ingredienteRimossoString = sistemaStringaIngrediente(stRmv);
+                Ingredienti ingredienti = Ingredienti.valueOf(ingredienteRimossoString);
                 p.rmvIngredienti(ingredienti);
             } catch (Exception ignored) { ;}
         }
         for (int i = 0; i < num; i++) {
             pizzeordinate.add(p);
         }
+        System.out.println("\t> Aggiunte " + num + " pizze " + p.getNome() + " (" + p.getDescrizione() + ").");
+    }
+
+    private String sistemaStringaIngrediente(StringTokenizer st){
+        String ingred = st.nextToken(",");
+        if(ingred.startsWith(" "))
+            ingred = ingred.substring(1);
+        if(ingred.endsWith(" "))
+            ingred = ingred.substring(0,ingred.length()-1);
+        ingred = ingred.replace(" ","_");
+        ingred = ingred.toUpperCase();
+        return ingred;
     }
 
     public String recap() {

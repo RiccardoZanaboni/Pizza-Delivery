@@ -14,6 +14,7 @@ public class Pizzeria {
     private Forno[] infornate;
     private ArrayList<DeliveryMan> fattorini;
     private HashMap<String, PizzaMenu> menu;
+    private HashMap<String, Ingredienti> ingredientiPizzeria;
     private ArrayList<Order> ordini;
     private int ordiniDelGiorno;
     private final int TEMPI_FORNO = 12;      // ogni 5 minuti
@@ -23,6 +24,7 @@ public class Pizzeria {
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
         this.menu = new HashMap<>();
+        this.ingredientiPizzeria = new HashMap<>();
         this.nome = nome;
         this.ordiniDelGiorno = 0;
         this.ordini = new ArrayList<>();
@@ -32,6 +34,7 @@ public class Pizzeria {
         this.infornate = new Forno[TEMPI_FORNO * (orarioChiusura.getHours() - orarioApertura.getHours())];
         this.fattorini= new ArrayList<>();
         creaMenu();
+        setIngredientiPizzeria();
     }
 
     public void AddPizza(PizzaMenu pizza){
@@ -46,6 +49,29 @@ public class Pizzeria {
         for(int i=0;i<infornate.length;i++){
             infornate[i]=new Forno(postidisponibili);
         }
+    }
+
+    public void setIngredientiPizzeria(){
+        this.ingredientiPizzeria.put(Ingredienti.ALICI.name(), Ingredienti.ALICI);
+        this.ingredientiPizzeria.put(Ingredienti.BASILICO.name(), Ingredienti.BASILICO);
+        this.ingredientiPizzeria.put(Ingredienti.BELLE_DONNE.name(), Ingredienti.BELLE_DONNE);
+        this.ingredientiPizzeria.put(Ingredienti.CAPPERI.name(), Ingredienti.CAPPERI);
+        this.ingredientiPizzeria.put(Ingredienti.COTTO.name(), Ingredienti.COTTO);
+        this.ingredientiPizzeria.put(Ingredienti.CRUDO.name(), Ingredienti.CRUDO);
+        this.ingredientiPizzeria.put(Ingredienti.FUNGHI.name(), Ingredienti.FUNGHI);
+        this.ingredientiPizzeria.put(Ingredienti.GALANTERIA.name(), Ingredienti.GALANTERIA);
+        this.ingredientiPizzeria.put(Ingredienti.GEMME_DELL_INFINITO.name(), Ingredienti.GEMME_DELL_INFINITO);
+        this.ingredientiPizzeria.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
+        this.ingredientiPizzeria.put(Ingredienti.MOZZARELLA_DI_BUFALA.name(), Ingredienti.MOZZARELLA_DI_BUFALA);
+        this.ingredientiPizzeria.put(Ingredienti.OLIVE_NERE.name(), Ingredienti.OLIVE_NERE);
+        this.ingredientiPizzeria.put(Ingredienti.ORIGANO.name(), Ingredienti.ORIGANO);
+        this.ingredientiPizzeria.put(Ingredienti.PATATINE.name(), Ingredienti.PATATINE);
+        this.ingredientiPizzeria.put(Ingredienti.PEPERONI.name(), Ingredienti.PEPERONI);
+        this.ingredientiPizzeria.put(Ingredienti.POMODORINI.name(), Ingredienti.POMODORINI);
+        this.ingredientiPizzeria.put(Ingredienti.RUCOLA.name(), Ingredienti.RUCOLA);
+        this.ingredientiPizzeria.put(Ingredienti.SALAME_PICCANTE.name(), Ingredienti.SALAME_PICCANTE);
+        this.ingredientiPizzeria.put(Ingredienti.SALSICCIA.name(), Ingredienti.SALSICCIA);
+        this.ingredientiPizzeria.put(Ingredienti.WURSTEL.name(), Ingredienti.WURSTEL);
     }
 
     public void creaMenu(){
@@ -154,8 +180,20 @@ public class Pizzeria {
         return ordiniDelGiorno;
     }
 
+    public HashMap<String, Ingredienti> getIngredientiPizzeria() {
+        return ingredientiPizzeria;
+    }
+
     public void setOrdiniDelGiorno() {
         this.ordiniDelGiorno ++;
+    }
+
+    public Order inizializeNewOrder() {
+        Order order = new Order(ordiniDelGiorno);
+        setOrdiniDelGiorno();
+        System.out.println(helloThere());
+        System.out.println(stampaMenu());
+        return order;
     }
 
 /*    public void makeOrder() {

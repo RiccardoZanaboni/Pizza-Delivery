@@ -28,7 +28,7 @@ public class PizzaMenu {
     public String getDescrizione() {
         String descrizione = "";
         for (Ingredienti ingr: this.ingredienti.values()) {
-            descrizione = descrizione.concat(ingr.name() + ", ");
+            descrizione = descrizione.concat(ingr.name().replace("_"," ") + ", ");
         }
         descrizione = descrizione.toLowerCase().substring(0, descrizione.lastIndexOf(","));
         return descrizione;

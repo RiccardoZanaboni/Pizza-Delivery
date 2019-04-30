@@ -30,16 +30,9 @@ public class TextInterface {
     private Scanner scan = new Scanner(System.in);
 
     public void makeOrderText(){
+        Order order = wolf.inizializeNewOrder();
         int num;
-        //int ordinate = 0;
-        //boolean ok;
         String nomePizza;
-        Order order = new Order(wolf.getOrdiniDelGiorno());
-
-        wolf.setOrdiniDelGiorno();
-        System.out.println(wolf.helloThere());
-        System.out.println(wolf.stampaMenu());
-
         int tot = 0;
         try {
             do {
@@ -49,7 +42,7 @@ public class TextInterface {
                 }
                 num = quantePizzaSpecifica(order, nomePizza);
                 if(order.getNumeroPizze()==16){
-                    System.out.println("Massimo numero di pizze ordinate raggiunto. Per aggiungere altre pizze eseguire un altro ordine.");
+                    System.out.println("Spiacenti: massimo numero di pizze ordinate raggiunto. Per aggiungere altre pizze effettuare un secondo ordine.");
                     break;
                 }
                 //System.out.println("ordinate " + num + " " + nomePizza + " (" + wolf.getMenu().get(nomePizza).getDescrizione() + ")");
@@ -210,11 +203,12 @@ public class TextInterface {
                 }
                 if(nomePizza.equals("AVANTI") && tot<=0 )
                     System.out.println("Numero di pizze non valido. Riprovare:");
-                else if (nomePizza.equals("AVANTI"))
+                else if (nomePizza.equals("AVANTI"))      // inutile, c'è else alla fine
                     ok = true;
-                else if (!(wolf.getMenu().containsKey(nomePizza)))         // qui ci vorrebbe una eccezione invece della if-else
+                else if (!(wolf.getMenu().containsKey(nomePizza)))
                     throw new RiprovaExc();
                 else
+                    //return nomePizza;
                     ok = true;
             } catch (RiprovaExc e){
                 System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
@@ -226,7 +220,6 @@ public class TextInterface {
     private int quantePizzaSpecifica(Order order, String nomePizza) {
         boolean ok = false;
         int num = 0;
-        //String modifiche="";
         do {
             System.out.println("Quante " + nomePizza + " vuoi?\t[0..n]");
             String line = scan.nextLine();
@@ -239,6 +232,7 @@ public class TextInterface {
                 else {
                     ok = true;
                     chiediModificaPizza(order,nomePizza,num);
+
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
@@ -250,15 +244,29 @@ public class TextInterface {
     }
 
     public void chiediModificaPizza(Order order, String nomePizza, int num){
-        System.out.print("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N)");
-        if(scan.nextLine().toUpperCase().equals("S")) {
-            System.out.print("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:\n");
+        System.out.println("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N):");
+        String answer = scan.nextLine().toUpperCase();
+        if(answer.equals("S")) {
+            System.out.println("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:");
+            String possibiliIngr = "Possibili aggiunte: ";
+            int i = 0;
+            for (Ingredienti ingr: wolf.getIngredientiPizzeria().values()) {
+                possibiliIngr += (ingr.name().toLowerCase().replace("_"," ") + ", ");
+                i++;
+                if(i%10 == 0)
+                    possibiliIngr += "\n";
+            }
+            System.out.println(possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")));
             String aggiunte = scan.nextLine();
-            System.out.print("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:\n");
+            System.out.println("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:");
             String rimozioni = scan.nextLine();
             order.addPizza(wolf.getMenu().get(nomePizza), aggiunte, rimozioni, num, wolf.getPREZZO_SUPPL());
-        } else
+        } else if(answer.equals("N")) {
             order.addPizza(wolf.getMenu().get(nomePizza), num);
+        } else {
+            System.out.println("Spiacenti: inserito carattere non corretto.");
+            chiediModificaPizza(order, nomePizza, num);
+        }
     }
 
     public boolean inserisciDati(Order order){
@@ -300,13 +308,9 @@ class Tester {
         TextInterface textInterface = new TextInterface();
         textInterface.wolf.ApriPizzeria(8);     // ma è qui che va creata la pizzeria?
         textInterface.wolf.AddFattorino(new DeliveryMan("Musi",textInterface.wolf));
-      //textInterface.wolf.AddFattorino(new DeliveryMan("Zanzatroni",textInterface.wolf));
+        //textInterface.wolf.AddFattorino(new DeliveryMan("Zanzatroni",textInterface.wolf));
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
-        textInterface.makeOrderText();  //Per prova vettori orario
-        textInterface.makeOrderText();
-
-
-
+        //textInterface.makeOrderText();  //Per prova vettori orario
     }
 }
