@@ -248,7 +248,7 @@ public class Pizzeria {
 
     public DeliveryMan fattorinoLibero(Date oraApertura, int oraDesiderata, int minutiDesiderati,int indice){
         for(DeliveryMan a:this.fattorini){
-            if(!a.getFattoriniTempi()[trovaCasellaTempoFattorino(oraApertura,oraDesiderata,minutiDesiderati)-indice]){
+            if(!a.getFattoriniTempi()[trovaCasellaTempoFattorino(oraApertura,oraDesiderata,minutiDesiderati)-indice].isOccupato()){
                 return a;
             }
         }
@@ -260,7 +260,7 @@ public class Pizzeria {
         for(int i=1; i<this.infornate.length; i++) {
             if (infornate[i].getPostiDisp()+infornate[i-1].getPostiDisp() >= tot) {
                 for(DeliveryMan a:this.fattorini){
-                    if(!a.getFattoriniTempi()[i/2]){
+                    if(!a.getFattoriniTempi()[i/2].isOccupato()){
                         int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
                         int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
                         if(min<=5){
@@ -382,7 +382,7 @@ public class Pizzeria {
             } else{
                 infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(tot);
             }
-            fattorinoLibero(this.orarioApertura,d.getHours(),d.getMinutes(),0).setFattoriniTempi(trovaCasellaTempoFattorino(this.orarioApertura, d.getHours(), d.getMinutes()));
+            fattorinoLibero(this.orarioApertura,d.getHours(),d.getMinutes(),0).OccupaFattorino(trovaCasellaTempoFattorino(this.orarioApertura, d.getHours(), d.getMinutes()));
             order.setCompleto();
             ordini.add(order);
             return true;

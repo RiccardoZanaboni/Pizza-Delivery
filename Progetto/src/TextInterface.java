@@ -7,7 +7,21 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
+ *
+ *
+ *
  * * @authors: Javengers, 2019
+ *
+ *
+ *  @author  Fecchio Andrea
+ *  @author  Gobbo Matteo
+ *  @author  Musitano Francesco
+ *  @author  Rossanigo Fabio
+ *  @author  Zanaboni Riccardo
+ *
+ *
+ *
+ *
  */
 
 public class TextInterface {
@@ -286,11 +300,11 @@ class Tester {
         TextInterface textInterface = new TextInterface();
         textInterface.wolf.ApriPizzeria(8);     // ma è qui che va creata la pizzeria?
         textInterface.wolf.AddFattorino(new DeliveryMan("Musi",textInterface.wolf));
-        textInterface.wolf.AddFattorino(new DeliveryMan("Zanzatroni",textInterface.wolf));
+      //textInterface.wolf.AddFattorino(new DeliveryMan("Zanzatroni",textInterface.wolf));
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
         textInterface.makeOrderText();  //Per prova vettori orario
-        //textInterface.makeOrderText();
+        textInterface.makeOrderText();
 
 
 
