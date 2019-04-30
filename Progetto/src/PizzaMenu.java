@@ -2,21 +2,19 @@ import java.util.HashMap;
 
 public class PizzaMenu {
     private String nome;
-    private String descrizione;
     private double prezzo;
-    private String modifiche;
     private HashMap <String, Ingredienti> ingredienti;
 
-    public PizzaMenu(String nome, HashMap ingr, double prezzo) {
+    public PizzaMenu(String nome, HashMap ingred, double prezzo) {
         this.nome = nome;
         this.prezzo = prezzo;
-        this.ingredienti = ingr;
+        this.ingredienti = ingred;
     }
 
     @Override
     public String toString() {
         String descrizione = this.getDescrizione();
-        return "- PizzaMenu" + "\t" + nome + "\n\t\tPrezzo: " + prezzo + " €\n\t\tIngredienti: " + descrizione;
+        return "- Pizza:" + "\t" + nome + "\n\t\tPrezzo: " + prezzo + " €\n\t\tIngredienti: " + descrizione;
     }
 
     public String getNome() {

@@ -3,7 +3,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-
 public class Order {
     private Customer customer;
     private String codice;
@@ -60,7 +59,7 @@ public class Order {
                 p.addIngredienti(ingredienti);
             } catch (Exception ignored) { ;}
         }
-        p.setPrezzo(p.getPrezzo()+piu*prezzoSupl);
+        p.setPrezzo(p.getPrezzo() + piu*prezzoSupl);        // aggiunto 0.50 per ogni ingrediente
         StringTokenizer stRmv = new StringTokenizer(rimozioni);
         while (stRmv.hasMoreTokens()) {
             try {

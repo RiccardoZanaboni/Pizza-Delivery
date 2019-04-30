@@ -14,15 +14,14 @@ public class TextInterface {
     Pizzeria wolf = new Pizzeria("Wolf Of Pizza","Via Bolzano 10, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
     private Scanner scan = new Scanner(System.in);
 
-
     public void makeOrderText(){
         int num;
-        int ordinate = 0;
-        boolean ok;
+        //int ordinate = 0;
+        //boolean ok;
         String nomePizza;
         Order order = new Order(wolf.getOrdiniDelGiorno());
 
-        wolf.setOrdiniDelGiorno(wolf.getOrdiniDelGiorno());
+        wolf.setOrdiniDelGiorno();
         System.out.println(wolf.helloThere());
         System.out.println(wolf.stampaMenu());
 
@@ -46,26 +45,24 @@ public class TextInterface {
             if (orario != null) {
                 order.setOrario(orario);
                 System.out.println(orario);
-
-                    if (inserisciDati(order)) {
-                        wolf.recapOrdine(order);
-                        //System.out.println(order.getPizzeordinate().get(0).equals(order.getPizzeordinate().get(1)));
-                        //placeOrder(order,orario,tot);    NON SO COSA SIANO QUESTE DUE RIGHE VE LE LASCIO
-                        System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
-                        if (scan.nextLine().toUpperCase().equals("S")) {
-                          wolf.chiediConferma(order,orario,tot);
-                        }else {
-                            System.out.println("L'ordine è stato annullato.");
-
-                        }
+                if (inserisciDati(order)) {
+                    wolf.recapOrdine(order);
+                    //System.out.println(order.getPizzeordinate().get(0).equals(order.getPizzeordinate().get(1)));
+                    //placeOrder(order,orario,tot);    NON SO COSA SIANO QUESTE DUE RIGHE VE LE LASCIO
+                    System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
+                    if (scan.nextLine().toUpperCase().equals("S")) {
+                        wolf.chiediConferma(order,orario,tot);
+                    } else {
+                        System.out.println("L'ordine è stato annullato.");
                     }
+                }
             }
         }catch (RestartOrderExc e){
             makeOrderText();
         }
     }
 
-    private int quantePizze(){
+    /*private int quantePizze(){
         int tot=0;
         String line;
         while(tot<=0){
@@ -80,7 +77,7 @@ public class TextInterface {
             }
         }
         return tot;
-    }
+    }*/
 
     private Date inserisciOrario (Order order, int tot){
         Date d = null;
@@ -96,7 +93,7 @@ public class TextInterface {
                     ok=true;
                     throw new RestartOrderExc();
                 } else {
-                    d = controllaOrario(sDate1, order, tot);          // CHECK ORARIO!!!
+                    d = checkValiditaOrario(sDate1, order, tot);
                     if(d==null)
                         throw new NumberFormatException();
                     else {
@@ -127,7 +124,7 @@ public class TextInterface {
         return d;
     }
 
-    public Date controllaOrario(String sDate1, Order order, int tot){
+    public Date checkValiditaOrario(String sDate1, Order order, int tot){
         Date d= null;
         try {
             StringTokenizer st = new StringTokenizer(sDate1, ":");
@@ -247,13 +244,12 @@ public class TextInterface {
 class Tester {
     public static void main(String[] args) {
         TextInterface textInterface = new TextInterface();
-        textInterface.wolf.ApriPizzeria(8);
+        textInterface.wolf.ApriPizzeria(8);     // ma è qui che va creata la pizzeria?
         textInterface.wolf.AddFattorino(new DeliveryMan("Musi",textInterface.wolf));
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
-        //textInterface.makeOrderText();  Per prova vettori orario
+        textInterface.makeOrderText();  //Per prova vettori orario
         //textInterface.makeOrderText();
-
 
 
 

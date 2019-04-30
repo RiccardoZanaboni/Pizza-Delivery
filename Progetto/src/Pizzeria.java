@@ -15,7 +15,7 @@ public class Pizzeria {
     private int ordiniDelGiorno;
     private final int TEMPI_FORNO = 12;      // ogni 5 minuti
     private final int TEMPI_FATTORINI = 6;   // ogni 10 minuti
-    private Scanner scan = new Scanner(System.in);
+    //private Scanner scan = new Scanner(System.in);
     private final double PREZZO_SUPPL = 0.5;
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {
@@ -151,8 +151,8 @@ public class Pizzeria {
         return ordiniDelGiorno;
     }
 
-    public void setOrdiniDelGiorno(int ordiniDelGiorno) {
-        this.ordiniDelGiorno = ordiniDelGiorno++;
+    public void setOrdiniDelGiorno() {
+        this.ordiniDelGiorno ++;
     }
 
 /*    public void makeOrder() {
@@ -208,7 +208,7 @@ public class Pizzeria {
         return line+s+line;
     }
 
-    private int quantePizze(){
+    /*private int quantePizze(){
         int tot=0;
         String line;
         while(tot<=0){
@@ -223,7 +223,7 @@ public class Pizzeria {
             }
         }
         return tot;
-    }
+    }*/
 
     public boolean controllaApertura(int ora, int minuti){
         return !(ora < this.orarioApertura.getHours() || ora > this.orarioChiusura.getHours() || (ora == this.orarioChiusura.getHours() && minuti >= this.orarioChiusura.getMinutes()) || (ora == this.orarioApertura.getHours() && minuti <= this.orarioApertura.getMinutes()));
@@ -295,7 +295,7 @@ public class Pizzeria {
         return nomePizza;
     }*/
 
-    private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
+    /*private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
         boolean ok = false;
         int num = 0;
         do {
@@ -318,9 +318,9 @@ public class Pizzeria {
             }
         } while(!ok);
         return num;
-    }
+    }*/
 
-    public void chiediModificaPizza(Order order, String nomePizza, int num){
+    /*public void chiediModificaPizza(Order order, String nomePizza, int num){
         System.out.print("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N)");
         if(scan.nextLine().toUpperCase().equals("S")) {
             System.out.print("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:\n");
@@ -330,7 +330,7 @@ public class Pizzeria {
             order.addPizza(menu.get(nomePizza), aggiunte, rimozioni, num, PREZZO_SUPPL);
         } else
             order.addPizza(menu.get(nomePizza), num);
-    }
+    }*/
 
   /*  public boolean inserisciDati(Order order){
         boolean ok=true;
