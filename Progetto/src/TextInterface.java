@@ -264,11 +264,11 @@ class Tester {
         TextInterface textInterface = new TextInterface();
         textInterface.wolf.ApriPizzeria(8);     // ma è qui che va creata la pizzeria?
         textInterface.wolf.AddFattorino(new DeliveryMan("Musi",textInterface.wolf));
-        textInterface.wolf.AddFattorino(new DeliveryMan("Zanzatroni",textInterface.wolf));
+      //textInterface.wolf.AddFattorino(new DeliveryMan("Zanzatroni",textInterface.wolf));
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
         textInterface.makeOrderText();  //Per prova vettori orario
-        //textInterface.makeOrderText();
+        textInterface.makeOrderText();
 
 
 
