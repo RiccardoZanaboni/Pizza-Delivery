@@ -33,7 +33,7 @@ public class TextInterface {
                     break;
                 }
                 num = quantePizzaSpecifica(order, nomePizza);
-                if(num==16){
+                if(order.getNumeroPizze()==16){
                     System.out.println("Massimo numero di pizze ordinate raggiunto. Per aggiungere altre pizze eseguire un altro ordine.");
                     break;
                 }
