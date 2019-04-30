@@ -3,6 +3,9 @@ import exceptions.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@SuppressWarnings("unchecked")
+
+
 public class Pizzeria {
     private String nome;
     private String indirizzo;
