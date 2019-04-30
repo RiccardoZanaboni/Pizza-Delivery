@@ -228,7 +228,9 @@ public class Pizzeria {
         return tot;
     }*/
 
-    public boolean controllaApertura(int ora, int minuti){
+    public boolean controllaApertura(Date d){
+        int ora= d.getHours();
+        int minuti= d.getMinutes();
         return !(ora < this.orarioApertura.getHours() || ora > this.orarioChiusura.getHours() || (ora == this.orarioChiusura.getHours() && minuti >= this.orarioChiusura.getMinutes()) || (ora == this.orarioApertura.getHours() && minuti <= this.orarioApertura.getMinutes()));
     }
 

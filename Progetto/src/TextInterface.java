@@ -2,6 +2,7 @@ import exceptions.OutOfTimeExc;
 import exceptions.RestartOrderExc;
 import exceptions.RiprovaExc;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -57,33 +58,68 @@ public class TextInterface {
         }
     }
 
-    /*private int quantePizze(){
-        int tot=0;
-        String line;
-        while(tot<=0){
-            System.out.println("Quante pizze vuoi ordinare?");
-            line = scan.nextLine();
-            try {
-                tot = Integer.parseInt(line);   // può generare NumberFormatException
-                if(tot<=0)
-                    throw new NumberFormatException();
-            } catch (NumberFormatException e) {
-                System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-            }
+    private void superOrarioMegaGalattico (Order order, int tot) {
+        String orarioScelto = insertTime(order, tot);
+        if (checkValidTime(orarioScelto)) {
+            Date d = stringToDate(orarioScelto);
         }
-        return tot;
-    }*/
+
+    }
+
+    private String insertTime(Order order, int tot) {
+        System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm] \t\t(Inserisci 'F' per annullare e ricominciare) \nEcco gli orari disponibili:");
+        for (String s : wolf.OrariDisponibili(tot)) {
+            System.out.print(s);
+        }
+        String sDate1 = scan.nextLine();
+        return sDate1;
+    }
+
+    private Date stringToDate(String sDate1){
+        Date d;
+        Calendar calendar = new GregorianCalendar();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        sDate1 = day + "/" + month + "/" + year + " " + sDate1;
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        try {
+            d = formato.parse(sDate1);
+        } catch (ParseException e) {
+            return null;
+        }
+        return d;
+    }
+
+    private boolean checkValidTime(String sDate1) {
+        boolean b = false;
+        try {
+            StringTokenizer st = new StringTokenizer(sDate1, ":");
+            String token = st.nextToken();
+            if (token.length() != 2) {
+                return b;
+            }
+            int ora = Integer.parseInt(token);
+            token = st.nextToken();
+            if (token.length() != 2)
+                return b;
+            int minuti = Integer.parseInt(token);
+            if (ora > 23 || minuti > 59)
+                return b;
+        } catch (NumberFormatException | NoSuchElementException e) {
+            return b;
+        }
+        b=true;
+        return b;
+    }
 
     private Date inserisciOrario (Order order, int tot){
         Date d = null;
         boolean ok = false;
-        do {
-            System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm] \t\t(Inserisci 'F' per annullare e ricominciare) \nEcco gli orari disponibili:");
-            for(String s:wolf.OrariDisponibili(tot)){
-                System.out.print(s);
-            }
-            String sDate1 = scan.nextLine();
-            try {
+
+        String sDate1 = insertTime(order, tot);
+            do {
+                try {
                 if (sDate1.toUpperCase().equals("F")) {
                     ok=true;
                     throw new RestartOrderExc();
@@ -94,7 +130,7 @@ public class TextInterface {
                     else {
                         int ora = d.getHours();
                         int minuti = d.getMinutes();
-                        if (!wolf.controllaApertura(ora, minuti))
+                        if (!wolf.controllaApertura(d))
                             throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
                         if (wolf.getInfornate()[wolf.trovaCasellaTempoForno(wolf.getOrarioApertura(),ora,minuti)].getPostiDisp()+wolf.getInfornate()[wolf.trovaCasellaTempoForno(wolf.getOrarioApertura(),ora,minuti)-1].getPostiDisp() < tot) {
                             throw new RiprovaExc();
