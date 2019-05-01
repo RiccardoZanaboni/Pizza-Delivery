@@ -310,7 +310,6 @@ public class Pizzeria {
                         } else {
                             disp.add(oraNew + ":" + min + " ");
                         }
-
                         break;
                     }
                 }

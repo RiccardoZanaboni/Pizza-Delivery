@@ -14,7 +14,7 @@ public class PizzaMenu {
     @Override
     public String toString() {
         String descrizione = this.getDescrizione();
-        return "- Pizza:" + "\t" + nome + "\n\t\tPrezzo: " + prezzo + " €\n\t\tIngredienti: " + descrizione;
+        return "- " + nome + "\n\t\tPrezzo: " + prezzo + " €\n\t\tIngredienti: " + descrizione;
     }
 
     public String getNome() {
