@@ -37,15 +37,14 @@ public class TextInterface {
         try {
             do {
                 nomePizza = qualePizza(tot);
-                if (nomePizza.equals("AVANTI")) {
-                    break;
+                if (nomePizza.equals("OK")) {
+                    break;      // smette di chiedere pizze
                 }
                 num = quantePizzaSpecifica(order, nomePizza);
                 if(order.getNumeroPizze()==16){
                     System.out.println("Spiacenti: massimo numero di pizze ordinate raggiunto. Per aggiungere altre pizze effettuare un secondo ordine.");
                     break;
                 }
-                //System.out.println("ordinate " + num + " " + nomePizza + " (" + wolf.getMenu().get(nomePizza).getDescrizione() + ")");
                 tot += num;
             } while (true);
 
@@ -60,7 +59,7 @@ public class TextInterface {
                     //placeOrder(order,orario,tot);    NON SO COSA SIANO QUESTE DUE RIGHE VE LE LASCIO
                 }
             }
-        }catch (RestartOrderExc e){
+        } catch (RestartOrderExc e){
             makeOrderText();
         }
     }
@@ -199,21 +198,20 @@ public class TextInterface {
         String nomePizza;
         boolean ok=false;
         do {
-            System.out.println("Quale pizza desideri?\t\t(Inserisci 'Avanti' per proseguire o 'F' per annullare e ricominciare)");
+            System.out.println("Quale pizza desideri?\t\t(Inserisci 'OK' per proseguire o 'F' per annullare e ricominciare)");
             nomePizza = scan.nextLine().toUpperCase();
             try {
                 if (nomePizza.equals("F")) {
                     ok=true;
                     throw new RestartOrderExc();
                 }
-                if(nomePizza.equals("AVANTI") && tot<=0 )
+                if(nomePizza.equals("OK") && tot<=0 )
                     System.out.println("Numero di pizze non valido. Riprovare:");
-                else if (nomePizza.equals("AVANTI"))      // inutile, c'è else alla fine
+                else if (nomePizza.equals("OK"))
                     ok = true;
                 else if (!(wolf.getMenu().containsKey(nomePizza)))
                     throw new RiprovaExc();
                 else
-                    //return nomePizza;
                     ok = true;
             } catch (RiprovaExc e){
                 System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
@@ -226,7 +224,7 @@ public class TextInterface {
         boolean ok = false;
         int num = 0;
         do {
-            System.out.println("Quante " + nomePizza + " vuoi?\t[0..n]");
+            System.out.println("Quante " + nomePizza + " vuoi?\t[1..n]");
             String line = scan.nextLine();
             try {
                 num = Integer.parseInt(line);
