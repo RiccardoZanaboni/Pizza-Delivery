@@ -37,6 +37,10 @@ public class Pizzeria {
         setIngredientiPizzeria();
     }
 
+    public void addOrdine(Order order) {
+        this.ordini.add(order);
+    }
+
     public void AddPizza(PizzaMenu pizza){
         menu.put(pizza.getNome(),pizza);
     }
@@ -228,7 +232,7 @@ public class Pizzeria {
                 ok=inserisciDati(order);
                 if (ok) {
                     recapOrdine(order);
-                    chiediConferma(order,orario,tot);
+                    checkFornoFattorino(order,orario,tot);
                 }
             }
         }
@@ -410,7 +414,7 @@ public class Pizzeria {
         System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
     }
 
-    public boolean chiediConferma(Order order, Date d, int tot){
+    public boolean checkFornoFattorino(Order order, Date d, int tot){
         //if (s.toUpperCase().equals("S")) {
             //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
             if(infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp()<tot){
@@ -421,8 +425,6 @@ public class Pizzeria {
                 infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(tot);
             }
             fattorinoLibero(this.orarioApertura,d.getHours(),d.getMinutes(),0).OccupaFattorino(trovaCasellaTempoFattorino(this.orarioApertura, d.getHours(), d.getMinutes()));
-            order.setCompleto();
-            ordini.add(order);
             return true;
     }
 

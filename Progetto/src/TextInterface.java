@@ -1,4 +1,3 @@
-import exceptions.OutOfTimeExc;
 import exceptions.RestartOrderExc;
 import exceptions.RiprovaExc;
 
@@ -42,23 +41,19 @@ public class TextInterface {
                 }
                 num = quantePizzaSpecifica(order, nomePizza);
                 if(order.getNumeroPizze()==16){
-                    System.out.println("Spiacenti: massimo numero di pizze ordinate raggiunto. Per aggiungere altre pizze effettuare un secondo ordine.");
+                    //System.out.println("Spiacenti: massimo numero di pizze ordinate raggiunto. Per aggiungere altre pizze effettuando un secondo ordine.");
                     break;
                 }
                 tot += num;
             } while (true);
 
-            /*Date orario = inserisciOrario(order, tot);
-            if (orario != null) {
-                order.setOrario(orario);*/
-            Date orario = null;
+            Date orario;
             orario = superOrarioMegaGalattico(order, tot);
             System.out.println(orario);
             if (inserisciDati(order)) {
-                    wolf.recapOrdine(order);
-                    chiediConfermaText(order, orario, tot);
-                    //System.out.println(order.getPizzeordinate().get(0).equals(order.getPizzeordinate().get(1)));
-                    //placeOrder(order,orario,tot);    NON SO COSA SIANO QUESTE DUE RIGHE VE LE LASCIO
+                wolf.recapOrdine(order);
+                chiediConfermaText(order, orario, tot);
+                System.out.println("Riga in più");
             }
         } catch (RestartOrderExc e){
             makeOrderText();
@@ -67,19 +62,24 @@ public class TextInterface {
 
     private Date superOrarioMegaGalattico (Order order, int tot) {
         String orarioScelto = insertTime(order, tot);
-        Date d = null;
-        if (checkValidTime(orarioScelto)) {
-            d = stringToDate(orarioScelto);
-            try {
+        Date d;
+        try {
+            if (checkValidTime(orarioScelto)) {
+                d = stringToDate(orarioScelto);
                 if (!wolf.controllaApertura(d)) {
                     throw new ArrayIndexOutOfBoundsException();
                 } else {
                     order.setOrario(d);
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Spiacenti: la pizzeria è chiusa nell'orario inserito. :(");
-                d = superOrarioMegaGalattico(order, tot);
+            } else {
+                throw new RiprovaExc();
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Spiacenti: la pizzeria è chiusa nell'orario inserito. :(");
+            d = superOrarioMegaGalattico(order, tot);
+        } catch (RiprovaExc e){
+            System.out.println("Spiacenti: inserito orario non valido. :(");
+            d = superOrarioMegaGalattico(order, tot);
         }
         return d;
     }
@@ -136,7 +136,7 @@ public class TextInterface {
         return b;
     }
 
-    private Date inserisciOrario (Order order, int tot){
+    /*private Date inserisciOrario (Order order, int tot){
         Date d = null;
         boolean ok = false;
 
@@ -176,9 +176,9 @@ public class TextInterface {
             }
         } while(!ok);
         return d;
-    }
+    }*/
 
-    public Date checkValiditaOrario(String sDate1, Order order, int tot){
+    /*public Date checkValiditaOrario(String sDate1, Order order, int tot){
         Date d= null;
         try {
             StringTokenizer st = new StringTokenizer(sDate1, ":");
@@ -204,7 +204,7 @@ public class TextInterface {
             return null;
         }
         return d;
-    }
+    }*/
 
     private String qualePizza(int tot) throws RestartOrderExc{
         String nomePizza;
@@ -236,7 +236,7 @@ public class TextInterface {
         boolean ok = false;
         int num = 0;
         do {
-            System.out.println("Quante " + nomePizza + " vuoi?\t[1..n]");
+            System.out.println("Quante " + nomePizza + " vuoi?\t[1..n]");   // qui potremmo indicare numero max esatto
             String line = scan.nextLine();
             try {
                 num = Integer.parseInt(line);
@@ -311,7 +311,10 @@ public class TextInterface {
     public void chiediConfermaText(Order order, Date orario, int tot){
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare: ");
         if (scan.nextLine().toUpperCase().equals("S")) {
-            wolf.chiediConferma(order,orario,tot);
+            if(wolf.checkFornoFattorino(order,orario,tot)) {
+                order.setCompleto();
+                wolf.addOrdine(order);
+            }
         } else {
             System.out.println("L'ordine è stato annullato.");
         }
@@ -326,6 +329,8 @@ class Tester {
         //textInterface.wolf.AddFattorino(new DeliveryMan("Zanzatroni",textInterface.wolf));
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
-        //textInterface.makeOrderText();  //Per prova vettori orario
+        textInterface.makeOrderText();  //Per prova vettori orario
+        textInterface.makeOrderText();
+        textInterface.makeOrderText();
     }
 }
