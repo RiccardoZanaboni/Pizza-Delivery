@@ -75,9 +75,14 @@ public class TextInterface {
 
     private String insertTime(Order order, int tot) {
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm] \t\t(Inserisci 'F' per annullare e ricominciare) \nEcco gli orari disponibili:");
+        int c=0;
         for (String s : wolf.OrariDisponibili(tot)) {
             System.out.print(s);
+            c++;
+            if(c%20 == 0)
+                System.out.print("\n");
         }
+        System.out.println("\n");
         String sDate1 = scan.nextLine();
         return sDate1;
     }
@@ -294,7 +299,7 @@ public class TextInterface {
     }
 
     public void chiediConfermaText(Order order, Date orario, int tot){
-        System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare.");
+        System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare: ");
         if (scan.nextLine().toUpperCase().equals("S")) {
             wolf.chiediConferma(order,orario,tot);
         } else {

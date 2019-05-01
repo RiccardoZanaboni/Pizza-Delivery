@@ -302,9 +302,9 @@ public class Pizzeria {
                         int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
                         int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
                         if(min<=5){
-                            disp.add(oraNew + ":0" + min + "\n");
+                            disp.add(oraNew + ":0" + min + " ");
                         } else {
-                            disp.add(oraNew + ":" + min + "\n");
+                            disp.add(oraNew + ":" + min + " ");
                         }
 
                         break;
