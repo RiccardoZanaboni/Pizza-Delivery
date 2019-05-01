@@ -49,28 +49,40 @@ public class TextInterface {
                 tot += num;
             } while (true);
 
-            Date orario = inserisciOrario(order, tot);
+            /*Date orario = inserisciOrario(order, tot);
             if (orario != null) {
-                order.setOrario(orario);
-                System.out.println(orario);
-                if (inserisciDati(order)) {
+                order.setOrario(orario);*/
+            Date orario = null;
+            orario = superOrarioMegaGalattico(order, tot);
+            System.out.println(orario);
+            if (inserisciDati(order)) {
                     wolf.recapOrdine(order);
                     chiediConfermaText(order, orario, tot);
                     //System.out.println(order.getPizzeordinate().get(0).equals(order.getPizzeordinate().get(1)));
                     //placeOrder(order,orario,tot);    NON SO COSA SIANO QUESTE DUE RIGHE VE LE LASCIO
-                }
             }
         }catch (RestartOrderExc e){
             makeOrderText();
         }
     }
 
-    private void superOrarioMegaGalattico (Order order, int tot) {
+    private Date superOrarioMegaGalattico (Order order, int tot) {
         String orarioScelto = insertTime(order, tot);
+        Date d = null;
         if (checkValidTime(orarioScelto)) {
-            Date d = stringToDate(orarioScelto);
+            d = stringToDate(orarioScelto);
+            try {
+                if (!wolf.controllaApertura(d)) {
+                    throw new ArrayIndexOutOfBoundsException();
+                } else {
+                    order.setOrario(d);
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Spiacenti: la pizzeria è chiusa nell'orario inserito. :(");
+                d = superOrarioMegaGalattico(order, tot);
+            }
         }
-
+        return d;
     }
 
     private String insertTime(Order order, int tot) {
