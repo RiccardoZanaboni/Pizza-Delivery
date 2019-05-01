@@ -19,7 +19,7 @@ public class DeliveryMan {
         this.fattoriniTempi[i].InserisciOrdine();
     }
 
-    public void setFattoriniTempi(CasellaTempoDeliveryMan[] fattoriniTempi) {
+    /*public void setFattoriniTempi(CasellaTempoDeliveryMan[] fattoriniTempi) {
         this.fattoriniTempi = fattoriniTempi;
-    }
+    }*/
 }

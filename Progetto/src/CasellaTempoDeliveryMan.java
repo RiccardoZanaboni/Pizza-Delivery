@@ -8,7 +8,7 @@ public class CasellaTempoDeliveryMan {
     }
 
     public void InserisciOrdine() {
-        this.ordini += 1;
+        this.ordini++;
         if(this.ordini==2){
             this.occupato=true;
         }

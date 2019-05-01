@@ -297,18 +297,18 @@ public class Pizzeria {
         return null;
     }
 
-    public ArrayList<String> OrariDisponibili(int tot){
+    public ArrayList<String> OrarioDisponibile(int tot){
         ArrayList<String> disp = new ArrayList<>();
         for(int i=1; i<this.infornate.length; i++) {
-            if (infornate[i].getPostiDisp()+infornate[i-1].getPostiDisp() >= tot) {
+            if (infornate[i].getPostiDisp() + infornate[i-1].getPostiDisp() >= tot) {
                 for(DeliveryMan a:this.fattorini){
                     if(!a.getFattoriniTempi()[i/2].isOccupato()){
                         int oraNew = this.orarioApertura.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
                         int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
                         if(min<=5){
-                            disp.add(oraNew + ":0" + min + " ");
+                            disp.add(oraNew + ":0" + min + "  ");
                         } else {
-                            disp.add(oraNew + ":" + min + " ");
+                            disp.add(oraNew + ":" + min + "  ");
                         }
                         break;
                     }
