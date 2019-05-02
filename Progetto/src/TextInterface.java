@@ -65,8 +65,11 @@ public class TextInterface {
 
     private Date superOrarioMegaGalattico(Order order, int tot) {
         String orarioScelto = insertTime(tot);
-        Date d;
+        Date d = null;
         try {
+            if (orarioScelto.toUpperCase().equals("F")) {
+                throw new RestartOrderExc();
+            }
             if (checkValidTime(orarioScelto)) {
                 d = stringToDate(orarioScelto);
                 int ora = d.getHours();
@@ -86,10 +89,12 @@ public class TextInterface {
             } else {
                 throw new RiprovaExc();
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (RestartOrderExc roe) {
+            makeOrderText();
+        } catch (ArrayIndexOutOfBoundsException obe) {
             System.out.println("Spiacenti: la pizzeria è chiusa nell'orario inserito. :(");
             d = superOrarioMegaGalattico(order, tot);
-        } catch (RiprovaExc e) {
+        } catch (RiprovaExc re) {
             System.out.println("Spiacenti: inserito orario non valido. :(");
             d = superOrarioMegaGalattico(order, tot);
         }
@@ -150,7 +155,11 @@ public class TextInterface {
         String nomePizza;
         boolean ok = false;
         do {
-            System.out.println("Quale pizza desideri?\t\t(Inserisci 'OK' per proseguire o 'F' per annullare e ricominciare)");
+            System.out.print("Quale pizza desideri?");
+            if(isPrimaRichiesta)
+                System.out.print("\n");
+            else
+                System.out.print("\t\t(Inserisci 'OK' per proseguire o 'F' per annullare e ricominciare)\n");
             nomePizza = scan.nextLine().toUpperCase();
             try {
                 if (nomePizza.equals("F")) {
@@ -257,13 +266,24 @@ public class TextInterface {
     }
 
     private void chiediConfermaText(Order order, Date orario, int tot) {
-        System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare: ");
-        if (scan.nextLine().toUpperCase().equals("S")) {
+        System.out.println("Confermi l'ordine? Premere 'S' per confermare, 'N' per annullare: ");
+        String risp= scan.nextLine().toUpperCase();
+        if (risp.equals("S")) {
             wolf.checkFornoFattorino(order, orario, tot);
             order.setCompleto();
             wolf.addOrdine(order);
-        } else {
-            System.out.println("L'ordine è stato annullato.");
+        } else if (risp.equals("N")) {
+            try {
+                throw new RestartOrderExc();
+            } catch (RestartOrderExc roe) {
+                System.out.println("L'ordine è stato annullato.");
+                makeOrderText();
+            }
+        } else try {
+            throw new RiprovaExc();
+        } catch (RiprovaExc re) {
+            System.out.println("Spiacenti: carattere inserito non valido. Riprovare: ");
+            chiediConfermaText(order, orario, tot);
         }
     }
 
