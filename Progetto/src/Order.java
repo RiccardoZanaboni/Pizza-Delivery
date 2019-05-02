@@ -87,7 +87,7 @@ public class Order {
     }
 
     public String recap() {
-        String prodotti = "";
+        StringBuilder prodotti = new StringBuilder();
         ArrayList elencate = new ArrayList<PizzaMenu>();
         for (int i = 0; i < getNumeroPizze(); i++) {
 
@@ -100,10 +100,10 @@ public class Order {
                     if (p.equals(getPizzeordinate().get(j)))
                         num++;
                 }
-                prodotti += "\t" + num + "\t" + p.getNome() + "\t\t" + p.getDescrizione() + "\t\t-->\t" + num * p.getPrezzo() + "€\n";
+                prodotti.append("\t").append(num).append("\t").append(p.getNome()).append("\t\t").append(p.getDescrizione()).append("\t\t-->\t").append(num * p.getPrezzo()).append("€\n");
             }
         }
-        return prodotti;
+        return prodotti.toString();
     }
 
     public void setCustomer(Customer c) {

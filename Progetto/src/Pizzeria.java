@@ -1,5 +1,5 @@
 import java.util.*;
-@SuppressWarnings("ALL")
+@SuppressWarnings("deprecation")
 
 
 public class Pizzeria {
@@ -242,9 +242,9 @@ public class Pizzeria {
 
     public String stampaMenu() {
         String line= "\n--------------------------------------------------------------------------------------\n";
-        String s= "    >>  MENU\n";
+        StringBuilder s= new StringBuilder("    >>  MENU\n");
         for (String a:menu.keySet()) {
-            s += "\n"+ menu.get(a).toString();
+            s.append("\n").append(menu.get(a).toString());
         }
         return line+s+line;
     }
@@ -409,7 +409,7 @@ public class Pizzeria {
         System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
     }
 
-    public boolean checkFornoFattorino(Order order, Date d, int tot){
+    public boolean checkFornoFattorino(Date d, int tot){   //Order order, Date d, int tot
         //if (s.toUpperCase().equals("S")) {
             //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
             if(infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp()<tot){

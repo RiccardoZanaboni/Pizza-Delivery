@@ -319,7 +319,7 @@ public class TextInterface {
     private void chiediConfermaText(Order order, Date orario, int tot) {
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare: ");
         if (scan.nextLine().toUpperCase().equals("S")) {
-            if (wolf.checkFornoFattorino(order, orario, tot)) {
+            if (wolf.checkFornoFattorino(orario, tot)) {
                 order.setCompleto();
                 wolf.addOrdine(order);
             }
