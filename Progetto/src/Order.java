@@ -58,7 +58,7 @@ public class Order {
                 Ingredienti ingredienti = Ingredienti.valueOf(ingredienteAggiuntoString);
                 piu++;
                 p.addIngredienti(ingredienti);
-            } catch (Exception ignored) { ;}
+            } catch (Exception ignored) { }
         }
         p.setPrezzo(p.getPrezzo() + (piu * prezzoSupl));        // aggiunto 0.50 per ogni ingrediente
         StringTokenizer stRmv = new StringTokenizer(rimozioni);
@@ -67,7 +67,7 @@ public class Order {
                 String ingredienteRimossoString = sistemaStringaIngrediente(stRmv);
                 Ingredienti ingredienti = Ingredienti.valueOf(ingredienteRimossoString);
                 p.rmvIngredienti(ingredienti);
-            } catch (Exception ignored) { ;}
+            } catch (Exception ignored) { }
         }
         for (int i = 0; i < num; i++) {
             pizzeordinate.add(p);
