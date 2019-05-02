@@ -38,6 +38,7 @@ public class TextInterface {
                 isPrimaRichiesta = false;
                 num = quantePizzaSpecifica(order, nomePizza);
                 if (order.getNumeroPizze() == 16) {
+                    tot += num;
                     break;      // hai chiesto esattamente 16 pizze in totale: smette di chiedere pizze
                 }
                 tot += num;
@@ -49,7 +50,6 @@ public class TextInterface {
             if (inserisciDati(order)) {
                 wolf.recapOrdine(order);
                 chiediConfermaText(order, orario, tot);
-                //System.out.println("Riga in più");
             }
         } catch (RestartOrderExc e) {
             makeOrderText();
@@ -62,9 +62,18 @@ public class TextInterface {
         try {
             if (checkValidTime(orarioScelto)) {
                 d = stringToDate(orarioScelto);
+                int ora = d.getHours();
+                int minuti = d.getMinutes();
                 if (!wolf.controllaApertura(d)) {
                     throw new ArrayIndexOutOfBoundsException();
-                } else {
+                }
+                if (wolf.getInfornate()[wolf.trovaCasellaTempoForno(wolf.getOrarioApertura(),ora,minuti)].getPostiDisp() + wolf.getInfornate()[wolf.trovaCasellaTempoForno(wolf.getOrarioApertura(), ora, minuti) -1].getPostiDisp() < tot) {
+                    throw new RiprovaExc();
+                }
+                if(wolf.fattorinoLibero(wolf.getOrarioApertura(),ora,minuti,0)==null){
+                    throw new RiprovaExc();
+                }
+                else {
                     order.setOrario(d);
                 }
             } else {
@@ -81,7 +90,7 @@ public class TextInterface {
     }
 
     private String insertTime (int tot) {
-        System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm] \t\t(Inserisci 'F' per annullare e ricominciare)\n\tEcco gli orari disponibili:");
+        System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)\n\tEcco gli orari disponibili:");
         int c = 0;
         System.out.print("\t");
         for (String s : wolf.OrarioDisponibile(tot)) {
@@ -132,76 +141,6 @@ public class TextInterface {
         b = true;
         return b;
     }
-
-    /*private Date inserisciOrario (Order order, int tot){
-        Date d = null;
-        boolean ok = false;
-
-        String sDate1 = insertTime(order, tot);
-            do {
-                try {
-                if (sDate1.toUpperCase().equals("F")) {
-                    ok=true;
-                    throw new RestartOrderExc();
-                } else {
-                    d = checkValiditaOrario(sDate1, order, tot);
-                    if(d==null)
-                        throw new NumberFormatException();
-                    else {
-                        int ora = d.getHours();
-                        int minuti = d.getMinutes();
-                        if (!wolf.controllaApertura(d))
-                            throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
-                        if (wolf.getInfornate()[wolf.trovaCasellaTempoForno(wolf.getOrarioApertura(),ora,minuti)].getPostiDisp()+wolf.getInfornate()[wolf.trovaCasellaTempoForno(wolf.getOrarioApertura(),ora,minuti)-1].getPostiDisp() < tot) {
-                            throw new RiprovaExc();
-                        }
-                        if(wolf.fattorinoLibero(wolf.getOrarioApertura(),ora,minuti,0)==null){
-                            throw new RiprovaExc();
-                        }
-                        else
-                            ok =true;
-                    }
-                }
-            } catch (RestartOrderExc e) {
-                makeOrderText();
-            } catch (NumberFormatException | NoSuchElementException e) {
-                System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
-            } catch (OutOfTimeExc e) {
-                System.out.println("La pizzeria è chiusa nell'orario inserito. Riprovare:");
-            } catch (RiprovaExc e) {
-                System.out.println("L'orario scelto non è disponibile. Riprovare:");
-            }
-        } while(!ok);
-        return d;
-    }*/
-
-    /*public Date checkValiditaOrario(String sDate1, Order order, int tot){
-        Date d= null;
-        try {
-            StringTokenizer st = new StringTokenizer(sDate1, ":");
-            Calendar calendar = new GregorianCalendar();
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            int month = calendar.get(Calendar.MONTH) + 1;
-            int year = calendar.get(Calendar.YEAR);
-            String token = st.nextToken();
-            if (token.length() != 2) {
-                return null;
-            }
-            int ora = Integer.parseInt(token);
-            token = st.nextToken();
-            if (token.length() != 2)
-                return null;
-            int minuti = Integer.parseInt(token);
-            if (ora > 23 || minuti > 59)
-                return null;
-            sDate1 = day + "/" + month + "/" + year + " " + sDate1;
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            d = formato.parse(sDate1);
-        } catch (java.text.ParseException | NumberFormatException | NoSuchElementException e) {
-            return null;
-        }
-        return d;
-    }*/
 
     private String qualePizza(boolean isPrimaRichiesta) throws RestartOrderExc {
         String nomePizza;
@@ -309,10 +248,9 @@ public class TextInterface {
     public void chiediConfermaText(Order order, Date orario, int tot) {
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare: ");
         if (scan.nextLine().toUpperCase().equals("S")) {
-            if (wolf.checkFornoFattorino(order, orario, tot)) {
-                order.setCompleto();
-                wolf.addOrdine(order);
-            }
+            wolf.checkFornoFattorino(order, orario, tot);
+            order.setCompleto();
+            wolf.addOrdine(order);
         } else {
             System.out.println("L'ordine è stato annullato.");
         }
@@ -326,7 +264,78 @@ public class TextInterface {
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
         textInterface.makeOrderText();  //Per prova vettori orario
-        //textInterface.makeOrderText();
+        textInterface.makeOrderText();
         //textInterface.makeOrderText();
     }
 }
+
+
+/*private Date inserisciOrario (Order order, int tot){
+        Date d = null;
+        boolean ok = false;
+
+        String sDate1 = insertTime(order, tot);
+            do {
+                try {
+                if (sDate1.toUpperCase().equals("F")) {
+                    ok=true;
+                    throw new RestartOrderExc();
+                } else {
+                    d = checkValiditaOrario(sDate1, order, tot);
+                    if(d==null)
+                        throw new NumberFormatException();
+                    else {
+                        int ora = d.getHours();
+                        int minuti = d.getMinutes();
+                        if (!wolf.controllaApertura(d))
+                            throw new OutOfTimeExc();       //DA SISTEMARE SE SI CHIUDE ALLE 02:00
+                        if (wolf.getInfornate()[wolf.trovaCasellaTempoForno(wolf.getOrarioApertura(),ora,minuti)].getPostiDisp()+wolf.getInfornate()[wolf.trovaCasellaTempoForno(wolf.getOrarioApertura(),ora,minuti)-1].getPostiDisp() < tot) {
+                            throw new RiprovaExc();
+                        }
+                        if(wolf.fattorinoLibero(wolf.getOrarioApertura(),ora,minuti,0)==null){
+                            throw new RiprovaExc();
+                        }
+                        else
+                            ok =true;
+                    }
+                }
+            } catch (RestartOrderExc e) {
+                makeOrderText();
+            } catch (NumberFormatException | NoSuchElementException e) {
+                System.out.println("L'orario non è stato inserito correttamente. Riprovare:");
+            } catch (OutOfTimeExc e) {
+                System.out.println("La pizzeria è chiusa nell'orario inserito. Riprovare:");
+            } catch (RiprovaExc e) {
+                System.out.println("L'orario scelto non è disponibile. Riprovare:");
+            }
+        } while(!ok);
+        return d;
+    }*/
+
+    /*public Date checkValiditaOrario(String sDate1, Order order, int tot){
+        Date d= null;
+        try {
+            StringTokenizer st = new StringTokenizer(sDate1, ":");
+            Calendar calendar = new GregorianCalendar();
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            int month = calendar.get(Calendar.MONTH) + 1;
+            int year = calendar.get(Calendar.YEAR);
+            String token = st.nextToken();
+            if (token.length() != 2) {
+                return null;
+            }
+            int ora = Integer.parseInt(token);
+            token = st.nextToken();
+            if (token.length() != 2)
+                return null;
+            int minuti = Integer.parseInt(token);
+            if (ora > 23 || minuti > 59)
+                return null;
+            sDate1 = day + "/" + month + "/" + year + " " + sDate1;
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            d = formato.parse(sDate1);
+        } catch (java.text.ParseException | NumberFormatException | NoSuchElementException e) {
+            return null;
+        }
+        return d;
+    }*/
