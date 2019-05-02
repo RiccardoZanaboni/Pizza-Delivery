@@ -18,12 +18,18 @@ import java.util.*;
  *
  */
 
+@SuppressWarnings("deprecation")
+
 public class TextInterface {
 
-    Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 19, 0), new Date(2019, 0, 31, 23, 0, 0));
+    private Pizzeria wolf;
     private Scanner scan = new Scanner(System.in);
 
-    public void makeOrderText() {
+    private TextInterface() {
+        wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 19, 0), new Date(2019, 0, 31, 23, 0, 0));
+    }
+
+    private void makeOrderText() {
         Order order = wolf.inizializeNewOrder();
         int num;
         String nomePizza;
@@ -50,6 +56,7 @@ public class TextInterface {
             if (inserisciDati(order)) {
                 wolf.recapOrdine(order);
                 chiediConfermaText(order, orario, tot);
+                //System.out.println("Riga in più");
             }
         } catch (RestartOrderExc e) {
             makeOrderText();
@@ -100,8 +107,7 @@ public class TextInterface {
                 System.out.print("\n\t");
         }
         System.out.print("\n");
-        String sDate1 = scan.nextLine();
-        return sDate1;
+        return scan.nextLine();
     }
 
     private Date stringToDate(String sDate1) {
@@ -121,25 +127,23 @@ public class TextInterface {
     }
 
     private boolean checkValidTime(String sDate1) {
-        boolean b = false;
         try {
             StringTokenizer st = new StringTokenizer(sDate1, ":");
             String token = st.nextToken();
             if (token.length() != 2) {
-                return b;
+                return false;
             }
             int ora = Integer.parseInt(token);
             token = st.nextToken();
             if (token.length() != 2)
-                return b;
+                return false;
             int minuti = Integer.parseInt(token);
             if (ora > 23 || minuti > 59)
-                return b;
+                return false;
         } catch (NumberFormatException | NoSuchElementException e) {
-            return b;
+            return false;
         }
-        b = true;
-        return b;
+        return true;
     }
 
     private String qualePizza(boolean isPrimaRichiesta) throws RestartOrderExc {
@@ -195,33 +199,40 @@ public class TextInterface {
         return num;
     }
 
-    public void chiediModificaPizza(Order order, String nomePizza, int num) {
+    private void chiediModificaPizza(Order order, String nomePizza, int num) {
         System.out.println("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N):");
         String answer = scan.nextLine().toUpperCase();
-        if (answer.equals("S")) {
-            System.out.println("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:");
-            String possibiliIngr = "Possibili aggiunte: ";
-            int i = 0;
-            for (Ingredienti ingr : wolf.getIngredientiPizzeria().values()) {
-                possibiliIngr += (ingr.name().toLowerCase().replace("_", " ") + ", ");
-                i++;
-                if (i % 10 == 0)
-                    possibiliIngr += "\n";
-            }
-            System.out.println(possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")));
-            String aggiunte = scan.nextLine();
-            System.out.println("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:");
-            String rimozioni = scan.nextLine();
-            order.addPizza(wolf.getMenu().get(nomePizza), aggiunte, rimozioni, num, wolf.getPREZZO_SUPPL());
-        } else if (answer.equals("N")) {
-            order.addPizza(wolf.getMenu().get(nomePizza), num);
-        } else {
-            System.out.println("Spiacenti: inserito carattere non corretto.");
-            chiediModificaPizza(order, nomePizza, num);
+        switch (answer) {
+            case "S":
+                System.out.println("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:");
+                //String possibiliIngr = "Possibili aggiunte: ";
+                StringBuilder possibiliIngr = new StringBuilder("Possibili aggiunte: ");
+                int i = 0;
+                for (Ingredienti ingr : wolf.getIngredientiPizzeria().values()) {
+                    //possibiliIngr += (ingr.name().toLowerCase().replace("_", " ") + ", ");
+                    possibiliIngr.append(ingr.name().toLowerCase().replace("_", " ")).append(", ");
+                    i++;
+                    if (i % 10 == 0)
+                        possibiliIngr.append("\n");
+                    //possibiliIngr += "\n";
+                }
+                System.out.println(possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")));
+                String aggiunte = scan.nextLine();
+                System.out.println("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:");
+                String rimozioni = scan.nextLine();
+                order.addPizza(wolf.getMenu().get(nomePizza), aggiunte, rimozioni, num, wolf.getPREZZO_SUPPL());
+                break;
+            case "N":
+                order.addPizza(wolf.getMenu().get(nomePizza), num);
+                break;
+            default:
+                System.out.println("Spiacenti: inserito carattere non corretto.");
+                chiediModificaPizza(order, nomePizza, num);
+                break;
         }
     }
 
-    public boolean inserisciDati(Order order) {
+    private boolean inserisciDati(Order order) {
         boolean ok = true;
         try {
             System.out.println("Come ti chiami?\t\t(Inserisci 'F' per annullare e ricominciare)");
@@ -245,7 +256,7 @@ public class TextInterface {
         return ok;
     }
 
-    public void chiediConfermaText(Order order, Date orario, int tot) {
+    private void chiediConfermaText(Order order, Date orario, int tot) {
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, altro tasto per annullare: ");
         if (scan.nextLine().toUpperCase().equals("S")) {
             wolf.checkFornoFattorino(order, orario, tot);

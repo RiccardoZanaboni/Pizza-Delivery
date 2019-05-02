@@ -1,3 +1,4 @@
+@SuppressWarnings("ALL")
 public class DeliveryMan {
     private String nome;
     private CasellaTempoDeliveryMan fattoriniTempi[]; //false=libero?

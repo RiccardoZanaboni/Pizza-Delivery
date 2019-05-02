@@ -1,9 +1,5 @@
-import exceptions.*;
-
-import java.text.SimpleDateFormat;
 import java.util.*;
-
-@SuppressWarnings("unchecked")
+@SuppressWarnings("deprecation")
 
 
 public class Pizzeria {
@@ -208,9 +204,9 @@ public class Pizzeria {
 
     public String stampaMenu() {
         String line= "\n--------------------------------------------------------------------------------------\n";
-        String s= "    >>  MENU\n";
+        StringBuilder s= new StringBuilder("    >>  MENU\n");
         for (String a:menu.keySet()) {
-            s += "\n"+ menu.get(a).toString();
+            s.append("\n").append(menu.get(a).toString());
         }
         return line+s+line;
     }
@@ -463,3 +459,43 @@ public class Pizzeria {
     }
 
    */
+
+    /*public void recapOrdine(Order order){
+        String line = "\n---------------------------------------------\n";
+        String codice = "ORDINE N. " + order.getCodice() + "\n";
+        String dati = "SIG. " + order.getCustomer().getUsername() + "\tINDIRIZZO: " + order.getIndirizzo() + "\tORARIO: " + order.getOrario() + "\n";
+        String prodotti = order.recap();
+        double totaleCosto = order.getTotaleCosto();
+        System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
+    }
+
+    public boolean checkFornoFattorino(Date d, int tot){   //Order order, Date d, int tot
+        //if (s.toUpperCase().equals("S")) {
+            //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
+            if(infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp()<tot){
+                int disp=infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp();
+                infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(disp);
+                infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())-1].inserisciInfornate(tot-disp);
+            } else{
+                infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(tot);
+            }
+            fattorinoLibero(this.orarioApertura,d.getHours(),d.getMinutes(),0).OccupaFattorino(trovaCasellaTempoFattorino(this.orarioApertura, d.getHours(), d.getMinutes()));
+            return true;
+    }
+
+    public Date getOrarioChiusura() {
+        return orarioChiusura;
+    }
+
+    public Date getOrarioApertura() {
+        return orarioApertura;
+    }
+
+    public double getPREZZO_SUPPL() {
+        return PREZZO_SUPPL;
+    }
+
+    public Forno[] getInfornate() {
+        return infornate;
+    }
+}*/
