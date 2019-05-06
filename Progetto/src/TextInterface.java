@@ -72,6 +72,7 @@ public class TextInterface {
             }
             if (checkValidTime(orarioScelto)) {
                 d = stringToDate(orarioScelto);
+                assert d != null :"Error"; // se condizione non è verificata, il programma viene terminato
                 int ora = d.getHours();
                 int minuti = d.getMinutes();
                 if (!wolf.controllaApertura(d)) {
@@ -268,28 +269,34 @@ public class TextInterface {
     private void chiediConfermaText(Order order, Date orario, int tot) {
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, 'N' per annullare: ");
         String risp= scan.nextLine().toUpperCase();
-        if (risp.equals("S")) {
-            wolf.checkFornoFattorino(order, orario, tot);
-            order.setCompleto();
-            wolf.addOrdine(order);
-        } else if (risp.equals("N")) {
-            try {
-                throw new RestartOrderExc();
-            } catch (RestartOrderExc roe) {
-                System.out.println("L'ordine è stato annullato.");
-                makeOrderText();
-            }
-        } else try {
-            throw new RiprovaExc();
-        } catch (RiprovaExc re) {
-            System.out.println("Spiacenti: carattere inserito non valido. Riprovare: ");
-            chiediConfermaText(order, orario, tot);
+        switch (risp) {
+            case "S":
+                wolf.checkFornoFattorino(order, orario, tot);
+                order.setCompleto();
+                wolf.addOrdine(order);
+                break;
+            case "N":
+                try {
+                    throw new RestartOrderExc();
+                } catch (RestartOrderExc roe) {
+                    System.out.println("L'ordine è stato annullato.");
+                    makeOrderText();
+                }
+                break;
+            default:
+                try {
+                    throw new RiprovaExc();
+                } catch (RiprovaExc re) {
+                    System.out.println("Spiacenti: carattere inserito non valido. Riprovare: ");
+                    chiediConfermaText(order, orario, tot);
+                }
+                break;
         }
     }
 
     public static void main(String[] args) {
         TextInterface textInterface = new TextInterface();
-        textInterface.wolf.ApriPizzeria(8);     // ma è qui che va creata la pizzeria?
+        textInterface.wolf.ApriPizzeria(8);     // ma è qui che va creata la pizzeria? Bho non lo so
         textInterface.wolf.AddFattorino(new DeliveryMan("Musi", textInterface.wolf));
         //textInterface.wolf.AddFattorino(new DeliveryMan("Zanzatroni",textInterface.wolf));
         textInterface.wolf.creaMenu();
