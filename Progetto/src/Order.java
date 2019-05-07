@@ -88,7 +88,7 @@ public class Order {
 
     public String recap() {
         StringBuilder prodotti = new StringBuilder();
-        ArrayList<PizzaMenu> elencate = new ArrayList<>();
+        ArrayList<Pizza> elencate = new ArrayList<>();
         for (int i = 0; i < getNumeroPizze(); i++) {
 
             Pizza p = pizzeordinate.get(i);
