@@ -75,47 +75,47 @@ public class Pizzeria {
     }
 
     public void creaMenu(){
-        HashMap i1 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i1 = new HashMap <>();
         i1.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i1.put(Ingredienti.ORIGANO.name(), Ingredienti.ORIGANO);
         Pizza marinara = new Pizza("MARINARA", i1, 3.5);
         AddPizza(marinara);
 
-        HashMap i2 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i2 = new HashMap <>();
         i2.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i2.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         Pizza margherita = new Pizza("MARGHERITA", i2, 4.5);
         AddPizza(margherita);
 
-        HashMap i3 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i3 = new HashMap <>();
         i3.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i3.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i3.put(Ingredienti.PATATINE.name(), Ingredienti.PATATINE);
         Pizza patatine = new Pizza("PATATINE", i3, 5.5);
         AddPizza(patatine);
 
-        HashMap i4 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i4 = new HashMap <>();
         i4.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i4.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i4.put(Ingredienti.WURSTEL.name(), Ingredienti.WURSTEL);
         Pizza wurstel = new Pizza("WURSTEL", i4, 5.5);
         AddPizza(wurstel);
 
-        HashMap i5 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i5 = new HashMap <>();
         i5.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i5.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i5.put(Ingredienti.ALICI.name(), Ingredienti.ALICI);
         Pizza napoli = new Pizza("NAPOLI", i5, 5.5);
         AddPizza(napoli);
 
-        HashMap i6 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i6 = new HashMap <>();
         i6.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i6.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i6.put(Ingredienti.COTTO.name(), Ingredienti.COTTO);
         Pizza cotto = new Pizza("COTTO", i6, 5.5);
         AddPizza(cotto);
 
-        HashMap i7 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i7 = new HashMap <>();
         i7.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i7.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i7.put(Ingredienti.COTTO.name(), Ingredienti.COTTO);
@@ -123,14 +123,14 @@ public class Pizzeria {
         Pizza cottoFunghi = new Pizza("COTTO E FUNGHI", i7, 6);
         AddPizza(cottoFunghi);
 
-        HashMap i8 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i8 = new HashMap <>();
         i8.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i8.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i8.put(Ingredienti.SALAME_PICCANTE.name(), Ingredienti.SALAME_PICCANTE);
         Pizza salamePicc = new Pizza("SALAME PICCANTE", i8, 5.5);
         AddPizza(salamePicc);
 
-        HashMap i9 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i9 = new HashMap <>();
         i9.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i9.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i9.put(Ingredienti.SALSICCIA.name(), Ingredienti.SALSICCIA);
@@ -138,7 +138,7 @@ public class Pizzeria {
         Pizza americana = new Pizza("AMERICANA", i9, 6.5);
         AddPizza(americana);
 
-        HashMap i10 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i10 = new HashMap <>();
         i10.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i10.put(Ingredienti.COTTO.name(), Ingredienti.COTTO);
         i10.put(Ingredienti.CARCIOFI.name(), Ingredienti.CARCIOFI);
@@ -147,14 +147,14 @@ public class Pizzeria {
         Pizza capricciosa = new Pizza("CAPRICCIOSA", i10, 7);
         AddPizza(capricciosa);
 
-        HashMap i11 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i11 = new HashMap <>();
         i11.put(Ingredienti.POMODORINI.name(), Ingredienti.POMODORINI);
         i11.put(Ingredienti.MOZZARELLA_DI_BUFALA.name(), Ingredienti.MOZZARELLA_DI_BUFALA);
         i11.put(Ingredienti.RUCOLA.name(), Ingredienti.RUCOLA);
         Pizza italia = new Pizza("ITALIA", i11, 7.5);
         AddPizza(italia);
 
-        HashMap i12 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i12 = new HashMap <>();
         i12.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i12.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i12.put(Ingredienti.GALANTERIA.name(), Ingredienti.GALANTERIA);
@@ -162,7 +162,7 @@ public class Pizzeria {
         Pizza allaMusi = new Pizza("ALLA MUSI", i12, 100000);
         AddPizza(allaMusi);
 
-        HashMap i13 = new HashMap <String, Ingredienti>();
+        HashMap<String, Ingredienti> i13 = new HashMap <>();
         i13.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i13.put(Ingredienti.MOZZARELLA_DI_BUFALA.name(), Ingredienti.MOZZARELLA_DI_BUFALA);
         i13.put(Ingredienti.GEMME_DELL_INFINITO.name(), Ingredienti.GEMME_DELL_INFINITO);
