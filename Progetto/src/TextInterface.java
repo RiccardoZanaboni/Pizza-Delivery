@@ -295,7 +295,7 @@ public class TextInterface {
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
         textInterface.makeOrderText();  //Per prova vettori orario
-        textInterface.makeOrderText();
+        //textInterface.makeOrderText();
         //textInterface.makeOrderText();
     }
 }

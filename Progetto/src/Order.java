@@ -8,7 +8,7 @@ public class Order {
     private String codice;
     private String indirizzo;
     private Date orario;
-    private ArrayList<PizzaMenu> pizzeordinate;
+    private ArrayList<Pizza> pizzeordinate;
     private boolean completo;
 
     public Order(int num) {
@@ -32,7 +32,7 @@ public class Order {
         return orario;
     }
 
-    public ArrayList<PizzaMenu> getPizzeordinate() {
+    public ArrayList<Pizza> getPizzeordinate() {
         return pizzeordinate;
     }
 
@@ -40,16 +40,16 @@ public class Order {
         return codice;
     }
 
-    public void addPizza(PizzaMenu pizza, int num) {
+    public void addPizza(Pizza pizza, int num) {
         for (int i = 0; i < num; i++) {
             pizzeordinate.add(pizza);
         }
-        System.out.println("\t> Aggiunte " + num + " pizze " + pizza.getNome());
+        System.out.println("\t> Aggiunte " + num + " pizze " + pizza.getNomeMaiusc());
     }
 
-    public void addPizza(PizzaMenu pizza, String aggiunte, String rimozioni, int num, double prezzoSupl) {
+    public void addPizza(Pizza pizza, String aggiunte, String rimozioni, int num, double prezzoSupl) {
         HashMap<String, Ingredienti> ingr = new HashMap<>(pizza.getIngredienti());
-        PizzaMenu p = new PizzaMenu(pizza.getNome(), ingr, pizza.getPrezzo());
+        Pizza p = new Pizza(pizza.getNomeMaiusc(), ingr, pizza.getPrezzo());
         int piu=0;
         StringTokenizer stAgg = new StringTokenizer(aggiunte);
         while (stAgg.hasMoreTokens()) {
@@ -72,7 +72,7 @@ public class Order {
         for (int i = 0; i < num; i++) {
             pizzeordinate.add(p);
         }
-        System.out.println("\t> Aggiunte " + num + " pizze " + p.getNome() + " (" + p.getDescrizione() + ").");
+        System.out.println("\t> Aggiunte " + num + " pizze " + p.getNomeMaiusc() + " (" + p.getDescrizione() + ").");
     }
 
     private String sistemaStringaIngrediente(StringTokenizer st){
@@ -88,10 +88,10 @@ public class Order {
 
     public String recap() {
         StringBuilder prodotti = new StringBuilder();
-        ArrayList elencate = new ArrayList<PizzaMenu>();
+        ArrayList elencate = new ArrayList<Pizza>();
         for (int i = 0; i < getNumeroPizze(); i++) {
 
-            PizzaMenu p = pizzeordinate.get(i);
+            Pizza p = pizzeordinate.get(i);
 
             int num = 0;
             if (!(elencate.contains(p))) {
@@ -100,7 +100,7 @@ public class Order {
                     if (p.equals(getPizzeordinate().get(j)))
                         num++;
                 }
-                prodotti.append("\t").append(num).append("\t").append(p.getNome()).append("\t\t").append(p.getDescrizione()).append("\t\t-->\t").append(num * p.getPrezzo()).append("€\n");
+                prodotti.append("\t").append(num).append("\t").append(p.getNomeMaiusc()).append("\t\t").append(p.getDescrizione()).append("\t\t-->\t").append(num * p.getPrezzo()).append("€\n");
             }
         }
         return prodotti.toString();

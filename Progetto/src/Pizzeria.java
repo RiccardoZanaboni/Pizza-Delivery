@@ -9,7 +9,7 @@ public class Pizzeria {
     private Date orarioApertura;
     private Forno[] infornate;
     private ArrayList<DeliveryMan> fattorini;
-    private HashMap<String, PizzaMenu> menu;
+    private HashMap<String, Pizza> menu;
     private HashMap<String, Ingredienti> ingredientiPizzeria;
     private ArrayList<Order> ordini;
     private int ordiniDelGiorno;
@@ -37,8 +37,8 @@ public class Pizzeria {
         this.ordini.add(order);
     }
 
-    public void AddPizza(PizzaMenu pizza){
-        menu.put(pizza.getNome(),pizza);
+    public void AddPizza(Pizza pizza){
+        menu.put(pizza.getNomeMaiusc(),pizza);
     }
 
     public void AddFattorino(DeliveryMan deliveryMan){
@@ -78,41 +78,41 @@ public class Pizzeria {
         HashMap i1 = new HashMap <String, Ingredienti>();
         i1.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i1.put(Ingredienti.ORIGANO.name(), Ingredienti.ORIGANO);
-        PizzaMenu marinara = new PizzaMenu("MARINARA", i1, 3.5);
+        Pizza marinara = new Pizza("MARINARA", i1, 3.5);
         AddPizza(marinara);
 
         HashMap i2 = new HashMap <String, Ingredienti>();
         i2.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i2.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
-        PizzaMenu margherita = new PizzaMenu("MARGHERITA", i2, 4.5);
+        Pizza margherita = new Pizza("MARGHERITA", i2, 4.5);
         AddPizza(margherita);
 
         HashMap i3 = new HashMap <String, Ingredienti>();
         i3.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i3.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i3.put(Ingredienti.PATATINE.name(), Ingredienti.PATATINE);
-        PizzaMenu patatine = new PizzaMenu("PATATINE", i3, 5.5);
+        Pizza patatine = new Pizza("PATATINE", i3, 5.5);
         AddPizza(patatine);
 
         HashMap i4 = new HashMap <String, Ingredienti>();
         i4.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i4.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i4.put(Ingredienti.WURSTEL.name(), Ingredienti.WURSTEL);
-        PizzaMenu wurstel = new PizzaMenu("WURSTEL", i4, 5.5);
+        Pizza wurstel = new Pizza("WURSTEL", i4, 5.5);
         AddPizza(wurstel);
 
         HashMap i5 = new HashMap <String, Ingredienti>();
         i5.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i5.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i5.put(Ingredienti.ALICI.name(), Ingredienti.ALICI);
-        PizzaMenu napoli = new PizzaMenu("NAPOLI", i5, 5.5);
+        Pizza napoli = new Pizza("NAPOLI", i5, 5.5);
         AddPizza(napoli);
 
         HashMap i6 = new HashMap <String, Ingredienti>();
         i6.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i6.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i6.put(Ingredienti.COTTO.name(), Ingredienti.COTTO);
-        PizzaMenu cotto = new PizzaMenu("COTTO", i6, 5.5);
+        Pizza cotto = new Pizza("COTTO", i6, 5.5);
         AddPizza(cotto);
 
         HashMap i7 = new HashMap <String, Ingredienti>();
@@ -120,14 +120,14 @@ public class Pizzeria {
         i7.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i7.put(Ingredienti.COTTO.name(), Ingredienti.COTTO);
         i7.put(Ingredienti.FUNGHI.name(), Ingredienti.FUNGHI);
-        PizzaMenu cottoFunghi = new PizzaMenu("COTTO E FUNGHI", i7, 6);
+        Pizza cottoFunghi = new Pizza("COTTO E FUNGHI", i7, 6);
         AddPizza(cottoFunghi);
 
         HashMap i8 = new HashMap <String, Ingredienti>();
         i8.put(Ingredienti.POMODORO.name(), Ingredienti.POMODORO);
         i8.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i8.put(Ingredienti.SALAME_PICCANTE.name(), Ingredienti.SALAME_PICCANTE);
-        PizzaMenu salamePicc = new PizzaMenu("SALAME PICCANTE", i8, 5.5);
+        Pizza salamePicc = new Pizza("SALAME PICCANTE", i8, 5.5);
         AddPizza(salamePicc);
 
         HashMap i9 = new HashMap <String, Ingredienti>();
@@ -135,7 +135,7 @@ public class Pizzeria {
         i9.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i9.put(Ingredienti.SALSICCIA.name(), Ingredienti.SALSICCIA);
         i9.put(Ingredienti.PEPERONI.name(), Ingredienti.PEPERONI);
-        PizzaMenu americana = new PizzaMenu("AMERICANA", i9, 6.5);
+        Pizza americana = new Pizza("AMERICANA", i9, 6.5);
         AddPizza(americana);
 
         HashMap i10 = new HashMap <String, Ingredienti>();
@@ -144,14 +144,14 @@ public class Pizzeria {
         i10.put(Ingredienti.CARCIOFI.name(), Ingredienti.CARCIOFI);
         i10.put(Ingredienti.FUNGHI.name(), Ingredienti.FUNGHI);
         i10.put(Ingredienti.OLIVE_NERE.name(), Ingredienti.OLIVE_NERE);
-        PizzaMenu capricciosa = new PizzaMenu("CAPRICCIOSA", i10, 7);
+        Pizza capricciosa = new Pizza("CAPRICCIOSA", i10, 7);
         AddPizza(capricciosa);
 
         HashMap i11 = new HashMap <String, Ingredienti>();
         i11.put(Ingredienti.POMODORINI.name(), Ingredienti.POMODORINI);
         i11.put(Ingredienti.MOZZARELLA_DI_BUFALA.name(), Ingredienti.MOZZARELLA_DI_BUFALA);
         i11.put(Ingredienti.RUCOLA.name(), Ingredienti.RUCOLA);
-        PizzaMenu italia = new PizzaMenu("ITALIA", i11, 7.5);
+        Pizza italia = new Pizza("ITALIA", i11, 7.5);
         AddPizza(italia);
 
         HashMap i12 = new HashMap <String, Ingredienti>();
@@ -159,7 +159,7 @@ public class Pizzeria {
         i12.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i12.put(Ingredienti.GALANTERIA.name(), Ingredienti.GALANTERIA);
         i12.put(Ingredienti.BELLE_DONNE.name(), Ingredienti.BELLE_DONNE);
-        PizzaMenu allaMusi = new PizzaMenu("ALLA MUSI", i12, 100000);
+        Pizza allaMusi = new Pizza("ALLA MUSI", i12, 100000);
         AddPizza(allaMusi);
 
         HashMap i13 = new HashMap <String, Ingredienti>();
@@ -168,11 +168,11 @@ public class Pizzeria {
         i13.put(Ingredienti.GEMME_DELL_INFINITO.name(), Ingredienti.GEMME_DELL_INFINITO);
         i13.put(Ingredienti.ONNIPOTENZA.name(), Ingredienti.ONNIPOTENZA);
         i13.put(Ingredienti.ORIGANO.name(), Ingredienti.ORIGANO);
-        PizzaMenu thanos = new PizzaMenu("THANOS", i13, 0.50);
+        Pizza thanos = new Pizza("THANOS", i13, 0.50);
         AddPizza(thanos);
     }
 
-    public HashMap<String, PizzaMenu> getMenu() {
+    public HashMap<String, Pizza> getMenu() {
         return menu;
     }
 

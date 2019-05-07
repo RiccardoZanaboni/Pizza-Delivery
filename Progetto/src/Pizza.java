@@ -1,11 +1,11 @@
 import java.util.HashMap;
 
-public class PizzaMenu {
+public class Pizza {
     private String nome;
     private double prezzo;
     private HashMap <String, Ingredienti> ingredienti;
 
-    public PizzaMenu(String nome, HashMap ingred, double prezzo) {
+    public Pizza(String nome, HashMap ingred, double prezzo) {
         this.nome = nome;
         this.prezzo = prezzo;
         this.ingredienti = ingred;
@@ -17,7 +17,13 @@ public class PizzaMenu {
         return "- " + nome + "\n\t\tPrezzo: " + prezzo + " €\n\t\tIngredienti: " + descrizione;
     }
 
-    public String getNome() {
+    public String getNomeMaiusc() {
+        return nome;
+    }
+
+    public String getNomeCamel() {
+        String nome = this.nome;
+        nome = nome.charAt(0) + nome.substring(1).toLowerCase();
         return nome;
     }
 
