@@ -106,7 +106,7 @@ public class TextInterface {
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)\n\tEcco gli orari disponibili:");
         int c = 0;
         System.out.print("\t");
-        for (String s : wolf.OrarioDisponibile(tot)) {
+        for (String s : wolf.orarioDisponibile(tot)) {
             System.out.print(s);
             c++;
             if (c % 18 == 0)

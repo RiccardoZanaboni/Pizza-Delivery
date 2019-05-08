@@ -23,22 +23,18 @@ public class OrderPage2 {
     choiceBox.getItems().addAll(getOrari(pizzeria, tot));
 
     Label username = new Label("Username");
-    GridPane.setConstraints(username, 0, 0);
 
     TextField nameInput = new TextField();
     nameInput.setPromptText("yourname");
-    GridPane.setConstraints(nameInput, 1, 0);
 
     Label address = new Label("Indirizzo");
-    GridPane.setConstraints(address, 0, 1);
 
     TextField addressInput = new TextField();
     addressInput.setPromptText("youraddress");      // questo è il modo giusto per un login
-    GridPane.setConstraints(addressInput, 1, 1);
 
-    Button loginButton = new Button("Prosegui");
-    GridPane.setConstraints(loginButton, 3, 2);
-    loginButton.setOnAction(e-> {
+    Button nextPageButton = new Button("Prosegui");
+
+    nextPageButton.setOnAction(e-> {
       nome = getName(nameInput);
       indirizzo = getAddress(addressInput);
       oraScelta = getChoice(choiceBox);
@@ -50,9 +46,19 @@ public class OrderPage2 {
       orderPage3.display(window, order, pizzeria, tot);
     });
 
-    GridPane.setConstraints(choiceBox, 0, 4);
+    Button goBackButton = new Button("Torna indietro");
+    goBackButton.setOnAction(e -> window.setScene(scene1));
 
-    gridPane.getChildren().addAll(choiceBox, username, nameInput, address, addressInput, loginButton);
+
+    GridPane.setConstraints(username, 0 , 0);
+    GridPane.setConstraints(nameInput, 1, 0);
+    GridPane.setConstraints(address, 0, 1);
+    GridPane.setConstraints(addressInput, 1, 1);
+    GridPane.setConstraints(choiceBox, 0, 3);
+    GridPane.setConstraints(nextPageButton, 1, 5);
+    GridPane.setConstraints(goBackButton, 2, 5);
+
+    gridPane.getChildren().addAll(choiceBox, username, nameInput, address, addressInput, nextPageButton, goBackButton);
 
     scene3 = new Scene(gridPane, 430, 530);
     window.setScene(scene3);

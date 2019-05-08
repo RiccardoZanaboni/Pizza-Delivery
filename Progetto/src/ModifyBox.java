@@ -8,8 +8,14 @@ import javafx.event.EventHandler;
 
 import java.util.HashMap;
 
-public class ModifyBox {
-  public static void display(Order order, Pizzeria pizzeria, Label pizza) {
+public class ModifyBox{
+  Button confirmButton;
+  static boolean answer=false;
+
+
+  public static boolean display(Order order, Pizzeria pizzeria, Label pizza) {
+
+
 
     HashMap<String, Ingredienti> ingr = new HashMap<>(pizzeria.getIngredientiPizzeria());
     Pizza pizzaMenu = new Pizza(
@@ -59,6 +65,7 @@ public class ModifyBox {
     confirmButton.setOnAction(e -> {
       order.addPizza(pizzeria.getMenu().get(pizza.getText().toUpperCase()), 1);
       System.out.println();
+      answer=true;
       //tot++;
       window.close();
     });
@@ -75,6 +82,9 @@ public class ModifyBox {
     Scene scene = new Scene(layout);
     window.setScene(scene);
     window.showAndWait();
+
+    return answer;
   }
+
 
 }

@@ -191,8 +191,8 @@ public class Pizzeria {
     public Order inizializeNewOrder() {
         Order order = new Order(ordiniDelGiorno);
         setOrdiniDelGiorno();
-        System.out.println(helloThere());
-        System.out.println(stampaMenu());
+        //System.out.println(helloThere());
+        //System.out.println(stampaMenu());
         return order;
     }
 
@@ -238,7 +238,7 @@ public class Pizzeria {
         return null;
     }
 
-    public ArrayList<String> OrarioDisponibile(int tot){
+    public ArrayList<String> orarioDisponibile(int tot){
         ArrayList<String> disp = new ArrayList<>();
         for(int i=1; i<this.infornate.length; i++) {
             if (infornate[i].getPostiDisp() + infornate[i-1].getPostiDisp() >= tot) {
