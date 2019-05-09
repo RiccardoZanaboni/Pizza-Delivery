@@ -1,13 +1,10 @@
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
-
-import java.awt.event.ActionEvent;
 
 public class OrderPage1 {
 
@@ -32,7 +29,7 @@ public class OrderPage1 {
       order.addPizza(pizzeria.getMenu().get(margherita.getText().toUpperCase()), 1);
       tot++;
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
   });
     modMargherita.setOnAction(e-> {
       if(ModifyBox.display(order, pizzeria, margherita))
@@ -52,7 +49,7 @@ public class OrderPage1 {
       order.addPizza(pizzeria.getMenu().get(italia.getText().toUpperCase()), 1);
       tot++;
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
     });
     modItalia.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, italia))
@@ -72,7 +69,7 @@ public class OrderPage1 {
       order.addPizza(pizzeria.getMenu().get(marinara.getText().toUpperCase()), 1);
       tot++;
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
     });
     modMarinara.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, marinara))
@@ -92,7 +89,7 @@ public class OrderPage1 {
       order.addPizza(pizzeria.getMenu().get(patatine.getText().toUpperCase()), 1);
       tot++;
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
     });
     modPatatine.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, patatine))
@@ -112,7 +109,7 @@ public class OrderPage1 {
       order.addPizza(pizzeria.getMenu().get(wurstel.getText().toUpperCase()), 1);
       tot++;
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
     });
     modWurstel.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, wurstel))
@@ -132,7 +129,7 @@ public class OrderPage1 {
       order.addPizza(pizzeria.getMenu().get(capricciosa.getText().toUpperCase()), 1);
       tot++;
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
     });
     modCapricciosa.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, capricciosa))
@@ -152,7 +149,7 @@ public class OrderPage1 {
       order.addPizza(pizzeria.getMenu().get(napoli.getText().toUpperCase()), 1);
       tot++;
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
     });
     modNapoli.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, napoli))
@@ -172,7 +169,7 @@ public class OrderPage1 {
       order.addPizza(pizzeria.getMenu().get(cotto.getText().toUpperCase()), 1);
       tot++;
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
     });
     modCotto.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, cotto))
@@ -192,7 +189,7 @@ public class OrderPage1 {
       order.addPizza(pizzeria.getMenu().get(cottoFunghi.getText().toUpperCase()), 1);
       tot++;
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
     });
     modCottoFunghi.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, cottoFunghi))
@@ -212,7 +209,7 @@ public class OrderPage1 {
       order.addPizza(pizzeria.getMenu().get(americana.getText().toUpperCase()), 1);
       tot++;
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
     });
     modAmericana.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, cottoFunghi))
@@ -280,7 +277,7 @@ public class OrderPage1 {
       tot++;
       System.out.println(pizzeria.getMenu().get(label.getText().toUpperCase()));
     } else
-      AlertBox.display();
+      AlertNumPizzeMax.display();
   }*/
 
 }
