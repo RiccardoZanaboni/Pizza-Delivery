@@ -17,11 +17,15 @@ public class ModifyBox{
 
 
 
-    HashMap<String, Ingredienti> ingr = new HashMap<>(pizzeria.getIngredientiPizzeria());
     Pizza pizzaMenu = new Pizza(
             pizzeria.getMenu().get(pizza.getText().toUpperCase()).getNomeCamel(),
             pizzeria.getMenu().get(pizza.getText().toUpperCase()).getIngredienti(),
             pizzeria.getMenu().get(pizza.getText().toUpperCase()).getPrezzo());
+
+    //Pizza nuovaPizza = new Pizza(pizzaMenu.getNomeCamel(), pizzaMenu.getIngredienti(), pizzaMenu.getPrezzo());
+    HashMap<String, Ingredienti> ingr = new HashMap<>(pizzaMenu.getIngredienti());
+    Pizza nuovaPizza = new Pizza(pizzaMenu.getNomeMaiusc(), ingr, pizzaMenu.getPrezzo());
+
 
     Stage window = new Stage();
 
@@ -34,8 +38,11 @@ public class ModifyBox{
     Label alici = new Label("Alici");
     Button addAlici = new Button("Add");
     addAlici.setOnAction(e-> {
-      pizzaMenu.addIngredienti(ingr.get("ALICI"));
-      System.out.println(pizzaMenu.getIngredienti());
+      Ingredienti ingrediente = Ingredienti.valueOf("ALICI");
+      nuovaPizza.addIngredienti(ingrediente);
+      nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
+      System.out.println(nuovaPizza.getIngredienti());
+      System.out.println(ingr.get("ALICI").toString());
     });
     Button removeAlici = new Button("Remove");
     HBox hBox1 = new HBox();
@@ -48,8 +55,10 @@ public class ModifyBox{
     Label basilico = new Label("Basilico");
     Button addBasilico = new Button("Add");
     addBasilico.setOnAction(e-> {
-      pizzaMenu.addIngredienti(ingr.get("BASILICO"));
-      System.out.println(pizzaMenu.getIngredienti());
+      Ingredienti ingrediente = Ingredienti.valueOf("BASILICO");
+      nuovaPizza.addIngredienti(ingrediente);
+      nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
+      System.out.println(nuovaPizza.getIngredienti());
     });
     Button removeBasilico = new Button("Remove");
     HBox hBox2 = new HBox();
@@ -63,10 +72,8 @@ public class ModifyBox{
 
     Button confirmButton = new Button("Conferma le modifiche");
     confirmButton.setOnAction(e -> {
-      order.addPizza(pizzeria.getMenu().get(pizza.getText().toUpperCase()), 1);
-      System.out.println();
+      order.addPizza(nuovaPizza, 1);
       answer=true;
-      //tot++;
       window.close();
     });
 

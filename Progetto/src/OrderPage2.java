@@ -15,12 +15,12 @@ public class OrderPage2 {
     GridPane gridPane = new GridPane();
 
     ChoiceBox<String> choiceBox = new ChoiceBox<>();
-    //getItems returns the ObservableList object which you can add items to
+
+    choiceBox.getItems().addAll(getOrari(pizzeria, tot));
     //choiceBox.getItems().addAll(getOrari(pizzeria, tot));
 
     //Set a default value
-    //choiceBox.setValue("Apples");
-    choiceBox.getItems().addAll(getOrari(pizzeria, tot));
+    //choiceBox.setValue("");
 
     Label username = new Label("Username");
 
@@ -30,7 +30,7 @@ public class OrderPage2 {
     Label address = new Label("Indirizzo");
 
     TextField addressInput = new TextField();
-    addressInput.setPromptText("youraddress");      // questo è il modo giusto per un login
+    addressInput.setPromptText("youraddress");
 
     Button nextPageButton = new Button("Prosegui");
 
@@ -89,11 +89,11 @@ public class OrderPage2 {
   private ObservableList<String> getOrari (Pizzeria pizzeria, int tot) {
     ObservableList<String> orari = FXCollections.observableArrayList();
 
-   // orari.addAll(pizzeria.orarioDisponibile(tot));
+    orari.addAll(pizzeria.orarioDisponibile(tot));
 
-    orari.addAll("19:00", "19:05", "19:10", "19:15","19:20","19:25",
+    /*orari.addAll("19:00", "19:05", "19:10", "19:15","19:20","19:25",
             "19:30","19:35","19:40","19:45","19:50","19:55"
-    );
+    );*/
 
     return orari;
   }

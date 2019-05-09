@@ -1,10 +1,13 @@
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
+
+import java.awt.event.ActionEvent;
 
 public class OrderPage1 {
 
@@ -25,10 +28,12 @@ public class OrderPage1 {
     Label margheritaIngre = new Label(pizzeria.getMenu().get("MARGHERITA").getDescrizione());
     Button addMargherita = new Button("Aggiungi al carrello");
     Button modMargherita = new Button(("Modifica"));
-    addMargherita.setOnAction(e-> {
-      order.addPizza(pizzeria.getMenu().get("MARGHERITA"), 1);
+    addMargherita.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(margherita.getText().toUpperCase()), 1);
       tot++;
-    });
+    } else
+      AlertBox.display();
+  });
     modMargherita.setOnAction(e-> {
       if(ModifyBox.display(order, pizzeria, margherita))
         tot++;
@@ -43,9 +48,11 @@ public class OrderPage1 {
     Label italiaIngre = new Label(pizzeria.getMenu().get("ITALIA").getDescrizione());
     Button addItalia = new Button("Aggiungi al carrello");
     Button modItalia = new Button(("Modifica"));
-    addItalia.setOnAction(e-> {
-      order.addPizza(pizzeria.getMenu().get("ITALIA"), 1);
+    addItalia.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(italia.getText().toUpperCase()), 1);
       tot++;
+    } else
+      AlertBox.display();
     });
     modItalia.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, italia))
@@ -61,9 +68,11 @@ public class OrderPage1 {
     Label marinaraIngre = new Label(pizzeria.getMenu().get("MARINARA").getDescrizione());
     Button addMarinara = new Button("Aggiungi al carrello");
     Button modMarinara = new Button(("Modifica"));
-    addMarinara.setOnAction(e-> {
-      order.addPizza(pizzeria.getMenu().get("MARINARA"), 1);
+    addMarinara.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(marinara.getText().toUpperCase()), 1);
       tot++;
+    } else
+      AlertBox.display();
     });
     modMarinara.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, marinara))
@@ -79,9 +88,11 @@ public class OrderPage1 {
     Label patatineIngre = new Label(pizzeria.getMenu().get("PATATINE").getDescrizione());
     Button addPatatine = new Button("Aggiungi al carrello");
     Button modPatatine = new Button(("Modifica"));
-    addPatatine.setOnAction(e-> {
-      order.addPizza(pizzeria.getMenu().get("PATATINE"), 1);
+    addPatatine.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(patatine.getText().toUpperCase()), 1);
       tot++;
+    } else
+      AlertBox.display();
     });
     modPatatine.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, patatine))
@@ -97,9 +108,11 @@ public class OrderPage1 {
     Label wurstelIngre = new Label(pizzeria.getMenu().get("WURSTEL").getDescrizione());
     Button addWurstel = new Button("Aggiungi al carrello");
     Button modWurstel = new Button(("Modifica"));
-    addWurstel.setOnAction(e-> {
-      order.addPizza(pizzeria.getMenu().get("WURSTEL"), 1);
+    addWurstel.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(wurstel.getText().toUpperCase()), 1);
       tot++;
+    } else
+      AlertBox.display();
     });
     modWurstel.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, wurstel))
@@ -115,9 +128,11 @@ public class OrderPage1 {
     Label capricciosaIngre = new Label(pizzeria.getMenu().get("CAPRICCIOSA").getDescrizione());
     Button addCapricciosa = new Button("Aggiungi al carrello");
     Button modCapricciosa = new Button(("Modifica"));
-    addCapricciosa.setOnAction(e-> {
-      order.addPizza(pizzeria.getMenu().get("CAPRICCIOSA"), 1);
+    addCapricciosa.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(capricciosa.getText().toUpperCase()), 1);
       tot++;
+    } else
+      AlertBox.display();
     });
     modCapricciosa.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, capricciosa))
@@ -133,9 +148,11 @@ public class OrderPage1 {
     Label napoliIngre = new Label(pizzeria.getMenu().get("NAPOLI").getDescrizione());
     Button addNapoli = new Button("Aggiungi al carrello");
     Button modNapoli = new Button(("Modifica"));
-    addNapoli.setOnAction(e-> {
-      order.addPizza(pizzeria.getMenu().get("NAPOLI"), 1);
+    addNapoli.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(napoli.getText().toUpperCase()), 1);
       tot++;
+    } else
+      AlertBox.display();
     });
     modNapoli.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, napoli))
@@ -151,9 +168,11 @@ public class OrderPage1 {
     Label cottoIngre = new Label(pizzeria.getMenu().get("COTTO").getDescrizione());
     Button addCotto = new Button("Aggiungi al carrello");
     Button modCotto = new Button(("Modifica"));
-    addCotto.setOnAction(e-> {
-      order.addPizza(pizzeria.getMenu().get("COTTO"), 1);
+    addCotto.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(cotto.getText().toUpperCase()), 1);
       tot++;
+    } else
+      AlertBox.display();
     });
     modCotto.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, cotto))
@@ -169,9 +188,11 @@ public class OrderPage1 {
     Label cottoFunghiIngre = new Label(pizzeria.getMenu().get("COTTO E FUNGHI").getDescrizione());
     Button addCottoFunghi = new Button("Aggiungi al carrello");
     Button modCottoFunghi = new Button(("Modifica"));
-    addCottoFunghi.setOnAction(e-> {
-      order.addPizza(pizzeria.getMenu().get("COTTO E FUNGHI"), 1);
+    addCottoFunghi.setOnAction(e->{if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(cottoFunghi.getText().toUpperCase()), 1);
       tot++;
+    } else
+      AlertBox.display();
     });
     modCottoFunghi.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, cottoFunghi))
@@ -187,9 +208,11 @@ public class OrderPage1 {
     Label americanaIngre = new Label(pizzeria.getMenu().get("AMERICANA").getDescrizione());
     Button addAmericana = new Button("Aggiungi al carrello");
     Button modAmericana = new Button(("Modifica"));
-    addAmericana.setOnAction(e-> {
-      order.addPizza(pizzeria.getMenu().get("AMERICANA"), 1);
+    addAmericana.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(americana.getText().toUpperCase()), 1);
       tot++;
+    } else
+      AlertBox.display();
     });
     modAmericana.setOnAction(e->{
       if(ModifyBox.display(order, pizzeria, cottoFunghi))
@@ -213,6 +236,7 @@ public class OrderPage1 {
     avantiButton = new Button("Prosegui");
     avantiButton.setOnAction(e -> {
       System.out.println("Sono state ordinate in tutto "+tot+" pizze.");
+      System.out.println(order.getPizzeordinate());
       orderPage2.display(window, scene1, order, pizzeria, tot);
     });
 
@@ -233,8 +257,6 @@ public class OrderPage1 {
     GridPane.setConstraints(hBox10, 0,10);
 
     GridPane.setConstraints(hBoxButton, 0,11);
-    /*ColumnConstraints column1 = new ColumnConstraints(100, 100, 300);
-    column1.setHgrow(Priority.ALWAYS);*/
 
     gridPane.getChildren().addAll(
             hBox1, hBox2, hBox3, hBox4, hBox5, hBox6, hBox7, hBox8, hBox9, hBox10, hBoxButton
@@ -246,13 +268,20 @@ public class OrderPage1 {
     scrollPane1.fitToWidthProperty();
 
 
-
-
     Scene scene2;
     scene2 = new Scene(scrollPane1, 430, 530);
     window.setScene(scene2);
 
   }
+
+  /*public void addPizzaToOrder (Order order, Pizzeria pizzeria, Label label) {
+    if (tot<4) {
+      order.addPizza(pizzeria.getMenu().get(label.getText().toUpperCase()), 1);
+      tot++;
+      System.out.println(pizzeria.getMenu().get(label.getText().toUpperCase()));
+    } else
+      AlertBox.display();
+  }*/
 
 }
 

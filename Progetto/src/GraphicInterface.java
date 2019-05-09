@@ -26,9 +26,7 @@ public class GraphicInterface extends Application{
   Pizzeria wolf = new Pizzeria("Wolf Of Pizza","Via Bolzano 10, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
   int tot=0;
 
-  public static void main(String[] args) {
-    launch(args);
-  }
+  public static void main(String[] args) { launch(args); }
 
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -65,6 +63,8 @@ public class GraphicInterface extends Application{
     /**     FAI ORDINE        */
 
     makeOrderButton.setOnAction(e -> {
+      wolf.ApriPizzeria(8);
+      wolf.AddFattorino(new DeliveryMan("Musi", wolf));
       String name="";
       String address="";
       Order order = wolf.inizializeNewOrder();
