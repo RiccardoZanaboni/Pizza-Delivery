@@ -4,6 +4,7 @@ public class Pizza {
     private String nome;
     private double prezzo;
     private HashMap <String, Ingredienti> ingredienti;
+    private int count=0;
 
     public Pizza(String nome, HashMap ingred, double prezzo) {
         this.nome = nome;
@@ -56,5 +57,13 @@ public class Pizza {
 
     public void setPrezzo(double prezzo) {
         this.prezzo = prezzo;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount() {
+        this.count++;
     }
 }

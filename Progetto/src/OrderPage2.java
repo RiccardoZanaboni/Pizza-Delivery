@@ -25,14 +25,14 @@ public class OrderPage2 {
     Label username = new Label("Username");
 
     TextField nameInput = new TextField();
-    nameInput.setPromptText("yourname");
+    nameInput.setPromptText("Your name");
 
     Label address = new Label("Indirizzo");
 
     TextField addressInput = new TextField();
-    addressInput.setPromptText("youraddress");
+    addressInput.setPromptText("Your address");
 
-    Button nextPageButton = new Button("Prosegui");
+    Button nextPageButton = new Button("Prosegui →");
 
     nextPageButton.setOnAction(e-> {
       nome = getName(nameInput);
@@ -46,7 +46,7 @@ public class OrderPage2 {
       orderPage3.display(window, order, pizzeria, tot);
     });
 
-    Button goBackButton = new Button("Torna indietro");
+    Button goBackButton = new Button("Torna indietro ←");
     goBackButton.setOnAction(e -> window.setScene(scene1));
 
 

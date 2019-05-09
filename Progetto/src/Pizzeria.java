@@ -15,7 +15,6 @@ public class Pizzeria {
     private int ordiniDelGiorno;
     private final int TEMPI_FORNO = 12;      // ogni 5 minuti
     private final int TEMPI_FATTORINI = 6;   // ogni 10 minuti
-    //private Scanner scan = new Scanner(System.in);
     private final double PREZZO_SUPPL = 0.5;
 
     public Pizzeria(String nome, String indirizzo, Date orarioApertura, Date orarioChiusura) {

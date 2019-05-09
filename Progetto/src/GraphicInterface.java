@@ -93,14 +93,4 @@ public class GraphicInterface extends Application{
   }
 
 
-  private ObservableList<String> getOrari () {
-    ObservableList<String> orari = FXCollections.observableArrayList();
-
-    orari.addAll("19:00", "19:05", "19:05", "19:05","19:05","19:05",
-            "19:05","19:05","19:05","19:05","19:05","19:05"
-    );
-
-    return orari;
-  }
-
 }
