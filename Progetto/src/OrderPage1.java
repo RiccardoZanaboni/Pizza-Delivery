@@ -9,9 +9,7 @@ import javafx.geometry.Insets;
 public class OrderPage1 {
 
   private static int tot;
-  static int countMargherita=0;
-  static int countItalia=0;
-  static int countMarinara=0;
+  static int countModifiche=0;
 
   private static Button avantiButton;
 
@@ -22,6 +20,9 @@ public class OrderPage1 {
     gridPane.setPadding(new Insets(10, 10, 10, 10));
     gridPane.setVgap(8);
     gridPane.setHgap(10);
+
+    Label countModificheLabel = new Label();
+    countModificheLabel.setText(""+countModifiche);
 
     // Inserisco tutte le pizze
 
@@ -39,10 +40,17 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
   });
-    modMargherita.setOnAction(e-> {
-      if(ModifyBox.display(order, pizzeria, margherita))
-        tot++;
+    modMargherita.setOnAction(e-> {if(tot<16) {
+        if (ModifyBox.display(order, pizzeria, margherita))
+            tot++;
+        if (ModifyBox.answer) {
+            countModifiche++;
+            countModificheLabel.setText("" + countModifiche);
+        }
+    }else
+        AlertNumPizzeMax.display();
     });
+
     VBox vBox1 = new VBox();
     vBox1.getChildren().addAll(addMargherita, modMargherita);
     HBox hBox1 = new HBox();
@@ -63,9 +71,15 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
     });
-    modItalia.setOnAction(e->{
+    modItalia.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, italia))
         tot++;
+      if(ModifyBox.answer) {
+          countModifiche++;
+          countModificheLabel.setText("" + countModifiche);
+      }
+    }else
+        AlertNumPizzeMax.display();
     });
     VBox vBox2 = new VBox();
     vBox2.getChildren().addAll(addItalia, modItalia);
@@ -87,9 +101,15 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
     });
-    modMarinara.setOnAction(e->{
+    modMarinara.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, marinara))
         tot++;
+      if(ModifyBox.answer) {
+          countModifiche++;
+          countModificheLabel.setText("" + countModifiche);
+      }
+    }else
+        AlertNumPizzeMax.display();
     });
     VBox vBox3 = new VBox();
     vBox3.getChildren().addAll(addMarinara, modMarinara);
@@ -111,9 +131,15 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
     });
-    modPatatine.setOnAction(e->{
+    modPatatine.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, patatine))
         tot++;
+      if(ModifyBox.answer) {
+          countModifiche++;
+          countModificheLabel.setText("" + countModifiche);
+      }
+    }else
+                AlertNumPizzeMax.display();
     });
     VBox vBox4 = new VBox();
     vBox4.getChildren().addAll(addPatatine, modPatatine);
@@ -135,9 +161,15 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
     });
-    modWurstel.setOnAction(e->{
+    modWurstel.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, wurstel))
         tot++;
+      if(ModifyBox.answer) {
+          countModifiche++;
+          countModificheLabel.setText("" + countModifiche);
+      }
+    }else
+                AlertNumPizzeMax.display();
     });
     VBox vBox5 = new VBox();
     vBox5.getChildren().addAll(addWurstel, modWurstel);
@@ -159,9 +191,15 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
     });
-    modCapricciosa.setOnAction(e->{
+    modCapricciosa.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, capricciosa))
         tot++;
+      if(ModifyBox.answer) {
+          countModifiche++;
+          countModificheLabel.setText("" + countModifiche);
+      }
+    }else
+        AlertNumPizzeMax.display();
     });
     VBox vBox6= new VBox();
     vBox6.getChildren().addAll(addCapricciosa, modCapricciosa);
@@ -183,9 +221,15 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
     });
-    modNapoli.setOnAction(e->{
+    modNapoli.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, napoli))
         tot++;
+      if(ModifyBox.answer) {
+          countModifiche++;
+          countModificheLabel.setText("" + countModifiche);
+      }
+    }else
+                AlertNumPizzeMax.display();
     });
     VBox vBox7= new VBox();
     vBox7.getChildren().addAll(addNapoli, modNapoli);
@@ -208,9 +252,15 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
     });
-    modCotto.setOnAction(e->{
+    modCotto.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, cotto))
         tot++;
+      if(ModifyBox.answer) {
+          countModifiche++;
+          countModificheLabel.setText("" + countModifiche);
+      }
+    }else
+                AlertNumPizzeMax.display();
     });
     VBox vBox8= new VBox();
     vBox8.getChildren().addAll(addCotto, modCotto);
@@ -232,9 +282,15 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
     });
-    modCottoFunghi.setOnAction(e->{
+    modCottoFunghi.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, cottoFunghi))
         tot++;
+      if(ModifyBox.answer) {
+          countModifiche++;
+          countModificheLabel.setText("" + countModifiche);
+      }
+    }else
+                AlertNumPizzeMax.display();
     });
     VBox vBox9= new VBox();
     vBox9.getChildren().addAll(addCottoFunghi, modCottoFunghi);
@@ -256,9 +312,15 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
     });
-    modAmericana.setOnAction(e->{
+    modAmericana.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, americana))
         tot++;
+      if(ModifyBox.answer) {
+          countModifiche++;
+          countModificheLabel.setText("" + countModifiche);
+      }
+    }else
+                AlertNumPizzeMax.display();
     });
 
 
@@ -269,6 +331,12 @@ public class OrderPage1 {
     hBox10.getChildren().addAll(countAmericanaLabel,americana, americanaIngre, vBox10);
     hBox10.setSpacing(10);
 
+
+
+    Label modifiche=new Label();
+    modifiche.setText("Pizze Modificate");
+    HBox hBox11=new HBox();
+    hBox11.getChildren().addAll(countModificheLabel,modifiche);
 
     // Definisco bottone per tornare indietro
 
@@ -300,11 +368,12 @@ public class OrderPage1 {
     GridPane.setConstraints(hBox8, 0,8);
     GridPane.setConstraints(hBox9, 0,9);
     GridPane.setConstraints(hBox10, 0,10);
+    GridPane.setConstraints(hBox11,0,11);
 
-    GridPane.setConstraints(hBoxButton, 0,11);
+    GridPane.setConstraints(hBoxButton, 0,12);
 
     gridPane.getChildren().addAll(
-            hBox1, hBox2, hBox3, hBox4, hBox5, hBox6, hBox7, hBox8, hBox9, hBox10, hBoxButton
+            hBox1, hBox2, hBox3, hBox4, hBox5, hBox6, hBox7, hBox8, hBox9, hBox10, hBox11, hBoxButton
     );
 
     // Metto il gridPane con tutte le pizze all'interno di uno ScrollPane
