@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 
 public class OrderPage1 {
 
+  static Scene scene2;
   private static int tot;
   static int countModifiche=0;
 
@@ -378,18 +379,18 @@ public class OrderPage1 {
     avantiButton.setOnAction(e -> {
       System.out.println("Sono state ordinate in tutto "+tot+" pizze.");
       System.out.println(order.getPizzeordinate());
-      orderPage2.display(window, scene1, order, pizzeria, tot);
+      orderPage2.display(window, scene2, order, pizzeria, tot);
     });
 
     HBox hBoxIntestazione = new HBox();
     Label label = new Label("Ordine");
     hBoxIntestazione.getChildren().add(label);
-    hBoxIntestazione.setMinSize(600, 40);
+    hBoxIntestazione.setMinSize(600, 50);
     hBoxIntestazione.setAlignment(Pos.CENTER);
 
     HBox hBoxButton = new HBox(10);
     hBoxButton.getChildren().addAll(indietroButton, avantiButton);
-    hBoxButton.setMinSize(600, 40);
+    hBoxButton.setMinSize(600, 50);
     hBoxButton.setAlignment(Pos.CENTER);
 
     //GridPane.setConstraints(hBoxIntestazione, 1, 0);
@@ -450,7 +451,7 @@ public class OrderPage1 {
     layout.getChildren().addAll(hBoxIntestazione, scrollPane1, hBoxButton);
 
 
-    Scene scene2;
+    //Scene scene2;
     scene2 = new Scene(layout, 600, 600);
     window.setScene(scene2);
 

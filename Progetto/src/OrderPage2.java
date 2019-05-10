@@ -1,8 +1,10 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class OrderPage2 {
@@ -11,26 +13,33 @@ public class OrderPage2 {
   private String oraScelta, indirizzo, nome;
 
 
-  public void display (Stage window, Scene scene1, Order order, Pizzeria pizzeria, int tot) {
+  public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
     GridPane gridPane = new GridPane();
 
-    ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
-    choiceBox.getItems().addAll(getOrari(pizzeria, tot));
     //choiceBox.getItems().addAll(getOrari(pizzeria, tot));
 
     //Set a default value
     //choiceBox.setValue("");
 
     Label username = new Label("Username");
-
     TextField nameInput = new TextField();
     nameInput.setPromptText("Your name");
+    HBox usernameBox = new HBox(50);
+    usernameBox.getChildren().addAll(username, nameInput);
 
     Label address = new Label("Indirizzo");
-
     TextField addressInput = new TextField();
     addressInput.setPromptText("Your address");
+    HBox addressBox = new HBox(61);
+    addressBox.getChildren().addAll(address, addressInput);
+
+    Label choiceLabel = new Label("Scegli l'ora");
+    ChoiceBox<String> choiceBox = new ChoiceBox<>();
+    choiceBox.getItems().addAll(getOrari(pizzeria, tot));
+    HBox choiceHBox = new HBox(44);
+    choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
+
 
     Button nextPageButton = new Button("Prosegui →");
 
@@ -47,21 +56,37 @@ public class OrderPage2 {
     });
 
     Button goBackButton = new Button("Torna indietro ←");
-    goBackButton.setOnAction(e -> window.setScene(scene1));
+    goBackButton.setOnAction(e -> window.setScene(scene2));
+
+    HBox buttonBox = new HBox(10);
+    buttonBox.getChildren().addAll(goBackButton, nextPageButton);
+    buttonBox.setAlignment(Pos.CENTER);
+    buttonBox.setMinSize(600, 50);
+
+    HBox hBoxIntestazione = new HBox();
+    Label label = new Label("Inserisci i tuoi dati");
+    hBoxIntestazione.getChildren().add(label);
+    hBoxIntestazione.setMinSize(600, 50);
+    hBoxIntestazione.setAlignment(Pos.CENTER);
+
+    //GridPane.setConstraints(username, 0 , 0);
+    //GridPane.setConstraints(nameInput, 1, 0);
+    GridPane.setConstraints(usernameBox, 0, 0);
+    GridPane.setConstraints(addressBox, 0, 1);
+    GridPane.setConstraints(choiceHBox, 0, 2);
+    gridPane.getChildren().addAll(usernameBox, addressBox, choiceHBox);
+    gridPane.setMinSize(600, 500);
+    gridPane.setPadding(new Insets(150, 10, 10, 180));
+    gridPane.setVgap(20);
+    //gridPane.setHgap(150);
 
 
-    GridPane.setConstraints(username, 0 , 0);
-    GridPane.setConstraints(nameInput, 1, 0);
-    GridPane.setConstraints(address, 0, 1);
-    GridPane.setConstraints(addressInput, 1, 1);
-    GridPane.setConstraints(choiceBox, 0, 3);
-    GridPane.setConstraints(nextPageButton, 1, 5);
-    GridPane.setConstraints(goBackButton, 2, 5);
+    VBox layout = new VBox();
+    layout.getChildren().addAll(hBoxIntestazione, gridPane, buttonBox);
 
-    gridPane.getChildren().addAll(choiceBox, username, nameInput, address, addressInput, nextPageButton, goBackButton);
-
-    scene3 = new Scene(gridPane, 430, 530);
+    scene3 = new Scene(layout, 600, 600);
     window.setScene(scene3);
+
   }
 
   public String getChoice(ChoiceBox<String> choiceBox) {
