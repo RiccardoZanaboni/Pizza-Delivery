@@ -43,11 +43,11 @@ public class OrderPage1 {
       AlertNumPizzeMax.display();
   });
     modMargherita.setOnAction(e-> {if(tot<16) {
-        if (ModifyBox.display(order, pizzeria, margherita))
+        if (ModifyBox.display(order, pizzeria, margherita)) {
             tot++;
-        if (ModifyBox.answer) {
             countModifiche++;
             countModificheLabel.setText("" + countModifiche);
+            ModifyBox.setAnswer();
         }
     }else
         AlertNumPizzeMax.display();
@@ -76,11 +76,11 @@ public class OrderPage1 {
       AlertNumPizzeMax.display();
     });
     modItalia.setOnAction(e->{if(tot<16){
-      if(ModifyBox.display(order, pizzeria, italia))
-        tot++;
-      if(ModifyBox.answer) {
+      if(ModifyBox.display(order, pizzeria, italia)) {
+          tot++;
           countModifiche++;
           countModificheLabel.setText("" + countModifiche);
+          ModifyBox.setAnswer();
       }
     }else
         AlertNumPizzeMax.display();
@@ -109,11 +109,11 @@ public class OrderPage1 {
       AlertNumPizzeMax.display();
     });
     modMarinara.setOnAction(e->{if(tot<16){
-      if(ModifyBox.display(order, pizzeria, marinara))
-        tot++;
-      if(ModifyBox.answer) {
+      if(ModifyBox.display(order, pizzeria, marinara)) {
+          tot++;
           countModifiche++;
           countModificheLabel.setText("" + countModifiche);
+          ModifyBox.setAnswer();
       }
     }else
         AlertNumPizzeMax.display();
@@ -142,11 +142,11 @@ public class OrderPage1 {
       AlertNumPizzeMax.display();
     });
     modPatatine.setOnAction(e->{if(tot<16){
-      if(ModifyBox.display(order, pizzeria, patatine))
-        tot++;
-      if(ModifyBox.answer) {
+      if(ModifyBox.display(order, pizzeria, patatine)){
+          tot++;
           countModifiche++;
           countModificheLabel.setText("" + countModifiche);
+          ModifyBox.setAnswer();
       }
     }else
                 AlertNumPizzeMax.display();
@@ -174,11 +174,11 @@ public class OrderPage1 {
       AlertNumPizzeMax.display();
     });
     modWurstel.setOnAction(e->{if(tot<16){
-      if(ModifyBox.display(order, pizzeria, wurstel))
-        tot++;
-      if(ModifyBox.answer) {
+      if(ModifyBox.display(order, pizzeria, wurstel)){
+          tot++;
           countModifiche++;
           countModificheLabel.setText("" + countModifiche);
+          ModifyBox.setAnswer();
       }
     }else
                 AlertNumPizzeMax.display();
@@ -208,11 +208,11 @@ public class OrderPage1 {
       AlertNumPizzeMax.display();
     });
     modCapricciosa.setOnAction(e->{if(tot<16){
-      if(ModifyBox.display(order, pizzeria, capricciosa))
-        tot++;
-      if(ModifyBox.answer) {
+      if(ModifyBox.display(order, pizzeria, capricciosa)) {
+          tot++;
           countModifiche++;
           countModificheLabel.setText("" + countModifiche);
+          ModifyBox.setAnswer();
       }
     }else
         AlertNumPizzeMax.display();
@@ -241,11 +241,11 @@ public class OrderPage1 {
       AlertNumPizzeMax.display();
     });
     modNapoli.setOnAction(e->{if(tot<16){
-      if(ModifyBox.display(order, pizzeria, napoli))
-        tot++;
-      if(ModifyBox.answer) {
+      if(ModifyBox.display(order, pizzeria, napoli)){
+          tot++;
           countModifiche++;
           countModificheLabel.setText("" + countModifiche);
+          ModifyBox.setAnswer();
       }
     }else
                 AlertNumPizzeMax.display();
@@ -275,11 +275,11 @@ public class OrderPage1 {
       AlertNumPizzeMax.display();
     });
     modCotto.setOnAction(e->{if(tot<16){
-      if(ModifyBox.display(order, pizzeria, cotto))
-        tot++;
-      if(ModifyBox.answer) {
+      if(ModifyBox.display(order, pizzeria, cotto)) {
+          tot++;
           countModifiche++;
           countModificheLabel.setText("" + countModifiche);
+          ModifyBox.setAnswer();
       }
     }else
                 AlertNumPizzeMax.display();
@@ -309,11 +309,11 @@ public class OrderPage1 {
       AlertNumPizzeMax.display();
     });
     modCottoFunghi.setOnAction(e->{if(tot<16){
-      if(ModifyBox.display(order, pizzeria, cottoFunghi))
-        tot++;
-      if(ModifyBox.answer) {
+      if(ModifyBox.display(order, pizzeria, cottoFunghi)) {
+          tot++;
           countModifiche++;
           countModificheLabel.setText("" + countModifiche);
+          ModifyBox.setAnswer();
       }
     }else
                 AlertNumPizzeMax.display();
@@ -342,11 +342,11 @@ public class OrderPage1 {
       AlertNumPizzeMax.display();
     });
     modAmericana.setOnAction(e->{if(tot<16){
-      if(ModifyBox.display(order, pizzeria, americana))
-        tot++;
-      if(ModifyBox.answer) {
+      if(ModifyBox.display(order, pizzeria, americana)) {
+          tot++;
           countModifiche++;
           countModificheLabel.setText("" + countModifiche);
+          ModifyBox.setAnswer();
       }
     }else
                 AlertNumPizzeMax.display();
