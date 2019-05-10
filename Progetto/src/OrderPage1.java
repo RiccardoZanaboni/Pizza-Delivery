@@ -81,6 +81,7 @@ public class OrderPage1 {
     }else
         AlertNumPizzeMax.display();
     });
+
     VBox vBox2 = new VBox();
     vBox2.getChildren().addAll(addItalia, modItalia);
     HBox hBox2 = new HBox();
@@ -111,6 +112,7 @@ public class OrderPage1 {
     }else
         AlertNumPizzeMax.display();
     });
+
     VBox vBox3 = new VBox();
     vBox3.getChildren().addAll(addMarinara, modMarinara);
     HBox hBox3 = new HBox();
@@ -171,6 +173,7 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
+
     VBox vBox5 = new VBox();
     vBox5.getChildren().addAll(addWurstel, modWurstel);
     HBox hBox5 = new HBox();
@@ -201,6 +204,7 @@ public class OrderPage1 {
     }else
         AlertNumPizzeMax.display();
     });
+
     VBox vBox6= new VBox();
     vBox6.getChildren().addAll(addCapricciosa, modCapricciosa);
     HBox hBox6 = new HBox();
@@ -231,6 +235,7 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
+
     VBox vBox7= new VBox();
     vBox7.getChildren().addAll(addNapoli, modNapoli);
     HBox hBox7 = new HBox();
@@ -262,6 +267,7 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
+
     VBox vBox8= new VBox();
     vBox8.getChildren().addAll(addCotto, modCotto);
     HBox hBox8 = new HBox();
@@ -292,6 +298,7 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
+
     VBox vBox9= new VBox();
     vBox9.getChildren().addAll(addCottoFunghi, modCottoFunghi);
     HBox hBox9 = new HBox();
@@ -322,8 +329,6 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
-
-
 
     VBox vBox10= new VBox();
     vBox10.getChildren().addAll(addAmericana, modAmericana);
