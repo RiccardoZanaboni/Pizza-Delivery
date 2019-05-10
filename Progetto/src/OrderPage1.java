@@ -28,6 +28,7 @@ public class OrderPage1 {
 
     Label margherita = new Label(pizzeria.getMenu().get("MARGHERITA").getNomeCamel());
     Label margheritaIngre = new Label(pizzeria.getMenu().get("MARGHERITA").getDescrizione());
+    Label margheritaPrezzo = new Label(pizzeria.getMenu().get("MARGHERITA").getPrezzo()+"€");
     Button addMargherita = new Button("Aggiungi al carrello ");
     Button modMargherita = new Button(("Modifica"));
     Label countMargheritaLabel= new Label();
@@ -51,14 +52,16 @@ public class OrderPage1 {
         AlertNumPizzeMax.display();
     });
 
-    VBox vBox1 = new VBox();
+    HBox hBox1 = new HBox(10);
+    VBox vBox1 = new VBox(5);
+    VBox vBox1A = new VBox(10);
     vBox1.getChildren().addAll(addMargherita, modMargherita);
-    HBox hBox1 = new HBox();
-    hBox1.getChildren().addAll(countMargheritaLabel,margherita, margheritaIngre, vBox1);
-    hBox1.setSpacing(10);
+    vBox1A.getChildren().addAll(margherita, margheritaIngre);
+    hBox1.getChildren().addAll(margheritaPrezzo, vBox1);
 
     Label italia = new Label(pizzeria.getMenu().get("ITALIA").getNomeCamel());
     Label italiaIngre = new Label(pizzeria.getMenu().get("ITALIA").getDescrizione());
+    Label italiaPrezzo = new Label(pizzeria.getMenu().get("ITALIA").getPrezzo()+"€");
     Button addItalia = new Button("Aggiungi al carrello");
     Button modItalia = new Button(("Modifica"));
     Label countItaliaLabel= new Label();
@@ -82,14 +85,16 @@ public class OrderPage1 {
         AlertNumPizzeMax.display();
     });
 
-    VBox vBox2 = new VBox();
+    HBox hBox2 = new HBox(10);
+    VBox vBox2 = new VBox(5);
+    VBox vBox2A = new VBox(10);
     vBox2.getChildren().addAll(addItalia, modItalia);
-    HBox hBox2 = new HBox();
-    hBox2.getChildren().addAll(countItaliaLabel, italia, italiaIngre, vBox2);
-    hBox2.setSpacing(10);
+    vBox2A.getChildren().addAll(italia, italiaIngre);
+    hBox2.getChildren().addAll(italiaPrezzo, vBox2);
 
     Label marinara= new Label(pizzeria.getMenu().get("MARINARA").getNomeCamel());
     Label marinaraIngre = new Label(pizzeria.getMenu().get("MARINARA").getDescrizione());
+    Label marinaraPrezzo = new Label(pizzeria.getMenu().get("MARINARA").getPrezzo()+"€");
     Button addMarinara = new Button("Aggiungi al carrello");
     Button modMarinara = new Button(("Modifica"));
     Label countMarinaraLabel=new Label();
@@ -113,14 +118,16 @@ public class OrderPage1 {
         AlertNumPizzeMax.display();
     });
 
-    VBox vBox3 = new VBox();
+    HBox hBox3 = new HBox(10);
+    VBox vBox3 = new VBox(5);
+    VBox vBox3A = new VBox(10);
     vBox3.getChildren().addAll(addMarinara, modMarinara);
-    HBox hBox3 = new HBox();
-    hBox3.getChildren().addAll(countMarinaraLabel, marinara, marinaraIngre, vBox3);
-    hBox3.setSpacing(10);
+    vBox3A.getChildren().addAll(marinara, marinaraIngre);
+    hBox3.getChildren().addAll(marinaraPrezzo, vBox3);
 
     Label patatine= new Label(pizzeria.getMenu().get("PATATINE").getNomeCamel());
     Label patatineIngre = new Label(pizzeria.getMenu().get("PATATINE").getDescrizione());
+    Label patatinePrezzo = new Label(pizzeria.getMenu().get("PATATINE").getPrezzo()+"€");
     Button addPatatine = new Button("Aggiungi al carrello");
     Button modPatatine = new Button(("Modifica"));
     Label countPatatineLabel=new Label();
@@ -143,14 +150,16 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
-    VBox vBox4 = new VBox();
+    HBox hBox4 = new HBox(10);
+    VBox vBox4 = new VBox(5);
+    VBox vBox4A = new VBox(10);
     vBox4.getChildren().addAll(addPatatine, modPatatine);
-    HBox hBox4 = new HBox();
-    hBox4.getChildren().addAll(countPatatineLabel,patatine, patatineIngre, vBox4);
-    hBox4.setSpacing(10);
+    vBox4A.getChildren().addAll(patatine, patatineIngre);
+    hBox4.getChildren().addAll(patatinePrezzo, vBox4);
 
     Label wurstel= new Label(pizzeria.getMenu().get("WURSTEL").getNomeCamel());
     Label wurstelIngre = new Label(pizzeria.getMenu().get("WURSTEL").getDescrizione());
+    Label wurstelPrezzo = new Label(pizzeria.getMenu().get("WURSTEL").getPrezzo()+"€");
     Button addWurstel = new Button("Aggiungi al carrello");
     Button modWurstel = new Button(("Modifica"));
     Label countWurstelLabel=new Label();
@@ -174,14 +183,17 @@ public class OrderPage1 {
                 AlertNumPizzeMax.display();
     });
 
-    VBox vBox5 = new VBox();
+    HBox hBox5 = new HBox(10);
+    VBox vBox5 = new VBox(5);
+    VBox vBox5A = new VBox(10);
     vBox5.getChildren().addAll(addWurstel, modWurstel);
-    HBox hBox5 = new HBox();
-    hBox5.getChildren().addAll(countWurstelLabel,wurstel, wurstelIngre, vBox5);
-    hBox5.setSpacing(10);
+    vBox5A.getChildren().addAll(wurstel, wurstelIngre);
+    hBox5.getChildren().addAll(wurstelPrezzo, vBox5);
+
 
     Label capricciosa= new Label(pizzeria.getMenu().get("CAPRICCIOSA").getNomeCamel());
     Label capricciosaIngre = new Label(pizzeria.getMenu().get("CAPRICCIOSA").getDescrizione());
+    Label capricciosaPrezzo = new Label(pizzeria.getMenu().get("CAPRICCIOSA").getPrezzo()+"€");
     Button addCapricciosa = new Button("Aggiungi al carrello");
     Button modCapricciosa = new Button(("Modifica"));
     Label countCapricciosaLabel=new Label();
@@ -205,14 +217,16 @@ public class OrderPage1 {
         AlertNumPizzeMax.display();
     });
 
-    VBox vBox6= new VBox();
+    HBox hBox6 = new HBox(10);
+    VBox vBox6 = new VBox(5);
+    VBox vBox6A = new VBox(10);
     vBox6.getChildren().addAll(addCapricciosa, modCapricciosa);
-    HBox hBox6 = new HBox();
-    hBox6.getChildren().addAll(countCapricciosaLabel,capricciosa, capricciosaIngre, vBox6);
-    hBox6.setSpacing(10);
+    vBox6A.getChildren().addAll(capricciosa, capricciosaIngre);
+    hBox6.getChildren().addAll(capricciosaPrezzo, vBox6);
 
     Label napoli = new Label(pizzeria.getMenu().get("NAPOLI").getNomeCamel());
     Label napoliIngre = new Label(pizzeria.getMenu().get("NAPOLI").getDescrizione());
+    Label napoliPrezzo = new Label(pizzeria.getMenu().get("NAPOLI").getPrezzo()+"€");
     Button addNapoli = new Button("Aggiungi al carrello");
     Button modNapoli = new Button(("Modifica"));
     Label countNapoliLabel=new Label();
@@ -236,14 +250,16 @@ public class OrderPage1 {
                 AlertNumPizzeMax.display();
     });
 
-    VBox vBox7= new VBox();
+    HBox hBox7 = new HBox(10);
+    VBox vBox7 = new VBox(5);
+    VBox vBox7A = new VBox(10);
     vBox7.getChildren().addAll(addNapoli, modNapoli);
-    HBox hBox7 = new HBox();
-    hBox7.getChildren().addAll(countNapoliLabel,napoli, napoliIngre, vBox7);
-    hBox7.setSpacing(10);
+    vBox7A.getChildren().addAll(napoli, napoliIngre);
+    hBox7.getChildren().addAll(napoliPrezzo, vBox5);
 
     Label cotto = new Label(pizzeria.getMenu().get("COTTO").getNomeCamel());
     Label cottoIngre = new Label(pizzeria.getMenu().get("COTTO").getDescrizione());
+    Label cottoPrezzo = new Label(pizzeria.getMenu().get("COTTO").getPrezzo()+"€");
     Button addCotto = new Button("Aggiungi al carrello");
     Button modCotto = new Button(("Modifica"));
     Label countCottoLabel=new Label();
@@ -268,14 +284,17 @@ public class OrderPage1 {
                 AlertNumPizzeMax.display();
     });
 
-    VBox vBox8= new VBox();
+    HBox hBox8 = new HBox(10);
+    VBox vBox8 = new VBox(5);
+    VBox vBox8A = new VBox(10);
     vBox8.getChildren().addAll(addCotto, modCotto);
-    HBox hBox8 = new HBox();
-    hBox8.getChildren().addAll(countCottoLabel, cotto, cottoIngre, vBox8);
-    hBox8.setSpacing(10);
+    vBox8A.getChildren().addAll(cotto, cottoIngre);
+    hBox8.getChildren().addAll(cottoPrezzo, vBox8);
+
 
     Label cottoFunghi = new Label(pizzeria.getMenu().get("COTTO E FUNGHI").getNomeCamel());
     Label cottoFunghiIngre = new Label(pizzeria.getMenu().get("COTTO E FUNGHI").getDescrizione());
+    Label cottoFunghiPrezzo = new Label(pizzeria.getMenu().get("COTTO E FUNGHI").getPrezzo()+"€");
     Button addCottoFunghi = new Button("Aggiungi al carrello");
     Button modCottoFunghi = new Button(("Modifica"));
     Label countCottoFunghiLabel=new Label();
@@ -299,14 +318,16 @@ public class OrderPage1 {
                 AlertNumPizzeMax.display();
     });
 
-    VBox vBox9= new VBox();
+    HBox hBox9 = new HBox(10);
+    VBox vBox9 = new VBox(5);
+    VBox vBox9A = new VBox(10);
     vBox9.getChildren().addAll(addCottoFunghi, modCottoFunghi);
-    HBox hBox9 = new HBox();
-    hBox9.getChildren().addAll(countCottoFunghiLabel, cottoFunghi, cottoFunghiIngre, vBox9);
-    hBox9.setSpacing(10);
+    vBox9A.getChildren().addAll(cottoFunghi, cottoFunghiIngre);
+    hBox9.getChildren().addAll(cottoFunghiPrezzo, vBox9);
 
     Label americana = new Label(pizzeria.getMenu().get("AMERICANA").getNomeCamel());
     Label americanaIngre = new Label(pizzeria.getMenu().get("AMERICANA").getDescrizione());
+    Label americanaPrezzo = new Label(pizzeria.getMenu().get("AMERICANA").getPrezzo()+"€");
     Button addAmericana = new Button("Aggiungi al carrello");
     Button modAmericana = new Button(("Modifica"));
     Label countAmericanaLabel=new Label();
@@ -330,18 +351,20 @@ public class OrderPage1 {
                 AlertNumPizzeMax.display();
     });
 
-    VBox vBox10= new VBox();
+    HBox hBox10 = new HBox(10);
+    VBox vBox10 = new VBox(5);
+    VBox vBox10A = new VBox(10);
     vBox10.getChildren().addAll(addAmericana, modAmericana);
-    HBox hBox10 = new HBox();
-    hBox10.getChildren().addAll(countAmericanaLabel,americana, americanaIngre, vBox10);
-    hBox10.setSpacing(10);
+    vBox10A.getChildren().addAll(americana, americanaIngre);
+    hBox10.getChildren().addAll(americanaPrezzo, vBox10);
+
 
 
 
     Label modifiche=new Label();
     modifiche.setText("Pizze Modificate");
-    HBox hBox11=new HBox();
-    hBox11.getChildren().addAll(countModificheLabel,modifiche);
+    HBox hBoxMod=new HBox();
+    hBoxMod.getChildren().addAll(countModificheLabel,modifiche);
 
     // Definisco bottone per tornare indietro
 
@@ -358,27 +381,64 @@ public class OrderPage1 {
       orderPage2.display(window, scene1, order, pizzeria, tot);
     });
 
+    HBox hBoxIntestazione = new HBox();
+    Label label = new Label("Ordine");
+    hBoxIntestazione.getChildren().add(label);
+    hBoxIntestazione.setMinSize(600, 40);
+    hBoxIntestazione.setAlignment(Pos.CENTER);
 
-    HBox hBoxButton = new HBox();
+    HBox hBoxButton = new HBox(10);
     hBoxButton.getChildren().addAll(indietroButton, avantiButton);
-    hBoxButton.setAlignment(Pos.BASELINE_CENTER);
+    hBoxButton.setMinSize(600, 40);
+    hBoxButton.setAlignment(Pos.CENTER);
 
-    GridPane.setConstraints(hBox1, 0,1);
-    GridPane.setConstraints(hBox2, 0,2);
-    GridPane.setConstraints(hBox3, 0,3);
-    GridPane.setConstraints(hBox4, 0,4);
-    GridPane.setConstraints(hBox5, 0,5);
-    GridPane.setConstraints(hBox6, 0,6);
-    GridPane.setConstraints(hBox7, 0,7);
-    GridPane.setConstraints(hBox8, 0,8);
-    GridPane.setConstraints(hBox9, 0,9);
-    GridPane.setConstraints(hBox10, 0,10);
-    GridPane.setConstraints(hBox11,0,11);
+    //GridPane.setConstraints(hBoxIntestazione, 1, 0);
 
-    GridPane.setConstraints(hBoxButton, 0,12);
+    GridPane.setConstraints(countMargheritaLabel, 0,1);
+    GridPane.setConstraints(countItaliaLabel, 0,2);
+    GridPane.setConstraints(countMarinaraLabel, 0,3);
+    GridPane.setConstraints(countPatatineLabel, 0,4);
+    GridPane.setConstraints(countWurstelLabel, 0,5);
+    GridPane.setConstraints(countCapricciosaLabel, 0,6);
+    GridPane.setConstraints(countNapoliLabel, 0,7);
+    GridPane.setConstraints(countCottoLabel, 0,8);
+    GridPane.setConstraints(countCottoFunghiLabel, 0,9);
+    GridPane.setConstraints(countAmericanaLabel, 0,10);
+    GridPane.setConstraints(countModificheLabel, 0,11);
+
+    GridPane.setConstraints(vBox1A, 1,1);
+    GridPane.setConstraints(vBox2A, 1,2);
+    GridPane.setConstraints(vBox3A, 1,3);
+    GridPane.setConstraints(vBox4A, 1,4);
+    GridPane.setConstraints(vBox5A, 1,5);
+    GridPane.setConstraints(vBox6A, 1,6);
+    GridPane.setConstraints(vBox7A, 1,7);
+    GridPane.setConstraints(vBox8A, 1,8);
+    GridPane.setConstraints(vBox9A, 1,9);
+    GridPane.setConstraints(vBox10A, 1,10);
+
+    GridPane.setConstraints(hBox1, 2,1);
+    GridPane.setConstraints(hBox2, 2,2);
+    GridPane.setConstraints(hBox3, 2,3);
+    GridPane.setConstraints(hBox4, 2,4);
+    GridPane.setConstraints(hBox5, 2,5);
+    GridPane.setConstraints(hBox6, 2,6);
+    GridPane.setConstraints(hBox7, 2,7);
+    GridPane.setConstraints(hBox8, 2,8);
+    GridPane.setConstraints(hBox9, 2,9);
+    GridPane.setConstraints(hBox10, 2,10);
+
+    GridPane.setConstraints(hBoxMod,1,12);
+    //GridPane.setConstraints(hBoxButton, 0,13);
+
+    gridPane.getColumnConstraints().add(new ColumnConstraints(50));
 
     gridPane.getChildren().addAll(
-            hBox1, hBox2, hBox3, hBox4, hBox5, hBox6, hBox7, hBox8, hBox9, hBox10, hBox11, hBoxButton
+            hBoxMod,
+            countMargheritaLabel, countItaliaLabel, countMarinaraLabel, countPatatineLabel,countWurstelLabel,
+            countCapricciosaLabel, countNapoliLabel, countCottoLabel, countCottoFunghiLabel, countAmericanaLabel,
+            hBox1, hBox2, hBox3, hBox4, hBox5, hBox6, hBox7, hBox8, hBox9, hBox10,
+            vBox1A, vBox2A, vBox3A, vBox4A, vBox5A, vBox6A, vBox7A, vBox8A, vBox9A, vBox10A
     );
 
     // Metto il gridPane con tutte le pizze all'interno di uno ScrollPane
@@ -386,9 +446,12 @@ public class OrderPage1 {
     scrollPane1.fitToHeightProperty();
     scrollPane1.fitToWidthProperty();
 
+    VBox layout = new VBox();
+    layout.getChildren().addAll(hBoxIntestazione, scrollPane1, hBoxButton);
+
 
     Scene scene2;
-    scene2 = new Scene(scrollPane1, 600, 600);
+    scene2 = new Scene(layout, 600, 600);
     window.setScene(scene2);
 
   }
