@@ -32,8 +32,10 @@ public class OrderPage1 {
     Label margheritaPrezzo = new Label(pizzeria.getMenu().get("MARGHERITA").getPrezzo()+"€");
     Button addMargherita = new Button("Aggiungi al carrello ");
     Button modMargherita = new Button(("Modifica"));
+    Button rimuoviMargherita =new Button("rimuovi dal carrello");
     Label countMargheritaLabel= new Label();
     countMargheritaLabel.setText(""+pizzeria.getMenu().get("MARGHERITA").getCount());
+
     addMargherita.setOnAction(e-> {if (tot<16) {
       order.addPizza(pizzeria.getMenu().get(margherita.getText().toUpperCase()), 1);
       tot++;
@@ -42,6 +44,15 @@ public class OrderPage1 {
     } else
       AlertNumPizzeMax.display();
   });
+    rimuoviMargherita.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("MARGHERITA"))){
+        order.getPizzeordinate().remove(pizzeria.getMenu().get("MARGHERITA"));
+        tot--;
+        pizzeria.getMenu().get("MARGHERITA").resetCount();
+        countMargheritaLabel.setText(""+pizzeria.getMenu().get("MARGHERITA").getCount());
+    }else
+        AlertNumeroPizzeMin.display("MARGHERITA");
+    });
     modMargherita.setOnAction(e-> {if(tot<16) {
         if (ModifyBox.display(order, pizzeria, margherita)) {
             tot++;
@@ -56,7 +67,7 @@ public class OrderPage1 {
     HBox hBox1 = new HBox(10);
     VBox vBox1 = new VBox(5);
     VBox vBox1A = new VBox(10);
-    vBox1.getChildren().addAll(addMargherita, modMargherita);
+    vBox1.getChildren().addAll(addMargherita, modMargherita, rimuoviMargherita);
     vBox1A.getChildren().addAll(margherita, margheritaIngre);
     hBox1.getChildren().addAll(margheritaPrezzo, vBox1);
 
@@ -64,7 +75,7 @@ public class OrderPage1 {
     Label italiaIngre = new Label(pizzeria.getMenu().get("ITALIA").getDescrizione());
     Label italiaPrezzo = new Label(pizzeria.getMenu().get("ITALIA").getPrezzo()+"€");
     Button addItalia = new Button("Aggiungi al carrello");
-    Button modItalia = new Button(("Modifica"));
+    Button modItalia = new Button(( "Modifica"));
     Label countItaliaLabel= new Label();
     countItaliaLabel.setText(""+pizzeria.getMenu().get("ITALIA").getCount());
     addItalia.setOnAction(e-> {if (tot<16) {
@@ -85,11 +96,21 @@ public class OrderPage1 {
     }else
         AlertNumPizzeMax.display();
     });
+    Button rimuoviItalia =new Button("rimuovi dal carrello");
+    rimuoviItalia.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("ITALIA"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("ITALIA"));
+            tot--;
+            pizzeria.getMenu().get("ITALIA").resetCount();
+            countItaliaLabel.setText(""+pizzeria.getMenu().get("ITALIA").getCount());
+        }else
+            AlertNumeroPizzeMin.display("ITALIA");
+    });
 
     HBox hBox2 = new HBox(10);
     VBox vBox2 = new VBox(5);
     VBox vBox2A = new VBox(10);
-    vBox2.getChildren().addAll(addItalia, modItalia);
+    vBox2.getChildren().addAll(addItalia, modItalia,rimuoviItalia);
     vBox2A.getChildren().addAll(italia, italiaIngre);
     hBox2.getChildren().addAll(italiaPrezzo, vBox2);
 
@@ -118,11 +139,21 @@ public class OrderPage1 {
     }else
         AlertNumPizzeMax.display();
     });
+    Button rimuoviMarinara =new Button("rimuovi dal carrello");
+    rimuoviMarinara.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("MARINARA"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("MARINARA"));
+            tot--;
+            pizzeria.getMenu().get("MARINARA").resetCount();
+            countMarinaraLabel.setText(""+pizzeria.getMenu().get("MARINARA").getCount());
+        }else
+            AlertNumeroPizzeMin.display("MARINARA");
+    });
 
     HBox hBox3 = new HBox(10);
     VBox vBox3 = new VBox(5);
     VBox vBox3A = new VBox(10);
-    vBox3.getChildren().addAll(addMarinara, modMarinara);
+    vBox3.getChildren().addAll(addMarinara, modMarinara,rimuoviMarinara);
     vBox3A.getChildren().addAll(marinara, marinaraIngre);
     hBox3.getChildren().addAll(marinaraPrezzo, vBox3);
 
@@ -151,10 +182,21 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
+    Button rimuoviPatatine =new Button("rimuovi dal carrello");
+    rimuoviPatatine.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("PATATINE"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("PATATINE"));
+            tot--;
+            pizzeria.getMenu().get("PATATINE").resetCount();
+            countPatatineLabel.setText(""+pizzeria.getMenu().get("PATATINE").getCount());
+        }else
+            AlertNumeroPizzeMin.display("PATATINE");
+     });
+
     HBox hBox4 = new HBox(10);
     VBox vBox4 = new VBox(5);
     VBox vBox4A = new VBox(10);
-    vBox4.getChildren().addAll(addPatatine, modPatatine);
+    vBox4.getChildren().addAll(addPatatine, modPatatine,rimuoviPatatine);
     vBox4A.getChildren().addAll(patatine, patatineIngre);
     hBox4.getChildren().addAll(patatinePrezzo, vBox4);
 
@@ -183,11 +225,21 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
+    Button rimuoviWurstel =new Button("rimuovi dal carrello");
+    rimuoviWurstel.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("WURSTEL"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("WURSTEL"));
+            tot--;
+            pizzeria.getMenu().get("WURSTEL").resetCount();
+            countWurstelLabel.setText(""+pizzeria.getMenu().get("WURSTEL").getCount());
+        }else
+            AlertNumeroPizzeMin.display("WURSTEL");
+    });
 
     HBox hBox5 = new HBox(10);
     VBox vBox5 = new VBox(5);
     VBox vBox5A = new VBox(10);
-    vBox5.getChildren().addAll(addWurstel, modWurstel);
+    vBox5.getChildren().addAll(addWurstel, modWurstel,rimuoviWurstel);
     vBox5A.getChildren().addAll(wurstel, wurstelIngre);
     hBox5.getChildren().addAll(wurstelPrezzo, vBox5);
 
@@ -217,11 +269,21 @@ public class OrderPage1 {
     }else
         AlertNumPizzeMax.display();
     });
+    Button rimuoviCapricciosa =new Button("rimuovi dal carrello");
+    rimuoviCapricciosa.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("CAPRICCIOSA"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("CAPRICCIOSA"));
+            tot--;
+            pizzeria.getMenu().get("CAPRICCIOSA").resetCount();
+            countCapricciosaLabel.setText(""+pizzeria.getMenu().get("CAPRICCIOSA").getCount());
+        }else
+            AlertNumeroPizzeMin.display("CAPRICCIOSA");
+    });
 
     HBox hBox6 = new HBox(10);
     VBox vBox6 = new VBox(5);
     VBox vBox6A = new VBox(10);
-    vBox6.getChildren().addAll(addCapricciosa, modCapricciosa);
+    vBox6.getChildren().addAll(addCapricciosa, modCapricciosa,rimuoviCapricciosa);
     vBox6A.getChildren().addAll(capricciosa, capricciosaIngre);
     hBox6.getChildren().addAll(capricciosaPrezzo, vBox6);
 
@@ -250,13 +312,23 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
+    Button rimuoviNapoli =new Button("rimuovi dal carrello");
+    rimuoviNapoli.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("NAPOLI"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("NAPOLI"));
+            tot--;
+            pizzeria.getMenu().get("NAPOLI").resetCount();
+            countNapoliLabel.setText(""+pizzeria.getMenu().get("NAPOLI").getCount());
+        }else
+            AlertNumeroPizzeMin.display("NAPOLI");
+    });
 
     HBox hBox7 = new HBox(10);
     VBox vBox7 = new VBox(5);
     VBox vBox7A = new VBox(10);
-    vBox7.getChildren().addAll(addNapoli, modNapoli);
+    vBox7.getChildren().addAll(addNapoli, modNapoli,rimuoviNapoli);
     vBox7A.getChildren().addAll(napoli, napoliIngre);
-    hBox7.getChildren().addAll(napoliPrezzo, vBox5);
+    hBox7.getChildren().addAll(napoliPrezzo, vBox7);
 
     Label cotto = new Label(pizzeria.getMenu().get("COTTO").getNomeCamel());
     Label cottoIngre = new Label(pizzeria.getMenu().get("COTTO").getDescrizione());
@@ -284,11 +356,21 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
+    Button rimuoviCotto =new Button("rimuovi dal carrello");
+    rimuoviCotto.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("COTTO"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("COTTO"));
+            tot--;
+            pizzeria.getMenu().get("COTTO").resetCount();
+            countCottoLabel.setText(""+pizzeria.getMenu().get("COTTO").getCount());
+        }else
+            AlertNumeroPizzeMin.display("COTTO");
+    });
 
     HBox hBox8 = new HBox(10);
     VBox vBox8 = new VBox(5);
     VBox vBox8A = new VBox(10);
-    vBox8.getChildren().addAll(addCotto, modCotto);
+    vBox8.getChildren().addAll(addCotto, modCotto,rimuoviCotto);
     vBox8A.getChildren().addAll(cotto, cottoIngre);
     hBox8.getChildren().addAll(cottoPrezzo, vBox8);
 
@@ -318,11 +400,21 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
+    Button rimuoviCottoFunghi =new Button("rimuovi dal carrello");
+    rimuoviCottoFunghi.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("COTTO E FUNGHI"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("COTTO E FUNGHI"));
+            tot--;
+            pizzeria.getMenu().get("COTTO E FUNGHI").resetCount();
+            countCottoFunghiLabel.setText(""+pizzeria.getMenu().get("COTTO E FUNGHI").getCount());
+        }else
+            AlertNumeroPizzeMin.display("COTTO E FUNGHI");
+    });
 
     HBox hBox9 = new HBox(10);
     VBox vBox9 = new VBox(5);
     VBox vBox9A = new VBox(10);
-    vBox9.getChildren().addAll(addCottoFunghi, modCottoFunghi);
+    vBox9.getChildren().addAll(addCottoFunghi, modCottoFunghi,rimuoviCottoFunghi);
     vBox9A.getChildren().addAll(cottoFunghi, cottoFunghiIngre);
     hBox9.getChildren().addAll(cottoFunghiPrezzo, vBox9);
 
@@ -351,11 +443,21 @@ public class OrderPage1 {
     }else
                 AlertNumPizzeMax.display();
     });
+    Button rimuoviAmericana =new Button("rimuovi dal carrello");
+    rimuoviAmericana.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("AMERICANA"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("AMERICANA"));
+            tot--;
+            pizzeria.getMenu().get("AMERICANA").resetCount();
+            countAmericanaLabel.setText(""+pizzeria.getMenu().get("AMERICANA").getCount());
+        }else
+            AlertNumeroPizzeMin.display("AMERICANA");
+    });
 
     HBox hBox10 = new HBox(10);
     VBox vBox10 = new VBox(5);
     VBox vBox10A = new VBox(10);
-    vBox10.getChildren().addAll(addAmericana, modAmericana);
+    vBox10.getChildren().addAll(addAmericana, modAmericana,rimuoviAmericana);
     vBox10A.getChildren().addAll(americana, americanaIngre);
     hBox10.getChildren().addAll(americanaPrezzo, vBox10);
 

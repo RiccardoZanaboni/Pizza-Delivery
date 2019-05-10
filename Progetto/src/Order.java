@@ -138,4 +138,12 @@ public class Order {
         }
         return totale;
     }
+
+    public boolean searchPizza(Pizza pizza){
+        for (int i=0; i<pizzeordinate.size();i++){
+           if(pizzeordinate.get(i)==pizza)
+               return true;
+        }
+    return false;
+    }
 }

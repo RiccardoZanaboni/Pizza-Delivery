@@ -66,4 +66,7 @@ public class Pizza {
     public void setCount() {
         this.count++;
     }
+    public void resetCount() {
+        this.count--;
+    }
 }
