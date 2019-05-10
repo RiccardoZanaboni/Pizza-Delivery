@@ -40,7 +40,7 @@ public class ModifyBox{
     //pizzeria.getMenu().get(pizza.getText()).setPrezzo(pizzeria.getMenu().get(pizza.getText()).getPrezzo() + 0.50);
     gridPane.getChildren().addAll(alici, hBox1);
     GridPane.setConstraints(alici, 1,index);
-    GridPane.setConstraints(hBox1, 5,index);
+    GridPane.setConstraints(hBox1, 2,index);
     index++;
   }
 
@@ -112,14 +112,18 @@ public class ModifyBox{
       window.close();
     });
 
-    VBox layout = new VBox(10);
-    layout.getChildren().addAll(gridPane, confirmButton);
+
+    ScrollPane scrollPane = new ScrollPane(gridPane);
+    VBox layout = new VBox();
+    layout.getChildren().addAll(scrollPane, confirmButton);
     layout.setAlignment(Pos.CENTER);
 
     // Impedisce di fare azioni sulle altre finestre
     window.initModality(Modality.APPLICATION_MODAL);
     window.setTitle("Modifica la pizza");
-    window.setMinWidth(250);
+    window.setMinWidth(400);
+    window.setMaxWidth(400);
+    window.setMaxHeight(300);
     // Mostra la finestra e attende di essere chiusa
     Scene scene = new Scene(layout);
     window.setScene(scene);

@@ -216,7 +216,7 @@ public class OrderPage1 {
     Button addNapoli = new Button("Aggiungi al carrello");
     Button modNapoli = new Button(("Modifica"));
     Label countNapoliLabel=new Label();
-    countCapricciosaLabel.setText(""+pizzeria.getMenu().get("NAPOLI").getCount());
+    countNapoliLabel.setText(""+pizzeria.getMenu().get("NAPOLI").getCount());
     addNapoli.setOnAction(e-> {if (tot<16) {
       order.addPizza(pizzeria.getMenu().get(napoli.getText().toUpperCase()), 1);
       tot++;
@@ -279,7 +279,7 @@ public class OrderPage1 {
     Button addCottoFunghi = new Button("Aggiungi al carrello");
     Button modCottoFunghi = new Button(("Modifica"));
     Label countCottoFunghiLabel=new Label();
-    countCottoLabel.setText(""+pizzeria.getMenu().get("COTTO E FUNGHI").getCount());
+    countCottoFunghiLabel.setText(""+pizzeria.getMenu().get("COTTO E FUNGHI").getCount());
     addCottoFunghi.setOnAction(e->{if (tot<16) {
       order.addPizza(pizzeria.getMenu().get(cottoFunghi.getText().toUpperCase()), 1);
       tot++;
@@ -310,7 +310,7 @@ public class OrderPage1 {
     Button addAmericana = new Button("Aggiungi al carrello");
     Button modAmericana = new Button(("Modifica"));
     Label countAmericanaLabel=new Label();
-    countCottoLabel.setText(""+pizzeria.getMenu().get("AMERICANA").getCount());
+    countAmericanaLabel.setText(""+pizzeria.getMenu().get("AMERICANA").getCount());
     addAmericana.setOnAction(e-> {if (tot<16) {
       order.addPizza(pizzeria.getMenu().get(americana.getText().toUpperCase()), 1);
       tot++;
