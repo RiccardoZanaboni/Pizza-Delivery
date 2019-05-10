@@ -1,21 +1,13 @@
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.Insets;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.ScrollPane;
 import java.util.Date;
-import java.util.HashMap;
 
 
 public class GraphicInterface extends Application{
@@ -88,6 +80,7 @@ public class GraphicInterface extends Application{
     window.setResizable(false);
     window.setScene(scene1);
     window.setTitle("Wolf of Pizza");
+    window.getIcons().add(new javafx.scene.image.Image("wolf_pizza.jpg"));
     window.show();
 
   }

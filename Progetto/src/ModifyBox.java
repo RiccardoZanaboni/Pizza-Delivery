@@ -18,8 +18,6 @@ public class ModifyBox{
 
   public static boolean display(Order order, Pizzeria pizzeria, Label pizza) {
 
-
-
     Pizza pizzaMenu = new Pizza(
             pizzeria.getMenu().get(pizza.getText().toUpperCase()).getNomeCamel(),
             pizzeria.getMenu().get(pizza.getText().toUpperCase()).getIngredienti(),
@@ -28,7 +26,6 @@ public class ModifyBox{
     //Pizza nuovaPizza = new Pizza(pizzaMenu.getNomeCamel(), pizzaMenu.getIngredienti(), pizzaMenu.getPrezzo());
     HashMap<String, Ingredienti> ingr = new HashMap<>(pizzaMenu.getIngredienti());
     Pizza nuovaPizza = new Pizza(pizzaMenu.getNomeMaiusc(), ingr, pizzaMenu.getPrezzo());
-
 
     Stage window = new Stage();
 
@@ -42,11 +39,11 @@ public class ModifyBox{
       Label alici = new Label("Alici");
       Button addAlici = new Button("Add");
       addAlici.setOnAction(e-> {
-      Ingredienti ingrediente = Ingredienti.valueOf("ALICI");
-      nuovaPizza.addIngredienti(ingrediente);
-      nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
-      System.out.println(nuovaPizza.getIngredienti());
-      System.out.println(ingr.get("ALICI").toString());
+          Ingredienti ingrediente = Ingredienti.valueOf("ALICI");
+          nuovaPizza.addIngredienti(ingrediente);
+          nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
+          System.out.println(nuovaPizza.getIngredienti());
+          System.out.println(ingr.get("ALICI").toString());
     });
       Button removeAlici = new Button("Remove");
       HBox hBox1 = new HBox();
@@ -103,7 +100,6 @@ public class ModifyBox{
       GridPane.setConstraints(carciofi, 1,4);
       GridPane.setConstraints(hBox4, 5,4);
 
-
       Label cotto = new Label("COTTO");
       Button addCotto = new Button("Add");
       addCotto.setOnAction(e-> {
@@ -120,10 +116,9 @@ public class ModifyBox{
       GridPane.setConstraints(cotto, 1,5);
       GridPane.setConstraints(hBox5, 5,5);
 
-
       Label crudo = new Label("CRUDO");
       Button addCrudo = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addCrudo.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("CRUDO");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -139,7 +134,7 @@ public class ModifyBox{
 
       Label funghi= new Label("FUNGHI");
       Button addFunghi = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addFunghi.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("FUNGHI");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -155,7 +150,7 @@ public class ModifyBox{
 
       Label gorgonzola= new Label("GORGONZOLA");
       Button addGorgonzola = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addGorgonzola.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("GORGONZOLA");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -171,7 +166,7 @@ public class ModifyBox{
 
       Label mozzarella= new Label("MOZZARELLA");
       Button addMozzarella = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addMozzarella.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("MOZZARELLA");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -187,7 +182,7 @@ public class ModifyBox{
 
       Label mozzarellaDiBufala = new Label("MOZZARELLA_DI_BUFALA");
       Button addMozzarellaDiBufala = new Button("Add");
-      addCarciofi.setOnAction(e-> {
+      addMozzarellaDiBufala.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("MOZZARELLA_DI_BUFALA");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -203,7 +198,7 @@ public class ModifyBox{
 
       Label oliveNere = new Label("OLIVE_NERE");
       Button addOliveNere = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addOliveNere.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("OLIVE_NERE");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -219,7 +214,7 @@ public class ModifyBox{
 
       Label origano = new Label("ORIGANO");
       Button addOrigano = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addOrigano.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("ORIGANO");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -235,7 +230,7 @@ public class ModifyBox{
 
       Label panna= new Label("PANNA");
       Button addPanna = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addPanna.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("PANNA");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -251,7 +246,7 @@ public class ModifyBox{
 
       Label patatine= new Label("PATATINE");
       Button addPatatine = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addPatatine.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("PATATINE");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -267,7 +262,7 @@ public class ModifyBox{
 
       Label peperoni= new Label("PEPERONI");
       Button addPeperoni = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addPeperoni.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("PEPERONI");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -281,12 +276,9 @@ public class ModifyBox{
       GridPane.setConstraints(peperoni, 1,15);
       GridPane.setConstraints(hBox15, 5,15);
 
-      // GALANTERIA, GEMME_DELL_INFINITO ONNIPOTENZA
-      //  WURSTEL
-
       Label pomodorini = new Label("POMODORINI");
       Button addPomodorini = new Button("Add");
-      addCapperi.setOnAction(e-> {
+      addPomodorini.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("POMODORINI");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -302,7 +294,7 @@ public class ModifyBox{
 
       Label pomodoro = new Label("POMODORO");
       Button addPomodoro = new Button("Add");
-      addCarciofi.setOnAction(e-> {
+      addPomodoro.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("POMODORO");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -316,10 +308,9 @@ public class ModifyBox{
       GridPane.setConstraints(pomodoro, 1,17);
       GridPane.setConstraints(hBox17, 5,17);
 
-
       Label rucola = new Label("RUCOLA");
       Button addRucola = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addRucola.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("RUCOLA");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -333,10 +324,9 @@ public class ModifyBox{
       GridPane.setConstraints(rucola, 1,18);
       GridPane.setConstraints(hBox18, 5,18);
 
-
       Label salamePiccante = new Label("SALAME_PICCANTE");
       Button addSalamePiccante = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addSalamePiccante.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("SALAME_PICCANTE");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -352,7 +342,7 @@ public class ModifyBox{
 
       Label salsiccia= new Label("SALSICCIA");
       Button addSalsiccia = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addSalsiccia.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("SALSICCIA");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -368,7 +358,7 @@ public class ModifyBox{
 
       Label speck= new Label("SPECK");
       Button addSpeck = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addSpeck.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("SPECK");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -384,7 +374,7 @@ public class ModifyBox{
 
       Label wurstel= new Label("WURSTEL");
       Button addWurstel = new Button("Add");
-      addCotto.setOnAction(e-> {
+      addWurstel.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("WURSTEL");
           nuovaPizza.addIngredienti(ingrediente);
           nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
@@ -399,11 +389,13 @@ public class ModifyBox{
       GridPane.setConstraints(hBox22, 5,22);
 
 
+      // BELLE DONNE, GALANTERIA, GEMME_DELL'INFINITO, ONNIPOTENZA
+
 
     Button confirmButton = new Button("Conferma le modifiche");
     confirmButton.setOnAction(e -> {
       order.addPizza(nuovaPizza, 1);
-      answer=true;
+      answer = true;
       window.close();
     });
 
