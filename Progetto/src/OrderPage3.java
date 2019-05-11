@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 public class OrderPage3 {
 
   public void display(Stage window, Order order, Pizzeria pizzeria, int tot) {
+
+    //TODO CREARE LA PAGINA RIEPILOGO
+
     Label label = new Label("Il tuo ordine");
 
     Label labelProducts = new Label("Prodotti");

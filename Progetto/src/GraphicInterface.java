@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 
 import java.util.Date;
 
+//TODO MIGLIORARE GRAFICA CON COLORI E IMMAGINI
 
 public class GraphicInterface extends Application{
   Stage window;
@@ -78,8 +79,7 @@ public class GraphicInterface extends Application{
     BorderPane layout = new BorderPane();
     layout.setTop(stackPane);
     layout.setCenter(gridPane);
-    scene1 = new Scene(layout, 600, 600);
-
+    scene1 = new Scene(layout, 430, 530);
     window.setResizable(false);
     window.setScene(scene1);
     window.setTitle("Wolf of Pizza");
