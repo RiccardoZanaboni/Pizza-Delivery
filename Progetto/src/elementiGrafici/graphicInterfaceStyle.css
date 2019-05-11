@@ -21,3 +21,10 @@
     -fx-background-color: linear-gradient(#1e90ff,  #87cefa);
     -fx-background-size: 600 500;
 }
+#pane{
+    -fx-background-image: url("wolf_pizza.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 500 200;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
