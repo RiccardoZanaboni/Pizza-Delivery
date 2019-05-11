@@ -93,7 +93,6 @@ public class GraphicInterface extends Application {
 		window.setResizable(false);
 		window.setScene(scene1);
 		window.setTitle("Wolf of Pizza");
-		window.getIcons().add(new javafx.scene.image.Image("elementiGrafici/wolf_pizza.jpg"));
 		window.show();
 	}
 }
