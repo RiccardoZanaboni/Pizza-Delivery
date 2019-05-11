@@ -16,6 +16,7 @@ public class OrderPage1 {
 
   public static void display(Stage window, Scene scene1, Scene scene3, Order order, Pizzeria pizzeria) {
 
+        //FIXME SISTEMARE DISTANZA TRA BOTTONI ADD, REMOVE, MODIFICA DI UNA PIZZA E QUELLA SUCCESSIVA
 
     GridPane gridPane = new GridPane();
     gridPane.setPadding(new Insets(10, 10, 10, 10));
@@ -463,6 +464,7 @@ public class OrderPage1 {
 
 
 
+//TODO AGGIUNGERE BOTTONE PER POTER TOGLIERE UNA PIZZA MODIFICATA
 
     Label modifiche=new Label();
     modifiche.setText("Pizze Modificate");
