@@ -1,6 +1,5 @@
 package elementiGrafici;
 
-import com.sun.tools.corba.se.idl.toJavaPortable.ValueBoxGen24;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -47,13 +46,13 @@ public class OrderPage3 {
       GridPane.setConstraints(hBox3,1,3);
 
 
-      Button closeButton = new Button("Torna indietro ←");
-      closeButton.setOnAction(e -> window.setScene(scene3));
-      Button nextPageButton = new Button("Fine →");
-      nextPageButton.setOnAction(e-> {window.close();});
+      Button indietroButton = new Button("Torna indietro ←");
+      indietroButton.setOnAction(e -> window.setScene(scene3));
+      Button closeButton = new Button("Fine ☓");
+      closeButton.setOnAction(e-> {window.close();});
 
       HBox buttonBox = new HBox(10);
-      buttonBox.getChildren().addAll(closeButton, nextPageButton);
+      buttonBox.getChildren().addAll(indietroButton, closeButton);
       buttonBox.setAlignment(Pos.CENTER);
       buttonBox.setMinSize(600, 50);
 
