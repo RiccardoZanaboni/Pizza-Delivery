@@ -190,8 +190,8 @@ public class Pizzeria {
     public Order inizializeNewOrder() {
         Order order = new Order(ordiniDelGiorno);
         setOrdiniDelGiorno();
-        //System.out.println(helloThere());
-        //System.out.println(stampaMenu());
+        System.out.println(helloThere());
+        System.out.println(stampaMenu());
         return order;
     }
 

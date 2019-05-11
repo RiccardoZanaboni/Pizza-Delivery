@@ -1,6 +1,8 @@
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
@@ -32,20 +34,21 @@ public class GraphicInterface extends Application{
     stackPane.getChildren().add(label1);
 
     // Definisco i bottoni presenti nella pagina
-    Button makeOrderButton = new Button("Fai l'ordine");
-    makeOrderButton.setMinSize(200, 200);
+    Button makeOrderButton = new Button("Nuovo Ordine");
+    makeOrderButton.setMinSize(270, 220);
     Button chiSiamoButton = new Button ("Chi siamo");
-    chiSiamoButton.setMinSize(200, 200);
+    chiSiamoButton.setMinSize(270, 220);
     Button recapOrdiniButton = new Button("Riepilogo ordini");
-    recapOrdiniButton.setMinSize(200, 200);
+    recapOrdiniButton.setMinSize(270, 220);
     Button altroButton = new Button("Altro");
-    altroButton.setMinSize(200, 200);
+    altroButton.setMinSize(270, 220);
 
     // Layout per i bottoni
     GridPane gridPane = new GridPane();
-    gridPane.setPadding(new Insets(10, 10, 10, 10));
-    gridPane.setVgap(10);
-    gridPane.setHgap(10);
+    gridPane.setAlignment(Pos.CENTER);
+    gridPane.setPadding(new Insets(20, 20, 20, 20));
+    gridPane.setVgap(20);
+    gridPane.setHgap(20);
     GridPane.setConstraints(makeOrderButton, 0, 0);
     GridPane.setConstraints(chiSiamoButton, 1, 0);
     GridPane.setConstraints(recapOrdiniButton, 0, 1);
@@ -75,7 +78,7 @@ public class GraphicInterface extends Application{
     BorderPane layout = new BorderPane();
     layout.setTop(stackPane);
     layout.setCenter(gridPane);
-    scene1 = new Scene(layout, 430, 530);
+    scene1 = new Scene(layout, 600, 600);
 
     window.setResizable(false);
     window.setScene(scene1);

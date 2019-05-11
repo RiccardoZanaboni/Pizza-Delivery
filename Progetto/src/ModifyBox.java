@@ -36,7 +36,7 @@ public class ModifyBox{
 
     // Meglio fare una funzione unica per gli add anzichè uno per uno
 
-      Label alici = new Label("Alici");
+      Label alici = new Label("ALICI");
       Button addAlici = new Button("Add");
       addAlici.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("ALICI");
@@ -52,7 +52,7 @@ public class ModifyBox{
       GridPane.setConstraints(alici, 1,1);
       GridPane.setConstraints(hBox1, 5,1);
 
-      Label basilico = new Label("Basilico");
+      Label basilico = new Label("BASILICO");
       Button addBasilico = new Button("Add");
       addBasilico.setOnAction(e-> {
           Ingredienti ingrediente = Ingredienti.valueOf("BASILICO");

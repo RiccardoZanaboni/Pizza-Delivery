@@ -149,7 +149,7 @@ public class OrderPage1 {
           ModifyBox.setAnswer();
       }
     }else
-                AlertNumPizzeMax.display();
+      AlertNumPizzeMax.display();
     });
     HBox hBox4 = new HBox(10);
     VBox vBox4 = new VBox(5);
