@@ -16,7 +16,7 @@ import pizzeria.Pizzeria;
 public class OrderPage1 {
 
   static Scene scene2;
-  private static int tot;
+  public static int tot;
   static int countModifiche=0;
 
   private static Button avantiButton;
@@ -38,21 +38,22 @@ public class OrderPage1 {
     Label margherita = new Label(pizzeria.getMenu().get("MARGHERITA").getNomeCamel());
     Label margheritaIngre = new Label(pizzeria.getMenu().get("MARGHERITA").getDescrizione());
     Label margheritaPrezzo = new Label(pizzeria.getMenu().get("MARGHERITA").getPrezzo()+"€");
-    Button addMargherita = new Button("Aggiungi al carrello ");
-    Button modMargherita = new Button(("Modifica"));
-    Button rimuoviMargherita =new Button("rimuovi dal carrello");
     Label countMargheritaLabel= new Label();
+    ButtonAddPizza addMargherita = new ButtonAddPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("MARGHERITA").getNomeMaiusc());
+    Button modMargherita = new Button(("Modifica"));
+    ButtonRmvPizza rimuoviMargherita =new ButtonRmvPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("MARGHERITA").getNomeMaiusc());
+
     countMargheritaLabel.setText(""+pizzeria.getMenu().get("MARGHERITA").getCount());
 
-    addMargherita.setOnAction(e-> {if (tot<16) {
+    /*addMargherita.setOnAction(e-> {if (tot<16) {
       order.addPizza(pizzeria.getMenu().get(margherita.getText().toUpperCase()), 1);
       tot++;
       pizzeria.getMenu().get("MARGHERITA").setCount();
       countMargheritaLabel.setText(""+pizzeria.getMenu().get("MARGHERITA").getCount());
     } else
       AlertNumPizzeMax.display();
-  });
-    rimuoviMargherita.setOnAction(event -> {
+  });*/
+    /*rimuoviMargherita.setOnAction(event -> {
         if(order.searchPizza(pizzeria.getMenu().get("MARGHERITA"))){
         order.getPizzeordinate().remove(pizzeria.getMenu().get("MARGHERITA"));
         tot--;
@@ -60,7 +61,7 @@ public class OrderPage1 {
         countMargheritaLabel.setText(""+pizzeria.getMenu().get("MARGHERITA").getCount());
     }else
         AlertNumeroPizzeMin.display("MARGHERITA");
-    });
+    });*/
     modMargherita.setOnAction(e-> {if(tot<16) {
         if (ModifyBox.display(order, pizzeria, margherita)) {
             tot++;
