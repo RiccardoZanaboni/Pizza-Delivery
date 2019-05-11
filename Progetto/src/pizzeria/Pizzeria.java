@@ -32,8 +32,8 @@ public class Pizzeria {
         this.orarioApertura = orarioApertura;
         this.infornate = new Forno[TEMPI_FORNO * (orarioChiusura.getHours() - orarioApertura.getHours())];
         this.fattorini= new ArrayList<>();
-        creaMenu();
         setIngredientiPizzeria();
+        creaMenu();
     }
 
     public void addOrdine(Order order) {
@@ -48,8 +48,8 @@ public class Pizzeria {
         fattorini.add(deliveryMan);
     }
 
-    public void ApriPizzeria(int postidisponibili){     // ripristina il vettore di infornate ad ogni apertura della pizzeria
-        for(int i=0;i<infornate.length;i++){
+    public void ApriPizzeria(int postidisponibili){
+        for(int i=0;i<infornate.length;i++){        // ripristina il vettore di infornate ad ogni apertura della pizzeria
             infornate[i]=new Forno(postidisponibili);
         }
     }
