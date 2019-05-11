@@ -7,7 +7,6 @@ import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.geometry.Insets;
 import pizzeria.DeliveryMan;
 import pizzeria.Order;
 import pizzeria.Pizza;
@@ -91,7 +90,7 @@ public class GraphicInterface extends Application{
     layout.getStyleClass().add("layout");
 
     scene1 = new Scene(layout, 600, 600);
-    scene1.getStylesheets().add("graphicInterfaceStyle.css");
+    scene1.getStylesheets().add("elementiGrafici/graphicInterfaceStyle.css");
     window.setResizable(false);
     window.setScene(scene1);
     window.setTitle("Wolf of pizzeria.Pizza");

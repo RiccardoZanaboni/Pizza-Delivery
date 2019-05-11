@@ -1,0 +1,23 @@
+.label {
+    -fx-font-family: Helvetica, Arial, sans-serif;
+    -fx-font-size: 20px;
+    -fx-text-fill: black;
+}
+
+.stackpane {
+    -fx-border-style: none none solid none;
+    -fx-border-color:black;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-border-style: solid solid none solid;
+    -fx-font-family: Helvetica, Arial, sans-serif;
+    -fx-font-size: 20px;
+    -fx-text-fill: black;
+}
+
+.layout{
+    -fx-background-color: linear-gradient(#1e90ff,  #87cefa);
+    -fx-background-size: 600 500;
+}
