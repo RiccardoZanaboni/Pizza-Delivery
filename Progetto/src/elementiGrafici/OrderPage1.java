@@ -2,6 +2,7 @@ package elementiGrafici;
 
 import avvisiGrafici.AlertNumPizzeMax;
 import avvisiGrafici.AlertNumeroPizzeMin;
+import elementiGrafici.ModifyBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,12 +37,11 @@ public class OrderPage1 {
 
     Label margherita = new Label(pizzeria.getMenu().get("MARGHERITA").getNomeCamel());
     Label margheritaIngre = new Label(pizzeria.getMenu().get("MARGHERITA").getDescrizione());
-    Label margheritaPrezzo = new Label(pizzeria.getMenu().get("MARGHERITA").getPrezzo()+" €");
+    Label margheritaPrezzo = new Label(pizzeria.getMenu().get("MARGHERITA").getPrezzo()+"€");
     Label countMargheritaLabel= new Label();
     ButtonAddPizza addMargherita = new ButtonAddPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("MARGHERITA").getNomeMaiusc());
-    Button modMargherita = new Button(("Modifica"));
     ButtonRmvPizza rimuoviMargherita =new ButtonRmvPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("MARGHERITA").getNomeMaiusc());
-
+    ButtonModPizza buttonModMargherita=new ButtonModPizza(order,pizzeria,pizzeria.getMenu().get("MARGHERITA").getNomeMaiusc(),countModificheLabel);
     countMargheritaLabel.setText(""+pizzeria.getMenu().get("MARGHERITA").getCount());
 
     /*addMargherita.setOnAction(e-> {if (tot<16) {
@@ -60,9 +60,9 @@ public class OrderPage1 {
         countMargheritaLabel.setText(""+pizzeria.getMenu().get("MARGHERITA").getCount());
     }else
         AlertNumeroPizzeMin.display("MARGHERITA");
-    });*/
+    });
     modMargherita.setOnAction(e-> {if(tot<16) {
-        if (ModifyBox.display(order, pizzeria, margherita)) {
+        if (ModifyBox.display(order, pizzeria, "MARGHERITA")) {
             tot++;
             countModifiche++;
             countModificheLabel.setText("" + countModifiche);
@@ -70,22 +70,38 @@ public class OrderPage1 {
         }
     }else
         AlertNumPizzeMax.display();
-    });
+    });*/
 
     HBox hBox1 = new HBox(10);
     VBox vBox1 = new VBox(5);
     VBox vBox1A = new VBox(10);
-    vBox1.getChildren().addAll(addMargherita, modMargherita, rimuoviMargherita);
+    vBox1.getChildren().addAll(addMargherita, buttonModMargherita, rimuoviMargherita);
     vBox1A.getChildren().addAll(margherita, margheritaIngre);
     hBox1.getChildren().addAll(margheritaPrezzo, vBox1);
+
+
 
     Label italia = new Label(pizzeria.getMenu().get("ITALIA").getNomeCamel());
     Label italiaIngre = new Label(pizzeria.getMenu().get("ITALIA").getDescrizione());
     Label italiaPrezzo = new Label(pizzeria.getMenu().get("ITALIA").getPrezzo()+"€");
-    ButtonAddPizza addItalia = new ButtonAddPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("ITALIA").getNomeMaiusc());
+      Label countItaliaLabel= new Label();
+      ButtonAddPizza addItalia = new ButtonAddPizza(order, pizzeria, countItaliaLabel, pizzeria.getMenu().get("ITALIA").getNomeMaiusc());
+      ButtonRmvPizza rimuoviItalia =new ButtonRmvPizza(order, pizzeria, countItaliaLabel, pizzeria.getMenu().get("ITALIA").getNomeMaiusc());
+      ButtonModPizza modItalia=new ButtonModPizza(order,pizzeria,pizzeria.getMenu().get("ITALIA").getNomeMaiusc(),countModificheLabel);
+      countItaliaLabel.setText(""+pizzeria.getMenu().get("ITALIA").getCount());
+
+    /*Button addItalia = new Button("Aggiungi al carrello");
     Button modItalia = new Button(( "Modifica"));
     Label countItaliaLabel= new Label();
     countItaliaLabel.setText(""+pizzeria.getMenu().get("ITALIA").getCount());
+    addItalia.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(italia.getText().toUpperCase()), 1);
+      tot++;
+      pizzeria.getMenu().get("ITALIA").setCount();
+      countItaliaLabel.setText(""+pizzeria.getMenu().get("ITALIA").getCount());
+    } else
+      AlertNumPizzeMax.display();
+    });
     modItalia.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, italia)) {
           tot++;
@@ -96,8 +112,17 @@ public class OrderPage1 {
     }else
         AlertNumPizzeMax.display();
     });
-    ButtonRmvPizza rimuoviItalia =new ButtonRmvPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("ITALIA").getNomeMaiusc());
-
+    Button rimuoviItalia =new Button("rimuovi dal carrello");
+    rimuoviItalia.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("ITALIA"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("ITALIA"));
+            tot--;
+            pizzeria.getMenu().get("ITALIA").resetCount();
+            countItaliaLabel.setText(""+pizzeria.getMenu().get("ITALIA").getCount());
+        }else
+            AlertNumeroPizzeMin.display("ITALIA");
+    });
+*/
     HBox hBox2 = new HBox(10);
     VBox vBox2 = new VBox(5);
     VBox vBox2A = new VBox(10);
@@ -108,10 +133,21 @@ public class OrderPage1 {
     Label marinara= new Label(pizzeria.getMenu().get("MARINARA").getNomeCamel());
     Label marinaraIngre = new Label(pizzeria.getMenu().get("MARINARA").getDescrizione());
     Label marinaraPrezzo = new Label(pizzeria.getMenu().get("MARINARA").getPrezzo()+"€");
-    ButtonAddPizza addMarinara = new ButtonAddPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("MARINARA").getNomeMaiusc());
+      Label countMarinaraLabel=new Label();
+
+    /*
+    Button addMarinara = new Button("Aggiungi al carrello");
     Button modMarinara = new Button(("Modifica"));
     Label countMarinaraLabel=new Label();
     countMarinaraLabel.setText(""+pizzeria.getMenu().get("MARINARA").getCount());
+    addMarinara.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(marinara.getText().toUpperCase()), 1);
+      tot++;
+      pizzeria.getMenu().get("MARINARA").setCount();
+      countMarinaraLabel.setText(""+pizzeria.getMenu().get("MARINARA").getCount());
+    } else
+      AlertNumPizzeMax.display();
+    });
     modMarinara.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, marinara)) {
           tot++;
@@ -122,7 +158,21 @@ public class OrderPage1 {
     }else
         AlertNumPizzeMax.display();
     });
-    ButtonRmvPizza rimuoviMarinara =new ButtonRmvPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("MARINARA").getNomeMaiusc());
+    Button rimuoviMarinara =new Button("rimuovi dal carrello");
+    rimuoviMarinara.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("MARINARA"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("MARINARA"));
+            tot--;
+            pizzeria.getMenu().get("MARINARA").resetCount();
+            countMarinaraLabel.setText(""+pizzeria.getMenu().get("MARINARA").getCount());
+        }else
+            AlertNumeroPizzeMin.display("MARINARA");
+    });*/
+
+      ButtonAddPizza addMarinara = new ButtonAddPizza(order, pizzeria, countMarinaraLabel, pizzeria.getMenu().get("MARINARA").getNomeMaiusc());
+      ButtonRmvPizza rimuoviMarinara =new ButtonRmvPizza(order, pizzeria, countMarinaraLabel, pizzeria.getMenu().get("MARINARA").getNomeMaiusc());
+      ButtonModPizza modMarinara=new ButtonModPizza(order,pizzeria,pizzeria.getMenu().get("MARINARA").getNomeMaiusc(),countModificheLabel);
+      countMarinaraLabel.setText(""+pizzeria.getMenu().get("MARINARA").getCount());
 
     HBox hBox3 = new HBox(10);
     VBox vBox3 = new VBox(5);
@@ -134,10 +184,21 @@ public class OrderPage1 {
     Label patatine= new Label(pizzeria.getMenu().get("PATATINE").getNomeCamel());
     Label patatineIngre = new Label(pizzeria.getMenu().get("PATATINE").getDescrizione());
     Label patatinePrezzo = new Label(pizzeria.getMenu().get("PATATINE").getPrezzo()+"€");
-    ButtonAddPizza addPatatine = new ButtonAddPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("PATATINE").getNomeMaiusc());
+      Label countPatatineLabel=new Label();
+
+    /*
+    Button addPatatine = new Button("Aggiungi al carrello");
     Button modPatatine = new Button(("Modifica"));
     Label countPatatineLabel=new Label();
     countPatatineLabel.setText(""+pizzeria.getMenu().get("PATATINE").getCount());
+    addPatatine.setOnAction(e-> {if (tot<16) {
+      order.addPizza(pizzeria.getMenu().get(patatine.getText().toUpperCase()), 1);
+      tot++;
+      pizzeria.getMenu().get("PATATINE").setCount();
+      countPatatineLabel.setText(""+pizzeria.getMenu().get("PATATINE").getCount());
+    } else
+      AlertNumPizzeMax.display();
+    });
     modPatatine.setOnAction(e->{if(tot<16){
       if(ModifyBox.display(order, pizzeria, patatine)){
           tot++;
@@ -148,7 +209,20 @@ public class OrderPage1 {
     }else
       AlertNumPizzeMax.display();
     });
-    ButtonRmvPizza rimuoviPatatine =new ButtonRmvPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("PATATINE").getNomeMaiusc());
+    Button rimuoviPatatine =new Button("rimuovi dal carrello");
+    rimuoviPatatine.setOnAction(event -> {
+        if(order.searchPizza(pizzeria.getMenu().get("PATATINE"))){
+            order.getPizzeordinate().remove(pizzeria.getMenu().get("PATATINE"));
+            tot--;
+            pizzeria.getMenu().get("PATATINE").resetCount();
+            countPatatineLabel.setText(""+pizzeria.getMenu().get("PATATINE").getCount());
+        }else
+            AlertNumeroPizzeMin.display("PATATINE");
+     });*/
+      ButtonAddPizza addPatatine = new ButtonAddPizza(order, pizzeria, countPatatineLabel, pizzeria.getMenu().get("PATATINE").getNomeMaiusc());
+      ButtonRmvPizza rimuoviPatatine =new ButtonRmvPizza(order, pizzeria, countPatatineLabel, pizzeria.getMenu().get("PATATINE").getNomeMaiusc());
+      ButtonModPizza modPatatine=new ButtonModPizza(order,pizzeria,pizzeria.getMenu().get("PATATINE").getNomeMaiusc(),countModificheLabel);
+      countPatatineLabel.setText(""+pizzeria.getMenu().get("PATATINE").getCount());
 
     HBox hBox4 = new HBox(10);
     VBox vBox4 = new VBox(5);
@@ -157,10 +231,10 @@ public class OrderPage1 {
     vBox4A.getChildren().addAll(patatine, patatineIngre);
     hBox4.getChildren().addAll(patatinePrezzo, vBox4);
 
-    Label wurstel= new Label(pizzeria.getMenu().get("WURSTEL").getNomeCamel());
+  /*  Label wurstel= new Label(pizzeria.getMenu().get("WURSTEL").getNomeCamel());
     Label wurstelIngre = new Label(pizzeria.getMenu().get("WURSTEL").getDescrizione());
     Label wurstelPrezzo = new Label(pizzeria.getMenu().get("WURSTEL").getPrezzo()+"€");
-    ButtonAddPizza addWurstel = new ButtonAddPizza(order, pizzeria, countMargheritaLabel, pizzeria.getMenu().get("WURSTEL").getNomeMaiusc());
+    Button addWurstel = new Button("Aggiungi al carrello");
     Button modWurstel = new Button(("Modifica"));
     Label countWurstelLabel=new Label();
     countWurstelLabel.setText(""+pizzeria.getMenu().get("WURSTEL").getCount());
@@ -417,6 +491,7 @@ public class OrderPage1 {
     vBox10.getChildren().addAll(addAmericana, modAmericana,rimuoviAmericana);
     vBox10A.getChildren().addAll(americana, americanaIngre);
     hBox10.getChildren().addAll(americanaPrezzo, vBox10);
+*/
 
 //TODO AGGIUNGERE BOTTONE PER POTER TOGLIERE UNA PIZZA MODIFICATA
 
@@ -457,36 +532,36 @@ public class OrderPage1 {
     GridPane.setConstraints(countItaliaLabel, 0,2);
     GridPane.setConstraints(countMarinaraLabel, 0,3);
     GridPane.setConstraints(countPatatineLabel, 0,4);
-    GridPane.setConstraints(countWurstelLabel, 0,5);
+    /*GridPane.setConstraints(countWurstelLabel, 0,5);
     GridPane.setConstraints(countCapricciosaLabel, 0,6);
     GridPane.setConstraints(countNapoliLabel, 0,7);
     GridPane.setConstraints(countCottoLabel, 0,8);
     GridPane.setConstraints(countCottoFunghiLabel, 0,9);
     GridPane.setConstraints(countAmericanaLabel, 0,10);
-    GridPane.setConstraints(countModificheLabel, 0,11);
+    GridPane.setConstraints(countModificheLabel, 0,11);*/
 
     GridPane.setConstraints(vBox1A, 1,1);
     GridPane.setConstraints(vBox2A, 1,2);
     GridPane.setConstraints(vBox3A, 1,3);
     GridPane.setConstraints(vBox4A, 1,4);
-    GridPane.setConstraints(vBox5A, 1,5);
+  /*  GridPane.setConstraints(vBox5A, 1,5);
     GridPane.setConstraints(vBox6A, 1,6);
     GridPane.setConstraints(vBox7A, 1,7);
     GridPane.setConstraints(vBox8A, 1,8);
     GridPane.setConstraints(vBox9A, 1,9);
     GridPane.setConstraints(vBox10A, 1,10);
-
+*/
     GridPane.setConstraints(hBox1, 2,1);
     GridPane.setConstraints(hBox2, 2,2);
     GridPane.setConstraints(hBox3, 2,3);
     GridPane.setConstraints(hBox4, 2,4);
-    GridPane.setConstraints(hBox5, 2,5);
+  /*  GridPane.setConstraints(hBox5, 2,5);
     GridPane.setConstraints(hBox6, 2,6);
     GridPane.setConstraints(hBox7, 2,7);
     GridPane.setConstraints(hBox8, 2,8);
     GridPane.setConstraints(hBox9, 2,9);
     GridPane.setConstraints(hBox10, 2,10);
-
+*/
     GridPane.setConstraints(hBoxMod,1,12);
     //GridPane.setConstraints(hBoxButton, 0,13);
 
@@ -494,10 +569,10 @@ public class OrderPage1 {
 
     gridPane.getChildren().addAll(
             hBoxMod,
-            countMargheritaLabel, countItaliaLabel, countMarinaraLabel, countPatatineLabel,countWurstelLabel,
-            countCapricciosaLabel, countNapoliLabel, countCottoLabel, countCottoFunghiLabel, countAmericanaLabel,
-            hBox1, hBox2, hBox3, hBox4, hBox5, hBox6, hBox7, hBox8, hBox9, hBox10,
-            vBox1A, vBox2A, vBox3A, vBox4A, vBox5A, vBox6A, vBox7A, vBox8A, vBox9A, vBox10A
+            countMargheritaLabel, countItaliaLabel, countMarinaraLabel, countPatatineLabel,//countWurstelLabel,
+           // countCapricciosaLabel, countNapoliLabel, countCottoLabel, countCottoFunghiLabel, countAmericanaLabel,
+            hBox1, hBox2, hBox3, hBox4, //hBox5, hBox6, hBox7, hBox8, hBox9, hBox10,
+            vBox1A, vBox2A, vBox3A, vBox4A //vBox5A, vBox6A, vBox7A, vBox8A, vBox9A, vBox10A
     );
 
     // Metto il gridPane con tutte le pizze all'interno di uno ScrollPane
