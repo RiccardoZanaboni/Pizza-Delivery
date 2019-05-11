@@ -28,7 +28,7 @@ public class TextInterface {
     private Scanner scan = new Scanner(System.in);
 
     private TextInterface() {
-        wolf = new Pizzeria("Wolf Of pizzeria.Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 19, 0), new Date(2019, 0, 31, 23, 0, 0));
+        wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 19, 0), new Date(2019, 0, 31, 23, 0, 0));
     }
 
     private void makeOrderText() {
