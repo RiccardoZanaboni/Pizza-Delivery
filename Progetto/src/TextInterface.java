@@ -232,7 +232,7 @@ public class TextInterface {
                 String aggiunte = scan.nextLine();
                 System.out.println("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:");
                 String rimozioni = scan.nextLine();
-                order.addPizza(wolf.getMenu().get(nomePizza), aggiunte, rimozioni, num, wolf.getPREZZO_SUPPL());
+                addPizza(order, wolf.getMenu().get(nomePizza), aggiunte, rimozioni, num, wolf.getPREZZO_SUPPL());
                 break;
             case "N":
                 order.addPizza(wolf.getMenu().get(nomePizza), num);
@@ -267,6 +267,46 @@ public class TextInterface {
         }
         return ok;
     }
+
+    public void addPizza(Order order, Pizza pizza, String aggiunte, String rimozioni, int num, double prezzoSupl) {
+        HashMap<String, Ingredienti> ingr = new HashMap<>(pizza.getIngredienti());
+        Pizza p = new Pizza(pizza.getNomeMaiusc(), ingr, pizza.getPrezzo());
+        int piu=0;
+        StringTokenizer stAgg = new StringTokenizer(aggiunte);
+        while (stAgg.hasMoreTokens()) {
+            try {
+                String ingredienteAggiuntoString = sistemaStringaIngrediente(stAgg);
+                Ingredienti ingredienti = Ingredienti.valueOf(ingredienteAggiuntoString);
+                piu++;
+                p.addIngredienti(ingredienti);
+            } catch (Exception ignored) { }
+        }
+        p.setPrezzo(p.getPrezzo() + (piu * prezzoSupl));        // aggiunto 0.50 per ogni ingrediente
+        StringTokenizer stRmv = new StringTokenizer(rimozioni);
+        while (stRmv.hasMoreTokens()) {
+            try {
+                String ingredienteRimossoString = sistemaStringaIngrediente(stRmv);
+                Ingredienti ingredienti = Ingredienti.valueOf(ingredienteRimossoString);
+                p.rmvIngredienti(ingredienti);
+            } catch (Exception ignored) { }
+        }
+        for (int i = 0; i < num; i++) {
+            order.getPizzeordinate().add(p);
+        }
+        System.out.println("\t> Aggiunte " + num + " pizze " + p.getNomeMaiusc() + " (" + p.getDescrizione() + ").");
+    }
+
+    private String sistemaStringaIngrediente(StringTokenizer st){
+        String ingred = st.nextToken(",");
+        if(ingred.startsWith(" "))
+            ingred = ingred.substring(1);
+        if(ingred.endsWith(" "))
+            ingred = ingred.substring(0,ingred.length()-1);
+        ingred = ingred.replace(" ","_");
+        ingred = ingred.toUpperCase();
+        return ingred;
+    }
+
 
     private void chiediConfermaText(Order order, Date orario, int tot) {
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, 'N' per annullare: ");

@@ -16,7 +16,7 @@ public class OrderPage3 {
 
   public void display(Stage window, Order order, Pizzeria pizzeria, int tot, Scene scene3) {
 
-      //FIXME MIGLIORARE LA PAGINA
+      //TODO MIGLIORARE LA PAGINA
 
       GridPane gridPane = new GridPane();
       gridPane.setPadding(new Insets(10, 10, 10, 10));

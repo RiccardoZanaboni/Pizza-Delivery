@@ -52,7 +52,6 @@ public class OrderPage2 {
     HBox choiceHBox = new HBox(44);
     choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
 
-
     Button nextPageButton = new Button("Prosegui →");
 
     nextPageButton.setOnAction(e-> {
