@@ -79,7 +79,7 @@ public class GraphicInterface extends Application{
     BorderPane layout = new BorderPane();
     layout.setTop(stackPane);
     layout.setCenter(gridPane);
-    scene1 = new Scene(layout, 430, 530);
+    scene1 = new Scene(layout, 600, 600);
     window.setResizable(false);
     window.setScene(scene1);
     window.setTitle("Wolf of Pizza");
