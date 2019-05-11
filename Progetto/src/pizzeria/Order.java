@@ -16,6 +16,7 @@ public class Order {
     private Date orario;
     private ArrayList<Pizza> pizzeordinate;
     private boolean completo;
+    private int countPizzeModificate;
 
     public Order(int num) {
         this.customer = null;
@@ -24,6 +25,15 @@ public class Order {
         this.orario = null;
         this.pizzeordinate = new ArrayList<>();
         this.completo = false;
+        this.countPizzeModificate=0;
+    }
+
+    public int getCountPizzeModificate() {
+        return countPizzeModificate;
+    }
+
+    public void setCountPizzeModificate() {
+        this.countPizzeModificate++;
     }
 
     public Customer getCustomer() {

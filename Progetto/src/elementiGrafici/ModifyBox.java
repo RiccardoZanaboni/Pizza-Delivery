@@ -19,12 +19,12 @@ public class ModifyBox{
         ModifyBox.answer= !ModifyBox.answer;
     }
 
-    public static boolean display(Order order, Pizzeria pizzeria, Label pizza) {
+    public static boolean display(Order order, Pizzeria pizzeria, String pizza) {
 
 		Pizza pizzaMenu = new Pizza(
-				pizzeria.getMenu().get(pizza.getText().toUpperCase()).getNomeCamel(),
-				pizzeria.getMenu().get(pizza.getText().toUpperCase()).getIngredienti(),
-				pizzeria.getMenu().get(pizza.getText().toUpperCase()).getPrezzo());
+				pizzeria.getMenu().get(pizza).getNomeCamel(),
+				pizzeria.getMenu().get(pizza).getIngredienti(),
+				pizzeria.getMenu().get(pizza).getPrezzo());
 
 		HashMap<String, Ingredienti> ingr = new HashMap<>(pizzaMenu.getIngredienti());
 		Pizza nuovaPizza = new Pizza(pizzaMenu.getNomeMaiusc(), ingr, pizzaMenu.getPrezzo());
