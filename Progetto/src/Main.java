@@ -6,11 +6,11 @@
 
 public class Main {
     public static void main(String[] args) {
-      //  Pizzeria wolfOfPizza = new Pizzeria("Wolf Of Pizza","Via de Gasperi 5, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
+      //  pizzeria.Pizzeria wolfOfPizza = new pizzeria.Pizzeria("Wolf Of pizzeria.Pizza","Via de Gasperi 5, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
 
 
-        //wolfOfPizza.AddFattorino(new DeliveryMan("Marco",wolfOfPizza));
-       // wolfOfPizza.AddFattorino(new DeliveryMan("Musi",wolfOfPizza));
+        //wolfOfPizza.AddFattorino(new pizzeria.DeliveryMan("Marco",wolfOfPizza));
+       // wolfOfPizza.AddFattorino(new pizzeria.DeliveryMan("Musi",wolfOfPizza));
 
         //wolfOfPizza.ApriPizzeria(8);
         //wolfOfPizza.makeOrder();

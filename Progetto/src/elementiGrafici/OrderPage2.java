@@ -1,3 +1,5 @@
+package elementiGrafici;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -6,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import pizzeria.Customer;
+import pizzeria.Order;
+import pizzeria.Pizzeria;
 
 public class OrderPage2 {
   private Scene scene3;

@@ -1,5 +1,6 @@
 import exceptions.RestartOrderExc;
 import exceptions.RiprovaExc;
+import pizzeria.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,7 @@ public class TextInterface {
     private Scanner scan = new Scanner(System.in);
 
     private TextInterface() {
-        wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 19, 0), new Date(2019, 0, 31, 23, 0, 0));
+        wolf = new Pizzeria("Wolf Of pizzeria.Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 19, 0), new Date(2019, 0, 31, 23, 0, 0));
     }
 
     private void makeOrderText() {
@@ -299,7 +300,7 @@ public class TextInterface {
         TextInterface textInterface = new TextInterface();
         textInterface.wolf.ApriPizzeria(8);     // ma è qui che va creata la pizzeria? Bho non lo so
         textInterface.wolf.AddFattorino(new DeliveryMan("Musi", textInterface.wolf));
-        //textInterface.wolf.AddFattorino(new DeliveryMan("Zanzatroni",textInterface.wolf));
+        //textInterface.wolf.AddFattorino(new pizzeria.DeliveryMan("Zanzatroni",textInterface.wolf));
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
         textInterface.makeOrderText();  //Per prova vettori orario
@@ -309,7 +310,7 @@ public class TextInterface {
 }
 
 
-/*private Date inserisciOrario (Order order, int tot){
+/*private Date inserisciOrario (pizzeria.Order order, int tot){
         Date d = null;
         boolean ok = false;
 
@@ -351,7 +352,7 @@ public class TextInterface {
         return d;
     }*/
 
-    /*public Date checkValiditaOrario(String sDate1, Order order, int tot){
+    /*public Date checkValiditaOrario(String sDate1, pizzeria.Order order, int tot){
         Date d= null;
         try {
             StringTokenizer st = new StringTokenizer(sDate1, ":");

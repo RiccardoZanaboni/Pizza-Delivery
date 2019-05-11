@@ -1,8 +1,12 @@
+package elementiGrafici;
+
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import pizzeria.Order;
+import pizzeria.Pizzeria;
 
 
 public class OrderPage3 {

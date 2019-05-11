@@ -1,31 +1,35 @@
+import elementiGrafici.OrderPage1;
+import elementiGrafici.OrderPage2;
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.Insets;
+import pizzeria.DeliveryMan;
+import pizzeria.Order;
+import pizzeria.Pizza;
+import pizzeria.Pizzeria;
 
 import java.util.Date;
 
-//TODO MIGLIORARE GRAFICA CON COLORI E IMMAGINI
+// TODO MIGLIORARE GRAFICA CON COLORI E IMMAGINI
 
 public class GraphicInterface extends Application{
   Stage window;
   Button button;
   Scene scene1, scene2, scene3;
   TableView<Pizza> table;
-  Pizzeria wolf = new Pizzeria("Wolf Of Pizza","Via Bolzano 10, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
+  Pizzeria wolf = new Pizzeria("Wolf Of pizzeria.Pizza","Via Bolzano 10, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
   int tot=0;
 
   public static void main(String[] args) { launch(args); }
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    window=primaryStage;
+  	window=primaryStage;
 
     /** PRIMA PAGINA*/
 
@@ -35,6 +39,7 @@ public class GraphicInterface extends Application{
     stackPane.getChildren().add(label1);
 
     // Definisco i bottoni presenti nella pagina
+
     Button makeOrderButton = new Button("Nuovo Ordine");
     makeOrderButton.setMinSize(270, 220);
     Button chiSiamoButton = new Button ("Chi siamo");
@@ -46,7 +51,6 @@ public class GraphicInterface extends Application{
 
     // Layout per i bottoni
     GridPane gridPane = new GridPane();
-    gridPane.setAlignment(Pos.CENTER);
     gridPane.setPadding(new Insets(20, 20, 20, 20));
     gridPane.setVgap(20);
     gridPane.setHgap(20);
@@ -82,8 +86,8 @@ public class GraphicInterface extends Application{
     scene1 = new Scene(layout, 600, 600);
     window.setResizable(false);
     window.setScene(scene1);
-    window.setTitle("Wolf of Pizza");
-    window.getIcons().add(new javafx.scene.image.Image("wolf_pizza.jpg"));
+    window.setTitle("Wolf of pizzeria.Pizza");
+    window.getIcons().add(new javafx.scene.image.Image("elementiGrafici/wolf_pizza.jpg"));
     window.show();
 
   }

@@ -1,3 +1,5 @@
+package pizzeria;
+
 public class CasellaTempoDeliveryMan {
     private boolean occupato;
     private int ordini;

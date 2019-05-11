@@ -1,3 +1,7 @@
+package pizzeria;
+
+import pizzeria.Ingredienti;
+
 import java.util.HashMap;
 
 public class Pizza {
@@ -15,7 +19,7 @@ public class Pizza {
     @Override
     public String toString() {
         String descrizione = this.getDescrizione();
-        return "- " + nome + "\n\t\tPrezzo: " + prezzo + " €\n\t\tIngredienti: " + descrizione;
+        return "- " + nome + "\n\t\tPrezzo: " + prezzo + " €\n\t\tpizzeria.Ingredienti: " + descrizione;
     }
 
     public String getNomeMaiusc() {

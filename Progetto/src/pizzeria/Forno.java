@@ -1,3 +1,5 @@
+package pizzeria;
+
 public class Forno {
     private int postiDisponibili;
 

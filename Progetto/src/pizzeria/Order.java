@@ -1,3 +1,9 @@
+package pizzeria;
+
+import pizzeria.Customer;
+import pizzeria.Ingredienti;
+import pizzeria.Pizza;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;

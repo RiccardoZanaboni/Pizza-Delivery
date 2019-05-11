@@ -1,3 +1,5 @@
+package pizzeria;
+
 public class Customer {
     private String username;
 

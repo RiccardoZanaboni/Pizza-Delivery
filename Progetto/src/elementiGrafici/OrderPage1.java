@@ -1,3 +1,8 @@
+package elementiGrafici;
+
+import avvisiGrafici.AlertNumPizzeMax;
+import avvisiGrafici.AlertNumeroPizzeMin;
+import elementiGrafici.ModifyBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -5,6 +10,8 @@ import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
+import pizzeria.Order;
+import pizzeria.Pizzeria;
 
 public class OrderPage1 {
 
@@ -561,13 +568,13 @@ public class OrderPage1 {
 
   }
 
-  /*public void addPizzaToOrder (Order order, Pizzeria pizzeria, Label label) {
+  /*public void addPizzaToOrder (pizzeria.Order order, pizzeria.Pizzeria pizzeria, Label label) {
     if (tot<4) {
       order.addPizza(pizzeria.getMenu().get(label.getText().toUpperCase()), 1);
       tot++;
       System.out.println(pizzeria.getMenu().get(label.getText().toUpperCase()));
     } else
-      AlertNumPizzeMax.display();
+      avvisiGrafici.AlertNumPizzeMax.display();
   }*/
 
 }

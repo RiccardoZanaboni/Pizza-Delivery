@@ -1,10 +1,14 @@
+package elementiGrafici;
+
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import pizzeria.Ingredienti;
+import pizzeria.Order;
+import pizzeria.Pizza;
+import pizzeria.Pizzeria;
 
 import java.util.HashMap;
 
@@ -23,7 +27,7 @@ public class ModifyBox{
             pizzeria.getMenu().get(pizza.getText().toUpperCase()).getIngredienti(),
             pizzeria.getMenu().get(pizza.getText().toUpperCase()).getPrezzo());
 
-    //Pizza nuovaPizza = new Pizza(pizzaMenu.getNomeCamel(), pizzaMenu.getIngredienti(), pizzaMenu.getPrezzo());
+    //pizzeria.Pizza nuovaPizza = new pizzeria.Pizza(pizzaMenu.getNomeCamel(), pizzaMenu.getIngredienti(), pizzaMenu.getPrezzo());
     HashMap<String, Ingredienti> ingr = new HashMap<>(pizzaMenu.getIngredienti());
     Pizza nuovaPizza = new Pizza(pizzaMenu.getNomeMaiusc(), ingr, pizzaMenu.getPrezzo());
 

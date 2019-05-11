@@ -1,3 +1,7 @@
+package pizzeria;
+
+import pizzeria.DeliveryMan;
+
 import java.util.*;
 @SuppressWarnings("deprecation")
 
@@ -306,7 +310,7 @@ public class Pizzeria {
         boolean ok;
         String nomePizza;
 
-        Order order = new Order(this.ordiniDelGiorno);
+        pizzeria.Order order = new pizzeria.Order(this.ordiniDelGiorno);
         this.ordiniDelGiorno++;
         System.out.println(helloThere());
         System.out.println(stampaMenu());
@@ -357,7 +361,7 @@ public class Pizzeria {
 
 
 
-    /*public boolean chiediConferma(Order order, Date d, int tot){
+    /*public boolean chiediConferma(pizzeria.Order order, Date d, int tot){
         //if (s.toUpperCase().equals("S")) {
         //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
         if(infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp()<tot){
@@ -396,7 +400,7 @@ public class Pizzeria {
         return nomePizza;
     }*/
 
-    /*private int quantePizzaSpecifica(Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
+    /*private int quantePizzaSpecifica(pizzeria.Order order, String nomePizza, int disponibili) {   // FUNZIONA BENE
         boolean ok = false;
         int num = 0;
         do {
@@ -421,7 +425,7 @@ public class Pizzeria {
         return num;
     }*/
 
-    /*public void chiediModificaPizza(Order order, String nomePizza, int num){
+    /*public void chiediModificaPizza(pizzeria.Order order, String nomePizza, int num){
         System.out.print("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N)");
         if(scan.nextLine().toUpperCase().equals("S")) {
             System.out.print("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:\n");
@@ -433,7 +437,7 @@ public class Pizzeria {
             order.addPizza(menu.get(nomePizza), num);
     }*/
 
-  /*  public boolean inserisciDati(Order order){
+  /*  public boolean inserisciDati(pizzeria.Order order){
         boolean ok=true;
         try {
             System.out.println("Come ti chiami?\t\t(Inserisci 'F' per annullare e ricominciare)");
@@ -442,7 +446,7 @@ public class Pizzeria {
                 ok=false;
                 throw new RestartOrderExc();
             }
-            Customer c = new Customer(nome);
+            pizzeria.Customer c = new pizzeria.Customer(nome);
             order.setCustomer(c);
             System.out.println("Inserisci l'indirizzo di consegna:\t\t(Inserisci 'F' per annullare e ricominciare)");
             String indirizzo = scan.nextLine();
@@ -459,7 +463,7 @@ public class Pizzeria {
 
    */
 
-    /*public void recapOrdine(Order order){
+    /*public void recapOrdine(pizzeria.Order order){
         String line = "\n---------------------------------------------\n";
         String codice = "ORDINE N. " + order.getCodice() + "\n";
         String dati = "SIG. " + order.getCustomer().getUsername() + "\tINDIRIZZO: " + order.getIndirizzo() + "\tORARIO: " + order.getOrario() + "\n";
@@ -468,7 +472,7 @@ public class Pizzeria {
         System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
     }
 
-    public boolean checkFornoFattorino(Date d, int tot){   //Order order, Date d, int tot
+    public boolean checkFornoFattorino(Date d, int tot){   //pizzeria.Order order, Date d, int tot
         //if (s.toUpperCase().equals("S")) {
             //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
             if(infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp()<tot){
@@ -494,7 +498,7 @@ public class Pizzeria {
         return PREZZO_SUPPL;
     }
 
-    public Forno[] getInfornate() {
+    public pizzeria.Forno[] getInfornate() {
         return infornate;
     }
 }*/
