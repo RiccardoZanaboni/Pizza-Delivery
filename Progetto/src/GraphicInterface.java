@@ -33,24 +33,30 @@ public class GraphicInterface extends Application {
 
     /** PRIMA PAGINA*/
 
-    Label label1 = new Label("Benvenuto");
+    Label label1 = new Label("Wolf Of Pizza");
     StackPane stackPane = new StackPane();
-    stackPane.setMinSize(100, 100);
+    //stackPane.setMinSize(100, 100);
+    stackPane.setMinSize(600, 50);
     stackPane.getChildren().add(label1);
+    stackPane.getStyleClass().add("stackpane");
+
+    StackPane spazioPane = new StackPane();
+    spazioPane.setMinSize(600, 150);
+
 
     // Definisco i bottoni presenti nella pagina
 
     Button makeOrderButton = new Button("Nuovo Ordine");
-    makeOrderButton.setMinSize(270, 220);
+    makeOrderButton.setMinSize(600, 100);
     Button chiSiamoButton = new Button ("Chi siamo");
-    chiSiamoButton.setMinSize(270, 220);
+    chiSiamoButton.setMinSize(600, 100);
     Button recapOrdiniButton = new Button("Riepilogo ordini");
-    recapOrdiniButton.setMinSize(270, 220);
+    recapOrdiniButton.setMinSize(600, 100);
     Button altroButton = new Button("Altro");
-    altroButton.setMinSize(270, 220);
+    altroButton.setMinSize(600, 100);
 
     // Layout per i bottoni
-    GridPane gridPane = new GridPane();
+    /*GridPane gridPane = new GridPane();
     gridPane.setPadding(new Insets(20, 20, 20, 20));
     gridPane.setVgap(20);
     gridPane.setHgap(20);
@@ -58,7 +64,7 @@ public class GraphicInterface extends Application {
     GridPane.setConstraints(chiSiamoButton, 1, 0);
     GridPane.setConstraints(recapOrdiniButton, 0, 1);
     GridPane.setConstraints(altroButton, 1, 1);
-    gridPane.getChildren().addAll(makeOrderButton, chiSiamoButton, recapOrdiniButton, altroButton);
+    gridPane.getChildren().addAll(makeOrderButton, chiSiamoButton, recapOrdiniButton, altroButton);*/
 
     /**     FAI ORDINE        */
 
@@ -80,17 +86,16 @@ public class GraphicInterface extends Application {
       System.out.println(name + address+ tot);*/
     });
 
-    BorderPane layout = new BorderPane();
-    layout.setTop(stackPane);
-    layout.setCenter(gridPane);
+    VBox layout = new VBox();
+    layout.getChildren().addAll(stackPane, spazioPane, makeOrderButton, chiSiamoButton, recapOrdiniButton, altroButton);
+    layout.getStyleClass().add("layout");
+
     scene1 = new Scene(layout, 600, 600);
+    scene1.getStylesheets().add("elementiGrafici/graphicInterfaceStyle.css");
     window.setResizable(false);
     window.setScene(scene1);
-    window.setTitle("Wolf of Pizza");
-    window.getIcons().add(new javafx.scene.image.Image("elementiGrafici/wolf_pizza.jpg"));
+    window.setTitle("Wolf of pizzeria.Pizza");
+    window.getIcons().add(new javafx.scene.image.Image("wolf_pizza.jpg"));
     window.show();
-
   }
-
-
 }
