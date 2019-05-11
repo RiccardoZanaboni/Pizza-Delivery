@@ -1,7 +1,11 @@
 package elementiGrafici;
 
+import com.sun.tools.corba.se.idl.toJavaPortable.ValueBoxGen24;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -11,30 +15,55 @@ import pizzeria.Pizzeria;
 
 public class OrderPage3 {
 
-  public void display(Stage window, Order order, Pizzeria pizzeria, int tot) {
+  public void display(Stage window, Order order, Pizzeria pizzeria, int tot, Scene scene3) {
 
-    //TODO CREARE LA PAGINA RIEPILOGO
+      //FIXME MIGLIORARE LA PAGINA
 
-    Label label = new Label("Il tuo ordine");
+      GridPane gridPane = new GridPane();
+      gridPane.setPadding(new Insets(10, 10, 10, 10));
+      gridPane.setVgap(10);
+      gridPane.setHgap(30);
+      VBox layout = new VBox();
+      HBox hbox1=new HBox(10 );
+      HBox hBox2=new HBox(10);
+      HBox hBox3=new HBox(10);
 
-    Label labelProducts = new Label("Prodotti");
-    TextField textProducts = new TextField();
-    textProducts.setText("Pizze ordinate");
-    VBox vBox1 = new VBox();
-    vBox1.getChildren().addAll(labelProducts, textProducts);
+      Label label = new Label("Il tuo ordine: SIG."+order.getCustomer().getUsername()+"\tINDIRIZZO: "+order.getIndirizzo()+"\tOrario "+order.getOrario());
+      hbox1.getChildren().addAll(label);
 
-    Label labelTot = new Label("Totale");
-    TextField textTot = new TextField();
-    textTot.setText("Totale ordine");
-    VBox vBox2 = new VBox();
-    vBox2.getChildren().addAll(labelTot, textTot);
+      Label labelProducts = new Label("Prodotti");
+      Label label1=new Label(order.recap());
+      VBox vBox=new VBox();
 
-    HBox hBox = new HBox();
-    hBox.getChildren().addAll(vBox1, vBox2);
+      vBox.getChildren().addAll(labelProducts,label1);
+      hBox2.getChildren().addAll(vBox);
 
-    Scene scene4;
-    scene4 = new Scene(hBox, 430, 530);
-    window.setScene(scene4);
+      Label labelTot = new Label("Totale");
+      Label label2=new Label(""+order.getTotaleCosto());
+      hBox3.getChildren().addAll(labelTot,label2);
+
+      GridPane.setConstraints(hbox1,0,1);
+      GridPane.setConstraints(hBox2,0,2);
+      GridPane.setConstraints(hBox3,1,3);
+
+
+      Button closeButton = new Button("Torna indietro ←");
+      closeButton.setOnAction(e -> window.setScene(scene3));
+      Button nextPageButton = new Button("Fine →");
+      nextPageButton.setOnAction(e-> {window.close();});
+
+      HBox buttonBox = new HBox(10);
+      buttonBox.getChildren().addAll(closeButton, nextPageButton);
+      buttonBox.setAlignment(Pos.CENTER);
+      buttonBox.setMinSize(600, 50);
+
+      gridPane.setMinSize(750, 500);
+      buttonBox.setMinSize(750, 100);
+      gridPane.getChildren().addAll(hbox1,hBox2,hBox3);
+      layout.getChildren().addAll(gridPane,buttonBox);
+      Scene scene4;
+      scene4 = new Scene(layout, 750, 600);
+      window.setScene(scene4);
 
   }
 }

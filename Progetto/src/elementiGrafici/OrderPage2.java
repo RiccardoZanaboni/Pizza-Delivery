@@ -12,10 +12,17 @@ import pizzeria.Customer;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 public class OrderPage2 {
   private Scene scene3;
   private Button button;
-  private String oraScelta, indirizzo, nome;
+  private String indirizzo, nome;
+  private Date ora;
 
 
   public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
@@ -51,13 +58,13 @@ public class OrderPage2 {
     nextPageButton.setOnAction(e-> {
       nome = getName(nameInput);
       indirizzo = getAddress(addressInput);
-      oraScelta = getChoice(choiceBox);
+      ora = getChoice(choiceBox, order);
       order.setIndirizzo(getAddress(addressInput));
       Customer customer = new Customer(getName(nameInput));
       order.setCustomer(customer);
-
+      order.setOrario(ora);
       OrderPage3 orderPage3 = new OrderPage3();
-      orderPage3.display(window, order, pizzeria, tot);
+      orderPage3.display(window, order, pizzeria, tot,scene3);
     });
 
     Button goBackButton = new Button("Torna indietro ←");
@@ -94,11 +101,24 @@ public class OrderPage2 {
 
   }
 
-  public String getChoice(ChoiceBox<String> choiceBox) {
+  //FIXME DA SISTEMARE getChoice , ora funziona ma poco carino
+  public Date getChoice(ChoiceBox<String> choiceBox, Order order) {
     String a = "L'ora scelta è:";
-    String food = choiceBox.getValue();
-    System.out.println(food);
-    return a;
+    Date oraScelta=null;
+    String orario = choiceBox.getValue();
+    Calendar calendar = new GregorianCalendar();
+    int day = calendar.get(Calendar.DAY_OF_MONTH);
+    int month = calendar.get(Calendar.MONTH) + 1;
+    int year = calendar.get(Calendar.YEAR);
+    orario = day + "/" + month + "/" + year + " " + orario;
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    try {
+      oraScelta = formato.parse(orario);
+    } catch (ParseException e) {
+      return null;
+    }
+    System.out.println(orario);
+    return oraScelta;
   }
 
   public String getAddress (TextField aInput) {
