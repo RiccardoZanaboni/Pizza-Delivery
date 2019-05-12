@@ -211,7 +211,19 @@ public class OrderPage1 {
         // Definisco bottone per tornare indietro
 
         Button indietroButton = new Button("Torna indietro ←");
-        indietroButton.setOnAction(e -> window.setScene(scene1));
+        indietroButton.setOnAction(e -> {
+            rimuoviPizze(rimuoviAmericana,pizzeria,order,"AMERICANA");
+            rimuoviPizze(rimuoviCapricciosa,pizzeria,order,"CAPRICCIOSA");
+            rimuoviPizze(rimuoviCotto,pizzeria,order,"COTTO");
+            rimuoviPizze(rimuoviCottoFunghi,pizzeria,order,"COTTO E FUNGHI");
+            rimuoviPizze(rimuoviItalia,pizzeria,order,"ITALIA");
+            rimuoviPizze(rimuoviMargherita,pizzeria,order,"MARGHERITA");
+            rimuoviPizze(rimuoviMarinara,pizzeria,order,"MARINARA");
+            rimuoviPizze(rimuoviNapoli,pizzeria,order,"NAPOLI");
+            rimuoviPizze(rimuoviPatatine,pizzeria,order,"PATATINE");
+            rimuoviPizze(rimuoviWurstel,pizzeria,order,"WURSTEL");
+            window.setScene(scene1);
+        });
 
         // Definisco bottone per andare avanti
 
@@ -295,6 +307,13 @@ public class OrderPage1 {
         window.setScene(scene2);
   }
 
+
+
+
+    public static void rimuoviPizze(ButtonRmvPizza buttonRmvPizza, Pizzeria pizzeria, Order order,String pizza ){
+      while(order.searchPizza(pizzeria.getMenu().get(pizza)))
+      { buttonRmvPizza.fire(); }
+  }
           /*public void addPizzaToOrder (pizzeria.Order order, pizzeria.Pizzeria pizzeria, Label label) {
             if (tot<4) {
               order.addPizza(pizzeria.getMenu().get(label.getText().toUpperCase()), 1);
