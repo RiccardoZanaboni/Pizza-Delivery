@@ -26,7 +26,7 @@ public class OrderPage1 {
 		//FIXME SISTEMARE DISTANZA TRA BOTTONI ADD, REMOVE, MODIFICA DI UNA PIZZA E QUELLA SUCCESSIVA
 
         GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setPadding(new Insets(10, 10,10, 10));
         gridPane.setVgap(8);
         gridPane.setHgap(10);
 
@@ -284,7 +284,7 @@ public class OrderPage1 {
 
         GridPane.setConstraints(hBoxMod,1,12);
         //GridPane.setConstraints(hBoxButton, 0,13);
-
+        gridPane.setVgap(30);
         gridPane.getColumnConstraints().add(new ColumnConstraints(50));
 
         gridPane.getChildren().addAll(
