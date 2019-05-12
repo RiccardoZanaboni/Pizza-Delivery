@@ -131,7 +131,7 @@ public class OrderPage1 {
         HBox hBox6 = new HBox(10);
         VBox vBox6 = new VBox(5);
         VBox vBox6A = new VBox(10);
-        vBox6.getChildren().addAll(addCapricciosa, modCapricciosa, rimuoviCapricciosa);
+        vBox6.getChildren().addAll(addCapricciosa, modCapricciosa,rimuoviCapricciosa);
         vBox6A.getChildren().addAll(capricciosa, capricciosaIngre);
         hBox6.getChildren().addAll(capricciosaPrezzo, vBox6);
 
@@ -210,7 +210,19 @@ public class OrderPage1 {
         // Definisco bottone per tornare indietro
 
         Button indietroButton = new Button("Torna indietro ←");
-        indietroButton.setOnAction(e -> window.setScene(scene1));
+        indietroButton.setOnAction(e -> {
+            rimuoviPizze(rimuoviAmericana,pizzeria,order,"AMERICANA");
+            rimuoviPizze(rimuoviCapricciosa,pizzeria,order,"CAPRICCIOSA");
+            rimuoviPizze(rimuoviCotto,pizzeria,order,"COTTO");
+            rimuoviPizze(rimuoviCottoFunghi,pizzeria,order,"COTTO E FUNGHI");
+            rimuoviPizze(rimuoviItalia,pizzeria,order,"ITALIA");
+            rimuoviPizze(rimuoviMargherita,pizzeria,order,"MARGHERITA");
+            rimuoviPizze(rimuoviMarinara,pizzeria,order,"MARINARA");
+            rimuoviPizze(rimuoviNapoli,pizzeria,order,"NAPOLI");
+            rimuoviPizze(rimuoviPatatine,pizzeria,order,"PATATINE");
+            rimuoviPizze(rimuoviWurstel,pizzeria,order,"WURSTEL");
+            window.setScene(scene1);
+        });
 
         // Definisco bottone per andare avanti
 
@@ -271,10 +283,15 @@ public class OrderPage1 {
 
         GridPane.setConstraints(hBoxMod, 1, 12);
         //GridPane.setConstraints(hBoxButton, 0,13);
-
+        gridPane.setVgap(30);
         gridPane.getColumnConstraints().add(new ColumnConstraints(50));
 
-        gridPane.getChildren().addAll(hBoxMod, countMargheritaLabel, countItaliaLabel, countMarinaraLabel, countPatatineLabel, countWurstelLabel, countCapricciosaLabel, countNapoliLabel, countCottoLabel, countCottoFunghiLabel, countAmericanaLabel, hBox1, hBox2, hBox3, hBox4, hBox5, hBox6, hBox7, hBox8, hBox9, hBox10, vBox1A, vBox2A, vBox3A, vBox4A, vBox5A, vBox6A, vBox7A, vBox8A, vBox9A, vBox10A);
+        gridPane.getChildren().addAll(
+                hBoxMod, countMargheritaLabel, countItaliaLabel, countMarinaraLabel, countPatatineLabel,countWurstelLabel,
+                countCapricciosaLabel, countNapoliLabel, countCottoLabel, countCottoFunghiLabel, countAmericanaLabel,
+                hBox1, hBox2, hBox3, hBox4, hBox5, hBox6, hBox7, hBox8, hBox9, hBox10,
+                vBox1A, vBox2A, vBox3A, vBox4A ,vBox5A, vBox6A, vBox7A, vBox8A, vBox9A, vBox10A
+            );
 
         // Metto il gridPane con tutte le pizze all'interno di uno ScrollPane
         javafx.scene.control.ScrollPane scrollPane1 = new javafx.scene.control.ScrollPane(gridPane);
@@ -287,5 +304,35 @@ public class OrderPage1 {
         //Scene scene2;
         scene2 = new Scene(layout, 600, 600);
         window.setScene(scene2);
-    }
-}
+  }
+
+
+
+
+    public static void rimuoviPizze(ButtonRmvPizza buttonRmvPizza, Pizzeria pizzeria, Order order,String pizza ){
+      while(order.searchPizza(pizzeria.getMenu().get(pizza)))
+      { buttonRmvPizza.fire(); }
+  }
+          /*public void addPizzaToOrder (pizzeria.Order order, pizzeria.Pizzeria pizzeria, Label label) {
+            if (tot<4) {
+              order.addPizza(pizzeria.getMenu().get(label.getText().toUpperCase()), 1);
+              tot++;
+              System.out.println(pizzeria.getMenu().get(label.getText().toUpperCase()));
+            } else
+              avvisiGrafici.AlertNumPizzeMax.display();
+          }*/
+
+        }
+
+
+
+
+
+
+        /*hBoxM.getChildren().addAll(indietroButton, avantiButton);
+            BorderPane borderPane = new BorderPane();
+            borderPane.getChildren().addAll(scrollPane1, hBoxM);
+            borderPane.setTop(scrollPane1);
+            borderPane.setBottom(hBoxM);
+        VBox vBox = new VBox();
+vBox.getChildren().addAll(scrollPane1, hBoxM);*/

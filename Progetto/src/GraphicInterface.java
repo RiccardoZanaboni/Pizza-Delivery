@@ -41,7 +41,7 @@ public class GraphicInterface extends Application {
 
 		StackPane spazioPane = new StackPane();
 		spazioPane.setMinSize(600, 150);
-
+		spazioPane.setId("pane");
 
 		// Definisco i bottoni presenti nella pagina
 
@@ -89,11 +89,11 @@ public class GraphicInterface extends Application {
 		layout.getStyleClass().add("layout");
 
 		scene1 = new Scene(layout, 600, 600);
-		scene1.getStylesheets().add("elementiGrafici/graphicInterfaceStyle.css");
+		scene1.getStylesheets().addAll(this.getClass().getResource("elementiGrafici/graphicInterfaceStyle.css").toExternalForm());
 		window.setResizable(false);
 		window.setScene(scene1);
 		window.setTitle("Wolf of Pizza");
-		window.getIcons().add(new javafx.scene.image.Image("elementiGrafici/wolf_pizza.jpg"));
+		window.getIcons().add(new javafx.scene.image.Image("elementiGrafici/wolf_pizza.png"));
 		window.show();
 	}
 }
