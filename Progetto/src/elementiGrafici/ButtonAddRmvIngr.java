@@ -43,6 +43,8 @@ public class ButtonAddRmvIngr extends Button {
                 System.out.println(nuovaPizza.getIngredienti());
                 System.out.println(ingr.name());}
             else{
+                if(finalCr==0)
+                { nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() - 0.50);}
                 nuovaPizza.rmvIngredienti(ingr);
                 System.out.println(nuovaPizza.getIngredienti());
                 System.out.println(ingr.name());}
