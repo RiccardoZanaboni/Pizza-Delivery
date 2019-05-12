@@ -14,21 +14,21 @@ import pizzeria.Pizzeria;
 
 public class OrderPage3 {
 
-  public void display(Stage window, Order order, Pizzeria pizzeria, int tot, Scene scene3) {
+    public void display(Stage window, Order order, Pizzeria pizzeria, int tot, Scene scene3) {
 
-      //TODO MIGLIORARE LA PAGINA
+        //TODO MIGLIORARE LA PAGINA
 
-      GridPane gridPane = new GridPane();
-      gridPane.setPadding(new Insets(10, 10, 10, 10));
-      gridPane.setVgap(10);
-      gridPane.setHgap(30);
-      VBox layout = new VBox();
-      HBox hbox1=new HBox(10 );
-      HBox hBox2=new HBox(10);
-      HBox hBox3=new HBox(10);
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setVgap(10);
+        gridPane.setHgap(30);
+        VBox layout = new VBox();
+        HBox hbox1=new HBox(10 );
+        HBox hBox2=new HBox(10);
+        HBox hBox3=new HBox(10);
 
-      Label label = new Label("Il tuo ordine: SIG."+order.getCustomer().getUsername()+"\tINDIRIZZO: "+order.getIndirizzo()+"\tOrario "+order.getOrario());
-      hbox1.getChildren().addAll(label);
+        Label label = new Label("Il tuo ordine: SIG."+order.getCustomer().getUsername()+"\tINDIRIZZO: "+order.getIndirizzo()+"\tOrario "+order.getOrario());
+        hbox1.getChildren().addAll(label);
 
       Label labelProducts = new Label("Prodotti");
       Label label1=new Label(order.recap());
