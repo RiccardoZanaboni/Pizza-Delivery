@@ -6,7 +6,9 @@ import javafx.scene.control.Label;
 import pizzeria.Ingredienti;
 import pizzeria.Pizza;
 
-public class ButtonRmvIngr extends Button {
+import java.util.HashMap;
+
+public class ButtonAddRmvIngr extends Button {
 	/*public ButtonRmvIngr(Ingredienti ingr, Pizza nuovaPizza) {
 		this.setText("Remove");
 		this.setOnAction(e-> {
@@ -23,12 +25,21 @@ public class ButtonRmvIngr extends Button {
     //FIXME: SPIEGAZIONE-->la prima volta che schiacci aggiungi, la seconda rimuovi, la terza aggiungi.. etc
 
 	static private int anInt=0;
-    public ButtonRmvIngr(Ingredienti ingr, Pizza nuovaPizza) {
-        this.setText("✘");
+    public ButtonAddRmvIngr(Ingredienti ingr, Pizza nuovaPizza) {
+        int cr=0;
+        if(nuovaPizza.getIngredienti().containsKey(ingr.name()))
+        {
+            this.setText("✔");
+            cr=7;
+            anInt++;
+        }else {
+            this.setText("✘");}
+        int finalCr = cr;
         this.setOnAction(e-> {
             if(anInt%2==0) {
+                if(finalCr !=7)
+                { nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);}
                 nuovaPizza.addIngredienti(ingr);
-                nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);
                 System.out.println(nuovaPizza.getIngredienti());
                 System.out.println(ingr.name());}
             else{

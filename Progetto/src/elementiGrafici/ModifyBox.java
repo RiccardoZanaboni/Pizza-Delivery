@@ -38,7 +38,7 @@ public class ModifyBox{
 
 		Label alici = new Label(Ingredienti.ALICI.name());
 		ButtonAddIngr addAlici = new ButtonAddIngr(Ingredienti.ALICI, nuovaPizza);
-		ButtonRmvIngr removeAlici = new ButtonRmvIngr(Ingredienti.ALICI, nuovaPizza);
+		ButtonAddRmvIngr removeAlici = new ButtonAddRmvIngr(Ingredienti.ALICI, nuovaPizza);
 		HBox hBox1 = new HBox(4);
 		hBox1.getChildren().addAll(addAlici, removeAlici);
 		gridPane.getChildren().addAll(alici, hBox1);
@@ -47,7 +47,7 @@ public class ModifyBox{
 
 		Label basilico = new Label(Ingredienti.BASILICO.name());
 		ButtonAddIngr addBasilico = new ButtonAddIngr(Ingredienti.BASILICO, nuovaPizza);
-		ButtonRmvIngr removeBasilico = new ButtonRmvIngr(Ingredienti.BASILICO, nuovaPizza);
+		ButtonAddRmvIngr removeBasilico = new ButtonAddRmvIngr(Ingredienti.BASILICO, nuovaPizza);
 		HBox hBox2 = new HBox(4);
 		hBox2.getChildren().addAll(addBasilico, removeBasilico);
 		gridPane.getChildren().addAll(basilico, hBox2);
@@ -56,7 +56,7 @@ public class ModifyBox{
 
 		Label capperi = new Label(Ingredienti.CAPPERI.name());
 		ButtonAddIngr addCapperi = new ButtonAddIngr(Ingredienti.CAPPERI, nuovaPizza);
-		ButtonRmvIngr removeCapperi = new ButtonRmvIngr(Ingredienti.CAPPERI, nuovaPizza);
+		ButtonAddRmvIngr removeCapperi = new ButtonAddRmvIngr(Ingredienti.CAPPERI, nuovaPizza);
 		HBox hBox3 = new HBox(4);
 		hBox3.getChildren().addAll(addCapperi, removeCapperi);
 		gridPane.getChildren().addAll(capperi, hBox3);
@@ -65,7 +65,7 @@ public class ModifyBox{
 
 		Label carciofi = new Label(Ingredienti.CARCIOFI.name());
 		ButtonAddIngr addCarciofi = new ButtonAddIngr(Ingredienti.CARCIOFI, nuovaPizza);
-		ButtonRmvIngr removeCarciofi = new ButtonRmvIngr(Ingredienti.CARCIOFI, nuovaPizza);
+		ButtonAddRmvIngr removeCarciofi = new ButtonAddRmvIngr(Ingredienti.CARCIOFI, nuovaPizza);
 		HBox hBox4 = new HBox(4);
 		hBox4.getChildren().addAll(addCarciofi, removeCarciofi);
 		gridPane.getChildren().addAll(carciofi, hBox4);
@@ -74,7 +74,7 @@ public class ModifyBox{
 
 		Label cotto = new Label(Ingredienti.COTTO.name());
 		ButtonAddIngr addCotto = new ButtonAddIngr(Ingredienti.COTTO, nuovaPizza);
-		ButtonRmvIngr removeCotto = new ButtonRmvIngr(Ingredienti.COTTO, nuovaPizza);
+		ButtonAddRmvIngr removeCotto = new ButtonAddRmvIngr(Ingredienti.COTTO, nuovaPizza);
 		HBox hBox5 = new HBox(4);
 		hBox5.getChildren().addAll(addCotto, removeCotto);
 		gridPane.getChildren().addAll(cotto, hBox5);
@@ -83,7 +83,7 @@ public class ModifyBox{
 
 		Label crudo = new Label(Ingredienti.CRUDO.name());
 		ButtonAddIngr addCrudo = new ButtonAddIngr(Ingredienti.CRUDO, nuovaPizza);
-		ButtonRmvIngr removeCrudo = new ButtonRmvIngr(Ingredienti.CRUDO, nuovaPizza);
+		ButtonAddRmvIngr removeCrudo = new ButtonAddRmvIngr(Ingredienti.CRUDO, nuovaPizza);
 		HBox hBox6 = new HBox(4);
 		hBox6.getChildren().addAll(addCrudo, removeCrudo);
 		gridPane.getChildren().addAll(crudo, hBox6);
@@ -92,7 +92,7 @@ public class ModifyBox{
 
 		Label funghi= new Label(Ingredienti.FUNGHI.name());
 		ButtonAddIngr addFunghi = new ButtonAddIngr(Ingredienti.FUNGHI, nuovaPizza);
-		ButtonRmvIngr removeFunghi= new ButtonRmvIngr(Ingredienti.FUNGHI, nuovaPizza);
+		ButtonAddRmvIngr removeFunghi= new ButtonAddRmvIngr(Ingredienti.FUNGHI, nuovaPizza);
 		HBox hBox7 = new HBox(4);
 		hBox7.getChildren().addAll(addFunghi, removeFunghi);
 		gridPane.getChildren().addAll(funghi, hBox7);
@@ -101,7 +101,7 @@ public class ModifyBox{
 
 		Label gorgonzola = new Label(Ingredienti.GORGONZOLA.name());
 		ButtonAddIngr addGorgonzola = new ButtonAddIngr(Ingredienti.GORGONZOLA, nuovaPizza);
-		ButtonRmvIngr removeGorgonzola= new ButtonRmvIngr(Ingredienti.GORGONZOLA, nuovaPizza);
+		ButtonAddRmvIngr removeGorgonzola= new ButtonAddRmvIngr(Ingredienti.GORGONZOLA, nuovaPizza);
 		HBox hBox8 = new HBox(4);
 		hBox8.getChildren().addAll(addGorgonzola, removeGorgonzola);
 		gridPane.getChildren().addAll(gorgonzola, hBox8);
@@ -110,7 +110,7 @@ public class ModifyBox{
 
 		Label mozzarella= new Label(Ingredienti.MOZZARELLA.name());
 		ButtonAddIngr addMozzarella = new ButtonAddIngr(Ingredienti.MOZZARELLA, nuovaPizza);
-		ButtonRmvIngr removeMozzarella = new ButtonRmvIngr(Ingredienti.MOZZARELLA, nuovaPizza);
+		ButtonAddRmvIngr removeMozzarella = new ButtonAddRmvIngr(Ingredienti.MOZZARELLA, nuovaPizza);
 		HBox hBox9 = new HBox(4);
 		hBox9.getChildren().addAll(addMozzarella, removeMozzarella);
 		gridPane.getChildren().addAll(mozzarella, hBox9);
@@ -119,7 +119,7 @@ public class ModifyBox{
 
 		Label mozzarellaDiBufala = new Label(Ingredienti.MOZZARELLA_DI_BUFALA.name());
 		ButtonAddIngr addMozzarellaDiBufala = new ButtonAddIngr(Ingredienti.MOZZARELLA_DI_BUFALA, nuovaPizza);
-		ButtonRmvIngr removeMozzarellaDiBufala= new ButtonRmvIngr(Ingredienti.MOZZARELLA_DI_BUFALA, nuovaPizza);
+		ButtonAddRmvIngr removeMozzarellaDiBufala= new ButtonAddRmvIngr(Ingredienti.MOZZARELLA_DI_BUFALA, nuovaPizza);
 		HBox hBox10 = new HBox(4);
 		hBox10.getChildren().addAll(addMozzarellaDiBufala, removeMozzarellaDiBufala);
 		gridPane.getChildren().addAll(mozzarellaDiBufala, hBox10);
@@ -128,7 +128,7 @@ public class ModifyBox{
 
 		Label oliveNere = new Label(Ingredienti.OLIVE_NERE.name());
 		ButtonAddIngr addOliveNere = new ButtonAddIngr(Ingredienti.OLIVE_NERE, nuovaPizza);
-		ButtonRmvIngr removeOliveNere = new ButtonRmvIngr(Ingredienti.OLIVE_NERE, nuovaPizza);
+		ButtonAddRmvIngr removeOliveNere = new ButtonAddRmvIngr(Ingredienti.OLIVE_NERE, nuovaPizza);
 		HBox hBox11 = new HBox(4);
 		hBox11.getChildren().addAll(addOliveNere, removeOliveNere);
 		gridPane.getChildren().addAll(oliveNere, hBox11);
@@ -137,7 +137,7 @@ public class ModifyBox{
 
 		Label origano = new Label(Ingredienti.ORIGANO.name());
 		ButtonAddIngr addOrigano = new ButtonAddIngr(Ingredienti.ORIGANO, nuovaPizza);
-		ButtonRmvIngr removeOrigano = new ButtonRmvIngr(Ingredienti.ORIGANO, nuovaPizza);
+		ButtonAddRmvIngr removeOrigano = new ButtonAddRmvIngr(Ingredienti.ORIGANO, nuovaPizza);
 		HBox hBox12 = new HBox(4);
 		hBox12.getChildren().addAll(addOrigano, removeOrigano);
 		gridPane.getChildren().addAll(origano, hBox12);
@@ -146,7 +146,7 @@ public class ModifyBox{
 
 		Label panna= new Label(Ingredienti.PANNA.name());
 		ButtonAddIngr addPanna = new ButtonAddIngr(Ingredienti.PANNA, nuovaPizza);
-		ButtonRmvIngr removePanna= new ButtonRmvIngr(Ingredienti.PANNA, nuovaPizza);
+		ButtonAddRmvIngr removePanna= new ButtonAddRmvIngr(Ingredienti.PANNA, nuovaPizza);
 		HBox hBox13 = new HBox(4);
 		hBox13.getChildren().addAll(addPanna, removePanna);
 		gridPane.getChildren().addAll(panna, hBox13);
@@ -155,7 +155,7 @@ public class ModifyBox{
 
 		Label patatine= new Label(Ingredienti.PATATINE.name());
 		ButtonAddIngr addPatatine = new ButtonAddIngr(Ingredienti.PATATINE, nuovaPizza);
-		ButtonRmvIngr removePatatine= new ButtonRmvIngr(Ingredienti.PATATINE, nuovaPizza);
+		ButtonAddRmvIngr removePatatine= new ButtonAddRmvIngr(Ingredienti.PATATINE, nuovaPizza);
 		HBox hBox14 = new HBox(4);
 		hBox14.getChildren().addAll(addPatatine, removePatatine);
 		gridPane.getChildren().addAll(patatine, hBox14);
@@ -164,7 +164,7 @@ public class ModifyBox{
 
 		Label peperoni= new Label(Ingredienti.PEPERONI.name());
 		ButtonAddIngr addPeperoni = new ButtonAddIngr(Ingredienti.PEPERONI, nuovaPizza);
-		ButtonRmvIngr removePeperoni = new ButtonRmvIngr(Ingredienti.PEPERONI, nuovaPizza);
+		ButtonAddRmvIngr removePeperoni = new ButtonAddRmvIngr(Ingredienti.PEPERONI, nuovaPizza);
 		HBox hBox15 = new HBox(4);
 		hBox15.getChildren().addAll(addPeperoni, removePeperoni);
 		gridPane.getChildren().addAll(peperoni, hBox15);
@@ -173,7 +173,7 @@ public class ModifyBox{
 
 		Label pomodorini = new Label(Ingredienti.POMODORINI.name());
 		ButtonAddIngr addPomodorini = new ButtonAddIngr(Ingredienti.POMODORINI, nuovaPizza);
-		ButtonRmvIngr removePomodorini = new ButtonRmvIngr(Ingredienti.POMODORINI, nuovaPizza);
+		ButtonAddRmvIngr removePomodorini = new ButtonAddRmvIngr(Ingredienti.POMODORINI, nuovaPizza);
 		HBox hBox16 = new HBox(4);
 		hBox16.getChildren().addAll(addPomodorini, removePomodorini);
 		gridPane.getChildren().addAll(pomodorini, hBox16);
@@ -182,7 +182,7 @@ public class ModifyBox{
 
 		Label pomodoro = new Label(Ingredienti.POMODORO.name());
 		ButtonAddIngr addPomodoro = new ButtonAddIngr(Ingredienti.POMODORO, nuovaPizza);
-		ButtonRmvIngr removePomodoro = new ButtonRmvIngr(Ingredienti.POMODORO, nuovaPizza);
+		ButtonAddRmvIngr removePomodoro = new ButtonAddRmvIngr(Ingredienti.POMODORO, nuovaPizza);
 		HBox hBox17 = new HBox(4);
 		hBox17.getChildren().addAll(addPomodoro, removePomodoro);
 		gridPane.getChildren().addAll(pomodoro, hBox17);
@@ -191,7 +191,7 @@ public class ModifyBox{
 
 		Label rucola = new Label(Ingredienti.RUCOLA.name());
 		ButtonAddIngr addRucola = new ButtonAddIngr(Ingredienti.RUCOLA, nuovaPizza);
-		ButtonRmvIngr removeRucola = new ButtonRmvIngr(Ingredienti.RUCOLA, nuovaPizza);
+		ButtonAddRmvIngr removeRucola = new ButtonAddRmvIngr(Ingredienti.RUCOLA, nuovaPizza);
 		HBox hBox18 = new HBox(4);
 		hBox18.getChildren().addAll(addRucola, removeRucola);
 		gridPane.getChildren().addAll(rucola, hBox18);
@@ -200,7 +200,7 @@ public class ModifyBox{
 
 		Label salamePiccante = new Label(Ingredienti.SALAME_PICCANTE.name());
 		ButtonAddIngr addSalamePiccante = new ButtonAddIngr(Ingredienti.SALAME_PICCANTE, nuovaPizza);
-		ButtonRmvIngr removeSalamePiccante = new ButtonRmvIngr(Ingredienti.SALAME_PICCANTE, nuovaPizza);
+		ButtonAddRmvIngr removeSalamePiccante = new ButtonAddRmvIngr(Ingredienti.SALAME_PICCANTE, nuovaPizza);
 		HBox hBox19 = new HBox(4);
 		hBox19.getChildren().addAll(addSalamePiccante, removeSalamePiccante);
 		gridPane.getChildren().addAll(salamePiccante, hBox19);
@@ -209,7 +209,7 @@ public class ModifyBox{
 
 		Label salsiccia = new Label(Ingredienti.SALSICCIA.name());
 		ButtonAddIngr addSalsiccia = new ButtonAddIngr(Ingredienti.SALSICCIA, nuovaPizza);
-		ButtonRmvIngr removeSalsiccia = new ButtonRmvIngr(Ingredienti.SALSICCIA, nuovaPizza);
+		ButtonAddRmvIngr removeSalsiccia = new ButtonAddRmvIngr(Ingredienti.SALSICCIA, nuovaPizza);
 		HBox hBox20 = new HBox(4);
 		hBox20.getChildren().addAll(addSalsiccia, removeSalsiccia);
 		gridPane.getChildren().addAll(salsiccia, hBox20);
@@ -218,7 +218,7 @@ public class ModifyBox{
 
 		Label speck = new Label(Ingredienti.SPECK.name());
 		ButtonAddIngr addSpeck = new ButtonAddIngr(Ingredienti.SPECK, nuovaPizza);
-		ButtonRmvIngr removeSpeck= new ButtonRmvIngr(Ingredienti.SPECK, nuovaPizza);
+		ButtonAddRmvIngr removeSpeck= new ButtonAddRmvIngr(Ingredienti.SPECK, nuovaPizza);
 		HBox hBox21 = new HBox(4);
 		hBox21.getChildren().addAll(addSpeck, removeSpeck);
 		gridPane.getChildren().addAll(speck, hBox21);
@@ -227,7 +227,7 @@ public class ModifyBox{
 
 		Label wurstel = new Label(Ingredienti.WURSTEL.name());
 		ButtonAddIngr addWurstel = new ButtonAddIngr(Ingredienti.WURSTEL, nuovaPizza);
-		ButtonRmvIngr removeWurstel = new ButtonRmvIngr(Ingredienti.WURSTEL, nuovaPizza);
+		ButtonAddRmvIngr removeWurstel = new ButtonAddRmvIngr(Ingredienti.WURSTEL, nuovaPizza);
 		HBox hBox22 = new HBox(4);
 		hBox22.getChildren().addAll(addWurstel, removeWurstel);
 		gridPane.getChildren().addAll(wurstel, hBox22);
@@ -236,7 +236,7 @@ public class ModifyBox{
 
 		Label belleDonne = new Label(Ingredienti.BELLE_DONNE.name());
 		ButtonAddIngr addBelleDonne = new ButtonAddIngr(Ingredienti.BELLE_DONNE, nuovaPizza);
-		ButtonRmvIngr removeBelleDonne = new ButtonRmvIngr(Ingredienti.BELLE_DONNE, nuovaPizza);
+		ButtonAddRmvIngr removeBelleDonne = new ButtonAddRmvIngr(Ingredienti.BELLE_DONNE, nuovaPizza);
 		HBox hBox23 = new HBox(4);
 		hBox23.getChildren().addAll(addBelleDonne, removeBelleDonne);
 		gridPane.getChildren().addAll(belleDonne, hBox23);
@@ -245,7 +245,7 @@ public class ModifyBox{
 
 		Label galanteria = new Label(Ingredienti.GALANTERIA.name());
 		ButtonAddIngr addGalanteria = new ButtonAddIngr(Ingredienti.GALANTERIA, nuovaPizza);
-		ButtonRmvIngr removeGalanteria = new ButtonRmvIngr(Ingredienti.GALANTERIA, nuovaPizza);
+		ButtonAddRmvIngr removeGalanteria = new ButtonAddRmvIngr(Ingredienti.GALANTERIA, nuovaPizza);
 		HBox hBox24 = new HBox(4);
 		hBox24.getChildren().addAll(addGalanteria, removeGalanteria);
 		gridPane.getChildren().addAll(galanteria, hBox24);
@@ -254,7 +254,7 @@ public class ModifyBox{
 
 		Label gemme = new Label(Ingredienti.GEMME_DELL_INFINITO.name());
 		ButtonAddIngr addGemme = new ButtonAddIngr(Ingredienti.GEMME_DELL_INFINITO, nuovaPizza);
-		ButtonRmvIngr removeGemme = new ButtonRmvIngr(Ingredienti.GEMME_DELL_INFINITO, nuovaPizza);
+		ButtonAddRmvIngr removeGemme = new ButtonAddRmvIngr(Ingredienti.GEMME_DELL_INFINITO, nuovaPizza);
 		HBox hBox25 = new HBox(4);
 		hBox25.getChildren().addAll(addGemme, removeGemme);
 		gridPane.getChildren().addAll(gemme, hBox25);
@@ -263,7 +263,7 @@ public class ModifyBox{
 
 		Label onnip = new Label(Ingredienti.ONNIPOTENZA.name());
 		ButtonAddIngr addOnnip = new ButtonAddIngr(Ingredienti.ONNIPOTENZA, nuovaPizza);
-		ButtonRmvIngr removeOnnip = new ButtonRmvIngr(Ingredienti.ONNIPOTENZA, nuovaPizza);
+		ButtonAddRmvIngr removeOnnip = new ButtonAddRmvIngr(Ingredienti.ONNIPOTENZA, nuovaPizza);
 		HBox hBox26 = new HBox(4);
 		hBox26.getChildren().addAll(addOnnip, removeOnnip);
 		gridPane.getChildren().addAll(onnip, hBox26);
