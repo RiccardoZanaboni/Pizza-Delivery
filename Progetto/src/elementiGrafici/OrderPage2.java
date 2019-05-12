@@ -63,7 +63,7 @@ public class OrderPage2 {
       order.setCustomer(customer);
       order.setOrario(ora);
       OrderPage3 orderPage3 = new OrderPage3();
-      orderPage3.display(window, order, pizzeria, tot,scene3);
+      orderPage3.display(window, order, pizzeria, tot, scene3);
     });
 
     Button goBackButton = new Button("Torna indietro ←");
