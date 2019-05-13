@@ -34,7 +34,8 @@ public class ButtonAddRmvIngr extends Button {
             cr=7;                            //SE APPARTIENE GIÁ ALLA PIZZA SETTATO A ✔
             anInt++;
         }else {
-            this.setText("✘");}
+            this.setText("✘");
+        }
         int finalCr = cr;
         this.setOnAction(e-> {
             if(anInt%2==0) {
