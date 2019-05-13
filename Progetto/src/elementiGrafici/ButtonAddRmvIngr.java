@@ -21,16 +21,17 @@ public class ButtonAddRmvIngr extends Button {
 }
 */
 
-	//FIXME:   --- IMPORSTARE GLI INGREDIENTI DA ✘(anInt =1) A ✔(anInt =0) DELLA PIZZA CHE SI STA MODIFICANDO  ---
-    //FIXME: SPIEGAZIONE-->la prima volta che schiacci aggiungi, la seconda rimuovi, la terza aggiungi.. etc
-
-	static private int anInt=0;
+	//
+    /** SPIEGAZIONE-->la prima volta che schiacci aggiungi, la seconda rimuovi, la terza aggiungi.. etc
+*/
+    static private int anInt;
     public ButtonAddRmvIngr(Ingredienti ingr, Pizza nuovaPizza) {
+        anInt=0;
         int cr=0;
         if(nuovaPizza.getIngredienti().containsKey(ingr.name()))
         {
             this.setText("✔");
-            cr=7;
+            cr=7;                            //SE APPARTIENE GIÁ ALLA PIZZA SETTATO A ✔
             anInt++;
         }else {
             this.setText("✘");}
@@ -40,14 +41,16 @@ public class ButtonAddRmvIngr extends Button {
                 if(finalCr !=7)
                 { nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() + 0.50);}
                 nuovaPizza.addIngredienti(ingr);
-                System.out.println(nuovaPizza.getIngredienti());
-                System.out.println(ingr.name());}
-            else{
-                if(finalCr==0)
-                { nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() - 0.50);}
+            }
+            else if(anInt%2==1){
+                //FIXME: NON SO PERCHE' NON FUNZIONA, SERVIREBBE A TOGLIERE 0.50 AGGIUNTI PER UN INGREDIENTE NON DELLA
+                 //FIXME PIZZA DOPO CHE HAI TOLTO SUCCESSIVAMENTE, DA PRIORITA AL if di CR
+                //if(finalCr==0)
+                //{ nuovaPizza.setPrezzo(nuovaPizza.getPrezzo() - 0.50);}
                 nuovaPizza.rmvIngredienti(ingr);
-                System.out.println(nuovaPizza.getIngredienti());
-                System.out.println(ingr.name());}
+            }
+            System.out.println(nuovaPizza.getIngredienti());
+            System.out.println(ingr.name());
             anInt++;
         });
     }

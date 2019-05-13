@@ -1,7 +1,5 @@
 package pizzeria;
 
-import pizzeria.DeliveryMan;
-
 import java.util.*;
 @SuppressWarnings("deprecation")
 

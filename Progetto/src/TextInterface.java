@@ -307,7 +307,6 @@ public class TextInterface {
         return ingred;
     }
 
-
     private void chiediConfermaText(Order order, Date orario, int tot) {
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, 'N' per annullare: ");
         String risp= scan.nextLine().toUpperCase();
