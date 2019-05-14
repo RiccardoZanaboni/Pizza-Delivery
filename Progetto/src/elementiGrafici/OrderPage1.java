@@ -30,11 +30,6 @@ public class OrderPage1 {
         Label countModificheLabel = new Label();
         countModificheLabel.setText("" + countModifiche);
 
-        // Inserisco tutte le pizze
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
-        // questo blocco andrebbe a sostituire da qui fino al prossimo TODO.
-
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
         ArrayList<Label> prezziLabels = new ArrayList<>();
@@ -50,9 +45,6 @@ public class OrderPage1 {
         riempiVBoxBottoni(pizzeria, vBoxBottoni, addButtons, modButtons, rmvButtons);
         riempiVBoxNomeAndIngr(pizzeria, vBoxNomeDescr, nomiLabels, ingrLabels);
         riempiHBoxPrezzoAndBottoni(pizzeria, hBoxPrezzoBottoni, prezziLabels, vBoxBottoni);
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
         //TODO AGGIUNGERE BOTTONE PER POTER TOGLIERE UNA PIZZA MODIFICATA
 
@@ -77,8 +69,6 @@ public class OrderPage1 {
         hBoxAvantiIndietro.getChildren().addAll(indietroButton, avantiButton);
         hBoxAvantiIndietro.setMinSize(600, 50);
         hBoxAvantiIndietro.setAlignment(Pos.CENTER);
-
-        //GridPane.setConstraints(hBoxIntestazione, 1, 0);
 
         setGridPaneContraints(pizzeria, countPizzeLabels, vBoxNomeDescr, hBoxPrezzoBottoni, countModificheLabel, hBoxMod);
         gridPane = addEverythingToGridPane(pizzeria, countPizzeLabels, hBoxPrezzoBottoni, hBoxMod, vBoxNomeDescr);
@@ -110,29 +100,23 @@ public class OrderPage1 {
     }
 
     private static void riempiVBoxBottoni(Pizzeria pizzeria, ArrayList<VBox> vBoxBottoni, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons, ArrayList<ButtonRmvPizza> rmvButtons) {
-        int i = 0;
-        for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
+        for (int i=0; i< pizzeria.getMenu().values().size();i++) {
             vBoxBottoni.add(new VBox(5));
             vBoxBottoni.get(i).getChildren().addAll(addButtons.get(i), modButtons.get(i), rmvButtons.get(i));
-            i++;
         }
     }
 
     private static void riempiVBoxNomeAndIngr(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels) {
-        int i = 0;
-        for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
+        for (int i=0; i<pizzeria.getMenu().values().size(); i++) {
             vBoxNomeDescr.add(new VBox(10));
             vBoxNomeDescr.get(i).getChildren().addAll(nomiLabels.get(i), ingrLabels.get(i));
-            i++;
         }
     }
 
     private static void riempiHBoxPrezzoAndBottoni(Pizzeria pizzeria, ArrayList<HBox> hBoxPrezzoBottoni, ArrayList<Label> prezziLabels, ArrayList<VBox> vBoxBottoni) {
-        int i = 0;
-        for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
-            hBoxPrezzoBottoni.add(new HBox(10));
+		for (int i=0; i<pizzeria.getMenu().values().size(); i++) {
+			hBoxPrezzoBottoni.add(new HBox(10));
             hBoxPrezzoBottoni.get(i).getChildren().addAll(prezziLabels.get(i), vBoxBottoni.get(i));
-            i++;
         }
     }
 
@@ -142,32 +126,25 @@ public class OrderPage1 {
         gridPane.setHgap(10);
         gridPane.setVgap(30);
         gridPane.getColumnConstraints().add(new ColumnConstraints(50));
-        int i = 0;
         gridPane.getChildren().add(hBoxMod);
-        for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
-            gridPane.getChildren().add(countPizzeLabels.get(i));
-            i++;
+		for (int i=0; i<pizzeria.getMenu().values().size(); i++) {
+			gridPane.getChildren().add(countPizzeLabels.get(i));
         }
-        i = 0;
-        for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
-            gridPane.getChildren().add(hBoxPrezzoBottoni.get(i));
-            i++;
-        }
-        i = 0;
-        for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
+		for (int i=0; i<pizzeria.getMenu().values().size(); i++) {
+			gridPane.getChildren().add(hBoxPrezzoBottoni.get(i));
+		}
+		for (int i=0; i<pizzeria.getMenu().values().size(); i++) {
             gridPane.getChildren().add(vBoxNomeDescr.get(i));
-            i++;
         }
         return gridPane;
     }
 
     private static void setGridPaneContraints(Pizzeria pizzeria, ArrayList<Label> countPizzeLabels, ArrayList<VBox> vBoxNomeDescr, ArrayList<HBox> hBoxPrezzoBottoni, Label countModificheLabel, HBox hBoxMod) {
-        int i = 0;
-        for (Pizza ignored : pizzeria.getMenu().values()) {
-            GridPane.setConstraints(countPizzeLabels.get(i), 0, i + 1);
+		int i=0;
+    	for (i=0; i<pizzeria.getMenu().values().size(); i++) {
+			GridPane.setConstraints(countPizzeLabels.get(i), 0, i + 1);
             GridPane.setConstraints(vBoxNomeDescr.get(i), 1, i + 1);
             GridPane.setConstraints(hBoxPrezzoBottoni.get(i), 2, i + 1);
-            i++;
         }
         GridPane.setConstraints(countModificheLabel, 0, i + 1);
         GridPane.setConstraints(hBoxMod, 1, i + 1);
@@ -183,7 +160,6 @@ public class OrderPage1 {
             }
             MenuPage menuPage = new MenuPage();
             menuPage.display(window, scene1, pizzeria);
-            //window.setScene(scene1);
         });
         return indietroButton;
     }
