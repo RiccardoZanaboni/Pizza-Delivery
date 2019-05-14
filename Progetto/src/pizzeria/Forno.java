@@ -12,6 +12,6 @@ public class Forno {
     }
 
     public void inserisciInfornate(int pizze){
-        this.postiDisponibili-=pizze;
+        this.postiDisponibili -= pizze;
     }
 }

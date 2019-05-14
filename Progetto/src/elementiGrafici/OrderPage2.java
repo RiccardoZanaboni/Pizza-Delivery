@@ -47,7 +47,6 @@ public class OrderPage2 {
 		choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
 
 		Button nextPageButton = new Button("Prosegui →");
-
 		nextPageButton.setOnAction(e-> {
 			nome = getName(nameInput);
 			indirizzo = getAddress(addressInput);
@@ -96,11 +95,11 @@ public class OrderPage2 {
 		window.setScene(scene3);
 	}
 
-	//FIXME DA SISTEMARE getChoice , ora funziona ma poco carino
+	// FIXME DA SISTEMARE getChoice , ora funziona ma poco carino
 
 	public Date getChoice(ChoiceBox<String> choiceBox, Order order) {
 		String a = "L'ora scelta è:";
-		Date oraScelta=null;
+		Date oraScelta;
 		String orario = choiceBox.getValue();
 		Calendar calendar = new GregorianCalendar();
 		int day = calendar.get(Calendar.DAY_OF_MONTH);

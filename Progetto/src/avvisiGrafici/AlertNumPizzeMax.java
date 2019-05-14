@@ -19,7 +19,6 @@ public class AlertNumPizzeMax {
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Modifica la pizza");
-        //window.setMinWidth(250);
         Scene scene = new Scene(layout, 430, 150);
         window.setScene(scene);
         window.show();
