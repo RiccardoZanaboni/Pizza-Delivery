@@ -1,23 +1,13 @@
 import elementiGrafici.MenuPage;
-import elementiGrafici.OrderPage1;
-import elementiGrafici.OrderPage2;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
-import javafx.scene.control.*;
 import javafx.util.Duration;
-import pizzeria.DeliveryMan;
-import pizzeria.Order;
-import pizzeria.Pizza;
 import pizzeria.Pizzeria;
-
-import java.awt.*;
 import java.util.Date;
 
 // TODO MIGLIORARE GRAFICA CON COLORI E IMMAGINI
@@ -39,13 +29,8 @@ public class GraphicInterface extends Application {
 		imageView.setFitHeight(600);
 		imageView.setFitWidth(600);
 
-
-		//Label label = new Label("Ciao");
-
 		StackPane stackPane = new StackPane();
 		stackPane.getChildren().addAll(imageView);
-		//label.setStyle("-fx-font: 24 arial");
-		//imageView.setImage(image);
 
 		scene0 = new Scene(stackPane, 600, 600);
 		window.setScene(scene0);
@@ -55,7 +40,6 @@ public class GraphicInterface extends Application {
 		fadeIn.setToValue(1);
 		fadeIn.setCycleCount(1);
 
-		//Finish splash with fade out effect
 		FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), stackPane);
 		fadeOut.setFromValue(1);
 		fadeOut.setToValue(0);
@@ -68,9 +52,6 @@ public class GraphicInterface extends Application {
 			MenuPage menuPage = new MenuPage();
 			menuPage.display(window, scene3, wolf);
 		});
-
-
-
 
 	}
 }
