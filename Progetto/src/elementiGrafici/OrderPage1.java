@@ -80,7 +80,7 @@ public class OrderPage1 {
         VBox layout = new VBox();
         layout.getChildren().addAll(hBoxIntestazione, scrollPane1, hBoxAvantiIndietro);
 
-        scene2 = new Scene(layout, 600, 600);
+        scene2 = new Scene(layout, 900, 700);
         window.setScene(scene2);
     }
 

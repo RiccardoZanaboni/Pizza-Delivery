@@ -33,242 +33,218 @@ public class ModifyBox{
 
 		GridPane gridPane = new GridPane();
 		gridPane.setPadding(new Insets(10, 10, 10, 10));
+		gridPane.getColumnConstraints().add(new ColumnConstraints(210));
+		gridPane.getColumnConstraints().add(new ColumnConstraints(70));
 		gridPane.setVgap(8);
 		gridPane.setHgap(10);
 
 		Label alici = new Label(Ingredienti.ALICI.name());
-		ButtonAddIngr addAlici = new ButtonAddIngr(Ingredienti.ALICI, nuovaPizza);
 		ButtonAddRmvIngr removeAlici = new ButtonAddRmvIngr(Ingredienti.ALICI, nuovaPizza);
 		HBox hBox1 = new HBox(4);
-		hBox1.getChildren().addAll(addAlici, removeAlici);
+		hBox1.getChildren().addAll(removeAlici);
 		gridPane.getChildren().addAll(alici, hBox1);
-		GridPane.setConstraints(alici, 1,1);
-		GridPane.setConstraints(hBox1, 5,1);
+		GridPane.setConstraints(alici, 0,1);
+		GridPane.setConstraints(hBox1, 1,1);
 
 		Label basilico = new Label(Ingredienti.BASILICO.name());
-		ButtonAddIngr addBasilico = new ButtonAddIngr(Ingredienti.BASILICO, nuovaPizza);
 		ButtonAddRmvIngr removeBasilico = new ButtonAddRmvIngr(Ingredienti.BASILICO, nuovaPizza);
 		HBox hBox2 = new HBox(4);
-		hBox2.getChildren().addAll(addBasilico, removeBasilico);
+		hBox2.getChildren().addAll(removeBasilico);
 		gridPane.getChildren().addAll(basilico, hBox2);
-		GridPane.setConstraints(basilico, 1,2);
-		GridPane.setConstraints(hBox2, 5,2);
+		GridPane.setConstraints(basilico, 0,2);
+		GridPane.setConstraints(hBox2, 1,2);
 
 		Label capperi = new Label(Ingredienti.CAPPERI.name());
-		ButtonAddIngr addCapperi = new ButtonAddIngr(Ingredienti.CAPPERI, nuovaPizza);
 		ButtonAddRmvIngr removeCapperi = new ButtonAddRmvIngr(Ingredienti.CAPPERI, nuovaPizza);
 		HBox hBox3 = new HBox(4);
-		hBox3.getChildren().addAll(addCapperi, removeCapperi);
+		hBox3.getChildren().addAll(removeCapperi);
 		gridPane.getChildren().addAll(capperi, hBox3);
-		GridPane.setConstraints(capperi, 1,3);
-		GridPane.setConstraints(hBox3, 5,3);
+		GridPane.setConstraints(capperi, 0,3);
+		GridPane.setConstraints(hBox3, 1,3);
 
 		Label carciofi = new Label(Ingredienti.CARCIOFI.name());
-		ButtonAddIngr addCarciofi = new ButtonAddIngr(Ingredienti.CARCIOFI, nuovaPizza);
 		ButtonAddRmvIngr removeCarciofi = new ButtonAddRmvIngr(Ingredienti.CARCIOFI, nuovaPizza);
 		HBox hBox4 = new HBox(4);
-		hBox4.getChildren().addAll(addCarciofi, removeCarciofi);
+		hBox4.getChildren().addAll(removeCarciofi);
 		gridPane.getChildren().addAll(carciofi, hBox4);
-		GridPane.setConstraints(carciofi, 1,4);
-		GridPane.setConstraints(hBox4, 5,4);
+		GridPane.setConstraints(carciofi, 0,4);
+		GridPane.setConstraints(hBox4, 1,4);
 
 		Label cotto = new Label(Ingredienti.COTTO.name());
-		ButtonAddIngr addCotto = new ButtonAddIngr(Ingredienti.COTTO, nuovaPizza);
 		ButtonAddRmvIngr removeCotto = new ButtonAddRmvIngr(Ingredienti.COTTO, nuovaPizza);
 		HBox hBox5 = new HBox(4);
-		hBox5.getChildren().addAll(addCotto, removeCotto);
+		hBox5.getChildren().addAll(removeCotto);
 		gridPane.getChildren().addAll(cotto, hBox5);
-		GridPane.setConstraints(cotto, 1,5);
-		GridPane.setConstraints(hBox5, 5,5);
+		GridPane.setConstraints(cotto, 0,5);
+		GridPane.setConstraints(hBox5, 1,5);
 
 		Label crudo = new Label(Ingredienti.CRUDO.name());
-		ButtonAddIngr addCrudo = new ButtonAddIngr(Ingredienti.CRUDO, nuovaPizza);
 		ButtonAddRmvIngr removeCrudo = new ButtonAddRmvIngr(Ingredienti.CRUDO, nuovaPizza);
 		HBox hBox6 = new HBox(4);
-		hBox6.getChildren().addAll(addCrudo, removeCrudo);
+		hBox6.getChildren().addAll(removeCrudo);
 		gridPane.getChildren().addAll(crudo, hBox6);
-		GridPane.setConstraints(crudo, 1,6);
-		GridPane.setConstraints(hBox6, 5,6);
+		GridPane.setConstraints(crudo, 0,6);
+		GridPane.setConstraints(hBox6, 1,6);
 
 		Label funghi= new Label(Ingredienti.FUNGHI.name());
-		ButtonAddIngr addFunghi = new ButtonAddIngr(Ingredienti.FUNGHI, nuovaPizza);
 		ButtonAddRmvIngr removeFunghi= new ButtonAddRmvIngr(Ingredienti.FUNGHI, nuovaPizza);
 		HBox hBox7 = new HBox(4);
-		hBox7.getChildren().addAll(addFunghi, removeFunghi);
+		hBox7.getChildren().addAll(removeFunghi);
 		gridPane.getChildren().addAll(funghi, hBox7);
-		GridPane.setConstraints(funghi, 1,7);
-		GridPane.setConstraints(hBox7, 5,7);
+		GridPane.setConstraints(funghi, 0,7);
+		GridPane.setConstraints(hBox7, 1,7);
 
 		Label gorgonzola = new Label(Ingredienti.GORGONZOLA.name());
-		ButtonAddIngr addGorgonzola = new ButtonAddIngr(Ingredienti.GORGONZOLA, nuovaPizza);
 		ButtonAddRmvIngr removeGorgonzola= new ButtonAddRmvIngr(Ingredienti.GORGONZOLA, nuovaPizza);
 		HBox hBox8 = new HBox(4);
-		hBox8.getChildren().addAll(addGorgonzola, removeGorgonzola);
+		hBox8.getChildren().addAll(removeGorgonzola);
 		gridPane.getChildren().addAll(gorgonzola, hBox8);
-		GridPane.setConstraints(gorgonzola, 1,8);
-		GridPane.setConstraints(hBox8, 5,8);
+		GridPane.setConstraints(gorgonzola, 0,8);
+		GridPane.setConstraints(hBox8, 1,8);
 
 		Label mozzarella= new Label(Ingredienti.MOZZARELLA.name());
-		ButtonAddIngr addMozzarella = new ButtonAddIngr(Ingredienti.MOZZARELLA, nuovaPizza);
 		ButtonAddRmvIngr removeMozzarella = new ButtonAddRmvIngr(Ingredienti.MOZZARELLA, nuovaPizza);
 		HBox hBox9 = new HBox(4);
-		hBox9.getChildren().addAll(addMozzarella, removeMozzarella);
+		hBox9.getChildren().addAll(removeMozzarella);
 		gridPane.getChildren().addAll(mozzarella, hBox9);
-		GridPane.setConstraints(mozzarella, 1,9);
-		GridPane.setConstraints(hBox9, 5,9);
+		GridPane.setConstraints(mozzarella, 0,9);
+		GridPane.setConstraints(hBox9, 1,9);
 
 		Label mozzarellaDiBufala = new Label(Ingredienti.MOZZARELLA_DI_BUFALA.name());
-		ButtonAddIngr addMozzarellaDiBufala = new ButtonAddIngr(Ingredienti.MOZZARELLA_DI_BUFALA, nuovaPizza);
 		ButtonAddRmvIngr removeMozzarellaDiBufala= new ButtonAddRmvIngr(Ingredienti.MOZZARELLA_DI_BUFALA, nuovaPizza);
 		HBox hBox10 = new HBox(4);
-		hBox10.getChildren().addAll(addMozzarellaDiBufala, removeMozzarellaDiBufala);
+		hBox10.getChildren().addAll(removeMozzarellaDiBufala);
 		gridPane.getChildren().addAll(mozzarellaDiBufala, hBox10);
-		GridPane.setConstraints(mozzarellaDiBufala, 1,10);
-		GridPane.setConstraints(hBox10, 5,10);
+		GridPane.setConstraints(mozzarellaDiBufala, 0,10);
+		GridPane.setConstraints(hBox10, 1,10);
 
 		Label oliveNere = new Label(Ingredienti.OLIVE_NERE.name());
-		ButtonAddIngr addOliveNere = new ButtonAddIngr(Ingredienti.OLIVE_NERE, nuovaPizza);
 		ButtonAddRmvIngr removeOliveNere = new ButtonAddRmvIngr(Ingredienti.OLIVE_NERE, nuovaPizza);
 		HBox hBox11 = new HBox(4);
-		hBox11.getChildren().addAll(addOliveNere, removeOliveNere);
+		hBox11.getChildren().addAll(removeOliveNere);
 		gridPane.getChildren().addAll(oliveNere, hBox11);
-		GridPane.setConstraints(oliveNere, 1,11);
-		GridPane.setConstraints(hBox11, 5,11);
+		GridPane.setConstraints(oliveNere, 0,11);
+		GridPane.setConstraints(hBox11, 1,11);
 
 		Label origano = new Label(Ingredienti.ORIGANO.name());
-		ButtonAddIngr addOrigano = new ButtonAddIngr(Ingredienti.ORIGANO, nuovaPizza);
 		ButtonAddRmvIngr removeOrigano = new ButtonAddRmvIngr(Ingredienti.ORIGANO, nuovaPizza);
 		HBox hBox12 = new HBox(4);
-		hBox12.getChildren().addAll(addOrigano, removeOrigano);
+		hBox12.getChildren().addAll(removeOrigano);
 		gridPane.getChildren().addAll(origano, hBox12);
-		GridPane.setConstraints(origano, 1,12);
-		GridPane.setConstraints(hBox12, 5,12);
+		GridPane.setConstraints(origano, 0,12);
+		GridPane.setConstraints(hBox12, 1,12);
 
 		Label panna= new Label(Ingredienti.PANNA.name());
-		ButtonAddIngr addPanna = new ButtonAddIngr(Ingredienti.PANNA, nuovaPizza);
 		ButtonAddRmvIngr removePanna= new ButtonAddRmvIngr(Ingredienti.PANNA, nuovaPizza);
 		HBox hBox13 = new HBox(4);
-		hBox13.getChildren().addAll(addPanna, removePanna);
+		hBox13.getChildren().addAll(removePanna);
 		gridPane.getChildren().addAll(panna, hBox13);
-		GridPane.setConstraints(panna, 1,13);
-		GridPane.setConstraints(hBox13, 5,13);
+		GridPane.setConstraints(panna, 0,13);
+		GridPane.setConstraints(hBox13, 1,13);
 
 		Label patatine= new Label(Ingredienti.PATATINE.name());
-		ButtonAddIngr addPatatine = new ButtonAddIngr(Ingredienti.PATATINE, nuovaPizza);
 		ButtonAddRmvIngr removePatatine= new ButtonAddRmvIngr(Ingredienti.PATATINE, nuovaPizza);
 		HBox hBox14 = new HBox(4);
-		hBox14.getChildren().addAll(addPatatine, removePatatine);
+		hBox14.getChildren().addAll(removePatatine);
 		gridPane.getChildren().addAll(patatine, hBox14);
-		GridPane.setConstraints(patatine, 1,14);
-		GridPane.setConstraints(hBox14, 5,14);
+		GridPane.setConstraints(patatine, 0,14);
+		GridPane.setConstraints(hBox14, 1,14);
 
 		Label peperoni= new Label(Ingredienti.PEPERONI.name());
-		ButtonAddIngr addPeperoni = new ButtonAddIngr(Ingredienti.PEPERONI, nuovaPizza);
 		ButtonAddRmvIngr removePeperoni = new ButtonAddRmvIngr(Ingredienti.PEPERONI, nuovaPizza);
 		HBox hBox15 = new HBox(4);
-		hBox15.getChildren().addAll(addPeperoni, removePeperoni);
+		hBox15.getChildren().addAll(removePeperoni);
 		gridPane.getChildren().addAll(peperoni, hBox15);
-		GridPane.setConstraints(peperoni, 1,15);
-		GridPane.setConstraints(hBox15, 5,15);
+		GridPane.setConstraints(peperoni, 0,15);
+		GridPane.setConstraints(hBox15, 1,15);
 
 		Label pomodorini = new Label(Ingredienti.POMODORINI.name());
-		ButtonAddIngr addPomodorini = new ButtonAddIngr(Ingredienti.POMODORINI, nuovaPizza);
 		ButtonAddRmvIngr removePomodorini = new ButtonAddRmvIngr(Ingredienti.POMODORINI, nuovaPizza);
 		HBox hBox16 = new HBox(4);
-		hBox16.getChildren().addAll(addPomodorini, removePomodorini);
+		hBox16.getChildren().addAll(removePomodorini);
 		gridPane.getChildren().addAll(pomodorini, hBox16);
-		GridPane.setConstraints(pomodorini, 1,16);
-		GridPane.setConstraints(hBox16, 5,16);
+		GridPane.setConstraints(pomodorini, 0,16);
+		GridPane.setConstraints(hBox16, 1,16);
 
 		Label pomodoro = new Label(Ingredienti.POMODORO.name());
-		ButtonAddIngr addPomodoro = new ButtonAddIngr(Ingredienti.POMODORO, nuovaPizza);
 		ButtonAddRmvIngr removePomodoro = new ButtonAddRmvIngr(Ingredienti.POMODORO, nuovaPizza);
 		HBox hBox17 = new HBox(4);
-		hBox17.getChildren().addAll(addPomodoro, removePomodoro);
+		hBox17.getChildren().addAll(removePomodoro);
 		gridPane.getChildren().addAll(pomodoro, hBox17);
-		GridPane.setConstraints(pomodoro, 1,17);
-		GridPane.setConstraints(hBox17, 5,17);
+		GridPane.setConstraints(pomodoro, 0,17);
+		GridPane.setConstraints(hBox17, 1,17);
 
 		Label rucola = new Label(Ingredienti.RUCOLA.name());
-		ButtonAddIngr addRucola = new ButtonAddIngr(Ingredienti.RUCOLA, nuovaPizza);
 		ButtonAddRmvIngr removeRucola = new ButtonAddRmvIngr(Ingredienti.RUCOLA, nuovaPizza);
 		HBox hBox18 = new HBox(4);
-		hBox18.getChildren().addAll(addRucola, removeRucola);
+		hBox18.getChildren().addAll(removeRucola);
 		gridPane.getChildren().addAll(rucola, hBox18);
-		GridPane.setConstraints(rucola, 1,18);
-		GridPane.setConstraints(hBox18, 5,18);
+		GridPane.setConstraints(rucola, 0,18);
+		GridPane.setConstraints(hBox18, 1,18);
 
 		Label salamePiccante = new Label(Ingredienti.SALAME_PICCANTE.name());
-		ButtonAddIngr addSalamePiccante = new ButtonAddIngr(Ingredienti.SALAME_PICCANTE, nuovaPizza);
 		ButtonAddRmvIngr removeSalamePiccante = new ButtonAddRmvIngr(Ingredienti.SALAME_PICCANTE, nuovaPizza);
 		HBox hBox19 = new HBox(4);
-		hBox19.getChildren().addAll(addSalamePiccante, removeSalamePiccante);
+		hBox19.getChildren().addAll(removeSalamePiccante);
 		gridPane.getChildren().addAll(salamePiccante, hBox19);
-		GridPane.setConstraints(salamePiccante, 1,19);
-		GridPane.setConstraints(hBox19, 5,19);
+		GridPane.setConstraints(salamePiccante, 0,19);
+		GridPane.setConstraints(hBox19, 1,19);
 
 		Label salsiccia = new Label(Ingredienti.SALSICCIA.name());
-		ButtonAddIngr addSalsiccia = new ButtonAddIngr(Ingredienti.SALSICCIA, nuovaPizza);
 		ButtonAddRmvIngr removeSalsiccia = new ButtonAddRmvIngr(Ingredienti.SALSICCIA, nuovaPizza);
 		HBox hBox20 = new HBox(4);
-		hBox20.getChildren().addAll(addSalsiccia, removeSalsiccia);
+		hBox20.getChildren().addAll(removeSalsiccia);
 		gridPane.getChildren().addAll(salsiccia, hBox20);
-		GridPane.setConstraints(salsiccia, 1,20);
-		GridPane.setConstraints(hBox20, 5,20);
+		GridPane.setConstraints(salsiccia, 0,20);
+		GridPane.setConstraints(hBox20, 1,20);
 
 		Label speck = new Label(Ingredienti.SPECK.name());
-		ButtonAddIngr addSpeck = new ButtonAddIngr(Ingredienti.SPECK, nuovaPizza);
 		ButtonAddRmvIngr removeSpeck= new ButtonAddRmvIngr(Ingredienti.SPECK, nuovaPizza);
 		HBox hBox21 = new HBox(4);
-		hBox21.getChildren().addAll(addSpeck, removeSpeck);
+		hBox21.getChildren().addAll(removeSpeck);
 		gridPane.getChildren().addAll(speck, hBox21);
-		GridPane.setConstraints(speck, 1,21);
-		GridPane.setConstraints(hBox21, 5,21);
+		GridPane.setConstraints(speck, 0,21);
+		GridPane.setConstraints(hBox21, 1,21);
 
 		Label wurstel = new Label(Ingredienti.WURSTEL.name());
-		ButtonAddIngr addWurstel = new ButtonAddIngr(Ingredienti.WURSTEL, nuovaPizza);
 		ButtonAddRmvIngr removeWurstel = new ButtonAddRmvIngr(Ingredienti.WURSTEL, nuovaPizza);
 		HBox hBox22 = new HBox(4);
-		hBox22.getChildren().addAll(addWurstel, removeWurstel);
+		hBox22.getChildren().addAll(removeWurstel);
 		gridPane.getChildren().addAll(wurstel, hBox22);
-		GridPane.setConstraints(wurstel, 1,22);
-		GridPane.setConstraints(hBox22, 5,22);
+		GridPane.setConstraints(wurstel, 0,22);
+		GridPane.setConstraints(hBox22, 1,22);
 
 		Label belleDonne = new Label(Ingredienti.BELLE_DONNE.name());
-		ButtonAddIngr addBelleDonne = new ButtonAddIngr(Ingredienti.BELLE_DONNE, nuovaPizza);
 		ButtonAddRmvIngr removeBelleDonne = new ButtonAddRmvIngr(Ingredienti.BELLE_DONNE, nuovaPizza);
 		HBox hBox23 = new HBox(4);
-		hBox23.getChildren().addAll(addBelleDonne, removeBelleDonne);
+		hBox23.getChildren().addAll(removeBelleDonne);
 		gridPane.getChildren().addAll(belleDonne, hBox23);
-		GridPane.setConstraints(belleDonne, 1,23);
-		GridPane.setConstraints(hBox23, 5,23);
+		GridPane.setConstraints(belleDonne, 0,23);
+		GridPane.setConstraints(hBox23, 1,23);
 
 		Label galanteria = new Label(Ingredienti.GALANTERIA.name());
-		ButtonAddIngr addGalanteria = new ButtonAddIngr(Ingredienti.GALANTERIA, nuovaPizza);
 		ButtonAddRmvIngr removeGalanteria = new ButtonAddRmvIngr(Ingredienti.GALANTERIA, nuovaPizza);
 		HBox hBox24 = new HBox(4);
-		hBox24.getChildren().addAll(addGalanteria, removeGalanteria);
+		hBox24.getChildren().addAll(removeGalanteria);
 		gridPane.getChildren().addAll(galanteria, hBox24);
-		GridPane.setConstraints(galanteria, 1,24);
-		GridPane.setConstraints(hBox24, 5,24);
+		GridPane.setConstraints(galanteria, 0,24);
+		GridPane.setConstraints(hBox24, 1,24);
 
 		Label gemme = new Label(Ingredienti.GEMME_DELL_INFINITO.name());
-		ButtonAddIngr addGemme = new ButtonAddIngr(Ingredienti.GEMME_DELL_INFINITO, nuovaPizza);
 		ButtonAddRmvIngr removeGemme = new ButtonAddRmvIngr(Ingredienti.GEMME_DELL_INFINITO, nuovaPizza);
 		HBox hBox25 = new HBox(4);
-		hBox25.getChildren().addAll(addGemme, removeGemme);
+		hBox25.getChildren().addAll(removeGemme);
 		gridPane.getChildren().addAll(gemme, hBox25);
-		GridPane.setConstraints(gemme, 1,25);
-		GridPane.setConstraints(hBox25, 5,25);
+		GridPane.setConstraints(gemme, 0,25);
+		GridPane.setConstraints(hBox25, 1,25);
 
 		Label onnip = new Label(Ingredienti.ONNIPOTENZA.name());
-		ButtonAddIngr addOnnip = new ButtonAddIngr(Ingredienti.ONNIPOTENZA, nuovaPizza);
 		ButtonAddRmvIngr removeOnnip = new ButtonAddRmvIngr(Ingredienti.ONNIPOTENZA, nuovaPizza);
 		HBox hBox26 = new HBox(4);
-		hBox26.getChildren().addAll(addOnnip, removeOnnip);
+		hBox26.getChildren().addAll(removeOnnip);
 		gridPane.getChildren().addAll(onnip, hBox26);
-		GridPane.setConstraints(onnip, 1,26);
-		GridPane.setConstraints(hBox26, 5,26);
+		GridPane.setConstraints(onnip, 0,26);
+		GridPane.setConstraints(hBox26, 1,26);
 
 		Button confirmButton = new Button("Conferma le modifiche");
 		confirmButton.setOnAction(e -> {
@@ -285,7 +261,7 @@ public class ModifyBox{
 		// Impedisce di fare azioni sulle altre finestre
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("Modifica la pizza");
-		window.setMinWidth(400);
+		window.setMinWidth(330);
 		window.setMaxWidth(400);
 		window.setMaxHeight(300);
 		// Mostra la finestra e attende di essere chiusa
