@@ -72,6 +72,10 @@ public class OrderPage1 {
 
         setGridPaneContraints(pizzeria, countPizzeLabels, vBoxNomeDescr, hBoxPrezzoBottoni, countModificheLabel, hBoxMod);
         gridPane = addEverythingToGridPane(pizzeria, countPizzeLabels, hBoxPrezzoBottoni, hBoxMod, vBoxNomeDescr);
+        gridPane.getColumnConstraints().add(new ColumnConstraints(40));
+        gridPane.getColumnConstraints().add(new ColumnConstraints(520));
+        gridPane.getColumnConstraints().add(new ColumnConstraints(250));
+
 
         // Metto il gridPane con tutte le pizze all'interno di uno ScrollPane
         ScrollPane scrollPane1 = new ScrollPane(gridPane);
@@ -80,7 +84,7 @@ public class OrderPage1 {
         VBox layout = new VBox();
         layout.getChildren().addAll(hBoxIntestazione, scrollPane1, hBoxAvantiIndietro);
 
-        scene2 = new Scene(layout, 900, 700);
+        scene2 = new Scene(layout, 850, 600);
         window.setScene(scene2);
     }
 
@@ -123,9 +127,8 @@ public class OrderPage1 {
     private static GridPane addEverythingToGridPane(Pizzeria pizzeria, ArrayList<Label> countPizzeLabels, ArrayList<HBox> hBoxPrezzoBottoni, HBox hBoxMod, ArrayList<VBox> vBoxNomeDescr) {
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setHgap(10);
+        gridPane.setHgap(1);
         gridPane.setVgap(30);
-        gridPane.getColumnConstraints().add(new ColumnConstraints(50));
         gridPane.getChildren().add(hBoxMod);
 		for (int i=0; i<pizzeria.getMenu().values().size(); i++) {
 			gridPane.getChildren().add(countPizzeLabels.get(i));

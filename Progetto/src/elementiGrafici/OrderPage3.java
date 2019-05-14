@@ -61,7 +61,7 @@ public class OrderPage3 {
       gridPane.getChildren().addAll(hbox1,hBox2,hBox3);
       layout.getChildren().addAll(gridPane,buttonBox);
       Scene scene4;
-      scene4 = new Scene(layout, 1000, 600);
+      scene4 = new Scene(layout, 950, 600);
       window.setScene(scene4);
 
   }

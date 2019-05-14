@@ -160,7 +160,7 @@ public class Pizzeria {
         i12.put(Ingredienti.MOZZARELLA.name(), Ingredienti.MOZZARELLA);
         i12.put(Ingredienti.GALANTERIA.name(), Ingredienti.GALANTERIA);
         i12.put(Ingredienti.BELLE_DONNE.name(), Ingredienti.BELLE_DONNE);
-        Pizza allaMusi = new Pizza("ALLA MUSI", i12, 100000);
+        Pizza allaMusi = new Pizza("ALLA MUSI", i12, 100);
         AddPizza(allaMusi);
 
         HashMap<String, Ingredienti> i13 = new HashMap <>();
