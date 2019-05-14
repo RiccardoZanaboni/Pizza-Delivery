@@ -67,7 +67,11 @@ public class OrderPage2 {
     });
 
     Button goBackButton = new Button("Torna indietro ←");
-    goBackButton.setOnAction(e -> window.setScene(scene2));
+    goBackButton.setOnAction(e -> {
+      OrderPage1 orderPage1 = new OrderPage1();
+      orderPage1.display(window,scene2, scene3, order, pizzeria);
+      //window.setScene(scene2);
+    });
 
     HBox buttonBox = new HBox(10);
     buttonBox.getChildren().addAll(goBackButton, nextPageButton);
