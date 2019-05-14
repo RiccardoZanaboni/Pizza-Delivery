@@ -91,7 +91,7 @@ public class OrderPage2 {
 		VBox layout = new VBox();
 		layout.getChildren().addAll(hBoxIntestazione, gridPane, buttonBox);
 
-		scene3 = new Scene(layout, 600, 600);
+		scene3 = new Scene(layout, 850, 600);
 		window.setScene(scene3);
 	}
 
