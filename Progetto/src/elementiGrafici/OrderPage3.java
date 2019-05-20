@@ -41,9 +41,9 @@ public class OrderPage3 {
         titleBox.setMinSize(600, 50);
 
         VBox recapBox = new VBox(20);
-        Label yourNameLabel = new Label("SIG."+order.getCustomer().getUsername());
-        Label yourAddressLabel = new Label("INDIRIZZO: "+order.getIndirizzo());
-        Label yourOrderTimeLabel = new Label ("Orario "+order.getOrario());
+        Label yourNameLabel = new Label("SIG.\t" + order.getCustomer().getUsername());
+        Label yourAddressLabel = new Label("INDIRIZZO:\t" + order.getIndirizzo());
+        Label yourOrderTimeLabel = new Label ("ORARIO:\t" + order.getOrario());
         recapBox.getChildren().addAll(yourNameLabel, yourAddressLabel, yourOrderTimeLabel);
 
         Button indietroButton = new Button("← Torna indietro");
@@ -53,8 +53,8 @@ public class OrderPage3 {
             MenuPage menuPage = new MenuPage();
             OrderPage1.getIndietroButton().fire();
             menuPage.display(window, pizzeria);
-        }
-            );
+        });
+
         Button closeButton = new Button("Fine ☓");
         closeButton.setOnAction(e-> {window.close();});
 

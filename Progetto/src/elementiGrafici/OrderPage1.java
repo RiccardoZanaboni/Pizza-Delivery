@@ -20,15 +20,9 @@ public class OrderPage1 {
     private static Button avantiButton;
     private static Button indietroButton;
 
-
-
     public void display(Stage window, Scene scene1, Order order, Pizzeria pizzeria) {
 
         // FIXME SISTEMARE DISTANZA TRA BOTTONI ADD, REMOVE, MODIFICA DI UNA PIZZA E QUELLA SUCCESSIVA
-
-        Label countModificheLabel = new Label();
-        int countModifiche = 0;
-        countModificheLabel.setText("" + countModifiche);
 
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -40,6 +34,10 @@ public class OrderPage1 {
         ArrayList<VBox> vBoxBottoni = new ArrayList<>();
         ArrayList<VBox> vBoxNomeDescr = new ArrayList<>();
         ArrayList<HBox> hBoxPrezzoBottoni = new ArrayList<>();
+
+        Label countModificheLabel = new Label();
+        int countModifiche = 0;
+        countModificheLabel.setText("" + countModifiche);
 
         riempiLabelsAndButtons(pizzeria, order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels, addButtons, modButtons, rmvButtons, countModificheLabel);
         riempiVBoxNomeAndIngr(pizzeria, vBoxNomeDescr, nomiLabels, ingrLabels);
