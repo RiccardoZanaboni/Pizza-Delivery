@@ -48,18 +48,25 @@ public class OrderPage3 {
 
         Button indietroButton = new Button("← Torna indietro");
         indietroButton.setOnAction(e -> window.setScene(scene3));
+        Button nuovoOrdine=new Button("Nuovo Ordine");
+        nuovoOrdine.setOnAction(event -> {
+            MenuPage menuPage = new MenuPage();
+            OrderPage1.getIndietroButton().fire();
+            menuPage.display(window, pizzeria);
+        }
+            );
         Button closeButton = new Button("Fine ☓");
         closeButton.setOnAction(e-> {window.close();});
 
         HBox buttonBox = new HBox(10);
-        buttonBox.getChildren().addAll(indietroButton, closeButton);
+        buttonBox.getChildren().addAll(indietroButton, nuovoOrdine,closeButton);
         buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.setMinSize(600, 50);
+        buttonBox.setMinSize(600, 30);
 
 
         ScrollPane scrollPane = new ScrollPane(gridPane);
 
-        scrollPane.setMinSize(600, 500);
+        scrollPane.setMinSize(600, 400);
         buttonBox.setMinSize(600, 100);
         layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
         Scene scene4;

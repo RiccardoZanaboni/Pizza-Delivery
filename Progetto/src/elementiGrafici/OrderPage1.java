@@ -20,7 +20,9 @@ public class OrderPage1 {
     private static Button avantiButton;
     private static Button indietroButton;
 
-    public void display(Stage window, Scene scene1, Scene scene3, Order order, Pizzeria pizzeria) {
+
+
+    public void display(Stage window, Scene scene1, Order order, Pizzeria pizzeria) {
 
         // FIXME SISTEMARE DISTANZA TRA BOTTONI ADD, REMOVE, MODIFICA DI UNA PIZZA E QUELLA SUCCESSIVA
 
@@ -61,12 +63,10 @@ public class OrderPage1 {
         HBox hBoxIntestazione = new HBox();
         Label labelOrdine = new Label("Ordine");
         hBoxIntestazione.getChildren().add(labelOrdine);
-        hBoxIntestazione.setMinSize(600, 50);
         hBoxIntestazione.setAlignment(Pos.CENTER);
 
         HBox hBoxAvantiIndietro = new HBox(10);
         hBoxAvantiIndietro.getChildren().addAll(indietroButton, avantiButton);
-        hBoxAvantiIndietro.setMinSize(600, 50);
         hBoxAvantiIndietro.setAlignment(Pos.CENTER);
 
         GridPane gridPane;
@@ -78,13 +78,27 @@ public class OrderPage1 {
 
         // Metto il gridPane con tutte le pizze all'interno di uno ScrollPane
         ScrollPane scroll = new ScrollPane(gridPane);
-        scroll.fitToHeightProperty();
-        scroll.fitToWidthProperty();
-        VBox layout = new VBox();
-        layout.getChildren().addAll(hBoxIntestazione, scroll, hBoxAvantiIndietro);
+        scroll.setFitToHeight(true);
+        scroll.setFitToWidth(true);
+        scroll.prefWidthProperty().bind(window.widthProperty());
+        scroll.prefHeightProperty().bind(window.heightProperty());
+        HBox hBox=new HBox();
+        scroll.setPadding(new Insets(10, 1, 5, 10));
+        hBox.getChildren().add(scroll);
+        hBox.setAlignment(Pos.CENTER);
 
-        scene2 = new Scene(layout, 850, 600);
+        VBox layout = new VBox();
+        layout.getChildren().addAll(hBoxIntestazione, hBox, hBoxAvantiIndietro);
+        layout.prefWidthProperty().bind(window.widthProperty());
+        layout.prefHeightProperty().bind(window.heightProperty());
+
+        scene2 = new Scene(layout,880,600);
         window.setScene(scene2);
+        window.show();
+    }
+
+    public static Button getIndietroButton() {
+        return indietroButton;
     }
 
     private static void riempiLabelsAndButtons(Pizzeria pizzeria, Order order, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, ArrayList<Label> countPizzeLabels, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons, ArrayList<ButtonRmvPizza> rmvButtons, Label countModificheLabel) {
@@ -182,7 +196,7 @@ public class OrderPage1 {
                 i++;
             }
             MenuPage menuPage = new MenuPage();
-            menuPage.display(window, scene1, pizzeria);
+            menuPage.display(window, pizzeria);
         });
         return indietroButton;
     }

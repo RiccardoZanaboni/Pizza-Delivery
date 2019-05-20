@@ -35,12 +35,12 @@ public class GraphicInterface extends Application {
 		scene0 = new Scene(stackPane, 600, 600);
 		window.setScene(scene0);
 		window.show();
-		FadeTransition fadeIn = new FadeTransition(Duration.seconds(4), stackPane);
+		FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), stackPane);
 		fadeIn.setFromValue(0);
 		fadeIn.setToValue(1);
 		fadeIn.setCycleCount(1);
 
-		FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), stackPane);
+		FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), stackPane);
 		fadeOut.setFromValue(1);
 		fadeOut.setToValue(0);
 		fadeOut.setCycleCount(1);
@@ -50,7 +50,7 @@ public class GraphicInterface extends Application {
 		fadeIn.setOnFinished((e) -> {
 			fadeOut.play();
 			MenuPage menuPage = new MenuPage();
-			menuPage.display(window, scene3, wolf);
+			menuPage.display(window, wolf);
 		});
 
 	}

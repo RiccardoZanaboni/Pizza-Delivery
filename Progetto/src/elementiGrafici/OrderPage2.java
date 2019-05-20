@@ -1,9 +1,13 @@
 package elementiGrafici;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -62,37 +66,42 @@ public class OrderPage2 {
 		Button goBackButton = new Button("Torna indietro ←");
 		goBackButton.setOnAction(e -> {
 			OrderPage1 orderPage1 = new OrderPage1();
-			orderPage1.display(window,scene2, scene3, order, pizzeria);
+			orderPage1.display(window,scene2, order, pizzeria);
 			//window.setScene(scene2);
 		});
 
 		HBox buttonBox = new HBox(10);
 		buttonBox.getChildren().addAll(goBackButton, nextPageButton);
 		buttonBox.setAlignment(Pos.CENTER);
-		buttonBox.setMinSize(600, 50);
 
 		HBox hBoxIntestazione = new HBox();
 		Label label = new Label("Inserisci i tuoi dati");
 		hBoxIntestazione.getChildren().add(label);
-		hBoxIntestazione.setMinSize(600, 50);
 		hBoxIntestazione.setAlignment(Pos.CENTER);
 
 		//GridPane.setConstraints(username, 0 , 0);
 		// GridPane.setConstraints(nameInput, 1, 0);
-		GridPane.setConstraints(usernameBox, 0, 0);
+		GridPane.setConstraints(usernameBox,0,0);
 		GridPane.setConstraints(addressBox, 0, 1);
 		GridPane.setConstraints(choiceHBox, 0, 2);
+
 		gridPane.getChildren().addAll(usernameBox, addressBox, choiceHBox);
-		gridPane.setMinSize(600, 500);
-		gridPane.setPadding(new Insets(150, 10, 10, 180));
+		gridPane.setPadding(new Insets(130, 5, 20, 70));
 		gridPane.setVgap(20);
 		//gridPane.setHgap(150);
 
-		VBox layout = new VBox();
-		layout.getChildren().addAll(hBoxIntestazione, gridPane, buttonBox);
+        HBox hBox=new HBox(40);
+        gridPane.setHgap(50);
+        hBox.getChildren().add(gridPane);
+        hBox.setAlignment(Pos.CENTER);
 
-		scene3 = new Scene(layout, 850, 600);
-		window.setScene(scene3);
+		VBox layout = new VBox();
+		layout.getChildren().addAll(hBoxIntestazione, hBox, buttonBox);
+
+		scene3 = new Scene(layout);
+        layout.prefWidthProperty().bind(window.widthProperty());
+        layout.prefHeightProperty().bind(window.heightProperty());
+        window.setScene(scene3);
 	}
 
 	// FIXME DA SISTEMARE getChoice , ora funziona ma poco carino

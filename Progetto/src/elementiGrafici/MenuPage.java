@@ -14,11 +14,10 @@ import pizzeria.Pizzeria;
 public class MenuPage {
 	private Scene scene1;
 
-	public void display(Stage window, Scene scene3, Pizzeria pizzeria) {
+	public void display(Stage window, Pizzeria pizzeria) {
 
 		Label label1 = new Label("Wolf Of Pizza");
 		StackPane stackPane = new StackPane();
-		stackPane.setMinSize(600, 50);
 		stackPane.getChildren().add(label1);
 		stackPane.getStyleClass().add("stackpane");
 
@@ -28,30 +27,37 @@ public class MenuPage {
 
 		// Definisco i bottoni presenti nella pagina
 
-		Button makeOrderButton = new Button("Nuovo Ordine");
-		makeOrderButton.setMinSize(600, 100);
+        Button makeOrderButton = new Button("Nuovo Ordine");
+        makeOrderButton.prefWidthProperty().bind(window.widthProperty());
+        makeOrderButton.prefHeightProperty().bind(window.heightProperty());
 		Button chiSiamoButton = new Button("Chi siamo");
-		chiSiamoButton.setMinSize(600, 100);
-		Button recapOrdiniButton = new Button("Riepilogo ordini");
-		recapOrdiniButton.setMinSize(600, 100);
+		chiSiamoButton.prefWidthProperty().bind(window.widthProperty());
+        chiSiamoButton.prefHeightProperty().bind(window.heightProperty());
+        Button recapOrdiniButton = new Button("Riepilogo ordini");
+        recapOrdiniButton.prefWidthProperty().bind(window.widthProperty());
+        recapOrdiniButton.prefHeightProperty().bind(window.heightProperty());
 		Button altroButton = new Button("Altro");
-		altroButton.setMinSize(600, 100);
+		altroButton.prefWidthProperty().bind(window.widthProperty());
+        altroButton.prefHeightProperty().bind(window.heightProperty());
 
-		makeOrderButton.setOnAction(e -> {
+        makeOrderButton.setOnAction(e -> {
 			pizzeria.ApriPizzeria(8);
 			pizzeria.AddFattorino(new DeliveryMan("Musi",pizzeria));
 			Order order = pizzeria.inizializeNewOrder();
 			OrderPage1 orderPage1 = new OrderPage1();
-			orderPage1.display(window, scene1, scene3, order, pizzeria);
+			orderPage1.display(window, scene1,order,pizzeria);
 		});
 
 		VBox layout = new VBox();
 		layout.getChildren().addAll(stackPane, spazioPane, makeOrderButton, chiSiamoButton, recapOrdiniButton, altroButton);
 		layout.getStyleClass().add("layout");
 
-		scene1 = new Scene(layout, 600, 600);
+        layout.prefWidthProperty().bind(window.widthProperty());
+        layout.prefHeightProperty().bind(window.heightProperty());
+
+		scene1 = new Scene(layout);
 		scene1.getStylesheets().addAll(this.getClass().getResource("graphicInterfaceStyle.css").toExternalForm());
-		window.setResizable(false);
+		//window.setResizable(false);
 		window.setScene(scene1);
 		window.setTitle("Wolf of Pizza");
 		window.getIcons().add(new Image("elementiGrafici/wolf_pizza.png"));
