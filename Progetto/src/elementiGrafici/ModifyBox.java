@@ -15,7 +15,6 @@ import java.util.HashMap;
 
 public class ModifyBox{
 	private static boolean answer = false;
-	private static Button confirmButton;
 
 	public static void setAnswer() {
         ModifyBox.answer = !ModifyBox.answer;
@@ -33,24 +32,17 @@ public class ModifyBox{
 
 		Stage window = new Stage();
 
-		//////////////////////////////////////////////////////////////////
-
 		ArrayList<Label> ingrLabels = new ArrayList<>();
 		ArrayList<ButtonAddRmvIngr> ingrButtons = new ArrayList<>();
 		ArrayList<HBox> hBoxes = new ArrayList<>();
 
 		riempiLabelsAndButtons(pizzeria, nuovaPizza, ingrLabels, ingrButtons);
 		riempiHBoxes(hBoxes, ingrButtons);
-		GridPane gridPane;
-		gridPane = setGridPaneContraints(ingrLabels, hBoxes);
+		GridPane gridPane = setGridPaneContraints(ingrLabels, hBoxes);
 		gridPane.getColumnConstraints().add(new ColumnConstraints(210));
 		gridPane.getColumnConstraints().add(new ColumnConstraints(70));
 
-
-		////////////////////////////////////////////////////////////////
-
-
-		confirmButton = new Button("Conferma le modifiche");
+		Button confirmButton = new Button("Conferma le modifiche");
 		confirmButton.setOnAction(e -> {
 			order.addPizza(nuovaPizza, 1);
 			answer = true;

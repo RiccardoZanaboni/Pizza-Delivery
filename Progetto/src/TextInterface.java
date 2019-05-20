@@ -32,6 +32,8 @@ public class TextInterface {
     }
 
     private void makeOrderText() {
+        System.out.println(wolf.helloThere());
+        System.out.println(wolf.stampaMenu());
         Order order = wolf.inizializeNewOrder();
         int num;
         String nomePizza;
@@ -216,19 +218,8 @@ public class TextInterface {
         String answer = scan.nextLine().toUpperCase();
         switch (answer) {
             case "S":
+                System.out.println(wolf.possibiliAggiunte());
                 System.out.println("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:");
-                //String possibiliIngr = "Possibili aggiunte: ";
-                StringBuilder possibiliIngr = new StringBuilder("Possibili aggiunte: ");
-                int i = 0;
-                for (Ingredienti ingr : wolf.getIngredientiPizzeria().values()) {
-                    //possibiliIngr += (ingr.name().toLowerCase().replace("_", " ") + ", ");
-                    possibiliIngr.append(ingr.name().toLowerCase().replace("_", " ")).append(", ");
-                    i++;
-                    if (i % 10 == 0)
-                        possibiliIngr.append("\n");
-                    //possibiliIngr += "\n";
-                }
-                System.out.println(possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")));
                 String aggiunte = scan.nextLine();
                 System.out.println("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:");
                 String rimozioni = scan.nextLine();
@@ -309,10 +300,10 @@ public class TextInterface {
 
     private void chiediConfermaText(Order order, Date orario, int tot) {
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, 'N' per annullare: ");
-        String risp= scan.nextLine().toUpperCase();
+        String risp = scan.nextLine().toUpperCase();
         switch (risp) {
             case "S":
-                wolf.checkFornoFattorino(order, orario, tot);
+                wolf.checkFornoAndFattorino(order, orario, tot);
                 order.setCompleto();
                 wolf.addOrdine(order);
                 break;
@@ -342,8 +333,7 @@ public class TextInterface {
         //textInterface.wolf.AddFattorino(new pizzeria.DeliveryMan("Zanzatroni",textInterface.wolf));
         textInterface.wolf.creaMenu();
         textInterface.makeOrderText();
-        textInterface.makeOrderText();  //Per prova vettori orario
-        //textInterface.makeOrderText();
+        //textInterface.makeOrderText();  //Per prova vettori orario
         //textInterface.makeOrderText();
     }
 }

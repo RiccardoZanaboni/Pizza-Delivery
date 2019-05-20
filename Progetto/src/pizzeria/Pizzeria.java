@@ -185,15 +185,13 @@ public class Pizzeria {
         return ingredientiPizzeria;
     }
 
-    public void setOrdiniDelGiorno() {
+    public void incrementaOrdiniDelGiorno() {
         this.ordiniDelGiorno ++;
     }
 
     public Order inizializeNewOrder() {
         Order order = new Order(ordiniDelGiorno);
-        setOrdiniDelGiorno();
-        System.out.println(helloThere());
-        System.out.println(stampaMenu());
+        incrementaOrdiniDelGiorno();
         return order;
     }
 
@@ -269,18 +267,17 @@ public class Pizzeria {
         System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
     }
 
-    public boolean checkFornoFattorino(Order order, Date d, int tot){
-        //if (s.toUpperCase().equals("S")) {
-            //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
-            if(infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp()<tot){
-                int disp=infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp();
-                infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(disp);
-                infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())-1].inserisciInfornate(tot-disp);
-            } else{
-                infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(tot);
-            }
-            fattorinoLibero(this.orarioApertura,d.getHours(),d.getMinutes(),0).OccupaFattorino(trovaCasellaTempoFattorino(this.orarioApertura, d.getHours(), d.getMinutes()));
-            return true;            // ma ritorna sempre true???
+    public boolean checkFornoAndFattorino(Order order, Date d, int tot){
+        //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
+        if(infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp()<tot){
+            int disp = infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp();
+            infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(disp);
+            infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())-1].inserisciInfornate(tot-disp);
+        } else{
+            infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].inserisciInfornate(tot);
+        }
+        fattorinoLibero(this.orarioApertura,d.getHours(),d.getMinutes(),0).OccupaFattorino(trovaCasellaTempoFattorino(this.orarioApertura, d.getHours(), d.getMinutes()));
+        return true;            // ma ritorna sempre true???
     }
 
     public Date getOrarioChiusura() {
@@ -297,6 +294,18 @@ public class Pizzeria {
 
     public Forno[] getInfornate() {
         return infornate;
+    }
+
+    public String possibiliAggiunte() {
+        StringBuilder possibiliIngr = new StringBuilder("Possibili aggiunte: ");
+        int i = 0;
+        for (Ingredienti ingr : getIngredientiPizzeria().values()) {
+            possibiliIngr.append(ingr.name().toLowerCase().replace("_", " ")).append(", ");
+            i++;
+            if (i % 10 == 0)
+                possibiliIngr.append("\n");
+        }
+        return possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")); // elimina ultima virgola
     }
 }
 
@@ -334,7 +343,7 @@ public class Pizzeria {
                 ok=inserisciDati(order);
                 if (ok) {
                     recapOrdine(order);
-                    checkFornoFattorino(order,orario,tot);
+                    checkFornoAndFattorino(order,orario,tot);
                 }
             }
         }
@@ -470,7 +479,7 @@ public class Pizzeria {
         System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
     }
 
-    public boolean checkFornoFattorino(Date d, int tot){   //pizzeria.Order order, Date d, int tot
+    public boolean checkFornoAndFattorino(Date d, int tot){   //pizzeria.Order order, Date d, int tot
         //if (s.toUpperCase().equals("S")) {
             //order.setOrario(d);     //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
             if(infornate[trovaCasellaTempoForno(this.orarioApertura, d.getHours(), d.getMinutes())].getPostiDisp()<tot){
