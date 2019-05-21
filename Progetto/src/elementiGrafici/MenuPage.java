@@ -27,7 +27,9 @@ public class MenuPage {
 
 		// Definisco i bottoni presenti nella pagina
 
-        Button makeOrderButton = new Button("Nuovo Ordine");
+		// makeNewOrder - login - register - myAccount (bloccato se non loggato)
+
+		Button makeOrderButton = new Button("Nuovo Ordine");
         makeOrderButton.prefWidthProperty().bind(window.widthProperty());
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
 		Button chiSiamoButton = new Button("Chi siamo");

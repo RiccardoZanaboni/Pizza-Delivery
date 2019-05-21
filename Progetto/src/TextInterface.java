@@ -268,19 +268,21 @@ public class TextInterface {
             try {
                 String ingredienteAggiuntoString = sistemaStringaIngrediente(stAgg);
                 Ingredienti ingredienti = Ingredienti.valueOf(ingredienteAggiuntoString);
-                piu++;
                 p.addIngredienti(ingredienti);
+                piu++;
             } catch (Exception ignored) { }
         }
-        p.setPrezzo(p.getPrezzo() + (piu * prezzoSupl));        // aggiunto 0.50 per ogni ingrediente
         StringTokenizer stRmv = new StringTokenizer(rimozioni);
         while (stRmv.hasMoreTokens()) {
             try {
                 String ingredienteRimossoString = sistemaStringaIngrediente(stRmv);
                 Ingredienti ingredienti = Ingredienti.valueOf(ingredienteRimossoString);
+                if(!pizza.getIngredienti().containsKey(ingredienteRimossoString) && p.getIngredienti().containsKey(ingredienteRimossoString))
+                    piu--;
                 p.rmvIngredienti(ingredienti);
             } catch (Exception ignored) { }
         }
+        p.setPrezzo(p.getPrezzo() + (piu * prezzoSupl));        // aggiunto 0.50 per ogni ingrediente
         for (int i = 0; i < num; i++) {
             order.getPizzeordinate().add(p);
         }

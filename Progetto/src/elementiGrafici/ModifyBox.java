@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class ModifyBox{
 	private static boolean answer = false;
 
-	public static void setAnswer() {
+	static void setAnswer() {
         ModifyBox.answer = !ModifyBox.answer;
     }
 
@@ -56,7 +56,7 @@ public class ModifyBox{
 
 		// Impedisce di fare azioni sulle altre finestre
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("Modifica la pizza");
+		window.setTitle("Modifica la pizza " + nuovaPizza.getNomeCamel());
 		window.setMinWidth(330);
 		window.setMaxWidth(400);
 		window.setMaxHeight(300);

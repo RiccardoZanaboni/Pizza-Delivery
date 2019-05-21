@@ -43,7 +43,7 @@ public class OrderPage3 {
 
         Button indietroButton = new Button("← Torna indietro");
         indietroButton.setOnAction(e -> window.setScene(scene3));
-        Button nuovoOrdine=new Button("Nuovo Ordine");
+        Button nuovoOrdine=new Button("Conferma e torna al Menu");
         nuovoOrdine.setOnAction(event -> {
         	order.setCompleto();
             MenuPage menuPage = new MenuPage();
@@ -51,7 +51,7 @@ public class OrderPage3 {
             menuPage.display(window, pizzeria);
         });
 
-        Button closeButton = new Button("Fine ☓");
+        Button closeButton = new Button("Conferma ed esci ☓");
         closeButton.setOnAction(e-> {
         	order.setCompleto();
         	window.close();

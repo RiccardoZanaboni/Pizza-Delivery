@@ -25,8 +25,10 @@ public class Pizza {
     }
 
     public String getNomeCamel() {
-        String nome = this.nome;
+        String nome = this.nome.toUpperCase();
         nome = nome.charAt(0) + nome.substring(1).toLowerCase();
+        if(nome.contains("_"))
+            nome = nome.replaceAll("_"," ");
         return nome;
     }
 
