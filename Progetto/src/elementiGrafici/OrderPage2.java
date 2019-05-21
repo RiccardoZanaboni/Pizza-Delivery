@@ -24,7 +24,6 @@ import java.util.GregorianCalendar;
 
 public class OrderPage2 {
 	private Scene scene3;
-	private Button button;
 	private String indirizzo, nome;
 	private Date ora;
 
@@ -32,19 +31,19 @@ public class OrderPage2 {
 	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
 		GridPane gridPane = new GridPane();
 
-		Label username = new Label("Username");
+		Label username = new Label("Username:");
 		TextField nameInput = new TextField();
 		nameInput.setPromptText("Your name");
 		HBox usernameBox = new HBox(50);
 		usernameBox.getChildren().addAll(username, nameInput);
 
-		Label address = new Label("Indirizzo");
+		Label address = new Label("Indirizzo:");
 		TextField addressInput = new TextField();
 		addressInput.setPromptText("Your address");
 		HBox addressBox = new HBox(61);
 		addressBox.getChildren().addAll(address, addressInput);
 
-		Label choiceLabel = new Label("Scegli l'ora");
+		Label choiceLabel = new Label("Scegli l'ora:");
 		ChoiceBox<String> choiceBox = new ChoiceBox<>();
 		choiceBox.getItems().addAll(getOrari(pizzeria, tot));
 		HBox choiceHBox = new HBox(44);
@@ -54,7 +53,7 @@ public class OrderPage2 {
 		nextPageButton.setOnAction(e-> {
 			nome = getName(nameInput);
 			indirizzo = getAddress(addressInput);
-			ora = getChoice(choiceBox, order);
+			ora = getChoice(choiceBox);
 			order.setIndirizzo(getAddress(addressInput));
 			Customer customer = new Customer(getName(nameInput));
 			order.setCustomer(customer);
@@ -79,8 +78,6 @@ public class OrderPage2 {
 		hBoxIntestazione.getChildren().add(label);
 		hBoxIntestazione.setAlignment(Pos.CENTER);
 
-		//GridPane.setConstraints(username, 0 , 0);
-		// GridPane.setConstraints(nameInput, 1, 0);
 		GridPane.setConstraints(usernameBox,0,0);
 		GridPane.setConstraints(addressBox, 0, 1);
 		GridPane.setConstraints(choiceHBox, 0, 2);
@@ -106,8 +103,7 @@ public class OrderPage2 {
 
 	// FIXME DA SISTEMARE getChoice , ora funziona ma poco carino
 
-	private Date getChoice(ChoiceBox<String> choiceBox, Order order) {
-		String a = "L'ora scelta è:";
+	private Date getChoice(ChoiceBox<String> choiceBox) {
 		Date oraScelta;
 		String orario = choiceBox.getValue();
 		Calendar calendar = new GregorianCalendar();
@@ -128,14 +124,12 @@ public class OrderPage2 {
 	private String getAddress (TextField aInput) {
 		String a = "";
 		a += aInput.getText();
-		//System.out.println(a);
 		return a;
 	}
 
 	private String getName (TextField nInput) {
 		String a = "";
 		a += nInput.getText();
-		//System.out.println(a);
     	return a;
 	}
 

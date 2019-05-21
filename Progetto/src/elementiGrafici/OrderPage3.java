@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pizzeria.Order;
-import pizzeria.Pizza;
 import pizzeria.Pizzeria;
 
 import java.util.ArrayList;
@@ -71,19 +70,6 @@ public class OrderPage3 {
         Scene scene4;
         scene4 = new Scene(layout, 600, 800);
         window.setScene(scene4);
-    }
-
-    private static void riempiLabels (Order order, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, ArrayList<Label> countPizzeLabels) {
-        System.out.println(order.getNumeroPizze());
-        System.out.println(order.getPizzeordinate());
-
-        for (int i=0; i<order.getNumeroPizze(); i++) {
-            nomiLabels.add(i, new Label(order.getPizzeordinate().get(i).getNomeCamel()));
-            ingrLabels.add(i, new Label(order.getPizzeordinate().get(i).getDescrizione()));
-            prezziLabels.add(i, new Label(order.getPizzeordinate().get(i).getPrezzo() + " €"));
-            countPizzeLabels.add(i, new Label());
-            countPizzeLabels.get(i).setText("" + order.getPizzeordinate().get(i).getCount());
-        }
     }
 
     private static GridPane addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {

@@ -60,7 +60,7 @@ public class Order {
         System.out.println("\t> Aggiunte " + num + " pizze " + pizza.getNomeMaiusc());
     }
 
-	public String recapTextual() {
+	String recapTextual() {
 		StringBuilder prodotti = new StringBuilder();
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		for (int i = 0; i < getNumeroPizze(); i++) {
@@ -99,7 +99,7 @@ public class Order {
 				elencate.add(p);
 				for (int j = 0; j < getNumeroPizze(); j++) {
 					if (p.getNomeMaiusc().equals(getPizzeordinate().get(j).getNomeMaiusc()) && p.getIngredienti().equals(getPizzeordinate().get(j).getIngredienti()))
-						num++;
+						num++;		// di quel "tipo di pizza" ce n'è una in più
 				}
 				nomiLabels.add(numTipo, new Label(pizzeordinate.get(i).getNomeCamel()));
 				ingrLabels.add(numTipo, new Label(pizzeordinate.get(i).getDescrizione()));
@@ -117,7 +117,7 @@ public class Order {
 				GridPane.setConstraints(ingrLabels.get(numTipo), 2, numTipo + 1);
 				GridPane.setConstraints(prezziLabels.get(numTipo), 3, numTipo + 1);
 
-				numTipo++;
+				numTipo++;		// ho un "tipo di pizza" in piu
 			}
 		}
 		return gridPane;
@@ -132,7 +132,8 @@ public class Order {
     }
 
     public boolean isCompleto() {
-        return completo;
+		// il server-pizzeria inizia a preparare le pizze solo se l'ordine è completo
+    	return completo;
     }
 
     public void setCompleto() {
@@ -157,10 +158,10 @@ public class Order {
     }
 
     public boolean searchPizza(Pizza pizza){
-        for (int i=0; i<pizzeordinate.size();i++){
-           if(pizzeordinate.get(i)==pizza)
-               return true;
-        }
-    return false;
+		for (Pizza pizza1 : pizzeordinate) {
+			if (pizza1.equals(pizza))
+				return true;
+		}
+		return false;
     }
 }
