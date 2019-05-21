@@ -6,8 +6,8 @@ import javafx.scene.control.Label;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
-public class ButtonAddPizza extends Button {
-	public ButtonAddPizza(Order order, Pizzeria pizzeria, Label countPizza, String pizza){
+class ButtonAddPizza extends Button {
+	ButtonAddPizza(Order order, Pizzeria pizzeria, Label countPizza, String pizza){
 		this.setText("Aggiungi al carrello ✔︎");
 		this.setOnAction(e-> {
 			if (order.getNumeroPizze()<16) {

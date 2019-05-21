@@ -106,7 +106,7 @@ public class OrderPage2 {
 
 	// FIXME DA SISTEMARE getChoice , ora funziona ma poco carino
 
-	public Date getChoice(ChoiceBox<String> choiceBox, Order order) {
+	private Date getChoice(ChoiceBox<String> choiceBox, Order order) {
 		String a = "L'ora scelta è:";
 		Date oraScelta;
 		String orario = choiceBox.getValue();
@@ -125,16 +125,16 @@ public class OrderPage2 {
 		return oraScelta;
 	}
 
-	public String getAddress (TextField aInput) {
+	private String getAddress (TextField aInput) {
 		String a = "";
-		a+=aInput.getText();
+		a += aInput.getText();
 		//System.out.println(a);
 		return a;
 	}
 
-	public String getName (TextField nInput) {
+	private String getName (TextField nInput) {
 		String a = "";
-		a+=nInput.getText();
+		a += nInput.getText();
 		//System.out.println(a);
     	return a;
 	}

@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pizzeria.Order;
+import pizzeria.Pizza;
 import pizzeria.Pizzeria;
 
 import java.util.ArrayList;
@@ -24,8 +25,8 @@ public class OrderPage3 {
         ArrayList<Label> prezziLabels = new ArrayList<>();
         ArrayList<Label> countPizzeLabels = new ArrayList<>();
 
-        riempiLabels(order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels);
-        GridPane gridPane = addEverythingToGridPane(pizzeria, order, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
+        //riempiLabels(order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels);
+        GridPane gridPane = addEverythingToGridPane(order, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
 
         Label yourOrder = new Label("Il tuo ordine:\t\t"+ order.getCodice());
 
@@ -43,7 +44,7 @@ public class OrderPage3 {
 
         Button indietroButton = new Button("← Torna indietro");
         indietroButton.setOnAction(e -> window.setScene(scene3));
-        Button nuovoOrdine=new Button("Conferma e torna al Menu");
+        Button nuovoOrdine=new Button("Conferma e torna al Menu ✔");
         nuovoOrdine.setOnAction(event -> {
         	order.setCompleto();
             MenuPage menuPage = new MenuPage();
@@ -85,35 +86,17 @@ public class OrderPage3 {
         }
     }
 
-    private static GridPane addEverythingToGridPane(Pizzeria pizzeria, Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
+    private static GridPane addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
         HBox totalBox = new HBox();
         Label labelTot = new Label("Totale: ");
         Label label2 = new Label("" + order.getTotaleCosto());
         totalBox.getChildren().addAll(labelTot,label2);
         totalBox.setAlignment(Pos.CENTER);
 
-        GridPane gridPane = new GridPane();
+        GridPane gridPane;
+		gridPane = order.recapGraphic(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
 		gridPane.getChildren().add(totalBox);
-        GridPane.setConstraints(totalBox, 1, order.getNumeroPizze()+2);
-
-        /*for (int i=0; i<order.getNumeroPizze(); i++) {
-            gridPane.getChildren().add(nomiLabels.get(i));
-            gridPane.getChildren().add(ingrLabels.get(i));
-            gridPane.getChildren().add(countPizzeLabels.get(i));
-            gridPane.getChildren().add(prezziLabels.get(i));
-			GridPane.setConstraints(countPizzeLabels.get(i), 0, i + 1);
-			GridPane.setConstraints(nomiLabels.get(i), 1, i + 1);
-			GridPane.setConstraints(ingrLabels.get(i), 2, i + 1);
-			GridPane.setConstraints(prezziLabels.get(i), 3, i + 1);
-		}*/
-
-        // TODO: QUESTE 4 RIGHE: SI PUÒ RIUTILIZZARE IL METODO ORDER.RECAP()
-		// (MA BISOGNA RIVEDERE COME VENGONO AGGIUNTE LE PIZZE ALL'ORDINE QUI)
-        Label tutto = new Label();
-        tutto.setText(order.recap());
-        gridPane.getChildren().add(tutto);
-        GridPane.setConstraints(tutto, 1,2);
-
+        GridPane.setConstraints(totalBox, 1, nomiLabels.size()+2);
 
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setHgap(10);

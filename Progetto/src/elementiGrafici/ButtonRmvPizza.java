@@ -6,8 +6,8 @@ import javafx.scene.control.Label;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
-public class ButtonRmvPizza extends Button {
-	public ButtonRmvPizza(Order order, Pizzeria pizzeria, Label countPizza, String pizza){
+class ButtonRmvPizza extends Button {
+	ButtonRmvPizza(Order order, Pizzeria pizzeria, Label countPizza, String pizza){
 		this.setText("Rimuovi dal carrello ✘");
 		this.setOnAction(e-> {
 			if(order.searchPizza(pizzeria.getMenu().get(pizza))){

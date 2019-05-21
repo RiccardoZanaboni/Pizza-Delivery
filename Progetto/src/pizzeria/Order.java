@@ -1,5 +1,8 @@
 package pizzeria;
 
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,19 +17,19 @@ public class Order {
 
     public Order(int num) {
         this.customer = null;
-        this.codice = "ORD-" + num;
+        this.codice = "WOLF.00" + num;
         this.indirizzo = "";
         this.orario = null;
         this.pizzeordinate = new ArrayList<>();
         this.completo = false;
-        this.countPizzeModificate=0;
+        this.countPizzeModificate = 0;
     }
 
     public int getCountPizzeModificate() {
         return countPizzeModificate;
     }
 
-    public void setCountPizzeModificate() {
+    public void incrementaCountPizzeModificate() {
         this.countPizzeModificate++;
     }
 
@@ -57,26 +60,69 @@ public class Order {
         System.out.println("\t> Aggiunte " + num + " pizze " + pizza.getNomeMaiusc());
     }
 
-    public String recap() {
-        StringBuilder prodotti = new StringBuilder();
-        ArrayList<Pizza> elencate = new ArrayList<>();
-        for (int i = 0; i < getNumeroPizze(); i++) {
+	public String recapTextual() {
+		StringBuilder prodotti = new StringBuilder();
+		ArrayList<Pizza> elencate = new ArrayList<>();
+		for (int i = 0; i < getNumeroPizze(); i++) {
 
-            Pizza p = pizzeordinate.get(i);
+			Pizza p = pizzeordinate.get(i);
+			
+			int num = 0;
+			if (!(elencate.contains(p))) {
+				elencate.add(p);
+				for (int j = 0; j < getNumeroPizze(); j++) {
+					if (p.equals(getPizzeordinate().get(j)))
+						num++;
+				}
+				prodotti.append("\t").append(num).append("\t").append(p.getNomeMaiusc()).append("\t\t").append(p.getDescrizione()).append("\t\t-->\t").append(num * p.getPrezzo()).append("€\n");
+			}
+		}
+		return prodotti.toString();
+	}
 
-            int num = 0;
-            if (!(elencate.contains(p))) {
-                elencate.add(p);
-                for (int j = 0; j < getNumeroPizze(); j++) {
-                    if (p.equals(getPizzeordinate().get(j)))
-                        num++;
-                }
-                prodotti.append("\t").append(num).append("\t").append(p.getNomeMaiusc()).append("\t\t").append(p.getDescrizione()).append("\t\t-->\t").append(num * p.getPrezzo()).append("€\n");
-            }
-        }
-        return prodotti.toString();
+	public GridPane recapGraphic(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
+    	GridPane gridPane = new GridPane();
+		ArrayList<Pizza> elencate = new ArrayList<>();
+		int numTipo = 0;
+		for (int i = 0; i < getNumeroPizze(); i++) {
+			Pizza p = pizzeordinate.get(i);
+			int num = 0;
+
+			boolean contains = false;
+			for (Pizza pizza : elencate) {
+				if (p.getNomeMaiusc().equals(pizza.getNomeMaiusc()) && p.getIngredienti().equals(pizza.getIngredienti())) {
+					contains = true;
+					break;
+				}
+			}
+			if (!contains) {
+				elencate.add(p);
+				for (int j = 0; j < getNumeroPizze(); j++) {
+					if (p.getNomeMaiusc().equals(getPizzeordinate().get(j).getNomeMaiusc()) && p.getIngredienti().equals(getPizzeordinate().get(j).getIngredienti()))
+						num++;
+				}
+				nomiLabels.add(numTipo, new Label(pizzeordinate.get(i).getNomeCamel()));
+				ingrLabels.add(numTipo, new Label(pizzeordinate.get(i).getDescrizione()));
+				prezziLabels.add(numTipo, new Label((pizzeordinate.get(i).getPrezzo()*num + " €")));
+				countPizzeLabels.add(numTipo, new Label());
+				countPizzeLabels.get(numTipo).setText("" + num);
+
+				gridPane.getChildren().add(nomiLabels.get(numTipo));
+				gridPane.getChildren().add(ingrLabels.get(numTipo));
+				gridPane.getChildren().add(countPizzeLabels.get(numTipo));
+				gridPane.getChildren().add(prezziLabels.get(numTipo));
+
+				GridPane.setConstraints(countPizzeLabels.get(numTipo), 0, numTipo + 1);
+				GridPane.setConstraints(nomiLabels.get(numTipo), 1, numTipo + 1);
+				GridPane.setConstraints(ingrLabels.get(numTipo), 2, numTipo + 1);
+				GridPane.setConstraints(prezziLabels.get(numTipo), 3, numTipo + 1);
+
+				numTipo++;
+			}
+		}
+		return gridPane;
     }
-
+	
     public void setCustomer(Customer c) {
         this.customer = c;
     }

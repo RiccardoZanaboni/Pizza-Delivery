@@ -13,7 +13,7 @@ public class ButtonAddRmvIngr extends Button {
 */
 
     private int anInt;
-    public ButtonAddRmvIngr(Ingredienti ingr, Pizza nuovaPizza) {
+    ButtonAddRmvIngr(Ingredienti ingr, Pizza nuovaPizza) {
         this.anInt=0;
         int cr=0;
         if(nuovaPizza.getIngredienti().containsKey(ingr.name()))

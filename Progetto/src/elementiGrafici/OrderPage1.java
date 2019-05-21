@@ -95,7 +95,7 @@ public class OrderPage1 {
         window.show();
     }
 
-    public static Button getIndietroButton() {
+    static Button getIndietroButton() {
         return indietroButton;
     }
 
@@ -164,26 +164,6 @@ public class OrderPage1 {
         //gridPane.getChildren().add(hBoxMod);
         return gridPane;
     }
-
-    /*private static GridPane addEverythingToGridPane(Pizzeria pizzeria, ArrayList<Label> countPizzeLabels, ArrayList<HBox> hBoxPrezzoBottoni, HBox hBoxMod, ArrayList<VBox> vBoxNomeDescr) {
-        GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setHgap(1);
-        gridPane.setVgap(30);
-
-        for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
-            gridPane.getChildren().add(countPizzeLabels.get(i));
-        }
-        gridPane.getChildren().add(countPiz);
-        for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
-            gridPane.getChildren().add(hBoxPrezzoBottoni.get(i));
-        }
-        for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
-            gridPane.getChildren().add(vBoxNomeDescr.get(i));
-        }
-        gridPane.getChildren().add(hBoxMod);
-        return gridPane;
-    }*/
 
     private static Button creaIndietroButton(Pizzeria pizzeria, Order order, Stage window, Scene scene1, ArrayList<ButtonRmvPizza> rmvButtons) {
         indietroButton = new Button("Torna indietro ←");
