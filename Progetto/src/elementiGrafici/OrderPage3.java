@@ -27,7 +27,7 @@ public class OrderPage3 {
         //riempiLabels(order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels);
         GridPane gridPane = addEverythingToGridPane(order, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
 
-        Label yourOrder = new Label("Il tuo ordine:\t\t"+ order.getCodice());
+        Label yourOrder = new Label("Il tuo ordine:\t\t"+ order.getOrderCode());
 
         HBox titleBox = new HBox();
         titleBox.getChildren().add(yourOrder);
@@ -37,23 +37,23 @@ public class OrderPage3 {
 
         VBox recapBox = new VBox(20);
         Label yourNameLabel = new Label("SIG.\t" + order.getCustomer().getUsername());
-        Label yourAddressLabel = new Label("INDIRIZZO:\t" + order.getIndirizzo());
-        Label yourOrderTimeLabel = new Label ("ORARIO:\t" + order.getOrario());
+        Label yourAddressLabel = new Label("INDIRIZZO:\t" + order.getAddress());
+        Label yourOrderTimeLabel = new Label ("ORARIO:\t" + order.getTime());
         recapBox.getChildren().addAll(yourNameLabel, yourAddressLabel, yourOrderTimeLabel);
 
         Button indietroButton = new Button("← Torna indietro");
         indietroButton.setOnAction(e -> window.setScene(scene3));
         Button nuovoOrdine=new Button("Conferma e torna al Menu ✔");
         nuovoOrdine.setOnAction(event -> {
-        	order.setCompleto();
+        	order.setFull();
             MenuPage menuPage = new MenuPage();
-            OrderPage1.getIndietroButton().fire();
+            OrderPage1.getBackButton().fire();
             menuPage.display(window, pizzeria);
         });
 
         Button closeButton = new Button("Conferma ed esci ☓");
         closeButton.setOnAction(e-> {
-        	order.setCompleto();
+        	order.setFull();
         	window.close();
         });
 
@@ -75,12 +75,12 @@ public class OrderPage3 {
     private static GridPane addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
         HBox totalBox = new HBox();
         Label labelTot = new Label("Totale: ");
-        Label label2 = new Label("" + order.getTotaleCosto());
+        Label label2 = new Label("" + order.getTotalPrice());
         totalBox.getChildren().addAll(labelTot,label2);
         totalBox.setAlignment(Pos.CENTER);
 
         GridPane gridPane;
-		gridPane = order.recapGraphic(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
+		gridPane = order.graphRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
 		gridPane.getChildren().add(totalBox);
         GridPane.setConstraints(totalBox, 1, nomiLabels.size()+2);
 

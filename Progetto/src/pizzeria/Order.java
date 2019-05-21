@@ -8,102 +8,101 @@ import java.util.Date;
 
 public class Order {
     private Customer customer;
-    private String codice;
-    private String indirizzo;
-    private Date orario;
-    private ArrayList<Pizza> pizzeordinate;
-    private boolean completo;
-    private int countPizzeModificate;
+    private String orderCode;
+    private String customerAddress;
+    private Date time;
+    private ArrayList<Pizza> orderedPizze;
+    private boolean isFull;
+    private int countModifiedPizze;
 
     public Order(int num) {
         this.customer = null;
-        this.codice = "WOLF.00" + num;
-        this.indirizzo = "";
-        this.orario = null;
-        this.pizzeordinate = new ArrayList<>();
-        this.completo = false;
-        this.countPizzeModificate = 0;
+        this.orderCode = "WOLF.00" + num;
+        this.customerAddress = "";
+        this.time = null;
+        this.orderedPizze = new ArrayList<>();
+        this.isFull = false;
+        this.countModifiedPizze = 0;
     }
 
-    public int getCountPizzeModificate() {
-        return countPizzeModificate;
+    public int getCountModifiedPizze() {
+        return countModifiedPizze;
     }
 
-    public void incrementaCountPizzeModificate() {
-        this.countPizzeModificate++;
+    public void increaseCountModifiedPizze() {
+        this.countModifiedPizze++;
     }
 
     public Customer getCustomer() {
         return customer;
     }
 
-    public String getIndirizzo() {
-        return indirizzo;
+    public String getAddress() {
+        return customerAddress;
     }
 
-    public Date getOrario() {
-        return orario;
+    public Date getTime() {
+        return time;
     }
 
-    public ArrayList<Pizza> getPizzeordinate() {
-        return pizzeordinate;
+    public ArrayList<Pizza> getOrderedPizze() {
+        return orderedPizze;
     }
 
-    public String getCodice() {
-        return codice;
+    public String getOrderCode() {
+        return orderCode;
     }
 
     public void addPizza(Pizza pizza, int num) {
         for (int i = 0; i < num; i++) {
-            pizzeordinate.add(pizza);
+            orderedPizze.add(pizza);
         }
-        System.out.println("\t> Aggiunte " + num + " pizze " + pizza.getNomeMaiusc());
     }
 
-	String recapTextual() {
+	String textRecap() {
 		StringBuilder prodotti = new StringBuilder();
 		ArrayList<Pizza> elencate = new ArrayList<>();
-		for (int i = 0; i < getNumeroPizze(); i++) {
+		for (int i = 0; i < getNumPizze(); i++) {
 
-			Pizza p = pizzeordinate.get(i);
+			Pizza p = orderedPizze.get(i);
 			
 			int num = 0;
 			if (!(elencate.contains(p))) {
 				elencate.add(p);
-				for (int j = 0; j < getNumeroPizze(); j++) {
-					if (p.equals(getPizzeordinate().get(j)))
+				for (int j = 0; j < getNumPizze(); j++) {
+					if (p.equals(getOrderedPizze().get(j)))
 						num++;
 				}
-				prodotti.append("\t").append(num).append("\t").append(p.getNomeMaiusc()).append("\t\t").append(p.getDescrizione()).append("\t\t-->\t").append(num * p.getPrezzo()).append("€\n");
+				prodotti.append("\t").append(num).append("\t").append(p.getMaiuscName()).append("\t\t").append(p.getDescription()).append("\t\t-->\t").append(num * p.getPrice()).append("€\n");
 			}
 		}
 		return prodotti.toString();
 	}
 
-	public GridPane recapGraphic(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
+	public GridPane graphRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
     	GridPane gridPane = new GridPane();
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		int numTipo = 0;
-		for (int i = 0; i < getNumeroPizze(); i++) {
-			Pizza p = pizzeordinate.get(i);
+		for (int i = 0; i < getNumPizze(); i++) {
+			Pizza p = orderedPizze.get(i);
 			int num = 0;
 
 			boolean contains = false;
 			for (Pizza pizza : elencate) {
-				if (p.getNomeMaiusc().equals(pizza.getNomeMaiusc()) && p.getIngredienti().equals(pizza.getIngredienti())) {
+				if (p.getMaiuscName().equals(pizza.getMaiuscName()) && p.getIngredients().equals(pizza.getIngredients())) {
 					contains = true;
 					break;
 				}
 			}
 			if (!contains) {
 				elencate.add(p);
-				for (int j = 0; j < getNumeroPizze(); j++) {
-					if (p.getNomeMaiusc().equals(getPizzeordinate().get(j).getNomeMaiusc()) && p.getIngredienti().equals(getPizzeordinate().get(j).getIngredienti()))
+				for (int j = 0; j < getNumPizze(); j++) {
+					if (p.getMaiuscName().equals(getOrderedPizze().get(j).getMaiuscName()) && p.getIngredients().equals(getOrderedPizze().get(j).getIngredients()))
 						num++;		// di quel "tipo di pizza" ce n'è una in più
 				}
-				nomiLabels.add(numTipo, new Label(pizzeordinate.get(i).getNomeCamel()));
-				ingrLabels.add(numTipo, new Label(pizzeordinate.get(i).getDescrizione()));
-				prezziLabels.add(numTipo, new Label((pizzeordinate.get(i).getPrezzo()*num + " €")));
+				nomiLabels.add(numTipo, new Label(orderedPizze.get(i).getCamelName()));
+				ingrLabels.add(numTipo, new Label(orderedPizze.get(i).getDescription()));
+				prezziLabels.add(numTipo, new Label((orderedPizze.get(i).getPrice()*num + " €")));
 				countPizzeLabels.add(numTipo, new Label());
 				countPizzeLabels.get(numTipo).setText("" + num);
 
@@ -127,38 +126,38 @@ public class Order {
         this.customer = c;
     }
 
-    public void setIndirizzo(String indirizzo) {
-        this.indirizzo = indirizzo;
+    public void setAddress(String indirizzo) {
+        this.customerAddress = indirizzo;
     }
 
-    public boolean isCompleto() {
-		// il server-pizzeria inizia a preparare le pizze solo se l'ordine è completo
-    	return completo;
+    public boolean isFull() {
+		// il server-pizzeria inizia a preparare le pizze solo se l'ordine è isFull
+    	return isFull;
     }
 
-    public void setCompleto() {
-        this.completo = true;
+    public void setFull() {
+        this.isFull = true;
         System.out.println("\nGrazie! L'ordine è stato effettuato correttamente.");
     }
 
-    public void setOrario(Date orario) {
-        this.orario = orario;
+    public void setTime(Date orario) {
+        this.time = orario;
     }
 
-    public int getNumeroPizze() {
-        return pizzeordinate.size();
+    public int getNumPizze() {
+        return orderedPizze.size();
     }
 
-    public double getTotaleCosto() {
+    public double getTotalPrice() {
         double totale = 0;
-        for(int i=0; i<getNumeroPizze(); i++){
-            totale += pizzeordinate.get(i).getPrezzo();
+        for(int i = 0; i< getNumPizze(); i++){
+            totale += orderedPizze.get(i).getPrice();
         }
         return totale;
     }
 
     public boolean searchPizza(Pizza pizza){
-		for (Pizza pizza1 : pizzeordinate) {
+		for (Pizza pizza1 : orderedPizze) {
 			if (pizza1.equals(pizza))
 				return true;
 		}

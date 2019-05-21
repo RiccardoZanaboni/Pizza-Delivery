@@ -10,9 +10,9 @@ class ButtonAddPizza extends Button {
 	ButtonAddPizza(Order order, Pizzeria pizzeria, Label countPizza, String pizza){
 		this.setText("Aggiungi al carrello ✔︎");
 		this.setOnAction(e-> {
-			if (order.getNumeroPizze()<16) {
+			if (order.getNumPizze()<16) {
 				order.addPizza(pizzeria.getMenu().get(pizza), 1);
-				pizzeria.getMenu().get(pizza).setCount();
+				pizzeria.getMenu().get(pizza).increaseCount();
 				countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
 			} else
 				AlertNumPizzeMax.display();

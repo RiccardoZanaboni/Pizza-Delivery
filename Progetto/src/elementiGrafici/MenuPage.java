@@ -43,9 +43,9 @@ public class MenuPage {
         altroButton.prefHeightProperty().bind(window.heightProperty());
 
         makeOrderButton.setOnAction(e -> {
-			pizzeria.ApriPizzeria(8);
-			pizzeria.AddFattorino(new DeliveryMan("Musi",pizzeria));
-			Order order = pizzeria.inizializeNewOrder();
+			pizzeria.OpenPizzeria(8);
+			pizzeria.AddDeliveryMan(new DeliveryMan("Musi",pizzeria));
+			Order order = pizzeria.initializeNewOrder();
 			OrderPage1 orderPage1 = new OrderPage1();
 			orderPage1.display(window, scene1,order,pizzeria);
 		});

@@ -11,8 +11,8 @@ class ButtonRmvPizza extends Button {
 		this.setText("Rimuovi dal carrello ✘");
 		this.setOnAction(e-> {
 			if(order.searchPizza(pizzeria.getMenu().get(pizza))){
-				order.getPizzeordinate().remove(pizzeria.getMenu().get(pizza));
-				pizzeria.getMenu().get(pizza).resetCount();
+				order.getOrderedPizze().remove(pizzeria.getMenu().get(pizza));
+				pizzeria.getMenu().get(pizza).decreaseCount();
 				countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
 			}else
 				AlertNumeroPizzeMin.display(pizza);

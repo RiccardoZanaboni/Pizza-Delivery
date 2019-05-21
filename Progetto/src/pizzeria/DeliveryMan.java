@@ -1,27 +1,27 @@
 package pizzeria;
 
 public class DeliveryMan {
-    private String nome;
-    private CasellaTempoDeliveryMan fattoriniTempi[]; //false=libero?
-    public final int TEMPI_FATTORINI = 6;   // ogni 10 minuti
+    private String name;
+    private TimeBoxDeliveryMan deliveryManTimes[];
+    public final int DELIVERYMAN_TIMES_FOR_HOURS = 6;   // ogni 10 minuti
 
-    public DeliveryMan(String nome, Pizzeria pizzeria) {
-        this.nome = nome;
-        this.fattoriniTempi = new CasellaTempoDeliveryMan[TEMPI_FATTORINI * pizzeria.getOrarioChiusura().getHours() - pizzeria.getOrarioApertura().getHours()];
-        for(int i=0;i<fattoriniTempi.length;i++){
-            fattoriniTempi[i]=new CasellaTempoDeliveryMan();
+    public DeliveryMan(String name, Pizzeria pizzeria) {
+        this.name = name;
+        this.deliveryManTimes = new TimeBoxDeliveryMan[DELIVERYMAN_TIMES_FOR_HOURS * pizzeria.getClosingTime().getHours() - pizzeria.getOpeningTime().getHours()];
+        for(int i = 0; i< deliveryManTimes.length; i++){
+            deliveryManTimes[i]=new TimeBoxDeliveryMan();
         }
     }
 
-    public CasellaTempoDeliveryMan[] getFattoriniTempi() {
-        return fattoriniTempi;
+    public TimeBoxDeliveryMan[] getDeliveryManTimes() {
+        return deliveryManTimes;
     }
 
     public void OccupaFattorino(int i) {
-        this.fattoriniTempi[i].InserisciOrdine();
+        this.deliveryManTimes[i].insertOrder();
     }
 
-    public void setFattoriniTempi(CasellaTempoDeliveryMan[] fattoriniTempi) {
-        this.fattoriniTempi = fattoriniTempi;
+    public void setDeliveryManTimes(TimeBoxDeliveryMan[] deliveryManTimes) {
+        this.deliveryManTimes = deliveryManTimes;
     }
 }

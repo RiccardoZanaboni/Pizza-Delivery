@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public class OrderPage1 {
 
     private static Scene scene2;
-    private static Button avantiButton;
-    private static Button indietroButton;
+    private static Button confirmButton;
+    private static Button backButton;
 
     public void display(Stage window, Scene scene1, Order order, Pizzeria pizzeria) {
 
@@ -39,10 +39,10 @@ public class OrderPage1 {
         int countModifiche = 0;
         countModificheLabel.setText("" + countModifiche);
 
-        riempiLabelsAndButtons(pizzeria, order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels, addButtons, modButtons, rmvButtons, countModificheLabel);
-        riempiVBoxNomeAndIngr(pizzeria, vBoxNomeDescr, nomiLabels, ingrLabels);
-        riempiVBoxBottoni(pizzeria, vBoxBottoni, addButtons, modButtons, rmvButtons);
-        riempiHBoxPrezzoAndBottoni(pizzeria, hBoxPrezzoBottoni, prezziLabels, vBoxBottoni);
+        fillLabelsAndButtons(pizzeria, order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels, addButtons, modButtons, rmvButtons, countModificheLabel);
+        fillVBoxesNomeAndIngr(pizzeria, vBoxNomeDescr, nomiLabels, ingrLabels);
+        fillVBoxesButtons(pizzeria, vBoxBottoni, addButtons, modButtons, rmvButtons);
+        fillHBoxesPrezzoAndBottoni(pizzeria, hBoxPrezzoBottoni, prezziLabels, vBoxBottoni);
 
         //TODO AGGIUNGERE BOTTONE PER POTER TOGLIERE UNA PIZZA MODIFICATA
 
@@ -50,13 +50,13 @@ public class OrderPage1 {
         modifiche.setText("Pizze Modificate");
         HBox hBoxMod = new HBox();
         hBoxMod.getChildren().addAll(countModificheLabel, modifiche);
-        countModificheLabel.setText("" + order.getCountPizzeModificate());
+        countModificheLabel.setText("" + order.getCountModifiedPizze());
 
         OrderPage2 orderPage2 = new OrderPage2();
 
         int tot = 0;
-        avantiButton = creaAvantiButton(window, orderPage2, scene2, order, pizzeria, tot);
-        indietroButton = creaIndietroButton(pizzeria, order, window, scene1, rmvButtons);
+        confirmButton = createConfirmButton(window, orderPage2, scene2, order, pizzeria, tot);
+        backButton = createBackButton(pizzeria, order, window, scene1, rmvButtons);
 
         HBox hBoxIntestazione = new HBox();
         Label labelOrdine = new Label("Ordine");
@@ -64,7 +64,7 @@ public class OrderPage1 {
         hBoxIntestazione.setAlignment(Pos.CENTER);
 
         HBox hBoxAvantiIndietro = new HBox(10);
-        hBoxAvantiIndietro.getChildren().addAll(indietroButton, avantiButton);
+        hBoxAvantiIndietro.getChildren().addAll(backButton, confirmButton);
         hBoxAvantiIndietro.setAlignment(Pos.CENTER);
 
         GridPane gridPane;
@@ -95,40 +95,40 @@ public class OrderPage1 {
         window.show();
     }
 
-    static Button getIndietroButton() {
-        return indietroButton;
+    static Button getBackButton() {
+        return backButton;
     }
 
-    private static void riempiLabelsAndButtons(Pizzeria pizzeria, Order order, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, ArrayList<Label> countPizzeLabels, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons, ArrayList<ButtonRmvPizza> rmvButtons, Label countModificheLabel) {
+    private static void fillLabelsAndButtons(Pizzeria pizzeria, Order order, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, ArrayList<Label> countPizzeLabels, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons, ArrayList<ButtonRmvPizza> rmvButtons, Label countModificheLabel) {
         int i = 0;
         for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
-            nomiLabels.add(i, new Label(pizzaMenu.getNomeCamel()));
-            ingrLabels.add(i, new Label(pizzaMenu.getDescrizione()));
-            prezziLabels.add(i, new Label(pizzaMenu.getPrezzo() + " €"));
+            nomiLabels.add(i, new Label(pizzaMenu.getCamelName()));
+            ingrLabels.add(i, new Label(pizzaMenu.getDescription()));
+            prezziLabels.add(i, new Label(pizzaMenu.getPrice() + " €"));
             countPizzeLabels.add(i, new Label());
-            countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getNomeMaiusc()).getCount());
-            addButtons.add(new ButtonAddPizza(order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getNomeMaiusc()));
-            modButtons.add(new ButtonModPizza(order, pizzeria, pizzaMenu.getNomeMaiusc(), countModificheLabel));
-            rmvButtons.add(new ButtonRmvPizza(order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getNomeMaiusc()));
+            countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getMaiuscName()).getCount());
+            addButtons.add(new ButtonAddPizza(order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
+            modButtons.add(new ButtonModPizza(order, pizzeria, pizzaMenu.getMaiuscName(), countModificheLabel));
+            rmvButtons.add(new ButtonRmvPizza(order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
             i++;
         }
     }
 
-    private static void riempiVBoxBottoni(Pizzeria pizzeria, ArrayList<VBox> vBoxBottoni, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons, ArrayList<ButtonRmvPizza> rmvButtons) {
+    private static void fillVBoxesButtons(Pizzeria pizzeria, ArrayList<VBox> vBoxBottoni, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons, ArrayList<ButtonRmvPizza> rmvButtons) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
             vBoxBottoni.add(new VBox(5));
             vBoxBottoni.get(i).getChildren().addAll(addButtons.get(i), modButtons.get(i), rmvButtons.get(i));
         }
     }
 
-    private static void riempiVBoxNomeAndIngr(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels) {
+    private static void fillVBoxesNomeAndIngr(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
             vBoxNomeDescr.add(new VBox(10));
             vBoxNomeDescr.get(i).getChildren().addAll(nomiLabels.get(i), ingrLabels.get(i));
         }
     }
 
-    private static void riempiHBoxPrezzoAndBottoni(Pizzeria pizzeria, ArrayList<HBox> hBoxPrezzoBottoni, ArrayList<Label> prezziLabels, ArrayList<VBox> vBoxBottoni) {
+    private static void fillHBoxesPrezzoAndBottoni(Pizzeria pizzeria, ArrayList<HBox> hBoxPrezzoBottoni, ArrayList<Label> prezziLabels, ArrayList<VBox> vBoxBottoni) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
             hBoxPrezzoBottoni.add(new HBox(10));
             hBoxPrezzoBottoni.get(i).getChildren().addAll(prezziLabels.get(i), vBoxBottoni.get(i));
@@ -165,31 +165,31 @@ public class OrderPage1 {
         return gridPane;
     }
 
-    private static Button creaIndietroButton(Pizzeria pizzeria, Order order, Stage window, Scene scene1, ArrayList<ButtonRmvPizza> rmvButtons) {
-        indietroButton = new Button("Torna indietro ←");
-        indietroButton.setOnAction(e -> {
+    private static Button createBackButton(Pizzeria pizzeria, Order order, Stage window, Scene scene1, ArrayList<ButtonRmvPizza> rmvButtons) {
+        backButton = new Button("Torna indietro ←");
+        backButton.setOnAction(e -> {
             int i = 0;
             for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
-                rimuoviPizze(rmvButtons.get(i), pizzeria, order, pizzaMenu.getNomeMaiusc());
+                removePizze(rmvButtons.get(i), pizzeria, order, pizzaMenu.getMaiuscName());
                 i++;
             }
             MenuPage menuPage = new MenuPage();
             menuPage.display(window, pizzeria);
         });
-        return indietroButton;
+        return backButton;
     }
 
-    private static Button creaAvantiButton(Stage window, OrderPage2 orderPage2, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
-        avantiButton = new Button("Prosegui  →");
-        avantiButton.setOnAction(e -> {
+    private static Button createConfirmButton(Stage window, OrderPage2 orderPage2, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
+        confirmButton = new Button("Prosegui  →");
+        confirmButton.setOnAction(e -> {
             System.out.println("Sono state ordinate in tutto " + tot + " pizze.");
-            System.out.println(order.getPizzeordinate());
+            System.out.println(order.getOrderedPizze());
             orderPage2.display(window, scene2, order, pizzeria, tot);
         });
-        return avantiButton;
+        return confirmButton;
     }
 
-    private static void rimuoviPizze(ButtonRmvPizza buttonRmvPizza, Pizzeria pizzeria, Order order, String pizza) {
+    private static void removePizze(ButtonRmvPizza buttonRmvPizza, Pizzeria pizzeria, Order order, String pizza) {
         while (order.searchPizza(pizzeria.getMenu().get(pizza))) {
             buttonRmvPizza.fire();
         }

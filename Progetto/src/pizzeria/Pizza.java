@@ -3,75 +3,79 @@ package pizzeria;
 import java.util.HashMap;
 
 public class Pizza {
-    private String nome;
-    private double prezzo;
-    private HashMap <String, Ingredienti> ingredienti;
+    private String name;
+    private double price;
+    private HashMap <String, Ingredients> ingredients;
     private int count=0;
 
-    public Pizza(String nome, HashMap ingred, double prezzo) {
-        this.nome = nome;
-        this.prezzo = prezzo;
-        this.ingredienti = ingred;
+    public Pizza(String name, HashMap<String, Ingredients> ingred, double price) {
+        this.name = name;
+        this.price = price;
+        this.ingredients = ingred;
     }
 
     @Override
     public String toString() {
-        String descrizione = this.getDescrizione();
-        return "- " + nome + "\n\t\tPrezzo: " + prezzo + " €\n\t\tIngredienti: " + descrizione;
+        String descrizione = this.getDescription();
+        return "- " + name + "\n\t\tPrezzo: " + price + " €\n\t\tIngredienti: " + descrizione;
     }
 
-    public String getNomeMaiusc() {
-        return nome;
+    public String getMaiuscName() {
+        return name.toUpperCase();
     }
 
-    public String getNomeCamel() {
-        String nome = this.nome.toUpperCase();
+    public String getCamelName() {
+        String nome = this.name.toUpperCase();
         nome = nome.charAt(0) + nome.substring(1).toLowerCase();
-        if(nome.contains("_"))
-            nome = nome.replaceAll("_"," ");
+        for(int i=1; i<nome.length(); i++){
+            if(nome.substring(i,i+1).equals("_") || nome.substring(i,i+1).equals(" ")){
+                nome = nome.replace(nome.substring(i,i+1)," ");
+                nome = nome.replace(nome.substring(i+1,i+2),nome.substring(i+1,i+2).toUpperCase());
+            }
+        }
         return nome;
     }
 
-    public HashMap<String, Ingredienti> getIngredienti() {
-        return ingredienti;
+    public HashMap<String, Ingredients> getIngredients() {
+        return ingredients;
     }
 
-    public String getDescrizione() {
+    public String getDescription() {
         String descrizione = "";
-        for (Ingredienti ingr: this.ingredienti.values()) {
+        for (Ingredients ingr: this.ingredients.values()) {
             descrizione = descrizione.concat(ingr.name().replace("_"," ") + ", ");
         }
         descrizione = descrizione.toLowerCase().substring(0, descrizione.lastIndexOf(","));
         return descrizione;
     }
 
-    public void addIngredienti(Ingredienti ing){
-        if(!(ingredienti.containsKey(ing.name())))
-            ingredienti.put(ing.name(),ing);
+    public void addIngredients(Ingredients ing){
+        if(!(ingredients.containsKey(ing.name())))
+            ingredients.put(ing.name(),ing);
     }
 
-    public void rmvIngredienti(Ingredienti ing){
-        if(ingredienti.containsKey(ing.name()))
-            ingredienti.remove(ing.name(),ing);
+    public void rmvIngredients(Ingredients ing){
+        if(ingredients.containsKey(ing.name()))
+            ingredients.remove(ing.name(),ing);
     }
 
-    public double getPrezzo() {
-        return prezzo;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPrezzo(double prezzo) {
-        this.prezzo = prezzo;
+    public void setPrice(double prezzo) {
+        this.price = prezzo;
     }
 
     public int getCount() {
         return count;
     }
 
-    public void setCount() {
+    public void increaseCount() {
         this.count++;
     }
 
-    public void resetCount() {
+    public void decreaseCount() {
         this.count--;
     }
 }

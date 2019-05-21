@@ -1,13 +1,9 @@
 package elementiGrafici;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -24,8 +20,8 @@ import java.util.GregorianCalendar;
 
 public class OrderPage2 {
 	private Scene scene3;
-	private String indirizzo, nome;
-	private Date ora;
+	private String address, name;
+	private Date time;
 
 
 	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
@@ -45,32 +41,32 @@ public class OrderPage2 {
 
 		Label choiceLabel = new Label("Scegli l'ora:");
 		ChoiceBox<String> choiceBox = new ChoiceBox<>();
-		choiceBox.getItems().addAll(getOrari(pizzeria, tot));
+		choiceBox.getItems().addAll(getTime(pizzeria, tot));
 		HBox choiceHBox = new HBox(44);
 		choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
 
 		Button nextPageButton = new Button("Prosegui →");
 		nextPageButton.setOnAction(e-> {
-			nome = getName(nameInput);
-			indirizzo = getAddress(addressInput);
-			ora = getChoice(choiceBox);
-			order.setIndirizzo(getAddress(addressInput));
+			name = getName(nameInput);
+			this.address = getAddress(addressInput);
+			time = getChoice(choiceBox);
+			order.setAddress(getAddress(addressInput));
 			Customer customer = new Customer(getName(nameInput));
 			order.setCustomer(customer);
-			order.setOrario(ora);
+			order.setTime(time);
 			OrderPage3 orderPage3 = new OrderPage3();
 			orderPage3.display(window, order, pizzeria, tot, scene3);
 		});
 
-		Button goBackButton = new Button("Torna indietro ←");
-		goBackButton.setOnAction(e -> {
+		Button backButton = new Button("Torna indietro ←");
+		backButton.setOnAction(e -> {
 			OrderPage1 orderPage1 = new OrderPage1();
 			orderPage1.display(window,scene2, order, pizzeria);
 			//window.setScene(scene2);
 		});
 
 		HBox buttonBox = new HBox(10);
-		buttonBox.getChildren().addAll(goBackButton, nextPageButton);
+		buttonBox.getChildren().addAll(backButton, nextPageButton);
 		buttonBox.setAlignment(Pos.CENTER);
 
 		HBox hBoxIntestazione = new HBox();
@@ -101,7 +97,7 @@ public class OrderPage2 {
         window.setScene(scene3);
 	}
 
-	// FIXME DA SISTEMARE getChoice , ora funziona ma poco carino
+	// FIXME DA SISTEMARE getChoice , time funziona ma poco carino
 
 	private Date getChoice(ChoiceBox<String> choiceBox) {
 		Date oraScelta;
@@ -133,9 +129,9 @@ public class OrderPage2 {
     	return a;
 	}
 
-	private ObservableList<String> getOrari (Pizzeria pizzeria, int tot) {
+	private ObservableList<String> getTime(Pizzeria pizzeria, int tot) {
 		ObservableList<String> orari = FXCollections.observableArrayList();
-		orari.addAll(pizzeria.orarioDisponibile(tot));
+		orari.addAll(pizzeria.availableTimes(tot));
 		return orari;
 	}
 }

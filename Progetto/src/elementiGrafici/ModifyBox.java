@@ -5,7 +5,7 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
-import pizzeria.Ingredienti;
+import pizzeria.Ingredients;
 import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
@@ -17,18 +17,18 @@ public class ModifyBox{
 	private static boolean answer = false;
 
 	static void setAnswer() {
-        ModifyBox.answer = !ModifyBox.answer;
+		ModifyBox.answer = !ModifyBox.answer;
     }
 
     public static boolean display(Order order, Pizzeria pizzeria, String pizza) {
 
 		Pizza pizzaMenu = new Pizza(
-				pizzeria.getMenu().get(pizza).getNomeCamel(),
-				pizzeria.getMenu().get(pizza).getIngredienti(),
-				pizzeria.getMenu().get(pizza).getPrezzo());
+				pizzeria.getMenu().get(pizza).getCamelName(),
+				pizzeria.getMenu().get(pizza).getIngredients(),
+				pizzeria.getMenu().get(pizza).getPrice());
 
-		HashMap<String, Ingredienti> ingr = new HashMap<>(pizzaMenu.getIngredienti());
-		Pizza nuovaPizza = new Pizza(pizzaMenu.getNomeMaiusc(), ingr, pizzaMenu.getPrezzo());
+		HashMap<String, Ingredients> ingr = new HashMap<>(pizzaMenu.getIngredients());
+		Pizza nuovaPizza = new Pizza(pizzaMenu.getMaiuscName(), ingr, pizzaMenu.getPrice());
 
 		Stage window = new Stage();
 
@@ -36,8 +36,8 @@ public class ModifyBox{
 		ArrayList<ButtonAddRmvIngr> ingrButtons = new ArrayList<>();
 		ArrayList<HBox> hBoxes = new ArrayList<>();
 
-		riempiLabelsAndButtons(pizzeria, nuovaPizza, ingrLabels, ingrButtons);
-		riempiHBoxes(hBoxes, ingrButtons);
+		fillLabelsAndButtons(pizzeria, nuovaPizza, ingrLabels, ingrButtons);
+		fillHBoxes(hBoxes, ingrButtons);
 		GridPane gridPane = setGridPaneContraints(ingrLabels, hBoxes);
 		gridPane.getColumnConstraints().add(new ColumnConstraints(210));
 		gridPane.getColumnConstraints().add(new ColumnConstraints(70));
@@ -56,7 +56,7 @@ public class ModifyBox{
 
 		// Impedisce di fare azioni sulle altre finestre
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("Modifica la pizza " + nuovaPizza.getNomeCamel());
+		window.setTitle("Modifica la pizza " + nuovaPizza.getMaiuscName());
 		window.setMinWidth(330);
 		window.setMaxWidth(400);
 		window.setMaxHeight(300);
@@ -80,7 +80,7 @@ public class ModifyBox{
 		return gridPane;
 	}
 
-	private static void riempiHBoxes(ArrayList<HBox> hBoxes, ArrayList<ButtonAddRmvIngr> ingrButtons) {
+	private static void fillHBoxes(ArrayList<HBox> hBoxes, ArrayList<ButtonAddRmvIngr> ingrButtons) {
 		for (ButtonAddRmvIngr ingrButton : ingrButtons) {
 			HBox hBox = new HBox(4);
 			hBox.getChildren().add(ingrButton);
@@ -88,9 +88,9 @@ public class ModifyBox{
 		}
 	}
 
-	private static void riempiLabelsAndButtons(Pizzeria pizzeria, Pizza nuovaPizza, ArrayList<Label> ingrLabels, ArrayList<ButtonAddRmvIngr> ingrButtons) {
-		for (Ingredienti ingr : pizzeria.getIngredientiPizzeria().values()) {
-			ingrLabels.add(new Label(ingr.name().toUpperCase()));
+	private static void fillLabelsAndButtons(Pizzeria pizzeria, Pizza nuovaPizza, ArrayList<Label> ingrLabels, ArrayList<ButtonAddRmvIngr> ingrButtons) {
+		for (Ingredients ingr : pizzeria.getIngredientsPizzeria().values()) {
+			ingrLabels.add(new Label(ingr.name().toUpperCase().replace("_"," ")));
 			ingrButtons.add(new ButtonAddRmvIngr(ingr, nuovaPizza));
 		}
 	}

@@ -10,10 +10,10 @@ class ButtonModPizza extends Button {
     ButtonModPizza(Order order, Pizzeria pizzeria,String pizza, Label countModificheLabel){
         this.setText("Modifica");
         this.setOnAction(e-> {
-            if(order.getNumeroPizze()<16) {
+            if(order.getNumPizze()<16) {
                 if (ModifyBox.display(order, pizzeria,pizza)) {
-                    order.incrementaCountPizzeModificate();
-                    countModificheLabel.setText("" + order.getCountPizzeModificate());
+                    order.increaseCountModifiedPizze();
+                    countModificheLabel.setText("" + order.getCountModifiedPizze());
                     ModifyBox.setAnswer();
                 }
             }else
