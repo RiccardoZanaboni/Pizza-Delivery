@@ -269,7 +269,8 @@ public class TextInterface {
                 String ingredienteAggiuntoString = sistemaStringaIngrediente(stAgg);
                 Ingredienti ingredienti = Ingredienti.valueOf(ingredienteAggiuntoString);
                 p.addIngredienti(ingredienti);
-                piu++;
+                if(!pizza.getIngredienti().containsKey(ingredienteAggiuntoString))
+                    piu++;
             } catch (Exception ignored) { }
         }
         StringTokenizer stRmv = new StringTokenizer(rimozioni);
