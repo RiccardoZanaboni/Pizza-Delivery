@@ -1,5 +1,5 @@
 import exceptions.RestartOrderExc;
-import exceptions.RiprovaExc;
+import exceptions.TryAgainExc;
 import pizzeria.*;
 
 import java.text.ParseException;
@@ -80,23 +80,23 @@ public class TextInterface {
                     throw new ArrayIndexOutOfBoundsException();
                 }
                 if (wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(),ora,minuti)].getPostiDisp() + wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(), ora, minuti) -1].getPostiDisp() < tot) {
-                    throw new RiprovaExc();
+                    throw new TryAgainExc();
                 }
                 if(wolf.aFreeDeliveryMan(wolf.getOpeningTime(),ora,minuti,0)==null){
-                    throw new RiprovaExc();
+                    throw new TryAgainExc();
                 }
                 else {
                     order.setTime(d);
                 }
             } else {
-                throw new RiprovaExc();
+                throw new TryAgainExc();
             }
         } catch (RestartOrderExc roe) {
             makeOrderText();
         } catch (ArrayIndexOutOfBoundsException obe) {
             System.out.println("Spiacenti: la pizzeria è chiusa nell'orario inserito. :(");
             d = orderTime(order, tot);
-        } catch (RiprovaExc re) {
+        } catch (TryAgainExc re) {
             System.out.println("Spiacenti: inserito orario non valido. :(");
             d = orderTime(order, tot);
         }
@@ -173,10 +173,10 @@ public class TextInterface {
                 else if (nomePizza.equals("OK"))
                     ok = true;
                 else if (!(wolf.getMenu().containsKey(nomePizza)))
-                    throw new RiprovaExc();
+                    throw new TryAgainExc();
                 else    // pizza inserita correttamente
                     ok = true;
-            } catch (RiprovaExc e) {
+            } catch (TryAgainExc e) {
                 System.out.println("Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:");
             }
         } while (!ok);
@@ -195,7 +195,7 @@ public class TextInterface {
                 if (num <= 0)
                     throw new NumberFormatException();
                 else if (totOrdinate + num > 16)
-                    throw new RiprovaExc();
+                    throw new TryAgainExc();
                 else {
                     ok = true;
                     askModifyPizza(order, nomePizza, num);
@@ -203,7 +203,7 @@ public class TextInterface {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
-            } catch (RiprovaExc e) {
+            } catch (TryAgainExc e) {
                 System.out.println("Spiacenti: massimo numero di pizze superato. Riprovare:");
             }
         } while (!ok);
@@ -258,16 +258,16 @@ public class TextInterface {
     }
 
     private void addPizza(Order order, Pizza pizza, String aggiunte, String rimozioni, int num, double prezzoSupl) {
-        HashMap<String, Ingredients> ingr = new HashMap<>(pizza.getIngredients());
+        HashMap<String, Toppings> ingr = new HashMap<>(pizza.getToppings());
         Pizza p = new Pizza(pizza.getMaiuscName(), ingr, pizza.getPrice());
         int piu=0;
         StringTokenizer stAgg = new StringTokenizer(aggiunte);
         while (stAgg.hasMoreTokens()) {
             try {
                 String ingredienteAggiuntoString = arrangeIngredientString(stAgg);
-                Ingredients ingredients = Ingredients.valueOf(ingredienteAggiuntoString);
-                p.addIngredients(ingredients);
-                if(!pizza.getIngredients().containsKey(ingredienteAggiuntoString))
+                Toppings toppings = Toppings.valueOf(ingredienteAggiuntoString);
+                p.addIngredients(toppings);
+                if(!pizza.getToppings().containsKey(ingredienteAggiuntoString))
                     piu++;
             } catch (Exception ignored) { }
         }
@@ -275,10 +275,10 @@ public class TextInterface {
         while (stRmv.hasMoreTokens()) {
             try {
                 String ingredienteRimossoString = arrangeIngredientString(stRmv);
-                Ingredients ingredients = Ingredients.valueOf(ingredienteRimossoString);
-                if(!pizza.getIngredients().containsKey(ingredienteRimossoString) && p.getIngredients().containsKey(ingredienteRimossoString))
+                Toppings toppings = Toppings.valueOf(ingredienteRimossoString);
+                if(!pizza.getToppings().containsKey(ingredienteRimossoString) && p.getToppings().containsKey(ingredienteRimossoString))
                     piu--;
-                p.rmvIngredients(ingredients);
+                p.rmvIngredients(toppings);
             } catch (Exception ignored) { }
         }
         p.setPrice(p.getPrice() + (piu * prezzoSupl));        // aggiunto 0.50 per ogni ingrediente
@@ -318,8 +318,8 @@ public class TextInterface {
                 break;
             default:
                 try {
-                    throw new RiprovaExc();
-                } catch (RiprovaExc re) {
+                    throw new TryAgainExc();
+                } catch (TryAgainExc re) {
                     System.out.println("Spiacenti: carattere inserito non valido. Riprovare: ");
                     askConfirm(order, orario, tot);
                 }

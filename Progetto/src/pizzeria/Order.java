@@ -15,9 +15,16 @@ public class Order {
     private boolean isFull;
     private int countModifiedPizze;
 
+    /**
+	 * L'ordine è identificato con un orderCode univoco.
+	 * I suoi attributi vengono man mano riempiti, durante l'avanzamento
+	 * delle procedure di ordinazione.
+	 * Viene preso in carico dalla pizzeria solo una volta confermato dal cliente.
+	 * */
+
     public Order(int num) {
         this.customer = null;
-        this.orderCode = "WOLF.00" + num;
+        this.orderCode = "ORD.00" + num;
         this.customerAddress = "";
         this.time = null;
         this.orderedPizze = new ArrayList<>();
@@ -25,40 +32,14 @@ public class Order {
         this.countModifiedPizze = 0;
     }
 
-    public int getCountModifiedPizze() {
-        return countModifiedPizze;
-    }
-
-    public void increaseCountModifiedPizze() {
-        this.countModifiedPizze++;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public String getAddress() {
-        return customerAddress;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public ArrayList<Pizza> getOrderedPizze() {
-        return orderedPizze;
-    }
-
-    public String getOrderCode() {
-        return orderCode;
-    }
-
+    /** aggiunge la pizza all'ordine. */
     public void addPizza(Pizza pizza, int num) {
         for (int i = 0; i < num; i++) {
             orderedPizze.add(pizza);
         }
     }
 
+    /** Restituisce una stringa con i vari prodotti, per il riepilogo. */
 	String textRecap() {
 		StringBuilder prodotti = new StringBuilder();
 		ArrayList<Pizza> elencate = new ArrayList<>();
@@ -79,6 +60,7 @@ public class Order {
 		return prodotti.toString();
 	}
 
+	/** costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
 	public GridPane graphRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
     	GridPane gridPane = new GridPane();
 		ArrayList<Pizza> elencate = new ArrayList<>();
@@ -89,7 +71,7 @@ public class Order {
 
 			boolean contains = false;
 			for (Pizza pizza : elencate) {
-				if (p.getMaiuscName().equals(pizza.getMaiuscName()) && p.getIngredients().equals(pizza.getIngredients())) {
+				if (p.getMaiuscName().equals(pizza.getMaiuscName()) && p.getToppings().equals(pizza.getToppings())) {
 					contains = true;
 					break;
 				}
@@ -97,7 +79,7 @@ public class Order {
 			if (!contains) {
 				elencate.add(p);
 				for (int j = 0; j < getNumPizze(); j++) {
-					if (p.getMaiuscName().equals(getOrderedPizze().get(j).getMaiuscName()) && p.getIngredients().equals(getOrderedPizze().get(j).getIngredients()))
+					if (p.getMaiuscName().equals(getOrderedPizze().get(j).getMaiuscName()) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
 						num++;		// di quel "tipo di pizza" ce n'è una in più
 				}
 				nomiLabels.add(numTipo, new Label(orderedPizze.get(i).getCamelName()));
@@ -121,17 +103,27 @@ public class Order {
 		}
 		return gridPane;
     }
-	
-    public void setCustomer(Customer c) {
-        this.customer = c;
-    }
 
-    public void setAddress(String indirizzo) {
-        this.customerAddress = indirizzo;
-    }
+    /** calcola e restituisce la spesa totale. */
+	public double getTotalPrice() {
+		double totale = 0;
+		for(int i = 0; i< getNumPizze(); i++){
+			totale += orderedPizze.get(i).getPrice();
+		}
+		return totale;
+	}
 
+	/** restituisce true se la pizza specificata è stata ordinata. */
+	public boolean searchPizza(Pizza pizza){
+		for (Pizza pizza1 : orderedPizze) {
+			if (pizza1.equals(pizza))
+				return true;
+		}
+		return false;
+	}
+
+    /** il server-pizzeria inizia a preparare le pizze solo se isFull = true. */
     public boolean isFull() {
-		// il server-pizzeria inizia a preparare le pizze solo se l'ordine è isFull
     	return isFull;
     }
 
@@ -144,23 +136,43 @@ public class Order {
         this.time = orario;
     }
 
-    public int getNumPizze() {
+	public void setCustomer(Customer c) {
+		this.customer = c;
+	}
+
+	public void setAddress(String indirizzo) {
+		this.customerAddress = indirizzo;
+	}
+
+	public int getCountModifiedPizze() {
+		return countModifiedPizze;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public String getAddress() {
+		return customerAddress;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public ArrayList<Pizza> getOrderedPizze() {
+		return orderedPizze;
+	}
+
+	public String getOrderCode() {
+		return orderCode;
+	}
+
+	public int getNumPizze() {
         return orderedPizze.size();
     }
 
-    public double getTotalPrice() {
-        double totale = 0;
-        for(int i = 0; i< getNumPizze(); i++){
-            totale += orderedPizze.get(i).getPrice();
-        }
-        return totale;
-    }
-
-    public boolean searchPizza(Pizza pizza){
-		for (Pizza pizza1 : orderedPizze) {
-			if (pizza1.equals(pizza))
-				return true;
-		}
-		return false;
-    }
+	public void increaseCountModifiedPizze() {
+		this.countModifiedPizze++;
+	}
 }

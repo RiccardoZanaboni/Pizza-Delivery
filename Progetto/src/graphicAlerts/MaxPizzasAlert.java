@@ -1,15 +1,19 @@
-package avvisiGrafici;
+package graphicAlerts;
 
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.geometry.*;
 
-public class AlertNumPizzeMax {
+/**
+ * Risolve, stampando un messaggio in una nuova finestra, la possibilità che l'utente
+ * richieda un numero di pizze complessivo superiore al massimo consentito.
+ */
+
+public class MaxPizzasAlert {
     public static void display() {
         Stage window = new Stage();
-        Label printError = new Label("Numero di pizze massimo raggiunto");
+        Label printError = new Label("Attenzione: numero di pizze massimo raggiunto!");
 
         printError.autosize();
 

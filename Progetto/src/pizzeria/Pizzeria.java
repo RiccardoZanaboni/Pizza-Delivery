@@ -3,7 +3,6 @@ package pizzeria;
 import java.util.*;
 @SuppressWarnings("deprecation")
 
-
 public class Pizzeria {
     private String name;
     private String address;
@@ -12,7 +11,7 @@ public class Pizzeria {
     private Oven[] ovens;
     private ArrayList<DeliveryMan> deliveryMen;
     private HashMap<String, Pizza> menu;
-    private HashMap<String, Ingredients> pizzeriaIngredients;
+    private HashMap<String, Toppings> pizzeriaIngredients;
     private ArrayList<Order> orders;
     private int numDailyOrders;
     private final int OVEN_TIMES_FOR_HOUR = 12;      // ogni 5 minuti
@@ -53,124 +52,124 @@ public class Pizzeria {
     }
 
     private void setIngredientsPizzeria(){
-        this.pizzeriaIngredients.put(Ingredients.ALICI.name(), Ingredients.ALICI);
-        this.pizzeriaIngredients.put(Ingredients.BASILICO.name(), Ingredients.BASILICO);
-        this.pizzeriaIngredients.put(Ingredients.BELLE_DONNE.name(), Ingredients.BELLE_DONNE);
-        this.pizzeriaIngredients.put(Ingredients.CAPPERI.name(), Ingredients.CAPPERI);
-        this.pizzeriaIngredients.put(Ingredients.COTTO.name(), Ingredients.COTTO);
-        this.pizzeriaIngredients.put(Ingredients.CRUDO.name(), Ingredients.CRUDO);
-        this.pizzeriaIngredients.put(Ingredients.FUNGHI.name(), Ingredients.FUNGHI);
-        this.pizzeriaIngredients.put(Ingredients.GALANTERIA.name(), Ingredients.GALANTERIA);
-        this.pizzeriaIngredients.put(Ingredients.GEMME_DELL_INFINITO.name(), Ingredients.GEMME_DELL_INFINITO);
-        this.pizzeriaIngredients.put(Ingredients.MOZZARELLA.name(), Ingredients.MOZZARELLA);
-        this.pizzeriaIngredients.put(Ingredients.MOZZARELLA_DI_BUFALA.name(), Ingredients.MOZZARELLA_DI_BUFALA);
-        this.pizzeriaIngredients.put(Ingredients.OLIVE_NERE.name(), Ingredients.OLIVE_NERE);
-        this.pizzeriaIngredients.put(Ingredients.ONNIPOTENZA.name(), Ingredients.ONNIPOTENZA);
-        this.pizzeriaIngredients.put(Ingredients.ORIGANO.name(), Ingredients.ORIGANO);
-        this.pizzeriaIngredients.put(Ingredients.PATATINE.name(), Ingredients.PATATINE);
-        this.pizzeriaIngredients.put(Ingredients.PEPERONI.name(), Ingredients.PEPERONI);
-        this.pizzeriaIngredients.put(Ingredients.POMODORINI.name(), Ingredients.POMODORINI);
-        this.pizzeriaIngredients.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        this.pizzeriaIngredients.put(Ingredients.RUCOLA.name(), Ingredients.RUCOLA);
-        this.pizzeriaIngredients.put(Ingredients.SALAME_PICCANTE.name(), Ingredients.SALAME_PICCANTE);
-        this.pizzeriaIngredients.put(Ingredients.SALSICCIA.name(), Ingredients.SALSICCIA);
-        this.pizzeriaIngredients.put(Ingredients.WURSTEL.name(), Ingredients.WURSTEL);
+        this.pizzeriaIngredients.put(Toppings.ALICI.name(), Toppings.ALICI);
+        this.pizzeriaIngredients.put(Toppings.BASILICO.name(), Toppings.BASILICO);
+        this.pizzeriaIngredients.put(Toppings.BELLE_DONNE.name(), Toppings.BELLE_DONNE);
+        this.pizzeriaIngredients.put(Toppings.CAPPERI.name(), Toppings.CAPPERI);
+        this.pizzeriaIngredients.put(Toppings.COTTO.name(), Toppings.COTTO);
+        this.pizzeriaIngredients.put(Toppings.CRUDO.name(), Toppings.CRUDO);
+        this.pizzeriaIngredients.put(Toppings.FUNGHI.name(), Toppings.FUNGHI);
+        this.pizzeriaIngredients.put(Toppings.GALANTERIA.name(), Toppings.GALANTERIA);
+        this.pizzeriaIngredients.put(Toppings.GEMME_DELL_INFINITO.name(), Toppings.GEMME_DELL_INFINITO);
+        this.pizzeriaIngredients.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
+        this.pizzeriaIngredients.put(Toppings.MOZZARELLA_DI_BUFALA.name(), Toppings.MOZZARELLA_DI_BUFALA);
+        this.pizzeriaIngredients.put(Toppings.OLIVE_NERE.name(), Toppings.OLIVE_NERE);
+        this.pizzeriaIngredients.put(Toppings.ONNIPOTENZA.name(), Toppings.ONNIPOTENZA);
+        this.pizzeriaIngredients.put(Toppings.ORIGANO.name(), Toppings.ORIGANO);
+        this.pizzeriaIngredients.put(Toppings.PATATINE.name(), Toppings.PATATINE);
+        this.pizzeriaIngredients.put(Toppings.PEPERONI.name(), Toppings.PEPERONI);
+        this.pizzeriaIngredients.put(Toppings.POMODORINI.name(), Toppings.POMODORINI);
+        this.pizzeriaIngredients.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        this.pizzeriaIngredients.put(Toppings.RUCOLA.name(), Toppings.RUCOLA);
+        this.pizzeriaIngredients.put(Toppings.SALAME_PICCANTE.name(), Toppings.SALAME_PICCANTE);
+        this.pizzeriaIngredients.put(Toppings.SALSICCIA.name(), Toppings.SALSICCIA);
+        this.pizzeriaIngredients.put(Toppings.WURSTEL.name(), Toppings.WURSTEL);
     }
 
     public void createMenu(){
-        HashMap<String, Ingredients> i1 = new HashMap <>();
-        i1.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i1.put(Ingredients.ORIGANO.name(), Ingredients.ORIGANO);
+        HashMap<String, Toppings> i1 = new HashMap <>();
+        i1.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i1.put(Toppings.ORIGANO.name(), Toppings.ORIGANO);
         Pizza marinara = new Pizza("MARINARA", i1, 3.5);
         AddPizza(marinara);
 
-        HashMap<String, Ingredients> i2 = new HashMap <>();
-        i2.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i2.put(Ingredients.MOZZARELLA.name(), Ingredients.MOZZARELLA);
+        HashMap<String, Toppings> i2 = new HashMap <>();
+        i2.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i2.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
         Pizza margherita = new Pizza("MARGHERITA", i2, 4.5);
         AddPizza(margherita);
 
-        HashMap<String, Ingredients> i3 = new HashMap <>();
-        i3.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i3.put(Ingredients.MOZZARELLA.name(), Ingredients.MOZZARELLA);
-        i3.put(Ingredients.PATATINE.name(), Ingredients.PATATINE);
+        HashMap<String, Toppings> i3 = new HashMap <>();
+        i3.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i3.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
+        i3.put(Toppings.PATATINE.name(), Toppings.PATATINE);
         Pizza patatine = new Pizza("PATATINE", i3, 5);
         AddPizza(patatine);
 
-        HashMap<String, Ingredients> i4 = new HashMap <>();
-        i4.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i4.put(Ingredients.MOZZARELLA.name(), Ingredients.MOZZARELLA);
-        i4.put(Ingredients.WURSTEL.name(), Ingredients.WURSTEL);
+        HashMap<String, Toppings> i4 = new HashMap <>();
+        i4.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i4.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
+        i4.put(Toppings.WURSTEL.name(), Toppings.WURSTEL);
         Pizza wurstel = new Pizza("WURSTEL", i4, 5);
         AddPizza(wurstel);
 
-        HashMap<String, Ingredients> i5 = new HashMap <>();
-        i5.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i5.put(Ingredients.MOZZARELLA.name(), Ingredients.MOZZARELLA);
-        i5.put(Ingredients.ALICI.name(), Ingredients.ALICI);
+        HashMap<String, Toppings> i5 = new HashMap <>();
+        i5.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i5.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
+        i5.put(Toppings.ALICI.name(), Toppings.ALICI);
         Pizza napoli = new Pizza("NAPOLI", i5, 5);
         AddPizza(napoli);
 
-        HashMap<String, Ingredients> i6 = new HashMap <>();
-        i6.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i6.put(Ingredients.MOZZARELLA.name(), Ingredients.MOZZARELLA);
-        i6.put(Ingredients.COTTO.name(), Ingredients.COTTO);
+        HashMap<String, Toppings> i6 = new HashMap <>();
+        i6.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i6.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
+        i6.put(Toppings.COTTO.name(), Toppings.COTTO);
         Pizza cotto = new Pizza("COTTO", i6, 5);
         AddPizza(cotto);
 
-        HashMap<String, Ingredients> i7 = new HashMap <>();
-        i7.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i7.put(Ingredients.MOZZARELLA.name(), Ingredients.MOZZARELLA);
-        i7.put(Ingredients.COTTO.name(), Ingredients.COTTO);
-        i7.put(Ingredients.FUNGHI.name(), Ingredients.FUNGHI);
+        HashMap<String, Toppings> i7 = new HashMap <>();
+        i7.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i7.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
+        i7.put(Toppings.COTTO.name(), Toppings.COTTO);
+        i7.put(Toppings.FUNGHI.name(), Toppings.FUNGHI);
         Pizza cottoFunghi = new Pizza("COTTO E FUNGHI", i7, 5.5);
         AddPizza(cottoFunghi);
 
-        HashMap<String, Ingredients> i8 = new HashMap <>();
-        i8.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i8.put(Ingredients.MOZZARELLA.name(), Ingredients.MOZZARELLA);
-        i8.put(Ingredients.SALAME_PICCANTE.name(), Ingredients.SALAME_PICCANTE);
+        HashMap<String, Toppings> i8 = new HashMap <>();
+        i8.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i8.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
+        i8.put(Toppings.SALAME_PICCANTE.name(), Toppings.SALAME_PICCANTE);
         Pizza salamePicc = new Pizza("SALAME PICCANTE", i8, 5);
         AddPizza(salamePicc);
 
-        HashMap<String, Ingredients> i9 = new HashMap <>();
-        i9.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i9.put(Ingredients.MOZZARELLA.name(), Ingredients.MOZZARELLA);
-        i9.put(Ingredients.SALSICCIA.name(), Ingredients.SALSICCIA);
-        i9.put(Ingredients.PEPERONI.name(), Ingredients.PEPERONI);
+        HashMap<String, Toppings> i9 = new HashMap <>();
+        i9.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i9.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
+        i9.put(Toppings.SALSICCIA.name(), Toppings.SALSICCIA);
+        i9.put(Toppings.PEPERONI.name(), Toppings.PEPERONI);
         Pizza americana = new Pizza("AMERICANA", i9, 6);
         AddPizza(americana);
 
-        HashMap<String, Ingredients> i10 = new HashMap <>();
-        i10.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i10.put(Ingredients.COTTO.name(), Ingredients.COTTO);
-        i10.put(Ingredients.CARCIOFI.name(), Ingredients.CARCIOFI);
-        i10.put(Ingredients.FUNGHI.name(), Ingredients.FUNGHI);
-        i10.put(Ingredients.OLIVE_NERE.name(), Ingredients.OLIVE_NERE);
+        HashMap<String, Toppings> i10 = new HashMap <>();
+        i10.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i10.put(Toppings.COTTO.name(), Toppings.COTTO);
+        i10.put(Toppings.CARCIOFI.name(), Toppings.CARCIOFI);
+        i10.put(Toppings.FUNGHI.name(), Toppings.FUNGHI);
+        i10.put(Toppings.OLIVE_NERE.name(), Toppings.OLIVE_NERE);
         Pizza capricciosa = new Pizza("CAPRICCIOSA", i10, 6);
         AddPizza(capricciosa);
 
-        HashMap<String, Ingredients> i11 = new HashMap <>();
-        i11.put(Ingredients.POMODORINI.name(), Ingredients.POMODORINI);
-        i11.put(Ingredients.MOZZARELLA_DI_BUFALA.name(), Ingredients.MOZZARELLA_DI_BUFALA);
-        i11.put(Ingredients.RUCOLA.name(), Ingredients.RUCOLA);
+        HashMap<String, Toppings> i11 = new HashMap <>();
+        i11.put(Toppings.POMODORINI.name(), Toppings.POMODORINI);
+        i11.put(Toppings.MOZZARELLA_DI_BUFALA.name(), Toppings.MOZZARELLA_DI_BUFALA);
+        i11.put(Toppings.RUCOLA.name(), Toppings.RUCOLA);
         Pizza italia = new Pizza("ITALIA", i11, 6);
         AddPizza(italia);
 
-        HashMap<String, Ingredients> i12 = new HashMap <>();
-        i12.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i12.put(Ingredients.MOZZARELLA.name(), Ingredients.MOZZARELLA);
-        i12.put(Ingredients.GALANTERIA.name(), Ingredients.GALANTERIA);
-        i12.put(Ingredients.BELLE_DONNE.name(), Ingredients.BELLE_DONNE);
+        HashMap<String, Toppings> i12 = new HashMap <>();
+        i12.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i12.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
+        i12.put(Toppings.GALANTERIA.name(), Toppings.GALANTERIA);
+        i12.put(Toppings.BELLE_DONNE.name(), Toppings.BELLE_DONNE);
         Pizza allaMusi = new Pizza("ALLA MUSI", i12, 8.5);
         AddPizza(allaMusi);
 
-        HashMap<String, Ingredients> i13 = new HashMap <>();
-        i13.put(Ingredients.POMODORO.name(), Ingredients.POMODORO);
-        i13.put(Ingredients.MOZZARELLA_DI_BUFALA.name(), Ingredients.MOZZARELLA_DI_BUFALA);
-        i13.put(Ingredients.GEMME_DELL_INFINITO.name(), Ingredients.GEMME_DELL_INFINITO);
-        i13.put(Ingredients.ONNIPOTENZA.name(), Ingredients.ONNIPOTENZA);
-        i13.put(Ingredients.ORIGANO.name(), Ingredients.ORIGANO);
+        HashMap<String, Toppings> i13 = new HashMap <>();
+        i13.put(Toppings.POMODORO.name(), Toppings.POMODORO);
+        i13.put(Toppings.MOZZARELLA_DI_BUFALA.name(), Toppings.MOZZARELLA_DI_BUFALA);
+        i13.put(Toppings.GEMME_DELL_INFINITO.name(), Toppings.GEMME_DELL_INFINITO);
+        i13.put(Toppings.ONNIPOTENZA.name(), Toppings.ONNIPOTENZA);
+        i13.put(Toppings.ORIGANO.name(), Toppings.ORIGANO);
         Pizza thanos = new Pizza("THANOS", i13, 0.50);
         AddPizza(thanos);
     }
@@ -183,7 +182,7 @@ public class Pizzeria {
         return numDailyOrders;
     }
 
-    public HashMap<String, Ingredients> getIngredientsPizzeria() {
+    public HashMap<String, Toppings> getIngredientsPizzeria() {
         return pizzeriaIngredients;
     }
 
@@ -278,7 +277,7 @@ public class Pizzeria {
         } else{
             ovens[findTimeBoxOven(this.closingTime, d.getHours(), d.getMinutes())].inserisciInfornate(tot);
         }
-        aFreeDeliveryMan(this.closingTime,d.getHours(),d.getMinutes(),0).OccupaFattorino(findTimeBoxDeliveryMan(this.closingTime, d.getHours(), d.getMinutes()));
+        aFreeDeliveryMan(this.closingTime,d.getHours(),d.getMinutes(),0).assignDelivery(findTimeBoxDeliveryMan(this.closingTime, d.getHours(), d.getMinutes()));
         return true;            // ma ritorna sempre true???
     }
 
@@ -301,7 +300,7 @@ public class Pizzeria {
     public String possibleAddictions() {
         StringBuilder possibiliIngr = new StringBuilder("Possibili aggiunte: ");
         int i = 0;
-        for (Ingredients ingr : getIngredientsPizzeria().values()) {
+        for (Toppings ingr : getIngredientsPizzeria().values()) {
             possibiliIngr.append(ingr.name().toLowerCase().replace("_", " ")).append(", ");
             i++;
             if (i % 10 == 0)

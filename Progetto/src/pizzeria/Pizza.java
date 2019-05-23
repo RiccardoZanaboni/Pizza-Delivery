@@ -5,10 +5,10 @@ import java.util.HashMap;
 public class Pizza {
     private String name;
     private double price;
-    private HashMap <String, Ingredients> ingredients;
+    private HashMap <String, Toppings> ingredients;
     private int count=0;
 
-    public Pizza(String name, HashMap<String, Ingredients> ingred, double price) {
+    public Pizza(String name, HashMap<String, Toppings> ingred, double price) {
         this.name = name;
         this.price = price;
         this.ingredients = ingred;
@@ -36,25 +36,25 @@ public class Pizza {
         return nome;
     }
 
-    public HashMap<String, Ingredients> getIngredients() {
+    public HashMap<String, Toppings> getToppings() {
         return ingredients;
     }
 
     public String getDescription() {
         String descrizione = "";
-        for (Ingredients ingr: this.ingredients.values()) {
+        for (Toppings ingr: this.ingredients.values()) {
             descrizione = descrizione.concat(ingr.name().replace("_"," ") + ", ");
         }
         descrizione = descrizione.toLowerCase().substring(0, descrizione.lastIndexOf(","));
         return descrizione;
     }
 
-    public void addIngredients(Ingredients ing){
+    public void addIngredients(Toppings ing){
         if(!(ingredients.containsKey(ing.name())))
             ingredients.put(ing.name(),ing);
     }
 
-    public void rmvIngredients(Ingredients ing){
+    public void rmvIngredients(Toppings ing){
         if(ingredients.containsKey(ing.name()))
             ingredients.remove(ing.name(),ing);
     }

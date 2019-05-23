@@ -1,4 +1,4 @@
-package elementiGrafici;
+package graphicElements;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,6 +10,17 @@ import pizzeria.Order;
 import pizzeria.Pizzeria;
 
 import java.util.ArrayList;
+
+/**
+ * OrderPage3 è la pagina di ordinazione che consente di visualizzare il riepilogo
+ * dei dati inseriti e delle pizze selezionate.
+ *
+ * Vi si accede tramite il bottone "Avanti" in OrderPage2.
+ * Cliccando "Indietro", si torna a OrderPage2.
+ * Cliccando "Conferma e torna alla Home", l'ordine viene inviato alla pizzeria
+ * e si torna alla pagina MenuPage.
+ * Cliccando "Conferma ed esci", l'ordine viene inviato alla pizzeria e l'applicazione viene chiusa.
+ */
 
 public class OrderPage3 {
 
@@ -24,7 +35,6 @@ public class OrderPage3 {
         ArrayList<Label> prezziLabels = new ArrayList<>();
         ArrayList<Label> countPizzeLabels = new ArrayList<>();
 
-        //riempiLabels(order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels);
         GridPane gridPane = addEverythingToGridPane(order, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
 
         Label yourOrder = new Label("Il tuo ordine:\t\t"+ order.getOrderCode());
@@ -43,11 +53,13 @@ public class OrderPage3 {
 
         Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
+        backButton.setOnAction(e ->
+                window.setScene(scene3)
+        );
 
-        backButton.setOnAction(e -> window.setScene(scene3));
-        Button newOrderButton=new Button("Conferma e torna al Menu ✔");
+        Button newOrderButton = new Button("Conferma e torna al Menu ✔");
         newOrderButton.setId("confirmButton");
-        newOrderButton.setOnAction(event -> {
+        newOrderButton.setOnAction(e -> {
         	order.setFull();
             MenuPage menuPage = new MenuPage();
             OrderPage1.getBackButton().fire();
@@ -67,13 +79,12 @@ public class OrderPage3 {
         buttonBox.setMinSize(600, 30);
 
         ScrollPane scrollPane = new ScrollPane(gridPane);
-
         scrollPane.setMinSize(600, 400);
         buttonBox.setMinSize(600, 100);
         layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
         Scene scene4;
         scene4 = new Scene(layout, 600, 800);
-        scene4.getStylesheets().addAll(this.getClass().getResource("ButtonPizza.css").toExternalForm());
+        scene4.getStylesheets().addAll(this.getClass().getResource("buttonsStyle.css").toExternalForm());
         window.setScene(scene4);
     }
 
@@ -88,7 +99,6 @@ public class OrderPage3 {
 		gridPane = order.graphRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
 		gridPane.getChildren().add(totalBox);
         GridPane.setConstraints(totalBox, 1, nomiLabels.size()+2);
-
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setHgap(10);
         gridPane.setVgap(30);

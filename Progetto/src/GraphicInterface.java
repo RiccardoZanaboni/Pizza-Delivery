@@ -1,4 +1,4 @@
-import elementiGrafici.MenuPage;
+import graphicElements.MenuPage;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -24,7 +24,7 @@ public class GraphicInterface extends Application {
 
 		window = primaryStage;
 
-		Image image = new Image("elementiGrafici/wolf_pizza.png");
+		Image image = new Image("graphicElements/wolf_pizza.png");
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(600);
 		imageView.setFitWidth(600);

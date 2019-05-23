@@ -1,4 +1,4 @@
-package elementiGrafici;
+package graphicElements;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,11 +11,16 @@ import pizzeria.DeliveryMan;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
+
+/**
+ * Finestra iniziale che rappresenta la "Home", con le varie possibilità
+ * di utilizzo del programma. Si attiva al "run" di GraphicInterface.
+ */
+
 public class MenuPage {
 	private Scene scene1;
 
 	public void display(Stage window, Pizzeria pizzeria) {
-
 		Label label1 = new Label("Wolf Of Pizza");
 		StackPane stackPane = new StackPane();
 		stackPane.getChildren().add(label1);
@@ -25,24 +30,12 @@ public class MenuPage {
 		spazioPane.setMinSize(600, 150);
 		spazioPane.setId("pane");
 
-		// Definisco i bottoni presenti nella pagina
-
 		// makeNewOrder - login - register - myAccount (bloccato se non loggato)
 
 		Button makeOrderButton = new Button("Nuovo Ordine");
         makeOrderButton.prefWidthProperty().bind(window.widthProperty());
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
-		Button chiSiamoButton = new Button("Chi siamo");
-		chiSiamoButton.prefWidthProperty().bind(window.widthProperty());
-        chiSiamoButton.prefHeightProperty().bind(window.heightProperty());
-        Button recapOrdiniButton = new Button("Riepilogo ordini");
-        recapOrdiniButton.prefWidthProperty().bind(window.widthProperty());
-        recapOrdiniButton.prefHeightProperty().bind(window.heightProperty());
-		Button altroButton = new Button("Altro");
-		altroButton.prefWidthProperty().bind(window.widthProperty());
-        altroButton.prefHeightProperty().bind(window.heightProperty());
-
-        makeOrderButton.setOnAction(e -> {
+		makeOrderButton.setOnAction(e -> {
 			pizzeria.OpenPizzeria(8);
 			pizzeria.AddDeliveryMan(new DeliveryMan("Musi",pizzeria));
 			Order order = pizzeria.initializeNewOrder();
@@ -50,10 +43,21 @@ public class MenuPage {
 			orderPage1.display(window, scene1,order,pizzeria);
 		});
 
+		Button chiSiamoButton = new Button("Chi siamo");
+		chiSiamoButton.prefWidthProperty().bind(window.widthProperty());
+        chiSiamoButton.prefHeightProperty().bind(window.heightProperty());
+
+        Button recapOrdiniButton = new Button("Riepilogo ordini");
+        recapOrdiniButton.prefWidthProperty().bind(window.widthProperty());
+        recapOrdiniButton.prefHeightProperty().bind(window.heightProperty());
+
+        Button altroButton = new Button("Altro");
+		altroButton.prefWidthProperty().bind(window.widthProperty());
+        altroButton.prefHeightProperty().bind(window.heightProperty());
+
 		VBox layout = new VBox();
 		layout.getChildren().addAll(stackPane, spazioPane, makeOrderButton, chiSiamoButton, recapOrdiniButton, altroButton);
 		layout.getStyleClass().add("layout");
-
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
 
@@ -62,7 +66,7 @@ public class MenuPage {
 		//window.setResizable(false);
 		window.setScene(scene1);
 		window.setTitle("Wolf of Pizza");
-		window.getIcons().add(new Image("elementiGrafici/wolf_pizza.png"));
+		window.getIcons().add(new Image("graphicElements/wolf_pizza.png"));
 		window.show();
 	}
 }

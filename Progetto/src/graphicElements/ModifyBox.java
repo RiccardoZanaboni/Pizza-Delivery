@@ -1,13 +1,11 @@
-package elementiGrafici;
+package graphicElements;
 
-import avvisiGrafici.AlertNumPizzeMax;
-import avvisiGrafici.AlertTopping;
+import graphicAlerts.ToppingsAlert;
 import javafx.stage.*;
-import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
-import pizzeria.Ingredients;
+import pizzeria.Toppings;
 import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
@@ -18,36 +16,36 @@ import java.util.HashMap;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class ModifyBox{
-    private static boolean answer = false;
+/**
+ * Finestra che si attiva se viene premuto un qualunque bottone "modifica" in OrderPage1.
+ * Dà all'utente la possibilità di selezionare gli ingredienti desiderati alla propria pizza.
+ * Blocca l'utilizzo della pagina OrderPage1, fino all'attivamento del confirmButton.
+ */
 
-    static void setAnswer() {
-        ModifyBox.answer = !ModifyBox.answer;
-    }
+public class ModifyBox{
+    private static boolean answer = false;  // answer = true se la pizza ha subìto modifiche
 
     public static boolean display(Order order, Pizzeria pizzeria, String pizza) {
-
         Stage window = new Stage();
 
         Pizza pizzaMenu = new Pizza(
                 pizzeria.getMenu().get(pizza).getCamelName(),
-                pizzeria.getMenu().get(pizza).getIngredients(),
-                pizzeria.getMenu().get(pizza).getPrice());
-
-        HashMap<String, Ingredients> ingr = new HashMap<>(pizzaMenu.getIngredients());
+                pizzeria.getMenu().get(pizza).getToppings(),
+                pizzeria.getMenu().get(pizza).getPrice()
+        );
+        HashMap<String, Toppings> ingr = new HashMap<>(pizzaMenu.getToppings());
         Pizza nuovaPizza = new Pizza(pizzaMenu.getMaiuscName(), ingr, pizzaMenu.getPrice());
 
         ArrayList<Label> ingrLabels = new ArrayList<>();
-        ArrayList<ButtonAddRmvIngr> ingrButtons = new ArrayList<>();
-        ArrayList<HBox> hBoxes = new ArrayList<>();
+        //ArrayList<ButtonAddRmvIngr> ingrButtons = new ArrayList<>();
         ArrayList<CheckBoxTopping> checkBoxes = new ArrayList<>();
-
-        fillLabelsAndCheclBoxes(pizzeria, nuovaPizza, ingrLabels, checkBoxes);
+        ArrayList<HBox> hBoxes = new ArrayList<>();
+        fillLabelsAndCheckBoxes(pizzeria, nuovaPizza, ingrLabels, checkBoxes);
         fillHBoxes(hBoxes, checkBoxes);
+
         GridPane gridPane = setGridPaneContraints(ingrLabels, hBoxes);
         gridPane.getColumnConstraints().add(new ColumnConstraints(210));
         gridPane.getColumnConstraints().add(new ColumnConstraints(70));
@@ -56,7 +54,7 @@ public class ModifyBox{
         confirmButton.setOnAction(e -> {
             handleOptions(checkBoxes, nuovaPizza);
             if (!checkCheckBoxTopping(checkBoxes))
-                AlertTopping.display();
+                ToppingsAlert.display();
             else {
                 handleOptions(checkBoxes, nuovaPizza);
                 order.addPizza(nuovaPizza, 1);
@@ -70,19 +68,19 @@ public class ModifyBox{
         layout.getChildren().addAll(scrollPane, confirmButton);
         layout.setAlignment(Pos.CENTER);
 
-        // Impedisce di fare azioni sulle altre finestre
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Modifica la pizza " + nuovaPizza.getMaiuscName());
+        window.initModality(Modality.APPLICATION_MODAL);    // Impedisce di fare azioni sulle altre finestre
+        window.setTitle("Modifica la pizza \"" + nuovaPizza.getCamelName() + "\"");
         window.setMinWidth(330);
         window.setMaxWidth(400);
         window.setMaxHeight(300);
-        // Mostra la finestra e attende di essere chiusa
+
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
         return answer;
     }
 
+    /** riempie il GridPane con tutti gli elementi necessari */
     private static GridPane setGridPaneContraints(ArrayList<Label> ingrLabels, ArrayList<HBox> hBoxes) {
         GridPane gridPane = new GridPane();
         for (int i=0; i<ingrLabels.size(); i++) {
@@ -96,6 +94,7 @@ public class ModifyBox{
         return gridPane;
     }
 
+    /** riempie ogni HBox con il relativo CheckBox */
     private static void fillHBoxes(ArrayList<HBox> hBoxes, ArrayList<CheckBoxTopping> checkBoxToppings) {
         for (CheckBoxTopping checkBoxTopping : checkBoxToppings) {
             HBox hBox = new HBox(4);
@@ -104,45 +103,43 @@ public class ModifyBox{
         }
     }
 
-    private static void fillLabelsAndCheclBoxes(Pizzeria pizzeria, Pizza nuovaPizza, ArrayList<Label> ingrLabels, ArrayList<CheckBoxTopping> checkBoxes) {
-        for (Ingredients ingr : pizzeria.getIngredientsPizzeria().values()) {
+    /** costruisce la lista dei vari Labels, CheckBoxes */
+    private static void fillLabelsAndCheckBoxes(Pizzeria pizzeria, Pizza nuovaPizza, ArrayList<Label> ingrLabels, ArrayList<CheckBoxTopping> checkBoxes) {
+        for (Toppings ingr : pizzeria.getIngredientsPizzeria().values()) {
             ingrLabels.add(new Label(ingr.name().toUpperCase().replace("_"," ")));
             checkBoxes.add(new CheckBoxTopping(ingr, nuovaPizza));
         }
     }
 
-
+    /** setta gli ingredienti come presenti o assenti sulla pizza */
     private static void handleOptions(ArrayList<CheckBoxTopping> checkBoxToppings, Pizza pizza){
-
-        for (int i = 0; i<checkBoxToppings.size(); i++) {
-            if (checkBoxToppings.get(i).isSelected()) {
-                if (!checkBoxToppings.get(i).isB()) {
-                    checkBoxToppings.get(i).setB(true);
+        for (CheckBoxTopping checkBoxTopping : checkBoxToppings) {
+            if (checkBoxTopping.isSelected()) {
+                if (!checkBoxTopping.isPresent()) {
+                    checkBoxTopping.setPresent(true);
                     pizza.setPrice(pizza.getPrice() + 0.50);
-                    pizza.addIngredients(checkBoxToppings.get(i).getIngr());
+                    pizza.addIngredients(checkBoxTopping.getIngr());
                 }
             } else {
-                checkBoxToppings.get(i).setB(false);
-                pizza.rmvIngredients(checkBoxToppings.get(i).getIngr());
+                checkBoxTopping.setPresent(false);
+                pizza.rmvIngredients(checkBoxTopping.getIngr());
             }
         }
     }
 
+    /** controlla che sia stato selezionato almeno un ingrediente per la pizza modificata */
     private static boolean checkCheckBoxTopping (ArrayList<CheckBoxTopping> checkBoxToppings) {
-        boolean b;
-        int m=0;
-        for (int i=0; i<checkBoxToppings.size(); i++) {
-            if (!checkBoxToppings.get(i).isB()) {
-                m++;
+        for (CheckBoxTopping checkBoxTopping : checkBoxToppings) {
+            if (checkBoxTopping.isPresent()) {
+                return true;
             }
         }
-        if (m==checkBoxToppings.size())
-            b=false;
-        else
-            b=true;
-        return b;
+        return false;
     }
 
+	static void setAnswer() {
+		ModifyBox.answer = !ModifyBox.answer;
+	}
 }
 
 

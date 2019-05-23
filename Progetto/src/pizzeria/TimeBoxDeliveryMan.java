@@ -11,7 +11,7 @@ class TimeBoxDeliveryMan {
 
     void insertOrder() {
         this.orders++;
-        if(this.orders ==2)      // un fattorino non può consegnare più di 2 orders per volta
+        if(this.orders == 2)      // un fattorino non può consegnare più di 2 orders per volta
             this.isBusy = true;
     }
 

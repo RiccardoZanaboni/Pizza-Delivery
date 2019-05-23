@@ -1,4 +1,4 @@
-package avvisiGrafici;
+package graphicAlerts;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -6,10 +6,15 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class AlertNumeroPizzeMin {
+/**
+ * Risolve, stampando un messaggio in una nuova finestra, la possibilità che l'utente
+ * richieda di eliminare dall'ordine pizze non presenti nell'ordine stesso.
+ */
+
+public class MinPizzasAlert {
     public static void display(String s) {
         Stage window = new Stage();
-        Label printError = new Label("Non ci sono "+s+" da rimuovere");
+        Label printError = new Label("Attenzione: non ci sono "+s+" da rimuovere!");
 
         printError.autosize();
 

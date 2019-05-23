@@ -1,19 +1,23 @@
-package elementiGrafici;
+package graphicElements;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import pizzeria.Ingredients;
+import pizzeria.Toppings;
 import pizzeria.Pizza;
 
 public class ButtonAddRmvIngr extends Button {
-    /** --> la prima volta che schiacci aggiungi, la seconda rimuovi, la terza aggiungi.. etc
-     * */
-
     private int anInt;
-    ButtonAddRmvIngr(Ingredients ingr, Pizza nuovaPizza) {
+
+    /**
+     * Bottone utile, nell'interfaccia grafica, per modificare la pizza in questione
+     * aggiungendo o rimuovendo l'ingrediente modificato. Setta automaticamente
+     * gli ingredienti già compresi nella versione della pizza presente nel menu.
+     */
+
+    ButtonAddRmvIngr(Toppings ingr, Pizza nuovaPizza) {
         this.anInt=0;
         int cr=0;
-        if(nuovaPizza.getIngredients().containsKey(ingr.name()))
+        if(nuovaPizza.getToppings().containsKey(ingr.name()))
         {
             this.setText("✔");
             cr=7;                            //SE APPARTIENE GIÁ ALLA PIZZA SETTATO A ✔
@@ -33,7 +37,7 @@ public class ButtonAddRmvIngr extends Button {
                 { nuovaPizza.setPrice(nuovaPizza.getPrice() - 0.50);}
                 nuovaPizza.rmvIngredients(ingr);
             }
-            System.out.println(nuovaPizza.getIngredients());
+            System.out.println(nuovaPizza.getToppings());
             System.out.println(ingr.name());
             this.anInt++;
         });

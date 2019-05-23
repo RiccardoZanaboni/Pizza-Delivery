@@ -1,4 +1,4 @@
-package elementiGrafici;
+package graphicElements;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,13 +18,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * OrderPage2 è la pagina di ordinazione che consente di selezionare username,
+ * indirizzo di consegna e orario desiderato (tra quelli disponibili).
+ *
+ * Vi si accede tramite il bottone "Avanti" in OrderPage1 o "Indietro" in OrderPage3.
+ * Cliccando "Indietro", l'inserimento dati nella pagina viene annullato e si torna a OrderPage1.
+ * Cliccando "Avanti", si salvano i dati inseriti e si accede alla pagina OrderPage3.
+ */
+
 public class OrderPage2 {
 	private Scene scene3;
 	private String address, name;
 	private Date time;
 
-
 	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
+
+		// TODO: se torno indietro da qui, non vorrei perdere nome e indirizzo!
+		// (l'ora per forza, perchè potrei cambiare numero di pizze)
+
 		GridPane gridPane = new GridPane();
 
 		Label username = new Label("Username:");
@@ -59,12 +71,11 @@ public class OrderPage2 {
 			orderPage3.display(window, order, pizzeria, tot, scene3);
 		});
 
-		Button backButton = new Button("Torna indietro ←");
+		Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
 			OrderPage1 orderPage1 = new OrderPage1();
-			orderPage1.display(window,scene2, order, pizzeria);
-			//window.setScene(scene2);
+			orderPage1.display(window, scene2, order, pizzeria);
 		});
 
 		HBox buttonBox = new HBox(10);
@@ -96,12 +107,13 @@ public class OrderPage2 {
 		scene3 = new Scene(layout);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
-        scene3.getStylesheets().addAll(this.getClass().getResource("ButtonPizza.css").toExternalForm());
+        scene3.getStylesheets().addAll(this.getClass().getResource("buttonsStyle.css").toExternalForm());
         window.setScene(scene3);
 	}
 
 	// FIXME DA SISTEMARE getChoice , time funziona ma poco carino
 
+	/** legge e restituisce l'orario desiderato */
 	private Date getChoice(ChoiceBox<String> choiceBox) {
 		Date oraScelta;
 		String orario = choiceBox.getValue();
@@ -120,18 +132,21 @@ public class OrderPage2 {
 		return oraScelta;
 	}
 
+	/** legge e restituisce l'indirizzo inserito */
 	private String getAddress (TextField aInput) {
 		String a = "";
 		a += aInput.getText();
 		return a;
 	}
 
+	/** legge e restituisce l'username inserito */
 	private String getName (TextField nInput) {
 		String a = "";
 		a += nInput.getText();
     	return a;
 	}
 
+	/** aggiunge tutti gli orari disponibili alla ObservableList */
 	private ObservableList<String> getTime(Pizzeria pizzeria, int tot) {
 		ObservableList<String> orari = FXCollections.observableArrayList();
 		orari.addAll(pizzeria.availableTimes(tot));

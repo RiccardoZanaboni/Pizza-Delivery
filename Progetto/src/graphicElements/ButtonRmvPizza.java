@@ -1,12 +1,18 @@
-package elementiGrafici;
+package graphicElements;
 
-import avvisiGrafici.AlertNumeroPizzeMin;
+import graphicAlerts.MinPizzasAlert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
 class ButtonRmvPizza extends Button {
+
+	/**
+	 * Bottone utile, nell'interfaccia grafica, per rimuovere dall'ordine
+	 * un'istanza (erroneamente inserita) della pizza in questione.
+	 */
+
 	ButtonRmvPizza(Order order, Pizzeria pizzeria, Label countPizza, String pizza){
 		this.setId("rmvpizza");
 		this.setText("Rimuovi dal carrello ✘");
@@ -16,7 +22,7 @@ class ButtonRmvPizza extends Button {
 				pizzeria.getMenu().get(pizza).decreaseCount();
 				countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
 			}else
-				AlertNumeroPizzeMin.display(pizza);
+				MinPizzasAlert.display(pizza);
 		});
 	}
 

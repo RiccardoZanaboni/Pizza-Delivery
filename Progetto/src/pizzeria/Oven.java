@@ -1,5 +1,10 @@
 package pizzeria;
 
+/**
+ * Ogni istanza di Oven è da considerarsi una infornata, ad un certo orario,
+ * con un dato numero di posti disponibili ed una durata definita in Pizzeria.
+ */
+
 public class Oven {
     private int availablePlaces;
 

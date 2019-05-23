@@ -1,12 +1,18 @@
-package elementiGrafici;
+package graphicElements;
 
-import avvisiGrafici.AlertNumPizzeMax;
+import graphicAlerts.MaxPizzasAlert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
 class ButtonAddPizza extends Button {
+
+	/**
+	 * Bottone utile, nell'interfaccia grafica, per aggiungere all'ordine
+	 * un'istanza della pizza desiderata.
+	 */
+
 	ButtonAddPizza(Order order, Pizzeria pizzeria, Label countPizza, String pizza){
 		this.setId("addpizza");
 		this.setText("Aggiungi al carrello ✔︎");
@@ -16,7 +22,7 @@ class ButtonAddPizza extends Button {
 				pizzeria.getMenu().get(pizza).increaseCount();
 				countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
 			} else
-				AlertNumPizzeMax.display();
+				MaxPizzasAlert.display();
 		});
 	}
 
