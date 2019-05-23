@@ -42,11 +42,11 @@ public class OrderPage3 {
         recapBox.getChildren().addAll(yourNameLabel, yourAddressLabel, yourOrderTimeLabel);
 
         Button backButton = new Button("← Torna indietro");
-        backButton.getStylesheets().addAll(this.getClass().getResource("BackButton.css").toExternalForm());
+        backButton.setId("backButton");
 
         backButton.setOnAction(e -> window.setScene(scene3));
         Button newOrderButton=new Button("Conferma e torna al Menu ✔");
-        newOrderButton.getStylesheets().addAll(this.getClass().getResource("ConfirmButton.css").toExternalForm());
+        newOrderButton.setId("confirmButton");
         newOrderButton.setOnAction(event -> {
         	order.setFull();
             MenuPage menuPage = new MenuPage();
@@ -55,7 +55,7 @@ public class OrderPage3 {
         });
 
         Button closeButton = new Button("Conferma ed esci ☓");
-        closeButton.getStylesheets().addAll(this.getClass().getResource("CloseButton.css").toExternalForm());
+        closeButton.setId("closeButton");
         closeButton.setOnAction(e-> {
         	order.setFull();
         	window.close();
@@ -73,6 +73,7 @@ public class OrderPage3 {
         layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
         Scene scene4;
         scene4 = new Scene(layout, 600, 800);
+        scene4.getStylesheets().addAll(this.getClass().getResource("ButtonPizza.css").toExternalForm());
         window.setScene(scene4);
     }
 

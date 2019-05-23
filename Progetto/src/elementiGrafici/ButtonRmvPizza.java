@@ -8,7 +8,7 @@ import pizzeria.Pizzeria;
 
 class ButtonRmvPizza extends Button {
 	ButtonRmvPizza(Order order, Pizzeria pizzeria, Label countPizza, String pizza){
-		setId("rmvpizza");
+		this.setId("rmvpizza");
 		this.setText("Rimuovi dal carrello ✘");
 		this.setOnAction(e-> {
 			if(order.searchPizza(pizzeria.getMenu().get(pizza))){

@@ -169,7 +169,7 @@ public class OrderPage1 {
 
     private Button createBackButton(Pizzeria pizzeria, Order order, Stage window, Scene scene1, ArrayList<ButtonRmvPizza> rmvButtons) {
         backButton = new Button("Torna indietro ←");
-        backButton.getStylesheets().addAll(this.getClass().getResource("BackButton.css").toExternalForm());
+        backButton.setId("backButton");
         backButton.setOnAction(e -> {
             int i = 0;
             for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
@@ -184,7 +184,7 @@ public class OrderPage1 {
 
     private  Button createConfirmButton(Stage window, OrderPage2 orderPage2, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
         confirmButton = new Button("Prosegui  →");
-        confirmButton.getStylesheets().addAll(this.getClass().getResource("ConfirmButton.css").toExternalForm());
+        confirmButton.setId("confirmButton");
         confirmButton.setOnAction(e -> {
             System.out.println("Sono state ordinate in tutto " + tot + " pizze.");
             System.out.println(order.getOrderedPizze());

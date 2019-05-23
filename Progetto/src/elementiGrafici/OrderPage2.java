@@ -46,7 +46,7 @@ public class OrderPage2 {
 		choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
 
 		Button confirmButton = new Button("Prosegui →");
-		confirmButton.getStylesheets().addAll(this.getClass().getResource("ConfirmButton.css").toExternalForm());
+        confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e-> {
 			name = getName(nameInput);
 			this.address = getAddress(addressInput);
@@ -60,8 +60,8 @@ public class OrderPage2 {
 		});
 
 		Button backButton = new Button("Torna indietro ←");
-		backButton.getStylesheets().addAll(this.getClass().getResource("BackButton.css").toExternalForm());
-		backButton.setOnAction(e -> {
+        backButton.setId("backButton");
+        backButton.setOnAction(e -> {
 			OrderPage1 orderPage1 = new OrderPage1();
 			orderPage1.display(window,scene2, order, pizzeria);
 			//window.setScene(scene2);
@@ -96,6 +96,7 @@ public class OrderPage2 {
 		scene3 = new Scene(layout);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
+        scene3.getStylesheets().addAll(this.getClass().getResource("ButtonPizza.css").toExternalForm());
         window.setScene(scene3);
 	}
 
