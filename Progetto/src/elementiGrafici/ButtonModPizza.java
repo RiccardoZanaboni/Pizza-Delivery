@@ -8,6 +8,7 @@ import pizzeria.Pizzeria;
 
 class ButtonModPizza extends Button {
     ButtonModPizza(Order order, Pizzeria pizzeria,String pizza, Label countModificheLabel){
+        this.getStylesheets().addAll(this.getClass().getResource("ButtonModPizz.css").toExternalForm());
         this.setText("Modifica");
         this.setOnAction(e-> {
             if(order.getNumPizze()<16) {

@@ -1,0 +1,27 @@
+/*https://www.w3schools.com/css/css3_buttons.asp         sito usato per i bottoni*/
+
+.button {
+  -fx-background-color: #4CAF50; /* Green */
+  -fx-border: none;
+  -fx-color: white;
+  -fx-font-size: 12px;
+  -fx-border-radius: 50%;
+  -fx-text-align: center;
+  -fx-text-decoration: none;
+  -fx-display: inline-block;
+  -fx-margin: 4px 2px;
+  -fx-webkit-transition-duration: 0.4s;
+  -fx-transition-duration: 0.4s;
+  -fx-cursor: pointer;
+}
+
+/*.button {
+  -fx-background-color: #555555;
+  -fx-color: black;
+
+}
+
+.button:hover {
+  -fx-background-color: #4CAF50;
+  -fx-color: white;
+}  */

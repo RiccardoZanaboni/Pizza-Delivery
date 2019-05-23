@@ -41,10 +41,13 @@ public class OrderPage3 {
         Label yourOrderTimeLabel = new Label ("ORARIO:\t" + order.getTime());
         recapBox.getChildren().addAll(yourNameLabel, yourAddressLabel, yourOrderTimeLabel);
 
-        Button indietroButton = new Button("← Torna indietro");
-        indietroButton.setOnAction(e -> window.setScene(scene3));
-        Button nuovoOrdine=new Button("Conferma e torna al Menu ✔");
-        nuovoOrdine.setOnAction(event -> {
+        Button backButton = new Button("← Torna indietro");
+        backButton.getStylesheets().addAll(this.getClass().getResource("BackButton.css").toExternalForm());
+
+        backButton.setOnAction(e -> window.setScene(scene3));
+        Button newOrderButton=new Button("Conferma e torna al Menu ✔");
+        newOrderButton.getStylesheets().addAll(this.getClass().getResource("ConfirmButton.css").toExternalForm());
+        newOrderButton.setOnAction(event -> {
         	order.setFull();
             MenuPage menuPage = new MenuPage();
             OrderPage1.getBackButton().fire();
@@ -52,13 +55,14 @@ public class OrderPage3 {
         });
 
         Button closeButton = new Button("Conferma ed esci ☓");
+        closeButton.getStylesheets().addAll(this.getClass().getResource("CloseButton.css").toExternalForm());
         closeButton.setOnAction(e-> {
         	order.setFull();
         	window.close();
         });
 
         HBox buttonBox = new HBox(10);
-        buttonBox.getChildren().addAll(indietroButton, nuovoOrdine,closeButton);
+        buttonBox.getChildren().addAll(backButton, newOrderButton,closeButton);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setMinSize(600, 30);
 
