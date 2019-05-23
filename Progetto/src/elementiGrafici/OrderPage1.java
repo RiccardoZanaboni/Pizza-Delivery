@@ -48,6 +48,7 @@ public class OrderPage1 {
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);
         HBox shoppingCartBox = new HBox(order.getNumPizzeProvvisorie());
+        shoppingCartBox.setId("shoppingCart");
         pizzasInCart.setText(order.getNumPizzeProvvisorie()+"");
         shoppingCartBox.getChildren().addAll(imageView, pizzasInCart);
 
@@ -72,9 +73,10 @@ public class OrderPage1 {
 
 
         HBox hBoxIntestazione = new HBox();
-        Label labelOrdine = new Label("Ordine");
+        Label labelOrdine = new Label("Totali pizze ordinate: ");
         hBoxIntestazione.getChildren().addAll(labelOrdine, shoppingCartBox);
         hBoxIntestazione.setAlignment(Pos.CENTER);
+        hBoxIntestazione.setId("hboxIntestazione");
 
         HBox hBoxAvantiIndietro = new HBox(10);
         hBoxAvantiIndietro.getChildren().addAll(backButton, confirmButton);
@@ -100,6 +102,7 @@ public class OrderPage1 {
         hBox.setAlignment(Pos.CENTER);
 
         VBox layout = new VBox();
+        layout.setId("layout");
         layout.getChildren().addAll(hBoxIntestazione, hBox, hBoxAvantiIndietro);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
@@ -118,9 +121,11 @@ public class OrderPage1 {
         int i = 0;
         for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
             nomiLabels.add(i, new Label(pizzaMenu.getCamelName()));
+            nomiLabels.get(i).setId("nomiLabel");
             ingrLabels.add(i, new Label(pizzaMenu.getDescription()));
             prezziLabels.add(i, new Label(pizzaMenu.getPrice() + " €"));
             countPizzeLabels.add(i, new Label());
+            countPizzeLabels.get(i).setId("countpizzeLabel");
             countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getMaiuscName()).getCount());
             addButtons.add(new ButtonAddPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
             modButtons.add(new ButtonModPizza(pizzasInCart, order, pizzeria, pizzaMenu.getMaiuscName(), countModificheLabel));
