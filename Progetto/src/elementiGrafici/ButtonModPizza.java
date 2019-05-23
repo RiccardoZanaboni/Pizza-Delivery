@@ -7,7 +7,7 @@ import pizzeria.Order;
 import pizzeria.Pizzeria;
 
 class ButtonModPizza extends Button {
-    ButtonModPizza(Order order, Pizzeria pizzeria,String pizza, Label countModificheLabel){
+    ButtonModPizza(Label pizzasInCart, Order order, Pizzeria pizzeria,String pizza, Label countModificheLabel){
         this.setId("modPizza");
         this.setText("Modifica");
         this.setOnAction(e-> {
@@ -16,6 +16,8 @@ class ButtonModPizza extends Button {
                     order.increaseCountModifiedPizze();
                     countModificheLabel.setText("" + order.getCountModifiedPizze());
                     ModifyBox.setAnswer();
+                    order.increaseNumPizzeProvvisorie();
+                    pizzasInCart.setText(order.getNumPizzeProvvisorie()+"");
                 }
             }else
                 AlertNumPizzeMax.display();

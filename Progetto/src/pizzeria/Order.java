@@ -14,6 +14,7 @@ public class Order {
     private ArrayList<Pizza> orderedPizze;
     private boolean isFull;
     private int countModifiedPizze;
+    private int numTemporaryPizze;
 
     public Order(int num) {
         this.customer = null;
@@ -23,6 +24,19 @@ public class Order {
         this.orderedPizze = new ArrayList<>();
         this.isFull = false;
         this.countModifiedPizze = 0;
+        this.numTemporaryPizze = 0;
+    }
+
+    public int getNumPizzeProvvisorie() {
+        return numTemporaryPizze;
+    }
+
+    public void increaseNumPizzeProvvisorie() {
+        this.numTemporaryPizze ++;
+    }
+
+    public void decreaseNumPizzeProvvisorie() {
+        this.numTemporaryPizze --;
     }
 
     public int getCountModifiedPizze() {

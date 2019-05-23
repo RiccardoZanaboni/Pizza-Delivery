@@ -4,6 +4,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
@@ -12,6 +14,7 @@ import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class OrderPage1 {
@@ -39,7 +42,16 @@ public class OrderPage1 {
         int countModifiche = 0;
         countModificheLabel.setText("" + countModifiche);
 
-        fillLabelsAndButtons(pizzeria, order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels, addButtons, modButtons, rmvButtons, countModificheLabel);
+        Label pizzasInCart = new Label();
+        Image image = new Image("/elementiGrafici/shopping_cart.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+        HBox shoppingCartBox = new HBox(order.getNumPizzeProvvisorie());
+        pizzasInCart.setText(order.getNumPizzeProvvisorie()+"");
+        shoppingCartBox.getChildren().addAll(imageView, pizzasInCart);
+
+        fillLabelsAndButtons(pizzasInCart, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels, addButtons, modButtons, rmvButtons, countModificheLabel);
         fillVBoxesNomeAndIngr(pizzeria, vBoxNomeDescr, nomiLabels, ingrLabels);
         fillVBoxesButtons(pizzeria, vBoxBottoni, addButtons, modButtons, rmvButtons);
         fillHBoxesPrezzoAndBottoni(pizzeria, hBoxPrezzoBottoni, prezziLabels, vBoxBottoni);
@@ -58,9 +70,10 @@ public class OrderPage1 {
         confirmButton = createConfirmButton(window, orderPage2, scene2, order, pizzeria, tot);
         backButton = createBackButton(pizzeria, order, window, scene1, rmvButtons);
 
+
         HBox hBoxIntestazione = new HBox();
         Label labelOrdine = new Label("Ordine");
-        hBoxIntestazione.getChildren().add(labelOrdine);
+        hBoxIntestazione.getChildren().addAll(labelOrdine, shoppingCartBox);
         hBoxIntestazione.setAlignment(Pos.CENTER);
 
         HBox hBoxAvantiIndietro = new HBox(10);
@@ -101,7 +114,7 @@ public class OrderPage1 {
         return backButton;
     }
 
-    private static void fillLabelsAndButtons(Pizzeria pizzeria, Order order, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, ArrayList<Label> countPizzeLabels, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons, ArrayList<ButtonRmvPizza> rmvButtons, Label countModificheLabel) {
+    private static void fillLabelsAndButtons(Label pizzasInCart, Pizzeria pizzeria, Order order, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, ArrayList<Label> countPizzeLabels, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons, ArrayList<ButtonRmvPizza> rmvButtons, Label countModificheLabel) {
         int i = 0;
         for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
             nomiLabels.add(i, new Label(pizzaMenu.getCamelName()));
@@ -109,9 +122,9 @@ public class OrderPage1 {
             prezziLabels.add(i, new Label(pizzaMenu.getPrice() + " €"));
             countPizzeLabels.add(i, new Label());
             countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getMaiuscName()).getCount());
-            addButtons.add(new ButtonAddPizza(order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
-            modButtons.add(new ButtonModPizza(order, pizzeria, pizzaMenu.getMaiuscName(), countModificheLabel));
-            rmvButtons.add(new ButtonRmvPizza(order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
+            addButtons.add(new ButtonAddPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
+            modButtons.add(new ButtonModPizza(pizzasInCart, order, pizzeria, pizzaMenu.getMaiuscName(), countModificheLabel));
+            rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
             i++;
         }
     }
@@ -198,5 +211,6 @@ public class OrderPage1 {
             buttonRmvPizza.fire();
         }
     }
+
     // TODO AGGIUNGERE BOTTONE PER POTER TOGLIERE UNA PIZZA MODIFICATA
 }

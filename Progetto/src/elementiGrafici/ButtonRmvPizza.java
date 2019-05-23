@@ -7,7 +7,7 @@ import pizzeria.Order;
 import pizzeria.Pizzeria;
 
 class ButtonRmvPizza extends Button {
-	ButtonRmvPizza(Order order, Pizzeria pizzeria, Label countPizza, String pizza){
+	ButtonRmvPizza(Label pizzasInCart, Order order, Pizzeria pizzeria, Label countPizza, String pizza){
 		this.setId("rmvpizza");
 		this.setText("Rimuovi dal carrello ✘");
 		this.setOnAction(e-> {
@@ -15,6 +15,8 @@ class ButtonRmvPizza extends Button {
 				order.getOrderedPizze().remove(pizzeria.getMenu().get(pizza));
 				pizzeria.getMenu().get(pizza).decreaseCount();
 				countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
+				order.decreaseNumPizzeProvvisorie();
+				pizzasInCart.setText(order.getNumPizzeProvvisorie()+"");
 			}else
 				AlertNumeroPizzeMin.display(pizza);
 		});
