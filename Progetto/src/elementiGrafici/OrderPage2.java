@@ -45,8 +45,9 @@ public class OrderPage2 {
 		HBox choiceHBox = new HBox(44);
 		choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
 
-		Button nextPageButton = new Button("Prosegui →");
-		nextPageButton.setOnAction(e-> {
+		Button confirmButton = new Button("Prosegui →");
+		confirmButton.getStylesheets().addAll(this.getClass().getResource("ConfirmButton.css").toExternalForm());
+		confirmButton.setOnAction(e-> {
 			name = getName(nameInput);
 			this.address = getAddress(addressInput);
 			time = getChoice(choiceBox);
@@ -59,6 +60,7 @@ public class OrderPage2 {
 		});
 
 		Button backButton = new Button("Torna indietro ←");
+		backButton.getStylesheets().addAll(this.getClass().getResource("BackButton.css").toExternalForm());
 		backButton.setOnAction(e -> {
 			OrderPage1 orderPage1 = new OrderPage1();
 			orderPage1.display(window,scene2, order, pizzeria);
@@ -66,7 +68,7 @@ public class OrderPage2 {
 		});
 
 		HBox buttonBox = new HBox(10);
-		buttonBox.getChildren().addAll(backButton, nextPageButton);
+		buttonBox.getChildren().addAll(backButton, confirmButton);
 		buttonBox.setAlignment(Pos.CENTER);
 
 		HBox hBoxIntestazione = new HBox();

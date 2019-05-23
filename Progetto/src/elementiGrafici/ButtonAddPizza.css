@@ -1,4 +1,5 @@
-/*https://www.w3schools.com/css/css3_buttons.asp         sito usato per i bottoni
+/*https://www.w3schools.com/css/css3_buttons.asp         sito usato per i bottoni */
+/*https://encycolorpedia.it                            sito usato per i colori*/
 
 .button {
   -fx-background-color: #4CAF50; /* Green */
@@ -18,7 +19,7 @@
 .button {                            /*colore iniziale del bottone*/
   -fx-background-color: #555555;        /*Black*/
   -fx-color: black;
-  -fx-border: 2px solid #4CAF50;
+
 }
 
 .button:hover {                   /*Effetto di quando ci passi sopra con il puntatore*/

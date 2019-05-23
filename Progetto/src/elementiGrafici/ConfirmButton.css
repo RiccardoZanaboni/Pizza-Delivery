@@ -1,7 +1,7 @@
 /*https://www.w3schools.com/css/css3_buttons.asp         sito usato per i bottoni*/
 
 .button {
-  -fx-background-color: #a52a2a; /* Red */
+  -fx-background-color: #4CAF50; /* Green */
   -fx-border: none;
   -fx-color: white;
   -fx-font-size: 12px;
@@ -15,14 +15,13 @@
   -fx-cursor: pointer;
 }
 
-.button {                    /*colore iniziale del bottone*/
-  -fx-background-color: #555555;    /*Black*/
+/*.button {
+  -fx-background-color: #555555;
   -fx-color: black;
 
 }
 
-.button:hover {            /*Effetto di quando ci passi sopra con il puntatore*/
-  -fx-background-color: #a52a2a;
+.button:hover {
+  -fx-background-color: #4CAF50;
   -fx-color: white;
- /* -fx-box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);*/
-}
+}  */

@@ -18,7 +18,7 @@
 }
 
 .layout{
-    -fx-background-color: linear-gradient(#1e90ff,  #87cefa);
+    -fx-background-color: linear-gradient(#a61022,  #f39f18);
     -fx-background-size: 600 500;
 }
 #pane{
