@@ -14,7 +14,7 @@ class ButtonModPizza extends Button {
      * aggiunta o rimozione di ingredienti, tramite apposito box di modifica.
      */
 
-    ButtonModPizza(Order order, Pizzeria pizzeria,String pizza, Label countModificheLabel){
+    ButtonModPizza(Label pizzasInCart, Order order, Pizzeria pizzeria,String pizza, Label countModificheLabel){
         this.setId("modPizza");
         this.setText("Modifica");
         this.setOnAction(e-> {
@@ -23,6 +23,8 @@ class ButtonModPizza extends Button {
                     order.increaseCountModifiedPizze();
                     countModificheLabel.setText("" + order.getCountModifiedPizze());
                     ModifyBox.setAnswer();
+                    order.increaseNumPizzeProvvisorie();
+                    pizzasInCart.setText(order.getNumPizzeProvvisorie()+"");
                 }
             }else
                 MaxPizzasAlert.display();
