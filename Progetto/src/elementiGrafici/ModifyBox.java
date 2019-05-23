@@ -30,9 +30,7 @@ public class ModifyBox{
     }
 
     public static boolean display(Order order, Pizzeria pizzeria, String pizza) {
-
-		// TODO visualizzare alert se non ci sono selezionati ingredienti
-
+	    
 		Stage window = new Stage();
 
 		Pizza pizzaMenu = new Pizza(
