@@ -51,7 +51,7 @@ public class OrderPage1 {
         countModificheLabel.setText("" + countModifiche);
 
         Label pizzasInCart = new Label();
-        Image image = new Image("/elementiGrafici/shopping_cart.png");
+        Image image = new Image("graphicElements/shopping_cart.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);
@@ -116,7 +116,7 @@ public class OrderPage1 {
         layout.prefHeightProperty().bind(window.heightProperty());
 
         scene2 = new Scene(layout,880,600);
-        scene2.getStylesheets().addAll(this.getClass().getResource("buttonsStyle.css").toExternalForm());
+        scene2.getStylesheets().addAll(this.getClass().getResource("buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
         window.setScene(scene2);
         window.show();
     }
@@ -214,8 +214,8 @@ public class OrderPage1 {
         confirmButton = new Button("Prosegui  →");
         confirmButton.setId("confirmButton");
         confirmButton.setOnAction(e -> {
-            System.out.println("Sono state ordinate in tutto " + tot + " pizze.");
-            System.out.println(order.getOrderedPizze());
+            //System.out.println("Sono state ordinate in tutto " + tot + " pizze.");
+            //System.out.println(order.getOrderedPizze());
             orderPage2.display(window, scene2, order, pizzeria, tot);
         });
         return confirmButton;

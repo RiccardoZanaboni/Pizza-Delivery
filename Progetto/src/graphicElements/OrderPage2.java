@@ -107,7 +107,7 @@ public class OrderPage2 {
 		scene3 = new Scene(layout);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
-        scene3.getStylesheets().addAll(this.getClass().getResource("buttonsStyle.css").toExternalForm());
+        scene3.getStylesheets().addAll(this.getClass().getResource("buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
         window.setScene(scene3);
 	}
 

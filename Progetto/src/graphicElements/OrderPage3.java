@@ -57,7 +57,7 @@ public class OrderPage3 {
                 window.setScene(scene3)
         );
 
-        Button newOrderButton = new Button("Conferma e torna al Menu ✔");
+        Button newOrderButton = new Button("Conferma e torna alla Home ✔");
         newOrderButton.setId("confirmButton");
         newOrderButton.setOnAction(e -> {
         	order.setFull();
@@ -84,7 +84,7 @@ public class OrderPage3 {
         layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
         Scene scene4;
         scene4 = new Scene(layout, 600, 800);
-        scene4.getStylesheets().addAll(this.getClass().getResource("buttonsStyle.css").toExternalForm());
+        scene4.getStylesheets().addAll(this.getClass().getResource("buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
         window.setScene(scene4);
     }
 

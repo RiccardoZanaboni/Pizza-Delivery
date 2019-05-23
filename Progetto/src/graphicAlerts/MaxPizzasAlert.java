@@ -13,7 +13,7 @@ import javafx.scene.control.*;
 public class MaxPizzasAlert {
     public static void display() {
         Stage window = new Stage();
-        Label printError = new Label("Attenzione: numero di pizze massimo raggiunto!");
+        Label printError = new Label("Attenzione: numero massimo di pizze raggiunto!");
 
         printError.autosize();
 
