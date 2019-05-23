@@ -8,7 +8,7 @@ import pizzeria.Pizzeria;
 
 class ButtonAddPizza extends Button {
 	ButtonAddPizza(Order order, Pizzeria pizzeria, Label countPizza, String pizza){
-        this.getStylesheets().addAll(this.getClass().getResource("ButtonAddPizza.css").toExternalForm());
+		setId("addpizza");
 		this.setText("Aggiungi al carrello ✔︎");
 		this.setOnAction(e-> {
 			if (order.getNumPizze()<16) {

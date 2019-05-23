@@ -73,6 +73,7 @@ public class OrderPage1 {
         gridPane.getColumnConstraints().add(new ColumnConstraints(40));
         gridPane.getColumnConstraints().add(new ColumnConstraints(520));
         gridPane.getColumnConstraints().add(new ColumnConstraints(250));
+        gridPane.setId("grid");
 
         // Metto il gridPane con tutte le pizze all'interno di uno ScrollPane
         ScrollPane scroll = new ScrollPane(gridPane);
@@ -91,6 +92,7 @@ public class OrderPage1 {
         layout.prefHeightProperty().bind(window.heightProperty());
 
         scene2 = new Scene(layout,880,600);
+        scene2.getStylesheets().addAll(this.getClass().getResource("ButtonPizza.css").toExternalForm());
         window.setScene(scene2);
         window.show();
     }

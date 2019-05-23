@@ -1,0 +1,33 @@
+/*https://www.w3schools.com/css/css3_buttons.asp         sito usato per i bottoni
+*/
+
+#addpizza {                            /*colore iniziale del bottone*/
+  -fx-background-color: #555555;        /*Black*/
+  -fx-color: black;
+  -fx-border-width: 2px;
+  -fx-border-style: solid;
+  /*-fx-border-color: #4CAF50;*/
+}
+
+#addpizza:hover {                   /*Effetto di quando ci passi sopra con il puntatore*/
+  -fx-background-color: #4CAF50;
+  -fx-color: white;
+}
+
+#rmvpizza {                    /*colore iniziale del bottone*/
+  -fx-background-color: #555555;    /*Black*/
+  -fx-color: black;
+  -fx-border-width: 2px;
+  -fx-border-style: solid;
+  /*-fx-border-color: #f44336;*/
+}
+
+#rmvpizza:hover {            /*Effetto di quando ci passi sopra con il puntatore*/
+  -fx-background-color: #f44336;-fx-background-repeat: stretch;
+  -fx-color: white;
+ /* -fx-box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);*/
+}
+
+#grid{
+    -fx-background-image: url("pizzaiolo.png");
+}
