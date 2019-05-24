@@ -29,7 +29,7 @@ public class Pizzeria {
      * una ArrayList di fattorini e una di ordini del giorno.
      */
 
-    public Pizzeria(String name, String address, Date closingTime, Date openingTime) {
+    public Pizzeria(String name, String address, Date openingTime, Date closingTime) {
         this.menu = new HashMap<>();
         this.pizzeriaIngredients = new HashMap<>();
         this.name = name;
@@ -38,7 +38,7 @@ public class Pizzeria {
         this.address = address;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
-        this.ovens = new Oven[OVEN_TIMES_FOR_HOUR * (openingTime.getHours() - closingTime.getHours())];
+        this.ovens = new Oven[OVEN_TIMES_FOR_HOUR * (closingTime.getHours() - openingTime.getHours())];
         this.deliveryMen = new ArrayList<>();
         setIngredientsPizzeria();
         createMenu();
@@ -59,7 +59,7 @@ public class Pizzeria {
     /** Crea o ripristina il vettore di infornate, ad ogni apertura della pizzeria */
     public void OpenPizzeria(int postidisponibili){
         for(int i = 0; i< ovens.length; i++) {
-            ovens[i]=new Oven(postidisponibili);
+            this.ovens[i] = new Oven(postidisponibili);
         }
     }
 
@@ -260,24 +260,35 @@ public class Pizzeria {
 
     /** Restituisce tutti gli orari in cui la pizzeria potrebbe garantire la consegna di "tot" pizze. */
     public ArrayList<String> availableTimes(int tot){
-        ArrayList<String> disp = new ArrayList<>();
-        for(int i = 1; i<this.ovens.length; i++) {
+        ArrayList<String> available = new ArrayList<>();
+
+        Calendar cal = new GregorianCalendar();
+        int nowHour = cal.get(Calendar.HOUR_OF_DAY);
+        int nowMinutes = cal.get(Calendar.MINUTE);
+
+        int now = 60*nowHour + nowMinutes;
+        int open = 60*openingTime.getHours() + openingTime.getMinutes();
+        int scarto = 0;
+        if(now > open) {
+            scarto = (now-open)/DELIVERYMAN_TIMES_FOR_HOURS;
+        }
+        for(int i = 6+scarto; i<this.ovens.length; i++) {       // considera i tempi minimi di preparazione e consegna
             if (ovens[i].getPostiDisp() + ovens[i-1].getPostiDisp() >= tot) {
                 for(DeliveryMan a:this.deliveryMen){
                     if(!a.getDeliveryManTimes()[i/2].isBusy()){
-                        int oraNew = this.closingTime.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
+                        int oraNew = this.openingTime.getHours() + i/12;   //NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
                         int min = 5 * (i - 12*(i/12));      // divisione senza resto, quindi ha un suo senso
-                        if(min<=5){
-                            disp.add(oraNew + ":0" + min + "  ");
+                        if(min <= 5){
+                            available.add(oraNew + ":0" + min + "  ");
                         } else {
-                            disp.add(oraNew + ":" + min + "  ");
+                            available.add(oraNew + ":" + min + "  ");
                         }
                         break;
                     }
                 }
             }
         }
-        return disp;
+        return available;
     }
 
     /** Controlla che la pizzeria possa garantire la consegna di "tot" pizze all'orario "d",

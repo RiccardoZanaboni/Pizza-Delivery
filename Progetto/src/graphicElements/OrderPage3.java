@@ -60,7 +60,7 @@ public class OrderPage3 {
         Button newOrderButton = new Button("Conferma e torna alla Home ✔");
         newOrderButton.setId("confirmButton");
         newOrderButton.setOnAction(e -> {
-        	order.setFull();
+        	order.confirmAndSetFull();
         	pizzeria.addOrder(order);
             MenuPage menuPage = new MenuPage();
             OrderPage1.getBackButton().fire();
@@ -70,7 +70,7 @@ public class OrderPage3 {
         Button closeButton = new Button("Conferma ed esci ☓");
         closeButton.setId("closeButton");
         closeButton.setOnAction(e-> {
-        	order.setFull();
+        	order.confirmAndSetFull();
         	pizzeria.addOrder(order);
         	window.close();
         });

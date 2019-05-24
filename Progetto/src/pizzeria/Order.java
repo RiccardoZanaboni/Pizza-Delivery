@@ -148,7 +148,7 @@ public class Order {
     	return isFull;
     }
 
-    public void setFull() {
+    public void confirmAndSetFull() {
         this.isFull = true;
         System.out.println("\nGrazie! L'ordine è stato effettuato correttamente.");
         String ore, minuti;

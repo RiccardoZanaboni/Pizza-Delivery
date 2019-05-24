@@ -22,7 +22,9 @@ import java.util.*;
 
 public class TextInterface {
 
-    private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 19, 0), new Date(2019, 0, 31, 23, 0, 0));
+    // FIXME: ma cosa significano i valori di mese e giorno???
+
+    private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 17, 0,0), new Date(2019, 0, 31, 23, 59, 59));
     private Scanner scan = new Scanner(System.in);
 
     private TextInterface() {}
@@ -80,6 +82,9 @@ public class TextInterface {
                 if (!wolf.isOpen(d)) {
                     throw new ArrayIndexOutOfBoundsException();
                 }
+                if (!checkNotTooLate(d)) {
+                    throw new TryAgainExc();
+                }
                 if (wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(),ora,minuti)].getPostiDisp() + wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(), ora, minuti) -1].getPostiDisp() < tot) {
                     throw new TryAgainExc();
                 }
@@ -104,7 +109,7 @@ public class TextInterface {
         return d;
     }
 
-    /** Stampa a video tutti gli orari disponibili per la consegna, e ritorna la stringa inserita dall'utente. */
+    /** Stampa a video tutti gli orari disponibili per la consegna e ritorna la stringa inserita dall'utente. */
     private String insertTime (int tot) {
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)\n\tEcco gli orari disponibili:");
         int c = 0;
@@ -119,8 +124,23 @@ public class TextInterface {
         return scan.nextLine();
     }
 
-    /** La stringa, corrispondente ad un orario valido, viene appositamente trasformata in Date
-     * (viene considerato il giorno corrente). */
+    private boolean checkNotTooLate(Date orarioScelto) {
+        int orderHour = orarioScelto.getHours();
+        int orderMinutes = orarioScelto.getMinutes();
+        Calendar cal = new GregorianCalendar();
+        int nowHour = cal.get(Calendar.HOUR_OF_DAY);
+        int nowMinutes = cal.get(Calendar.MINUTE);
+
+        if(orderHour < nowHour)
+            return false;
+        else if(orderHour == nowHour && orderMinutes < nowMinutes)
+            return false;
+        else
+            return true;
+    }
+
+    /** La stringa, corrispondente ad un orario valido, viene appositamente
+     * trasformata in Date (viene considerato il giorno corrente). */
     private Date stringToDate(String sDate1) {
         Date d;
         Calendar calendar = new GregorianCalendar();
@@ -323,7 +343,7 @@ public class TextInterface {
         switch (risp) {
             case "S":
                 wolf.updateOvenAndDeliveryMan(orario, tot);
-                order.setFull();
+                order.confirmAndSetFull();
                 wolf.addOrder(order);
                 break;
             case "N":

@@ -23,7 +23,7 @@ import java.util.Date;
  */
 
 public class GraphicInterface extends Application {
-	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza","Via Bolzano 10, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
+	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza","Via Bolzano 10, Pavia", new Date(2019,0,1,17,0,0),new Date(2019,0,31,23,59,59));
 	private Stage window;
 	private Scene scene0, scene3;
 
