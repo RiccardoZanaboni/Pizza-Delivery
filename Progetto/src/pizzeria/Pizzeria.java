@@ -229,12 +229,12 @@ public class Pizzeria {
 
     /** Controlla che la pizzeria sia aperta in un determinato orario. */
     public boolean isOpen(Date d){
-        int ora= d.getHours();
-        int minuti= d.getMinutes();
-        return !(ora < this.closingTime.getHours() || ora > this.openingTime.getHours() || (ora == this.openingTime.getHours() && minuti >= this.openingTime.getMinutes()) || (ora == this.closingTime.getHours() && minuti <= this.closingTime.getMinutes()));
+        int ora = d.getHours();
+        int minuti = d.getMinutes();
+        return !(ora < this.openingTime.getHours() || ora > this.closingTime.getHours() || (ora == this.closingTime.getHours() && minuti >= this.closingTime.getMinutes()) || (ora == this.openingTime.getHours() && minuti <= this.openingTime.getMinutes()));
     }
 
-    /** ritorna l'indice della casella temporale (forno) desiderata. */
+    /** ritorna l'indice della casella temporale (forno) desiderata. */		// mancherebbero minuti di apertura
     public int findTimeBoxOven(Date oraApertura, int oraDesiderata, int minutiDesiderati){
         int casellaTempo = this.OVEN_TIMES_FOR_HOUR *(oraDesiderata - oraApertura.getHours());
         casellaTempo += minutiDesiderati/5;

@@ -83,14 +83,14 @@ public class TextInterface {
                     throw new ArrayIndexOutOfBoundsException();
                 }
                 if (!checkNotTooLate(d)) {
-                    throw new TryAgainExc();
+                	throw new TryAgainExc();
                 }
-                if (wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(),ora,minuti)].getPostiDisp() + wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(), ora, minuti) -1].getPostiDisp() < tot) {
+                /*if (wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(),ora,minuti)].getPostiDisp() + wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(), ora, minuti) -1].getPostiDisp() < tot) {
                     throw new TryAgainExc();
-                }
+				}
                 if(wolf.aFreeDeliveryMan(wolf.getOpeningTime(),ora,minuti,0)==null){
                     throw new TryAgainExc();
-                }
+				}*/
                 else {
                     order.setTime(d);
                 }
@@ -100,10 +100,10 @@ public class TextInterface {
         } catch (RestartOrderExc roe) {
             makeOrderText();
         } catch (ArrayIndexOutOfBoundsException obe) {
-            System.out.println("Spiacenti: la pizzeria è chiusa nell'orario inserito. :(");
+            System.out.println("Spiacenti: la pizzeria è chiusa nell'orario inserito. Riprovare: ");
             d = orderTime(order, tot);
         } catch (TryAgainExc re) {
-            System.out.println("Spiacenti: inserito orario non valido. :(");
+            System.out.println("Spiacenti: inserito orario non valido. Riprovare: ");
             d = orderTime(order, tot);
         }
         return d;
@@ -344,6 +344,16 @@ public class TextInterface {
             case "S":
                 wolf.updateOvenAndDeliveryMan(orario, tot);
                 order.confirmAndSetFull();
+				String ore, minuti;
+				if(orario.getHours()<10)
+					ore = "0"+orario.getHours();
+				else
+					ore = String.valueOf(orario.getHours());
+				if(orario.getMinutes()<10)
+					minuti = "0"+orario.getMinutes();
+				else
+					minuti = String.valueOf(orario.getMinutes());
+				System.out.println("\t>> Consegna prevista: " + ore + ":" + minuti + ".");
                 wolf.addOrder(order);
                 break;
             case "N":
