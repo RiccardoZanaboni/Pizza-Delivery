@@ -34,7 +34,7 @@ public class OrderPage2 {
 
 	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
 
-		// TODO: se torno indietro da qui, non vorrei perdere nome e indirizzo!
+		// TODO: se torno indietro da qui, non vorrei perdere nome e indirizzo! Secondo me si :)
 		// (l'ora per forza, perchè potrei cambiare numero di pizze)
 
 		GridPane gridPane = new GridPane();
