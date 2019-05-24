@@ -2,7 +2,7 @@ package pizzeria;
 
 /**
  * Ogni istanza di Oven è da considerarsi una infornata, ad un certo orario,
- * con un dato numero di posti disponibili ed una durata definita in Pizzeria.
+ * con un dato numero di posti disponibili ed una durata definita nella classe Pizzeria.
  */
 
 public class Oven {

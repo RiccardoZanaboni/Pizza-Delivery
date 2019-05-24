@@ -61,6 +61,7 @@ public class OrderPage3 {
         newOrderButton.setId("confirmButton");
         newOrderButton.setOnAction(e -> {
         	order.setFull();
+        	pizzeria.addOrder(order);
             MenuPage menuPage = new MenuPage();
             OrderPage1.getBackButton().fire();
             menuPage.display(window, pizzeria);
@@ -70,6 +71,7 @@ public class OrderPage3 {
         closeButton.setId("closeButton");
         closeButton.setOnAction(e-> {
         	order.setFull();
+        	pizzeria.addOrder(order);
         	window.close();
         });
 

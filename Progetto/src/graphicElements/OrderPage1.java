@@ -33,7 +33,7 @@ public class OrderPage1 {
 
     public void display(Stage window, Scene scene1, Order order, Pizzeria pizzeria) {
 
-        // FIXME SISTEMARE DISTANZA TRA BOTTONI ADD, REMOVE, MODIFICA DI UNA PIZZA E QUELLA SUCCESSIVA
+        // TODO AGGIUNGERE BOTTONE PER POTER TOGLIERE UNA PIZZA MODIFICATA
 
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -60,12 +60,11 @@ public class OrderPage1 {
         pizzasInCart.setText(order.getNumPizzeProvvisorie()+"");
         shoppingCartBox.getChildren().addAll(imageView, pizzasInCart);
 
+        // metodi esterni per non appesantire
         fillLabelsAndButtons(pizzasInCart, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels, addButtons, modButtons, rmvButtons, countModificheLabel);
         fillVBoxesNomeAndIngr(pizzeria, vBoxNomeDescr, nomiLabels, ingrLabels);
         fillVBoxesButtons(pizzeria, vBoxBottoni, addButtons, modButtons, rmvButtons);
         fillHBoxesPrezzoAndBottoni(pizzeria, hBoxPrezzoBottoni, prezziLabels, vBoxBottoni);
-
-        //TODO AGGIUNGERE BOTTONE PER POTER TOGLIERE UNA PIZZA MODIFICATA
 
         Label modifiche = new Label();
         modifiche.setText("Pizze Modificate");
@@ -79,7 +78,6 @@ public class OrderPage1 {
         confirmButton = createConfirmButton(window, orderPage2, scene2, order, pizzeria, tot);
         backButton = createBackButton(pizzeria, order, window, scene1, rmvButtons);
 
-
         HBox hBoxIntestazione = new HBox();
         Label labelOrdine = new Label("Totali pizze ordinate: ");
         hBoxIntestazione.getChildren().addAll(labelOrdine, shoppingCartBox);
@@ -92,19 +90,18 @@ public class OrderPage1 {
 
         GridPane gridPane;
         gridPane = setGridPaneContraints(pizzeria, countPizzeLabels, vBoxNomeDescr, hBoxPrezzoBottoni, countModificheLabel, modifiche);
-        //gridPane = addEverythingToGridPane(pizzeria, countPizzeLabels, hBoxPrezzoBottoni, hBoxMod, vBoxNomeDescr);
         gridPane.getColumnConstraints().add(new ColumnConstraints(40));
         gridPane.getColumnConstraints().add(new ColumnConstraints(520));
         gridPane.getColumnConstraints().add(new ColumnConstraints(250));
         gridPane.setId("grid");
 
-        // Metto il gridPane con tutte le pizze all'interno di uno ScrollPane
+        /* Metto il gridPane con tutte le pizze all'interno di uno ScrollPane */
         ScrollPane scroll = new ScrollPane(gridPane);
         scroll.setFitToHeight(true);
         scroll.setFitToWidth(true);
         scroll.prefWidthProperty().bind(window.widthProperty());
         scroll.prefHeightProperty().bind(window.heightProperty());
-        HBox hBox=new HBox();
+        HBox hBox = new HBox();
         scroll.setPadding(new Insets(10, 1, 5, 10));
         hBox.getChildren().add(scroll);
         hBox.setAlignment(Pos.CENTER);
@@ -232,6 +229,4 @@ public class OrderPage1 {
     static Button getBackButton() {
         return backButton;
     }
-
-    // TODO AGGIUNGERE BOTTONE PER POTER TOGLIERE UNA PIZZA MODIFICATA
 }

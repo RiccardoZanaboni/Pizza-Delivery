@@ -29,7 +29,8 @@ import java.util.GregorianCalendar;
 
 public class OrderPage2 {
 	private Scene scene3;
-	private String address, name;
+	private String address;
+	private String name;
 	private Date time;
 
 	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
@@ -60,9 +61,9 @@ public class OrderPage2 {
 		Button confirmButton = new Button("Prosegui →");
         confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e-> {
-			name = getName(nameInput);
+			this.name = getName(nameInput);
 			this.address = getAddress(addressInput);
-			time = getChoice(choiceBox);
+			this.time = getChoice(choiceBox);
 			order.setAddress(getAddress(addressInput));
 			Customer customer = new Customer(getName(nameInput));
 			order.setCustomer(customer);
@@ -74,6 +75,8 @@ public class OrderPage2 {
 		Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
+			this.name = getName(nameInput);
+			this.address = getAddress(addressInput);
 			OrderPage1 orderPage1 = new OrderPage1();
 			orderPage1.display(window, scene2, order, pizzeria);
 		});

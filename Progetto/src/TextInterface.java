@@ -15,22 +15,22 @@ import java.util.*;
  *  @author  Rossanigo Fabio
  *  @author  Zanaboni Riccardo
  *
+ * Avvia il programma tramite interfaccia testuale.
  */
 
 @SuppressWarnings("deprecation")
 
 public class TextInterface {
 
-    private Pizzeria wolf;
+    private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 19, 0), new Date(2019, 0, 31, 23, 0, 0));
     private Scanner scan = new Scanner(System.in);
 
-    private TextInterface() {
-        wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 19, 0), new Date(2019, 0, 31, 23, 0, 0));
-    }
+    private TextInterface() {}
 
+    /** Effettua tutte le operazioni necessarie ad effettuare un nuovo ordine.
+     * Utilizzo la sigla-chiave "OK" una volta terminata la scelta delle pizze, per continuare.
+     * Utilizzo ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio. */
     private void makeOrderText() {
-        System.out.println(wolf.helloThere());
-        System.out.println(wolf.printMenu());
         Order order = wolf.initializeNewOrder();
         int num;
         String nomePizza;
@@ -55,15 +55,16 @@ public class TextInterface {
             orario = orderTime(order, tot);
             System.out.println(orario);
             if (insertNameAndAddress(order)) {
-                wolf.recapOrder(order);
+                order.recapOrder();
                 askConfirm(order, orario, tot);
-                //System.out.println("Riga in più");
             }
         } catch (RestartOrderExc e) {
             makeOrderText();
         }
     }
 
+    /** Esegue i controlli dovuti sulla stringa relativa all'orario e,
+     * in caso di successo, restituisce il Date "orarioScelto". */
     private Date orderTime(Order order, int tot) {
         String orarioScelto = insertTime(tot);
         Date d = null;
@@ -103,6 +104,7 @@ public class TextInterface {
         return d;
     }
 
+    /** Stampa a video tutti gli orari disponibili per la consegna, e ritorna la stringa inserita dall'utente. */
     private String insertTime (int tot) {
         System.out.println("A che ora vuoi ricevere la consegna? [formato HH:mm]\t\t(Inserisci 'F' per annullare e ricominciare)\n\tEcco gli orari disponibili:");
         int c = 0;
@@ -117,6 +119,8 @@ public class TextInterface {
         return scan.nextLine();
     }
 
+    /** La stringa, corrispondente ad un orario valido, viene appositamente trasformata in Date
+     * (viene considerato il giorno corrente). */
     private Date stringToDate(String sDate1) {
         Date d;
         Calendar calendar = new GregorianCalendar();
@@ -133,6 +137,7 @@ public class TextInterface {
         return d;
     }
 
+    /** Controlla che la String inserita corrisponda ad un orario valido, nel formato [HH:mm]. */
     private boolean checkValidTime(String sDate1) {
         try {
             StringTokenizer st = new StringTokenizer(sDate1, ":");
@@ -153,6 +158,9 @@ public class TextInterface {
         return true;
     }
 
+    /** Restituisce il nome della pizza desiderata, dopo avere effettuato i dovuti controlli:
+     * - che non sia stato inserito "OK" oppure "F";
+     * - che la stringa inserita corrisponda ad una pizza valida. */
     private String whichPizza(boolean isPrimaRichiesta) throws RestartOrderExc {
         String nomePizza;
         boolean ok = false;
@@ -183,6 +191,9 @@ public class TextInterface {
         return nomePizza;
     }
 
+    /** Ritorna il numero desiderato della pizza specifica richiesta.
+     * Il numero di pizze complessivamente ordinate non deve superare
+     * il valore massimo consentito. */
     private int howManySpecificPizza(Order order, String nomePizza) {
         boolean ok = false;
         int num = 0;
@@ -199,7 +210,6 @@ public class TextInterface {
                 else {
                     ok = true;
                     askModifyPizza(order, nomePizza, num);
-
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Spiacenti: inserito numero non valido. Riprovare:");
@@ -210,6 +220,8 @@ public class TextInterface {
         return num;
     }
 
+    /** Gestisce la possibilità che la pizza desiderata necessiti di aggiunte o rimozioni
+     * di ingredienti, rispetto ad una specifica presente sul menu. */
     private void askModifyPizza(Order order, String nomePizza, int num) {
         System.out.println("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?\t(S/N):");
         String answer = scan.nextLine().toUpperCase();
@@ -233,6 +245,7 @@ public class TextInterface {
         }
     }
 
+    /** Gestisce l'inserimento del nome del cliente e dell'indirizzo di spedizione. */
     private boolean insertNameAndAddress(Order order) {
         boolean ok = true;
         try {
@@ -257,6 +270,8 @@ public class TextInterface {
         return ok;
     }
 
+    /** Aggiunge la pizza all'Order, nella quantità inserita.
+     * Effettua, nel caso, tutte le modifiche richieste, aggiornando il prezzo. */
     private void addPizza(Order order, Pizza pizza, String aggiunte, String rimozioni, int num, double prezzoSupl) {
         HashMap<String, Toppings> ingr = new HashMap<>(pizza.getToppings());
         Pizza p = new Pizza(pizza.getMaiuscName(), ingr, pizza.getPrice());
@@ -288,6 +303,7 @@ public class TextInterface {
         System.out.println("\t> Aggiunte " + num + " pizze " + p.getMaiuscName() + " (" + p.getDescription() + ").");
     }
 
+    /** Gestisce eventuali errori di inserimento da tastiera (spazi/virgole) degli ingredienti. */
     private String arrangeIngredientString(StringTokenizer st){
         String ingred = st.nextToken(",");
         if(ingred.startsWith(" "))
@@ -299,12 +315,14 @@ public class TextInterface {
         return ingred;
     }
 
+    /** Chiede conferma dell'ordine e lo salva tra quelli completati
+     * (pronti all'evasione), aggiornando il vettore orario del forno e del fattorino. */
     private void askConfirm(Order order, Date orario, int tot) {
         System.out.println("Confermi l'ordine? Premere 'S' per confermare, 'N' per annullare: ");
         String risp = scan.nextLine().toUpperCase();
         switch (risp) {
             case "S":
-                wolf.checkOvenAndDeliveryMan(orario, tot);
+                wolf.updateOvenAndDeliveryMan(orario, tot);
                 order.setFull();
                 wolf.addOrder(order);
                 break;
@@ -329,6 +347,8 @@ public class TextInterface {
 
     public static void main(String[] args) {
         TextInterface textInterface = new TextInterface();
+        System.out.println(textInterface.wolf.helloThere());
+        System.out.println(textInterface.wolf.printMenu());
         textInterface.wolf.OpenPizzeria(8);     // ma è qui che va creata la pizzeria? Bho non lo so
         textInterface.wolf.AddDeliveryMan(new DeliveryMan("Musi", textInterface.wolf));
         //textInterface.wolf.AddDeliveryMan(new pizzeria.DeliveryMan("Zanzatroni",textInterface.wolf));

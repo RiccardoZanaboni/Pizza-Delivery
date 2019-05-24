@@ -10,14 +10,26 @@ import javafx.util.Duration;
 import pizzeria.Pizzeria;
 import java.util.Date;
 
-// TODO MIGLIORARE GRAFICA CON COLORI E IMMAGINI
+/**
+ * * @authors: Javengers, 2019
+ *
+ *  @author  Fecchio Andrea
+ *  @author  Gobbo Matteo
+ *  @author  Musitano Francesco
+ *  @author  Rossanigo Fabio
+ *  @author  Zanaboni Riccardo
+ *
+ * Avvia il programma tramite interfaccia grafica.
+ */
 
 public class GraphicInterface extends Application {
 	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza","Via Bolzano 10, Pavia", new Date(2019,0,1,19,0),new Date(2019,0,31,23,0,0));
 	private Stage window;
 	private Scene scene0, scene3;
 
-	public static void main(String[] args) { launch(args); }
+	public static void main(String[] args) {
+		launch(args);
+	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {

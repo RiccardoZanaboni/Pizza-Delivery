@@ -19,6 +19,7 @@ import pizzeria.Pizzeria;
 
 public class MenuPage {
 	private Scene scene1;
+	private Scene scene3 = null;
 
 	public void display(Stage window, Pizzeria pizzeria) {
 		Label label1 = new Label("Wolf Of Pizza");
@@ -37,10 +38,10 @@ public class MenuPage {
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
 		makeOrderButton.setOnAction(e -> {
 			pizzeria.OpenPizzeria(8);
-			pizzeria.AddDeliveryMan(new DeliveryMan("Musi",pizzeria));
+			pizzeria.AddDeliveryMan(new DeliveryMan("Musi", pizzeria));
 			Order order = pizzeria.initializeNewOrder();
 			OrderPage1 orderPage1 = new OrderPage1();
-			orderPage1.display(window, scene1,order,pizzeria);
+			orderPage1.display(window, scene1, order, pizzeria);
 		});
 
 		Button chiSiamoButton = new Button("Chi siamo");

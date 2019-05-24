@@ -53,14 +53,22 @@ public class Order {
         }
     }
 
-    /** Restituisce una stringa con i vari prodotti, per il riepilogo. */
-	String textRecap() {
+	/** In TextInterface, stampa a video il riepilogo dell'ordine. */
+	public void recapOrder(){
+		String line = "\n---------------------------------------------\n";
+		String codice = "ORDINE N. " + orderCode + "\n";
+		String dati = "SIG. " + customer.getUsername() + "\tINDIRIZZO: " + customerAddress + "\tORARIO: " + time + "\n";
+		String prodotti = textRecapProducts();
+		double totaleCosto = getTotalPrice();
+		System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
+	}
+
+	/** Restituisce una stringa con i vari prodotti, per il riepilogo. */
+	private String textRecapProducts() {
 		StringBuilder prodotti = new StringBuilder();
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		for (int i = 0; i < getNumPizze(); i++) {
-
 			Pizza p = orderedPizze.get(i);
-			
 			int num = 0;
 			if (!(elencate.contains(p))) {
 				elencate.add(p);
@@ -82,7 +90,6 @@ public class Order {
 		for (int i = 0; i < getNumPizze(); i++) {
 			Pizza p = orderedPizze.get(i);
 			int num = 0;
-
 			boolean contains = false;
 			for (Pizza pizza : elencate) {
 				if (p.getMaiuscName().equals(pizza.getMaiuscName()) && p.getToppings().equals(pizza.getToppings())) {
@@ -144,6 +151,16 @@ public class Order {
     public void setFull() {
         this.isFull = true;
         System.out.println("\nGrazie! L'ordine è stato effettuato correttamente.");
+        String ore, minuti;
+        if(time.getHours()<10)
+        	ore = "0"+time.getHours();
+        else
+        	ore = String.valueOf(time.getHours());
+        if(time.getMinutes()<10)
+        	minuti = "0"+time.getMinutes();
+        else
+        	minuti = String.valueOf(time.getMinutes());
+		System.out.println("\t>> Consegna prevista: " + ore + ":" + minuti + ".");
     }
 
     public void setTime(Date orario) {

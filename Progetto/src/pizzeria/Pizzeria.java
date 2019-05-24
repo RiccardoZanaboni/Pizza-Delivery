@@ -18,6 +18,17 @@ public class Pizzeria {
     private final int DELIVERYMAN_TIMES_FOR_HOURS = 6;   // ogni 10 minuti
     private final double SUPPL_PRICE = 0.5;
 
+    /**
+     * La Pizzeria è il locale che riceve le ordinazioni e le evade nei tempi richiesti.
+     * @param name: nome identificativo della Pizzeria
+     * @param address: indirizzo della Pizzeria
+     * @param closingTime: orario di chiusura, ogni giorno
+     * @param openingTime: orario di apertura, ogni giorno
+     *
+     * Inizializza anche il forno, con tutte le possibili infornate,
+     * una ArrayList di fattorini e una di ordini del giorno.
+     */
+
     public Pizzeria(String name, String address, Date closingTime, Date openingTime) {
         this.menu = new HashMap<>();
         this.pizzeriaIngredients = new HashMap<>();
@@ -34,7 +45,7 @@ public class Pizzeria {
     }
 
     public void addOrder(Order order) {
-        this.orders.add(order);
+        orders.add(order);
     }
 
     private void AddPizza(Pizza pizza){
@@ -45,12 +56,14 @@ public class Pizzeria {
         deliveryMen.add(deliveryMan);
     }
 
+    /** Crea o ripristina il vettore di infornate, ad ogni apertura della pizzeria */
     public void OpenPizzeria(int postidisponibili){
-        for(int i = 0; i< ovens.length; i++){        // ripristina il vettore di ovens ad ogni apertura della pizzeria
+        for(int i = 0; i< ovens.length; i++) {
             ovens[i]=new Oven(postidisponibili);
         }
     }
 
+    /** Una tantum: vengono aggiunti a "pizzeriaIngredients" tutti gli ingredienti utilizzabili. */
     private void setIngredientsPizzeria(){
         this.pizzeriaIngredients.put(Toppings.ALICI.name(), Toppings.ALICI);
         this.pizzeriaIngredients.put(Toppings.BASILICO.name(), Toppings.BASILICO);
@@ -76,6 +89,7 @@ public class Pizzeria {
         this.pizzeriaIngredients.put(Toppings.WURSTEL.name(), Toppings.WURSTEL);
     }
 
+    /** Una tantum: viene creato il menu della pizzeria; ad ogni pizza vengono aggiunti i rispettivi toppings. */
     public void createMenu(){
         HashMap<String, Toppings> i1 = new HashMap <>();
         i1.put(Toppings.POMODORO.name(), Toppings.POMODORO);
@@ -190,6 +204,7 @@ public class Pizzeria {
         this.numDailyOrders++;
     }
 
+    /** Crea un nuovo ordine */
     public Order initializeNewOrder() {
         Order order = new Order(numDailyOrders);
         increaseDailyOrders();
@@ -202,6 +217,7 @@ public class Pizzeria {
         return "\n--------------------------------------------------------------------------------------\n" + dati + open;
     }
 
+    /** Da TextInterface, permette di visualizzare il menu completo. */
     public String printMenu() {
         String line= "\n--------------------------------------------------------------------------------------\n";
         StringBuilder s= new StringBuilder("    >>  MENU\n");
@@ -211,24 +227,28 @@ public class Pizzeria {
         return line+s+line;
     }
 
+    /** Controlla che la pizzeria sia aperta in un determinato orario. */
     public boolean isOpen(Date d){
         int ora= d.getHours();
         int minuti= d.getMinutes();
         return !(ora < this.closingTime.getHours() || ora > this.openingTime.getHours() || (ora == this.openingTime.getHours() && minuti >= this.openingTime.getMinutes()) || (ora == this.closingTime.getHours() && minuti <= this.closingTime.getMinutes()));
     }
 
+    /** ritorna l'indice della casella temporale (forno) desiderata. */
     public int findTimeBoxOven(Date oraApertura, int oraDesiderata, int minutiDesiderati){
         int casellaTempo = this.OVEN_TIMES_FOR_HOUR *(oraDesiderata - oraApertura.getHours());
         casellaTempo += minutiDesiderati/5;
         return casellaTempo;
     }
 
+    /** ritorna l'indice della casella temporale (fattorino) desiderata. */
     private int findTimeBoxDeliveryMan(Date oraApertura, int oraDesiderata, int minutiDesiderati){
         int casellaTempo = this.DELIVERYMAN_TIMES_FOR_HOURS *(oraDesiderata - oraApertura.getHours());
         casellaTempo += minutiDesiderati/10;
         return casellaTempo;
     }
 
+    /** restituisce il primo fattorino della pizzeria che sia disponibile all'orario indicato. */
     public DeliveryMan aFreeDeliveryMan(Date oraApertura, int oraDesiderata, int minutiDesiderati, int indice){
         for(DeliveryMan a:this.deliveryMen){
             if(!a.getDeliveryManTimes()[findTimeBoxDeliveryMan(oraApertura,oraDesiderata,minutiDesiderati)-indice].isBusy()){
@@ -238,6 +258,7 @@ public class Pizzeria {
         return null;
     }
 
+    /** Restituisce tutti gli orari in cui la pizzeria potrebbe garantire la consegna di "tot" pizze. */
     public ArrayList<String> availableTimes(int tot){
         ArrayList<String> disp = new ArrayList<>();
         for(int i = 1; i<this.ovens.length; i++) {
@@ -259,17 +280,10 @@ public class Pizzeria {
         return disp;
     }
 
-    public void recapOrder(Order order){
-        String line = "\n---------------------------------------------\n";
-        String codice = "ORDINE N. " + order.getOrderCode() + "\n";
-        String dati = "SIG. " + order.getCustomer().getUsername() + "\tINDIRIZZO: " + order.getAddress() + "\tORARIO: " + order.getTime() + "\n";
-        String prodotti = order.textRecap();
-        double totaleCosto = order.getTotalPrice();
-        System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
-    }
-
-    public boolean checkOvenAndDeliveryMan(Date d, int tot){
-        //PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
+    /** Controlla che la pizzeria possa garantire la consegna di "tot" pizze all'orario "d",
+     * in base alla disponibilità di forno e fattorini. */
+    public void updateOvenAndDeliveryMan(Date d, int tot){
+        // PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
         if(ovens[findTimeBoxOven(this.closingTime, d.getHours(), d.getMinutes())].getPostiDisp()<tot){
             int disp = ovens[findTimeBoxOven(this.closingTime, d.getHours(), d.getMinutes())].getPostiDisp();
             ovens[findTimeBoxOven(this.closingTime, d.getHours(), d.getMinutes())].inserisciInfornate(disp);
@@ -278,7 +292,6 @@ public class Pizzeria {
             ovens[findTimeBoxOven(this.closingTime, d.getHours(), d.getMinutes())].inserisciInfornate(tot);
         }
         aFreeDeliveryMan(this.closingTime,d.getHours(),d.getMinutes(),0).assignDelivery(findTimeBoxDeliveryMan(this.closingTime, d.getHours(), d.getMinutes()));
-        return true;            // ma ritorna sempre true???
     }
 
     Date getClosingTime() {
@@ -297,6 +310,7 @@ public class Pizzeria {
         return ovens;
     }
 
+    /** In TextInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
     public String possibleAddictions() {
         StringBuilder possibiliIngr = new StringBuilder("Possibili aggiunte: ");
         int i = 0;
