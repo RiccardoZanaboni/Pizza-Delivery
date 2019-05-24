@@ -1,0 +1,77 @@
+/*https://www.w3schools.com/css/css3_buttons.asp         sito usato per i bottoni
+*/
+
+#addpizza {                            /*colore iniziale del bottone*/
+  -fx-background-color: #555555;        /*Black*/
+  -fx-color: black;
+  -fx-border-width: 2px;
+  -fx-border-radius: 80%;
+  -fx-border-style: solid;
+}
+
+#addpizza:hover {                   /*Effetto di quando ci passi sopra con il puntatore*/
+  -fx-background-color: #4CAF50;
+  -fx-color: white;
+}
+
+#rmvpizza {                    /*colore iniziale del bottone*/
+  -fx-background-color: #555555;    /*Black*/
+  -fx-color: black;
+  -fx-border-width: 2px;
+  -fx-border-radius: 50%;
+  -fx-border-style: solid;
+}
+
+#rmvpizza:hover {            /*Effetto di quando ci passi sopra con il puntatore*/
+  -fx-background-color: #f44336;-fx-background-repeat: stretch;
+  -fx-color: white;
+}
+
+#modPizza {                            /*colore iniziale del bottone*/
+  -fx-background-color: #555555;        /*Black*/
+  -fx-color: black;
+  -fx-border-width: 2px;
+  -fx-border-radius: 50%;
+  -fx-border-style: solid;
+  -fx-cursor: pointer;
+}
+
+#modPizza:hover {                   /*Effetto di quando ci passi sopra con il puntatore*/
+  -fx-background-color: #f39f18;
+  -fx-color: white;
+}
+#backButton {
+  -fx-background-color: #f39f18; /* yellow */
+  -fx-color: white;
+  -fx-font-size: 12px;
+  -fx-border-radius: 50%;
+  -fx-border-style: solid;
+  -fx-text-align: center;
+  -fx-display: inline-block;
+  -fx-cursor: pointer;
+}
+#closeButton {                            /*colore iniziale del bottone*/
+ -fx-background-color: #a52a2a;
+   -fx-color: white;
+   -fx-font-size: 12px;
+   -fx-border-radius: 50%;
+   -fx-border-style: solid;
+   -fx-text-align: center;
+   -fx-text-decoration: none;
+   -fx-display: inline-block;
+   -fx-margin: 4px 2px;
+   -fx-cursor: pointer;
+  }
+
+#confirmButton {
+  -fx-background-color: #4CAF50; /* Green */
+  -fx-color: white;
+  -fx-font-size: 12px;
+  -fx-border-radius: 50%;
+  -fx-border-style: solid;
+  -fx-text-align: center;
+  -fx-text-decoration: none;
+  -fx-display: inline-block;
+  -fx-margin: 4px 2px;
+  -fx-cursor: pointer;
+  }

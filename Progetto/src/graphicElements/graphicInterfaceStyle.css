@@ -7,13 +7,13 @@
 .stackpane {
     -fx-border-style: none none solid none;
     -fx-border-color:black;
+        -fx-font-variant: small-caps;
 }
 
 .button {
     -fx-background-color: transparent;
     -fx-border-style: solid solid none solid;
     -fx-font-family: Helvetica, Arial, sans-serif;
-    -fx-font-size: 20px;
     -fx-text-fill: black;
 }
 
