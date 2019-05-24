@@ -1,0 +1,60 @@
+
+
+#backButton {
+    -fx-background-color: #f39f18; /* yellow */
+    -fx-color: white;
+    -fx-font-size: 12px;
+    -fx-border-style: solid;
+    -fx-text-align: center;
+    -fx-display: inline-block;
+    -fx-cursor: pointer;
+}
+
+#closeButton {                            /*colore iniziale del bottone*/
+    -fx-background-color: #a52a2a;
+    -fx-color: white;
+    -fx-font-size: 12px;
+    -fx-border-style: solid;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-margin: 4px 2px;
+    -fx-cursor: pointer;
+}
+
+#confirmButton {
+    -fx-background-color: #4CAF50; /* Green */
+    -fx-color: white;
+    -fx-font-size: 12px;
+    -fx-border-style: solid;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-margin: 4px 2px;
+    -fx-cursor: pointer;
+}
+
+#grid {
+    -fx-background-image: url("backPizza2.jpg");
+    -fx-background-repeat: repeat-y;
+}
+
+
+
+#nomiLabel {
+     -fx-font-family: "Arial Black", Gadget, sans-serif;
+     -fx-background-color: #ffff9e;
+     -fx-border-style:solid;
+     -fx-font-size: 25px;
+     -fx-letter-spacing: 0px;
+     -fx-word-spacing: 0px;
+     -fx-font-color: black;
+     -fx-font-weight: 400;
+     -fx-text-decoration: none;
+     -fx-font-style: oblique;
+     -fx-font-variant: small-caps;
+     -fx-text-transform: capitalize;
+     }
+}
+
+}

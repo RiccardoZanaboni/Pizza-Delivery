@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Order;
@@ -42,17 +43,20 @@ public class OrderPage2 {
 		Label username = new Label("Username:");
 		TextField nameInput = new TextField();
 		nameInput.setPromptText("Your name");
+		username.setId("nomiLabel");
 		HBox usernameBox = new HBox(50);
 		usernameBox.getChildren().addAll(username, nameInput);
 
 		Label address = new Label("Indirizzo:");
-		TextField addressInput = new TextField();
+        address.setId("nomiLabel");
+        TextField addressInput = new TextField();
 		addressInput.setPromptText("Your address");
 		HBox addressBox = new HBox(61);
 		addressBox.getChildren().addAll(address, addressInput);
 
 		Label choiceLabel = new Label("Scegli l'ora:");
-		ChoiceBox<String> choiceBox = new ChoiceBox<>();
+        choiceLabel.setId("nomiLabel");
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
 		choiceBox.getItems().addAll(getTime(pizzeria, tot));
 		HBox choiceHBox = new HBox(44);
 		choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
@@ -103,11 +107,12 @@ public class OrderPage2 {
 
 		VBox layout = new VBox();
 		layout.getChildren().addAll(hBoxIntestazione, hBox, buttonBox);
+		layout.setId("grid");
 
 		scene3 = new Scene(layout);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
-        scene3.getStylesheets().addAll(this.getClass().getResource("buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
+        scene3.getStylesheets().addAll(this.getClass().getResource("orderPage2.css").toExternalForm());
         window.setScene(scene3);
 	}
 

@@ -3,6 +3,7 @@ package graphicElements;
 import graphicAlerts.MinPizzasAlert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.shape.Circle;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
@@ -15,7 +16,8 @@ class ButtonRmvPizza extends Button {
 
 	ButtonRmvPizza(Label pizzasInCart, Order order, Pizzeria pizzeria, Label countPizza, String pizza){
 		this.setId("rmvpizza");
-		this.setText("Rimuovi dal carrello ✘");
+		this.setShape(new Circle(1000000));
+		this.setText("✘");
 		this.setOnAction(e-> {
 			if(order.searchPizza(pizzeria.getMenu().get(pizza))){
 				order.getOrderedPizze().remove(pizzeria.getMenu().get(pizza));
