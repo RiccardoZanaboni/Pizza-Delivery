@@ -76,7 +76,10 @@
     -fx-background-image: url("pizza_background.jpg");
     -fx-background-repeat: repeat-y;
 }
-
+#grido {
+    -fx-background-image: url("ciao1.jpg");
+    -fx-background-repeat: repeat-y;
+}
 #layout {
     -fx-background-color: #FF4500;
 }

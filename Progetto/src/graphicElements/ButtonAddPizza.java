@@ -3,6 +3,7 @@ package graphicElements;
 import graphicAlerts.MaxPizzasAlert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.shape.Circle;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
@@ -15,7 +16,8 @@ class ButtonAddPizza extends Button {
 
 	ButtonAddPizza(Label pizzasInCart, Order order, Pizzeria pizzeria, Label countPizza, String pizza){
 		this.setId("addpizza");
-		this.setText("Aggiungi al carrello ✔︎");
+		this.setShape(new Circle(1000));
+		this.setText("✚");//("Aggiungi al carrello ✔︎");
 		this.setOnAction(e-> {
 			if (order.getNumPizze()<16) {
 				order.addPizza(pizzeria.getMenu().get(pizza), 1);
