@@ -3,7 +3,6 @@ package pizzeria;
 public class DeliveryMan {
     private String name;
     private TimeBoxDeliveryMan[] deliveryManTimes;
-    private final int DELIVERYMAN_TIMES_FOR_HOURS = 6;   // ogni 10 minuti
 
     /**
      * Il fattorino, identificato da un nome, fa partire una consegna ogni 10 minuti.
@@ -12,6 +11,7 @@ public class DeliveryMan {
 
     public DeliveryMan(String name, Pizzeria pizzeria) {
         this.name = name;
+        int DELIVERYMAN_TIMES_FOR_HOURS = 6;   // ogni 10 minuti
         this.deliveryManTimes = new TimeBoxDeliveryMan[DELIVERYMAN_TIMES_FOR_HOURS * pizzeria.getClosingTime().getHours() - pizzeria.getOpeningTime().getHours()];
         for(int i = 0; i < deliveryManTimes.length; i++){
             deliveryManTimes[i] = new TimeBoxDeliveryMan();
@@ -22,7 +22,6 @@ public class DeliveryMan {
     void assignDelivery(int i) {
         this.deliveryManTimes[i].insertOrder();
     }
-
 
     TimeBoxDeliveryMan[] getDeliveryManTimes() {
         return deliveryManTimes;

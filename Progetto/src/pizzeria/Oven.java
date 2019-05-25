@@ -8,12 +8,12 @@ package pizzeria;
 public class Oven {
     private int availablePlaces;
 
-    Oven(int avail) {
+    public Oven(int avail) {
         this.availablePlaces = avail;
     }
 
     public int getPostiDisp() {
-        return availablePlaces;
+        return this.availablePlaces;
     }
 
     void inserisciInfornate(int pizze){

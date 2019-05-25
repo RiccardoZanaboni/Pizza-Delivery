@@ -24,7 +24,7 @@ public class TextInterface {
 
     // FIXME: ma cosa significano i valori di mese e giorno???
 
-    private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 17, 0,0), new Date(2019, 0, 31, 23, 59, 59));
+    private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", new Date(2019, 0, 1, 10, 0,0), new Date(2019, 0, 31, 23, 59, 59));
     private Scanner scan = new Scanner(System.in);
 
     private TextInterface() {}
@@ -82,15 +82,15 @@ public class TextInterface {
                 if (!wolf.isOpen(d)) {
                     throw new ArrayIndexOutOfBoundsException();
                 }
-                if (!checkNotTooLate(d)) {
+                if (!checkNotTooLate(d,tot)) {
                 	throw new TryAgainExc();
                 }
-                /*if (wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(),ora,minuti)].getPostiDisp() + wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(), ora, minuti) -1].getPostiDisp() < tot) {
+                if (wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(),ora,minuti)].getPostiDisp() + wolf.getOvens()[wolf.findTimeBoxOven(wolf.getOpeningTime(), ora, minuti) -1].getPostiDisp() < tot) {
                     throw new TryAgainExc();
 				}
-                if(wolf.aFreeDeliveryMan(wolf.getOpeningTime(),ora,minuti,0)==null){
+                if(wolf.aFreeDeliveryMan(wolf.getOpeningTime(),ora,minuti)==null){
                     throw new TryAgainExc();
-				}*/
+				}
                 else {
                     order.setTime(d);
                 }
@@ -98,6 +98,7 @@ public class TextInterface {
                 throw new TryAgainExc();
             }
         } catch (RestartOrderExc roe) {
+            System.out.println("\n----------------------------------------------------------------------\n");
             makeOrderText();
         } catch (ArrayIndexOutOfBoundsException obe) {
             System.out.println("Spiacenti: la pizzeria è chiusa nell'orario inserito. Riprovare: ");
@@ -124,16 +125,18 @@ public class TextInterface {
         return scan.nextLine();
     }
 
-    private boolean checkNotTooLate(Date orarioScelto) {
+    private boolean checkNotTooLate(Date orarioScelto, int tot) {
         int orderHour = orarioScelto.getHours();
         int orderMinutes = orarioScelto.getMinutes();
         Calendar cal = new GregorianCalendar();
+        if(tot<wolf.getOvens()[0].getPostiDisp())
+            cal.add(Calendar.MINUTE, 14);       // tengo conto dei tempi minimi di una infornata e consegna.
+        else
+            cal.add(Calendar.MINUTE, 19);       // tengo conto dei tempi minimi di due infornate e consegna.
         int nowHour = cal.get(Calendar.HOUR_OF_DAY);
         int nowMinutes = cal.get(Calendar.MINUTE);
 
-        if(orderHour < nowHour)
-            return false;
-        else if(orderHour == nowHour && orderMinutes < nowMinutes)
+        if(orderHour < nowHour || (orderHour == nowHour && orderMinutes < nowMinutes))
             return false;
         else
             return true;
@@ -285,6 +288,7 @@ public class TextInterface {
             }
             order.setAddress(indirizzo);
         } catch (RestartOrderExc e) {
+            System.out.println("\n----------------------------------------------------------------------\n");
             makeOrderText();
         }
         return ok;
@@ -361,6 +365,7 @@ public class TextInterface {
                     throw new RestartOrderExc();
                 } catch (RestartOrderExc roe) {
                     System.out.println("L'ordine è stato annullato.");
+                    System.out.println("\n----------------------------------------------------------------------\n");
                     makeOrderText();
                 }
                 break;
@@ -381,7 +386,7 @@ public class TextInterface {
         System.out.println(textInterface.wolf.printMenu());
         textInterface.wolf.OpenPizzeria(8);     // ma è qui che va creata la pizzeria? Bho non lo so
         textInterface.wolf.AddDeliveryMan(new DeliveryMan("Musi", textInterface.wolf));
-        //textInterface.wolf.AddDeliveryMan(new pizzeria.DeliveryMan("Zanzatroni",textInterface.wolf));
+        textInterface.wolf.AddDeliveryMan(new pizzeria.DeliveryMan("Zanzatroni",textInterface.wolf));
         textInterface.wolf.createMenu();
         textInterface.makeOrderText();
         //textInterface.makeOrderText();  //Per prova vettori orario
