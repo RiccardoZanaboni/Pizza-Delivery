@@ -14,7 +14,7 @@ class ButtonAddPizza extends Button {
 	 * un'istanza della pizza desiderata.
 	 */
 
-	ButtonAddPizza(Label pizzasInCart, Order order, Pizzeria pizzeria, Label countPizza, String pizza){
+	ButtonAddPizza(Button shoppingCartButton, Order order, Pizzeria pizzeria, String pizza){
 		this.setId("addpizza");
 		this.setShape(new Circle(1000));
 		this.setText("✚");//("Aggiungi al carrello ✔︎");
@@ -22,9 +22,9 @@ class ButtonAddPizza extends Button {
 			if (order.getNumPizze()<16) {
 				order.addPizza(pizzeria.getMenu().get(pizza), 1);
 				pizzeria.getMenu().get(pizza).increaseCount();
-				countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
+				//countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
 				order.increaseNumPizzeProvvisorie();
-				pizzasInCart.setText(order.getNumPizzeProvvisorie()+"");
+				shoppingCartButton.setText(order.getNumPizzeProvvisorie()+"");
 			} else
 				MaxPizzasAlert.display();
 		});

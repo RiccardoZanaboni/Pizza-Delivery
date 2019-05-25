@@ -5,29 +5,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
 import pizzeria.Order;
+import pizzeria.Pizza;
 import pizzeria.Pizzeria;
 
-class ButtonRmvPizza extends Button {
-
-	/**
-	 * Bottone utile, nell'interfaccia grafica, per rimuovere dall'ordine
-	 * un'istanza (erroneamente inserita) della pizza in questione.
-	 */
-
-	ButtonRmvPizza(Label pizzasInCart, Order order, Pizzeria pizzeria, Label countPizza, String pizza){
-		this.setId("rmvpizza");
+public class ButtonRmvPizza extends Button {
+	public ButtonRmvPizza(Button shoppingCartButton, Order order, Pizzeria pizzeria, Pizza pizza, Label countPizza) {
 		this.setShape(new Circle(1000000));
 		this.setText("✘");
 		this.setOnAction(e-> {
-			if(order.searchPizza(pizzeria.getMenu().get(pizza))){
-				order.getOrderedPizze().remove(pizzeria.getMenu().get(pizza));
-				pizzeria.getMenu().get(pizza).decreaseCount();
-				countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
+			if (order.getOrderedPizze().contains(pizza)) {
+				order.getOrderedPizze().remove(pizza);
+				pizzeria.getMenu().get(pizza.getMaiuscName()).decreaseCount();
 				order.decreaseNumPizzeProvvisorie();
-				pizzasInCart.setText(order.getNumPizzeProvvisorie()+"");
-			}else
-				MinPizzasAlert.display(pizza);
+				shoppingCartButton.setText(order.getNumPizzeProvvisorie()+"");
+				countPizza.setText(""+pizzeria.getMenu().get(pizza.getMaiuscName()).getCount());
+
+			} else {
+				MinPizzasAlert.display(pizza.getMaiuscName());
+			}
 		});
 	}
-
 }
