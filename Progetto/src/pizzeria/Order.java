@@ -151,16 +151,6 @@ public class Order {
     public void confirmAndSetFull() {
         this.isFull = true;
         System.out.println("\nGrazie! L'ordine è stato effettuato correttamente.");
-        String ore, minuti;
-        if(time.getHours()<10)
-        	ore = "0"+time.getHours();
-        else
-        	ore = String.valueOf(time.getHours());
-        if(time.getMinutes()<10)
-        	minuti = "0"+time.getMinutes();
-        else
-        	minuti = String.valueOf(time.getMinutes());
-		System.out.println("\t>> Consegna prevista: " + ore + ":" + minuti + ".");
     }
 
     public void setTime(Date orario) {
