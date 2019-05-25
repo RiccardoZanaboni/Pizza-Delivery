@@ -52,6 +52,7 @@ public class OrderPage1 {
         int countModifiche = 0;
         countModificheLabel.setText("" + countModifiche);
 
+
         Label pizzasInCart = new Label();
         Image image = new Image("graphicElements/shopping_cart.png");
         ImageView imageView = new ImageView(image);
@@ -60,7 +61,14 @@ public class OrderPage1 {
         HBox shoppingCartBox = new HBox(order.getNumPizzeProvvisorie());
         shoppingCartBox.setId("shoppingCart");
         pizzasInCart.setText(order.getNumPizzeProvvisorie() + "");
-        shoppingCartBox.getChildren().addAll(imageView, pizzasInCart);
+        Button shoppingCartButton = new Button();
+        shoppingCartButton.setGraphic(imageView);
+        shoppingCartButton.setText(pizzasInCart.getText()+"");
+        shoppingCartButton.setOnAction(e->{
+            ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.display(order, pizzeria, pizzasInCart);
+        });
+        shoppingCartBox.getChildren().addAll(shoppingCartButton);
 
         // metodi esterni per non appesantire
         fillLabelsAndButtons(pizzasInCart, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels, addButtons, modButtons, rmvButtons, countModificheLabel);
@@ -137,7 +145,7 @@ public class OrderPage1 {
             countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getMaiuscName()).getCount());
             addButtons.add(new ButtonAddPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
             modButtons.add(new ButtonModPizza(pizzasInCart, order, pizzeria, pizzaMenu.getMaiuscName(), countModificheLabel));
-            rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
+            //rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
             i++;
         }
     }
@@ -148,7 +156,7 @@ public class OrderPage1 {
     private static void fillVBoxesButtons(Pizzeria pizzeria, ArrayList<VBox> vBoxBottoni, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons, ArrayList<ButtonRmvPizza> rmvButtons) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
             vBoxBottoni.add(new VBox(5));
-            vBoxBottoni.get(i).getChildren().addAll(addButtons.get(i), modButtons.get(i), rmvButtons.get(i));
+            vBoxBottoni.get(i).getChildren().addAll(addButtons.get(i), modButtons.get(i));
         }
     }
 
