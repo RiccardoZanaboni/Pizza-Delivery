@@ -129,7 +129,7 @@ public class OrderPage1 {
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
 
-        scene2 = new Scene(layout, 880, 600);
+        scene2 = new Scene(layout, 800, 600);
         scene2.getStylesheets().addAll(this.getClass().getResource("buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
         window.setScene(scene2);
         window.show();
