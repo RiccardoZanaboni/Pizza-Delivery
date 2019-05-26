@@ -2,6 +2,7 @@
     -fx-font-family: Helvetica, Arial, sans-serif;
     -fx-font-size: 40px;
     -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 .stackpane {
@@ -12,7 +13,7 @@
 
 .button {
     -fx-background-color: transparent;
-    -fx-border-style: solid solid none solid;
+    -fx-border-style: solid solid solid solid;
     -fx-font-family: Helvetica, Arial, sans-serif;
     -fx-text-fill: black;
     -fx-font-size: 20px;

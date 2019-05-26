@@ -3,31 +3,35 @@ package graphicElements;
 import graphicAlerts.MinPizzasAlert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import pizzeria.Order;
+import pizzeria.Pizza;
 import pizzeria.Pizzeria;
 
-class ButtonRmvPizza extends Button {
+public class ButtonRmvPizza extends Button {
+	public ButtonRmvPizza(Button shoppingCartButton, Order order, Pizzeria pizzeria, Pizza pizza, Label countPizza) {
 
-	/**
-	 * Bottone utile, nell'interfaccia grafica, per rimuovere dall'ordine
-	 * un'istanza (erroneamente inserita) della pizza in questione.
-	 */
-
-	ButtonRmvPizza(Label pizzasInCart, Order order, Pizzeria pizzeria, Label countPizza, String pizza){
-		this.setId("rmvpizza");
-		this.setShape(new Circle(1000000));
-		this.setText("✘");
+		Image image1 = new Image("graphicElements/cestino.png");
+		ImageView imageView = new ImageView(image1);
+		imageView.setFitHeight(20);
+		imageView.setFitWidth(20);
+		this.setGraphic(imageView);
+		//this.setText("✘");
+		this.setShape(new Circle(100000));
 		this.setOnAction(e-> {
-			if(order.searchPizza(pizzeria.getMenu().get(pizza))){
-				order.getOrderedPizze().remove(pizzeria.getMenu().get(pizza));
-				pizzeria.getMenu().get(pizza).decreaseCount();
-				countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
+			if (order.getOrderedPizze().contains(pizza)) {
+				order.getOrderedPizze().remove(pizza);
+				pizzeria.getMenu().get(pizza.getMaiuscName()).decreaseCount();
 				order.decreaseNumPizzeProvvisorie();
-				pizzasInCart.setText(order.getNumPizzeProvvisorie()+"");
-			}else
-				MinPizzasAlert.display(pizza);
+				shoppingCartButton.setText(order.getNumPizzeProvvisorie()+"");
+				countPizza.setText(""+pizzeria.getMenu().get(pizza.getMaiuscName()).getCount());
+
+			} else {
+				MinPizzasAlert.display(pizza.getMaiuscName());
+			}
 		});
 	}
-
 }

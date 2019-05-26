@@ -1,5 +1,6 @@
 package pizzeria;
 
+import graphicElements.ButtonRmvPizza;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -84,7 +85,9 @@ public class Order {
 
 	/** costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
 	public GridPane graphRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
-    	GridPane gridPane = new GridPane();
+		GridPane gridPane = new GridPane();
+		Label label = new Label();
+		label.setText(numTemporaryPizze+"");
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		int numTipo = 0;
 		for (int i = 0; i < getNumPizze(); i++) {

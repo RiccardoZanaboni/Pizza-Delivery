@@ -3,71 +3,107 @@ package graphicElements;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
+import pizzeria.Services;
 
+import javax.xml.ws.Service;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ShoppingCart {
     Stage window = new Stage();
 
 
-    public void display(Order order, Pizzeria pizzeria, Label pizzasInCart) {
+    public void display(Order order, Pizzeria pizzeria, Button shoppingCartButton) {
 
         VBox layout = new VBox();
-
-        ArrayList<Label> nomiLabels = new ArrayList<>();
-        ArrayList<Label> ingrLabels = new ArrayList<>();
-        ArrayList<Label> prezziLabels = new ArrayList<>();
-        ArrayList<Label> countPizzeLabels = new ArrayList<>();
-        //ArrayList<ButtonRmvPizza> rmvButton = new ArrayList<>();
 
         Label label = new Label("Il tuo carrello");
         HBox hBox = new HBox();
         hBox.getChildren().addAll(label);
         hBox.setAlignment(Pos.CENTER);
 
-        GridPane gridPane = addEverythingToGridPane(pizzasInCart, order, pizzeria, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
+        //GridPane gridPane = addEverythingToGridPane(pizzasInCart, order, pizzeria, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
+        GridPane gridPane = createGridPane(shoppingCartButton, order, pizzeria);
 
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setMinSize(600, 400);
         layout.getChildren().addAll(hBox, scrollPane);
         Scene scene = new Scene(layout);
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(scene);
-        window.showAndWait();
+        window.show();
+
     }
 
 
-    private static GridPane addEverythingToGridPane(Label pizzasInCart, Order order, Pizzeria pizzeria, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
-        HBox totalBox = new HBox();
-        Label labelTot = new Label("Totale: ");
-        Label label2 = new Label("" + order.getTotalPrice());
-        totalBox.getChildren().addAll(labelTot,label2);
-        totalBox.setAlignment(Pos.CENTER);
+    private static GridPane createGridPane(Button shoppingCartButton, Order order, Pizzeria pizzeria) {
+        GridPane gridPane = new GridPane();
+        ArrayList<Label> nomiLabels = new ArrayList<>();
+        ArrayList<Label> ingrLabels = new ArrayList<>();
+        ArrayList<Label> prezziLabels = new ArrayList<>();
+        ArrayList<Label> countPizzeLabels = new ArrayList<>();
+        ArrayList<ButtonRmvPizza> buttonRmvPizzas = new ArrayList<>();
 
-        ArrayList<ButtonRmvPizza> rmvButtons = new ArrayList<>();
-        GridPane gridPane;
-        gridPane = order.graphRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
-        /*for (int i = 0; i < order.getNumPizze(); i++) {
-            rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), order.getOrderedPizze().get(i).getMaiuscName()));
-        }*/
-        for (int i=0; i<order.getNumPizze(); i++) {
-            rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), order.getOrderedPizze().get(i).getMaiuscName()));
-            gridPane.getChildren().add(rmvButtons.get(i));
-            GridPane.setConstraints(rmvButtons.get(i), 4, i + 1);
+        ArrayList<Pizza> elencate = new ArrayList<>();
+        int numTipo = 0;
+        for (int i = 0; i < order.getNumPizze(); i++) {
+            Pizza p = order.getOrderedPizze().get(i);
+            int num = 0;
+            boolean contains = false;
+            for (Pizza pizza : elencate) {
+                if (p.getMaiuscName().equals(pizza.getMaiuscName()) && p.getToppings().equals(pizza.getToppings())) {
+                    contains = true;
+                    break;
+                }
+            }
+            if (!contains) {
+                elencate.add(p);
+                for (int j = 0; j < order.getNumPizze(); j++) {
+                    if (p.getMaiuscName().equals(order.getOrderedPizze().get(j).getMaiuscName()) && p.getToppings().equals(order.getOrderedPizze().get(j).getToppings()))
+                        num++;		// di quel "tipo di pizza" ce n'è una in più
+                }
+
+                nomiLabels.add(numTipo, new Label(Services.getCamelName(order.getOrderedPizze().get(i))));
+                ingrLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getDescription()));
+                prezziLabels.add(numTipo, new Label((order.getOrderedPizze().get(i).getPrice()*num + " €")));
+                countPizzeLabels.add(numTipo, new Label());
+                countPizzeLabels.get(numTipo).setText("" + num);
+                buttonRmvPizzas.add(new ButtonRmvPizza(shoppingCartButton, order, pizzeria, order.getOrderedPizze().get(i), countPizzeLabels.get(numTipo)));
+
+                gridPane.getChildren().add(nomiLabels.get(numTipo));
+                gridPane.getChildren().add(ingrLabels.get(numTipo));
+                gridPane.getChildren().add(countPizzeLabels.get(numTipo));
+                gridPane.getChildren().add(prezziLabels.get(numTipo));
+                gridPane.getChildren().add(buttonRmvPizzas.get(numTipo));
+
+                GridPane.setConstraints(countPizzeLabels.get(numTipo), 0, numTipo + 1);
+                GridPane.setConstraints(nomiLabels.get(numTipo), 1, numTipo + 1);
+                GridPane.setConstraints(ingrLabels.get(numTipo), 2, numTipo + 1);
+                GridPane.setConstraints(prezziLabels.get(numTipo), 3, numTipo + 1);
+                GridPane.setConstraints(buttonRmvPizzas.get(numTipo), 4, numTipo + 1);
+
+                numTipo++;		// ho un "tipo di pizza" in piu
+
+
+            }
+
+
         }
-
-        GridPane.setConstraints(totalBox, 1, nomiLabels.size()+2);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setHgap(10);
         gridPane.setVgap(30);
         return gridPane;
     }
+
 }

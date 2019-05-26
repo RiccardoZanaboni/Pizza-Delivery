@@ -35,8 +35,9 @@ public class OrderPage3 {
         ArrayList<Label> ingrLabels = new ArrayList<>();
         ArrayList<Label> prezziLabels = new ArrayList<>();
         ArrayList<Label> countPizzeLabels = new ArrayList<>();
+        ArrayList<ButtonRmvPizza> buttonRmvPizzas = new ArrayList<>();
 
-        GridPane gridPane = addEverythingToGridPane(order, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
+        GridPane gridPane = addEverythingToGridPane(buttonRmvPizzas, order, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
 
         Label yourOrder = new Label("Il tuo ordine:\t\t"+ order.getOrderCode());
 
@@ -91,7 +92,7 @@ public class OrderPage3 {
         window.setScene(scene4);
     }
 
-    private static GridPane addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
+    private static GridPane addEverythingToGridPane(ArrayList<ButtonRmvPizza> buttonRmvPizzas, Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
         HBox totalBox = new HBox();
         Label labelTot = new Label("Totale: ");
         Label label2 = new Label("" + order.getTotalPrice());

@@ -42,12 +42,12 @@ public class GraphicInterface extends Application {
 		Image image = new Image("graphicElements/wolf_pizza.png");
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(600);
-		imageView.setFitWidth(600);
+		imageView.setFitWidth(800);
 
 		StackPane stackPane = new StackPane();
 		stackPane.getChildren().addAll(imageView);
 
-		scene0 = new Scene(stackPane, 600, 600);
+		scene0 = new Scene(stackPane, 880, 600);
 		window.setScene(scene0);
 		window.show();
 		FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), stackPane);

@@ -1,10 +1,14 @@
 package graphicElements;
 
 import graphicAlerts.ClosedPizzeriaAlert;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -21,14 +25,22 @@ public class MenuPage {
 	private Scene scene3 = null;
 
 	public void display(Stage window, Pizzeria pizzeria) {
-		Label label1 = new Label("Wolf Of Pizza");
+		Label label1 = new Label("Benvenuto");
 		StackPane stackPane = new StackPane();
 		stackPane.getChildren().add(label1);
 		stackPane.getStyleClass().add("stackpane");
 
+		Image image1 = new Image("graphicElements/banner_pizza.jpg");
+		ImageView imageView = new ImageView(image1);
+		imageView.setFitHeight(150);
+		imageView.setFitWidth(880);
+		imageView.autosize();
+
 		StackPane spazioPane = new StackPane();
-		spazioPane.setMinSize(600, 150);
-		spazioPane.setId("pane");
+		spazioPane.setMinSize(800, 150);
+		spazioPane.getChildren().add(imageView);
+		spazioPane.setAlignment(Pos.CENTER);
+		//spazioPane.setId("pane");
 
 		// makeNewOrder - login - register - myAccount (bloccato se non loggato)
 
@@ -48,9 +60,11 @@ public class MenuPage {
 			}
 		});
 
+
 		Button chiSiamoButton = new Button("Chi siamo");
 		chiSiamoButton.prefWidthProperty().bind(window.widthProperty());
         chiSiamoButton.prefHeightProperty().bind(window.heightProperty());
+        //chiSiamoButton.setShape(new Rectangle(10,10));
 
         Button recapOrdiniButton = new Button("Riepilogo ordini");
         recapOrdiniButton.prefWidthProperty().bind(window.widthProperty());
@@ -60,14 +74,26 @@ public class MenuPage {
 		altroButton.prefWidthProperty().bind(window.widthProperty());
         altroButton.prefHeightProperty().bind(window.heightProperty());
 
+		GridPane gridPane = new GridPane();
+		gridPane.getChildren().addAll(makeOrderButton, chiSiamoButton, recapOrdiniButton, altroButton);
+		GridPane.setConstraints(makeOrderButton, 1, 1);
+		GridPane.setConstraints(chiSiamoButton, 2, 1);
+		GridPane.setConstraints(recapOrdiniButton, 1, 2);
+		GridPane.setConstraints(altroButton, 2, 2);
+
+		gridPane.setPadding(new Insets(10, 10, 10, 10));
+		gridPane.setHgap(10);
+		gridPane.setVgap(10);
+
 		VBox layout = new VBox();
-		layout.getChildren().addAll(stackPane, spazioPane, makeOrderButton, chiSiamoButton, recapOrdiniButton, altroButton);
+		//layout.getChildren().addAll(stackPane, spazioPane, makeOrderButton, chiSiamoButton, recapOrdiniButton, altroButton);
+		layout.getChildren().addAll(stackPane, imageView, gridPane);
 		layout.getStyleClass().add("layout");
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
 
 		scene1 = new Scene(layout);
-		scene1.getStylesheets().addAll(this.getClass().getResource("graphicInterfaceStyle.css").toExternalForm());
+		scene1.getStylesheets().addAll(this.getClass().getResource("menuStyle.css").toExternalForm());
 		//window.setResizable(false);
 		window.setScene(scene1);
 		window.setTitle("Wolf of Pizza");
