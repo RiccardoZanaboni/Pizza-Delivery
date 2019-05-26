@@ -25,7 +25,7 @@ public class ClosedPizzeriaAlert {
 
 
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("Modifica la pizza");
+		window.setTitle("Impossibile effettuare nuovo ordine");
 		Scene scene = new Scene(layout, 630, 150);
 		window.setScene(scene);
 		window.show();

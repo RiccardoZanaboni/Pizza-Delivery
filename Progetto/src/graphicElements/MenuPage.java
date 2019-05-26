@@ -49,7 +49,7 @@ public class MenuPage {
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
         String checkOpen = Services.checkTimeOrder(pizzeria);
 		makeOrderButton.setOnAction(e -> {
-			if(checkOpen.equals("OK")) {		// pizzeria aperta
+			if(checkOpen.equals("OPEN")) {		// pizzeria aperta
 				Order order = pizzeria.initializeNewOrder();
 				OrderPage1 orderPage1 = new OrderPage1();
 				orderPage1.display(window, scene1, order, pizzeria);
