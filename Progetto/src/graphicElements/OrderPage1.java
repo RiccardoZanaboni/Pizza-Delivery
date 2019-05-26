@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
+import pizzeria.Services;
 
 import java.util.ArrayList;
 
@@ -136,7 +137,7 @@ public class OrderPage1 {
     private static void fillLabelsAndButtons(Label pizzasInCart, Pizzeria pizzeria, Order order, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, ArrayList<Label> countPizzeLabels, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons, ArrayList<ButtonRmvPizza> rmvButtons, Label countModificheLabel) {
         int i = 0;
         for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
-            nomiLabels.add(i, new Label(pizzaMenu.getCamelName()));
+            nomiLabels.add(i, new Label(Services.getCamelName(pizzaMenu)));
             nomiLabels.get(i).setId("nomiLabel");
             ingrLabels.add(i, new Label(pizzaMenu.getDescription()));
             prezziLabels.add(i, new Label(pizzaMenu.getPrice() + " €"));

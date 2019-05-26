@@ -30,19 +30,6 @@ public class Pizza {
         return name.toUpperCase();
     }
 
-    /** Restituisce il nome della pizza, con tutte le iniziali maiuscole. */
-    public String getCamelName() {
-        String nome = this.name.toUpperCase();
-        nome = nome.charAt(0) + nome.substring(1).toLowerCase();
-        for(int i=1; i<nome.length(); i++){
-            if(nome.substring(i,i+1).equals("_") || nome.substring(i,i+1).equals(" ")){
-                nome = nome.replace(nome.substring(i,i+1)," ");
-                nome = nome.replace(nome.substring(i+1,i+2),nome.substring(i+1,i+2).toUpperCase());
-            }
-        }
-        return nome;
-    }
-
     public HashMap<String, Toppings> getToppings() {
         return ingredients;
     }

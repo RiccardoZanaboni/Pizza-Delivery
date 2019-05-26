@@ -103,7 +103,7 @@ public class Order {
 					if (p.getMaiuscName().equals(getOrderedPizze().get(j).getMaiuscName()) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
 						num++;		// di quel "tipo di pizza" ce n'è una in più
 				}
-				nomiLabels.add(numTipo, new Label(orderedPizze.get(i).getCamelName()));
+				nomiLabels.add(numTipo, new Label(Services.getCamelName(orderedPizze.get(i))));
 				ingrLabels.add(numTipo, new Label(orderedPizze.get(i).getDescription()));
 				prezziLabels.add(numTipo, new Label((orderedPizze.get(i).getPrice()*num + " €")));
 				countPizzeLabels.add(numTipo, new Label());

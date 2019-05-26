@@ -8,6 +8,9 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 import pizzeria.Pizzeria;
+
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 /**
@@ -23,7 +26,7 @@ import java.util.Date;
  */
 
 public class GraphicInterface extends Application {
-	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza","Via Bolzano 10, Pavia", new Date(2019,0,1,10,0,0),new Date(2019,0,31,23,59,59));
+	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia", LocalTime.MIN.plus(60*9+30, ChronoUnit.MINUTES), LocalTime.MIN, LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*17+30, ChronoUnit.MINUTES), LocalTime.MIN, LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*22+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES));
 	private Stage window;
 	private Scene scene0, scene3;
 

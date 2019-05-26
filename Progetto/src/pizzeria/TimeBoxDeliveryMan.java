@@ -1,9 +1,9 @@
 package pizzeria;
 
 class TimeBoxDeliveryMan {
-    private boolean isBusy;
+    private boolean isFree;
     private int orders;
-    final int maxDeliveries = 2;
+    private final int maxDeliveries = 2;    // un fattorino non può consegnare più di 2 orders per volta
 
     /**
      * La "casella temporale" del fattorino, ovvero l'arco di tempo (definito
@@ -11,17 +11,17 @@ class TimeBoxDeliveryMan {
      */
 
     TimeBoxDeliveryMan() {
-        this.isBusy = false;
+        this.isFree = true;
         this.orders = 0;
     }
 
     void insertOrder() {
         this.orders++;
-        if(this.orders == maxDeliveries)    // un fattorino non può consegnare più di 2 orders per volta
-            this.isBusy = true;
+        if(this.orders == maxDeliveries)
+            this.isFree = false;
     }
 
-    boolean isBusy() {
-        return isBusy;
+    boolean isFree() {
+        return isFree;
     }
 }

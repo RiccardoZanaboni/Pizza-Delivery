@@ -1,5 +1,6 @@
 package graphicElements;
 
+import graphicAlerts.ClosedPizzeriaAlert;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,9 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import pizzeria.DeliveryMan;
-import pizzeria.Order;
-import pizzeria.Pizzeria;
+import pizzeria.*;
 
 
 /**
@@ -36,12 +35,17 @@ public class MenuPage {
 		Button makeOrderButton = new Button("Nuovo Ordine");
         makeOrderButton.prefWidthProperty().bind(window.widthProperty());
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
+        String checkOpen = Services.checkTimeOrder(pizzeria);
 		makeOrderButton.setOnAction(e -> {
-			pizzeria.OpenPizzeria(8);
-			pizzeria.AddDeliveryMan(new DeliveryMan("Musi", pizzeria));
-			Order order = pizzeria.initializeNewOrder();
-			OrderPage1 orderPage1 = new OrderPage1();
-			orderPage1.display(window, scene1, order, pizzeria);
+			if(checkOpen.equals("OK")) {		// pizzeria aperta
+				Order order = pizzeria.initializeNewOrder();
+				OrderPage1 orderPage1 = new OrderPage1();
+				orderPage1.display(window, scene1, order, pizzeria);
+			} else if(checkOpen.equals("CLOSING")) {
+				ClosedPizzeriaAlert.display(true);		// pizzeria in chiusura
+			} else {
+				ClosedPizzeriaAlert.display(false);		// pizzeria già chiusa
+			}
 		});
 
 		Button chiSiamoButton = new Button("Chi siamo");

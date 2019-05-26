@@ -11,9 +11,11 @@ public class DeliveryMan {
 
     public DeliveryMan(String name, Pizzeria pizzeria) {
         this.name = name;
-        int DELIVERYMAN_TIMES_FOR_HOURS = 6;   // ogni 10 minuti
-        this.deliveryManTimes = new TimeBoxDeliveryMan[DELIVERYMAN_TIMES_FOR_HOURS * pizzeria.getClosingTime().getHours() - pizzeria.getOpeningTime().getHours()];
-        for(int i = 0; i < deliveryManTimes.length; i++){
+        int startMinutes = 60*pizzeria.getOpeningTime().getHours() + pizzeria.getOpeningTime().getMinutes();
+        int endMinutes = 60*pizzeria.getClosingTime().getHours() + pizzeria.getClosingTime().getMinutes();
+        int length = (int) ((endMinutes-startMinutes)/5);
+        this.deliveryManTimes = new TimeBoxDeliveryMan[length];
+        for(int i = 0; i < length; i++){
             deliveryManTimes[i] = new TimeBoxDeliveryMan();
         }
     }
@@ -25,9 +27,5 @@ public class DeliveryMan {
 
     TimeBoxDeliveryMan[] getDeliveryManTimes() {
         return deliveryManTimes;
-    }
-
-    public void setDeliveryManTimes(TimeBoxDeliveryMan[] deliveryManTimes) {
-        this.deliveryManTimes = deliveryManTimes;
     }
 }

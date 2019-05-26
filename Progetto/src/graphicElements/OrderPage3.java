@@ -19,7 +19,8 @@ import java.util.ArrayList;
  * Cliccando "Indietro", si torna a OrderPage2.
  * Cliccando "Conferma e torna alla Home", l'ordine viene inviato alla pizzeria
  * e si torna alla pagina MenuPage.
- * Cliccando "Conferma ed esci", l'ordine viene inviato alla pizzeria e l'applicazione viene chiusa.
+ * Cliccando "Conferma ed esci", l'ordine viene inviato alla pizzeria
+ * e l'applicazione viene chiusa.
  */
 
 public class OrderPage3 {

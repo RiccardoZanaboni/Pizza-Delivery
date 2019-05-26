@@ -5,10 +5,7 @@ import javafx.stage.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
-import pizzeria.Toppings;
-import pizzeria.Order;
-import pizzeria.Pizza;
-import pizzeria.Pizzeria;
+import pizzeria.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +29,7 @@ public class ModifyBox{
         Stage window = new Stage();
 
         Pizza pizzaMenu = new Pizza(
-                pizzeria.getMenu().get(pizza).getCamelName(),
+                Services.getCamelName(pizzeria.getMenu().get(pizza)),
                 pizzeria.getMenu().get(pizza).getToppings(),
                 pizzeria.getMenu().get(pizza).getPrice()
         );
@@ -69,7 +66,7 @@ public class ModifyBox{
         layout.setAlignment(Pos.CENTER);
 
         window.initModality(Modality.APPLICATION_MODAL);    // Impedisce di fare azioni sulle altre finestre
-        window.setTitle("Modifica la pizza \"" + nuovaPizza.getCamelName() + "\"");
+        window.setTitle("Modifica la pizza \"" + Services.getCamelName(nuovaPizza) + "\"");
         window.setMinWidth(330);
         window.setMaxWidth(400);
         window.setMaxHeight(300);
