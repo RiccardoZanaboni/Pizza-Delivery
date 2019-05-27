@@ -1,9 +1,11 @@
 package pizzeria;
 
+import com.sun.org.apache.regexp.internal.RE;
 import graphicElements.ButtonRmvPizza;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -56,17 +58,25 @@ public class Order {
 
 	/** In TextInterface, stampa a video il riepilogo dell'ordine. */
 	public void recapOrder(){
-		String line = "\n---------------------------------------------\n";
-		String codice = "ORDINE N. " + orderCode + "\n";
-		String dati = "SIG. " + customer.getUsername() + "\tINDIRIZZO: " + customerAddress + "\tORARIO: " + time + "\n";
-		String prodotti = textRecapProducts();
-		double totaleCosto = getTotalPrice();
-		System.out.println(line + codice + dati + prodotti + "\t\t\tTOTALE: € " + totaleCosto + line);
+		String line = "\n-------------------------------------------------------------------------------------\n";
+		StringBuilder recap = new StringBuilder();
+		recap.append(Services.colorSystemOut("ORDINE N. ",Color.RED,true,false));
+		recap.append(Services.colorSystemOut(orderCode,Color.RED,true,false));
+		recap.append(Services.colorSystemOut("\nSIG.\t\t",Color.YELLOW,false,false));
+		recap.append(Services.colorSystemOut(customer.getUsername(),Color.GREEN,true,false));
+		recap.append(Services.colorSystemOut("\nINDIRIZZO:\t",Color.YELLOW,false,false));
+		recap.append(Services.colorSystemOut(customerAddress,Color.GREEN,true,false));
+		recap.append(Services.colorSystemOut("\nORARIO:\t\t",Color.YELLOW,false,false));
+		recap.append(Services.colorSystemOut(Services.timeStamp(time.getHours(),time.getMinutes()),Color.GREEN,true,false));
+		recap.append(textRecapProducts());
+		recap.append(Services.colorSystemOut("TOTALE: € ",Color.YELLOW,true,false));
+		recap.append(Services.colorSystemOut(String.valueOf(getTotalPrice()),Color.RED,true,false));
+		System.out.println(line + recap + line);
 	}
 
 	/** Restituisce una stringa con i vari prodotti, per il riepilogo. */
 	private String textRecapProducts() {
-		StringBuilder prodotti = new StringBuilder();
+		StringBuilder prodotti = new StringBuilder("\n");
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		for (int i = 0; i < getNumPizze(); i++) {
 			Pizza p = orderedPizze.get(i);
@@ -77,7 +87,10 @@ public class Order {
 					if (p.equals(getOrderedPizze().get(j)))
 						num++;
 				}
-				prodotti.append("\t").append(num).append("\t").append(p.getMaiuscName()).append("\t\t").append(p.getDescription()).append("\t\t-->\t").append(num * p.getPrice()).append("€\n");
+				prodotti.append("\t€ ").append(p.getPrice()).append("  x  ");
+				prodotti.append(Services.colorSystemOut(String.valueOf(num),Color.WHITE,true,false));
+				prodotti.append("  ").append(Services.colorSystemOut(p.getMaiuscName(),Color.WHITE,true,false));
+				prodotti.append("\t\t").append(p.getDescription()).append("\n");
 			}
 		}
 		return prodotti.toString();
@@ -153,7 +166,9 @@ public class Order {
 
     public void confirmAndSetFull() {
         this.isFull = true;
-        System.out.println("\nGrazie! L'ordine è stato effettuato correttamente.");
+
+        String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
+        System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
     }
 
     public void setTime(Date orario) {

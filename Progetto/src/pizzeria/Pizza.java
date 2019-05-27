@@ -1,5 +1,6 @@
 package pizzeria;
 
+import java.awt.*;
 import java.util.HashMap;
 
 public class Pizza {
@@ -23,7 +24,10 @@ public class Pizza {
     @Override
     public String toString() {
         String descrizione = this.getDescription();
-        return "- " + name + "\n\t\tPrezzo: " + price + " €\n\t\tIngredienti: " + descrizione;
+        String nome = Services.colorSystemOut(name, Color.YELLOW, false, true);
+        String prezzo = Services.colorSystemOut("\n\t\tPrezzo: ",Color.ORANGE,false,false);
+        String ingr = Services.colorSystemOut("\n\t\tIngredienti: ",Color.ORANGE,false,false);
+        return "- " + nome + prezzo + price + " €" + ingr + descrizione;
     }
 
     public String getMaiuscName() {

@@ -1,5 +1,6 @@
 package pizzeria;
 
+import java.awt.*;
 import java.time.LocalTime;
 import java.util.*;
 @SuppressWarnings("deprecation")
@@ -68,8 +69,6 @@ public class Pizzeria {
         this.closings[5] = cl6;
         this.closings[6] = cl7;
     }
-
-    /** Crea o ripristina il vettore di infornate, ad ogni nuova apertura della pizzeria */
 
     public void addOrder(Order order) {
         orders.add(order);
@@ -242,18 +241,28 @@ public class Pizzeria {
         return order;
     }
 
-    public String helloThere(){         // da sistemare orario apertura-chiusura!!!
-        String dati = "\nPIZZERIA \"" + this.name + "\"\n\t" + this.address;
+    public String helloThere(){
         String opTime = Services.timeStamp(openingToday.getHours(), openingToday.getMinutes());
         String clTime = Services.timeStamp(closingToday.getHours(), closingToday.getMinutes());
-        String open = "\n\tApertura oggi: " + opTime + " - " + clTime;
-        return "\n--------------------------------------------------------------------------------------\n" + dati + open;
+        StringBuilder hello = new StringBuilder();
+        hello.append("\n--------------------------------------------------------------------------------------\n");
+        hello.append(Services.colorSystemOut("\nPIZZERIA ", Color.ORANGE,false,false));
+        hello.append(Services.colorSystemOut("\"" + this.name + "\"\n\t",Color.RED,true,false));
+        hello.append(Services.colorSystemOut(this.address,Color.ORANGE,false,false));
+        if(openingToday.equals(closingToday))
+            hello.append(Services.colorSystemOut("\n\tOGGI CHIUSO", Color.RED, true, false));
+        else {
+            hello.append(Services.colorSystemOut("\n\tApertura oggi: ", Color.ORANGE, false, false));
+            hello.append(Services.colorSystemOut(opTime + " - " + clTime, Color.RED, true, false));
+        }
+        return hello.toString();
     }
 
     /** Da TextInterface, permette di visualizzare il menu completo. */
     public String printMenu() {
-        String line= "\n--------------------------------------------------------------------------------------\n";
-        StringBuilder s= new StringBuilder("    >>  MENU\n");
+        String line = "\n--------------------------------------------------------------------------------------\n";
+        StringBuilder s = new StringBuilder("\n\t>>>  ");
+        s.append(Services.colorSystemOut(" M E N U \n",Color.YELLOW,false,true));
         for (String a:menu.keySet()) {
             s.append("\n").append(menu.get(a).toString());
         }
@@ -318,7 +327,8 @@ public class Pizzeria {
         if(availables.size() > 0) {
             return availables;
         } else {
-            System.out.println("Spiacenti: la pizzeria riapre domani. Torna a trovarci!");
+            String spiacenti = "Spiacenti: la pizzeria riapre domani. Torna a trovarci!";
+            System.out.println(Services.colorSystemOut(spiacenti,Color.RED,false,false));
             return null;
         }
     }
@@ -355,14 +365,16 @@ public class Pizzeria {
 
     /** In TextInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
     public String possibleAddictions() {
-        StringBuilder possibiliIngr = new StringBuilder("Possibili aggiunte: ");
+        StringBuilder possibiliIngr = new StringBuilder();
+        possibiliIngr.append(Services.colorSystemOut("\tPossibili aggiunte: ",Color.ORANGE,false,false));
         int i = 0;
         for (Toppings ingr : getIngredientsPizzeria().values()) {
+            if (i % 10 == 0)
+                possibiliIngr.append("\n\t");
             possibiliIngr.append(ingr.name().toLowerCase().replace("_", " ")).append(", ");
             i++;
-            if (i % 10 == 0)
-                possibiliIngr.append("\n");
         }
+        possibiliIngr.append("");
         return possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")); // elimina ultima virgola
     }
 
