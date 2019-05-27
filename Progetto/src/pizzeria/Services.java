@@ -46,6 +46,31 @@ public class Services {
 		return cString.toString();
 	}
 
+	public static void paintMenuString() {
+		String l1 = "        _______________________________________________";
+		l1 = colorSystemOut(l1,Color.WHITE,true,false);
+		String l2 = "        ||___________________________________________||";
+		l2 = colorSystemOut(l2,Color.WHITE,true,false);
+		String v = "        ||";
+		v = colorSystemOut(v,Color.WHITE,true,false);
+		String a = "                _____              ";
+		a = colorSystemOut(a, Color.RED,true,false);
+		String b = "        |\\  /| |      |\\   | |    |";
+		b = colorSystemOut(b, Color.RED,true,false);
+		String c = "        | \\/ | |___   | \\  | |    |";
+		c = colorSystemOut(c, Color.RED,true,false);
+		String d = "        |    | |      |  \\ | |    |";
+		d = colorSystemOut(d, Color.RED,true,false);
+		String e = "        |    | |_____ |   \\| |____|";
+		e = colorSystemOut(e, Color.RED,true,false);
+
+		System.out.println("\n"+getLine()+"\n"+l1+"\n"+v+a+v+"\n"+v+b+v+"\n"+v+c+v+"\n"+v+d+v+"\n"+v+e+v+"\n"+l2);
+	}
+
+	public static String getLine(){
+		return "\n---------------------------------------------------------------------------------------------------\n";
+	}
+
 	public static int getMinutes(int ora, int minuto){
 		return 60*ora + minuto;
 	}

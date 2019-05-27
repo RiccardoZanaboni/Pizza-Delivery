@@ -27,8 +27,6 @@ public class Pizzeria {
      * La Pizzeria è il locale che riceve le ordinazioni e le evade nei tempi richiesti.
      * @param name: nome identificativo della Pizzeria
      * @param address: indirizzo della Pizzeria
-     * @param //closingTime: orario di chiusura, ogni giorno
-     * @param //openingTime: orario di apertura, ogni giorno
      *
      * Inizializza anche il forno, con tutte le possibili infornate,
      * una ArrayList di fattorini e una di ordini del giorno.
@@ -241,12 +239,12 @@ public class Pizzeria {
         return order;
     }
 
+    /** Su TextInterface dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria. */
     public String helloThere(){
         String opTime = Services.timeStamp(openingToday.getHours(), openingToday.getMinutes());
         String clTime = Services.timeStamp(closingToday.getHours(), closingToday.getMinutes());
-        StringBuilder hello = new StringBuilder();
-        hello.append("\n--------------------------------------------------------------------------------------\n");
-        hello.append(Services.colorSystemOut("\nPIZZERIA ", Color.ORANGE,false,false));
+        StringBuilder hello = new StringBuilder(Services.getLine());
+        hello.append(Services.colorSystemOut("PIZZERIA ", Color.ORANGE,false,false));
         hello.append(Services.colorSystemOut("\"" + this.name + "\"\n\t",Color.RED,true,false));
         hello.append(Services.colorSystemOut(this.address,Color.ORANGE,false,false));
         if(openingToday.equals(closingToday))
@@ -258,15 +256,17 @@ public class Pizzeria {
         return hello.toString();
     }
 
-    /** Da TextInterface, permette di visualizzare il menu completo. */
+    /** Da TextInterface, permette di stampare a video il menu completo. */
     public String printMenu() {
-        String line = "\n--------------------------------------------------------------------------------------\n";
-        StringBuilder s = new StringBuilder("\n\t>>>  ");
-        s.append(Services.colorSystemOut(" M E N U \n",Color.YELLOW,false,true));
+        String line = Services.getLine();
+        Services.paintMenuString();
+        //StringBuilder s = new StringBuilder("\n\t>>>  ");
+        //s.append(Services.colorSystemOut(" M E N U \n",Color.YELLOW,false,true));
+        StringBuilder s = new StringBuilder();
         for (String a:menu.keySet()) {
             s.append("\n").append(menu.get(a).toString());
         }
-        return line+s+line;
+        return s+"\n"+line;
     }
 
     /** Controlla che la pizzeria sia aperta in un determinato orario, nella giornata odierna. */
@@ -327,7 +327,8 @@ public class Pizzeria {
         if(availables.size() > 0) {
             return availables;
         } else {
-            String spiacenti = "Spiacenti: la pizzeria riapre domani. Torna a trovarci!";
+            /* se l'ordine inizia in un orario ancora valido, ma impiega troppo tempo e diventa troppo tardi: */
+            String spiacenti = "\nSpiacenti: si è fatto tardi, la pizzeria è ormai in chiusura. Torna a trovarci!\n";
             System.out.println(Services.colorSystemOut(spiacenti,Color.RED,false,false));
             return null;
         }
@@ -366,7 +367,6 @@ public class Pizzeria {
     /** In TextInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
     public String possibleAddictions() {
         StringBuilder possibiliIngr = new StringBuilder();
-        possibiliIngr.append(Services.colorSystemOut("\tPossibili aggiunte: ",Color.ORANGE,false,false));
         int i = 0;
         for (Toppings ingr : getIngredientsPizzeria().values()) {
             if (i % 10 == 0)
@@ -374,8 +374,7 @@ public class Pizzeria {
             possibiliIngr.append(ingr.name().toLowerCase().replace("_", " ")).append(", ");
             i++;
         }
-        possibiliIngr.append("");
-        return possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")); // elimina ultima virgola
+        return possibiliIngr.toString();
     }
 
     /** Verifica che sia possibile cuocere le pizze nell' infornata richiesta e in quella appena precedente. */

@@ -1,11 +1,8 @@
-import com.sun.org.apache.regexp.internal.RE;
 import exceptions.RestartOrderExc;
 import exceptions.TryAgainExc;
 import pizzeria.*;
 
 import java.awt.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -28,11 +25,11 @@ public class TextInterface {
 
     private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
             // orari di apertura, da domenica a sabato
-            LocalTime.MIN.plus(60*16+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(35,ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(60*16+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1000, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
             LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
             LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
             // orari di chiusura, da domenica a sabato
-            LocalTime.MIN.plus(60*17+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1235,ChronoUnit.MINUTES), LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(60*17+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1382, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES),
             LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES),
             LocalTime.MIN.plus(60*22+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES));
     private Scanner scan = new Scanner(System.in);
@@ -68,11 +65,14 @@ public class TextInterface {
                 orario = orderTime(order, tot);
                 System.out.println(orario);
                 if (insertNameAndAddress(order)) {
-                    order.recapOrder();
+                    System.out.println(order.recapOrder());
                     askConfirm(order, orario, tot);
                 }
             } catch (RestartOrderExc e) {
-                makeOrderText();
+                String annullato = Services.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
+                System.out.println("\t>> " + annullato);
+                System.out.println(Services.getLine());
+                wantNewOrder();
             }
         } else if (Services.checkTimeOrder(wolf).equals("CLOSING")) {
             String spiacenti = "Spiacenti: la pizzeria al momento è in chiusura. Torna a trovarci domani!";
@@ -83,11 +83,43 @@ public class TextInterface {
         }
     }
 
+    /** Al lancio di TextInterface, inizia un nuovo ordine solo se richiesto. */
+    private void wantNewOrder() {
+        String open = Services.checkTimeOrder(wolf);
+        switch (open) {
+            case "OPEN":
+                String domanda = Services.colorSystemOut("Desideri eseguire un nuovo ordine?   ", Color.YELLOW, false, false);
+                System.out.println(domanda + "[S/N]");
+                String risposta = scan.nextLine().toUpperCase();
+                switch (risposta) {
+                    case "S":
+                        makeOrderText();
+                        break;
+                    case "N":
+                        System.out.println(Services.colorSystemOut("Ok, come non detto... :)\nA presto!", Color.YELLOW, false, false));
+                        break;
+                    default:
+                        System.out.println(Services.colorSystemOut("Spiacenti: inserito carattere non corretto. Risprovare: ", Color.RED, false, false));
+                        wantNewOrder();
+                        break;
+                }
+                break;
+            case "CLOSING":
+                String chiusura = "Spiacenti: la pizzeria al momento è in chiusura. Torna a trovarci domani!";
+                System.out.println(Services.colorSystemOut(chiusura, Color.RED, false, false));
+                break;
+            case "CLOSED":
+                String chiusa = "Spiacenti: la pizzeria al momento è chiusa. Torna a trovarci domani!";
+                System.out.println(Services.colorSystemOut(chiusa, Color.RED, false, false));
+                break;
+        }
+    }
+
     /** Esegue i controlli dovuti sulla stringa relativa all'orario e,
      * in caso di successo, restituisce il Date "orarioScelto". */
-    private Date orderTime(Order order, int tot) {
+    private Date orderTime(Order order, int tot) throws RestartOrderExc {
         String orarioScelto = insertTime(tot);
-        Date d = null;
+        Date d;
         try {
             if (orarioScelto.toUpperCase().equals("F")) {
                 throw new RestartOrderExc();
@@ -115,9 +147,6 @@ public class TextInterface {
             } else {
                 throw new TryAgainExc();
             }
-        } catch (RestartOrderExc roe) {
-            System.out.println("\n----------------------------------------------------------------------\n");
-            makeOrderText();
         } catch (ArrayIndexOutOfBoundsException obe) {
             String spiacenti = "Spiacenti: la pizzeria è chiusa nell'orario inserito. Riprovare: ";
             System.out.println(Services.colorSystemOut(spiacenti,Color.RED,false,false));
@@ -131,19 +160,22 @@ public class TextInterface {
     }
 
     /** Stampa a video tutti gli orari disponibili per la consegna e ritorna la stringa inserita dall'utente. */
-    private String insertTime (int tot) {
+    private String insertTime (int tot) throws RestartOrderExc {
         String domanda = Services.colorSystemOut("A che ora vuoi ricevere la consegna? [formato HH:mm]",Color.YELLOW,false,false);
-        System.out.println(domanda + " \t\t(Inserisci 'F' per annullare e ricominciare)");
+        System.out.println(domanda + " \t\t(Inserisci 'F' per annullare.)");
         System.out.println(Services.colorSystemOut("\tEcco gli orari disponibili:",Color.YELLOW,false,false));
         int c = 0;
         System.out.print("\t");
-        for (String s : wolf.availableTimes(tot)) {
-            System.out.print(s);
-            c++;
-            if (c % 18 == 0)
-                System.out.print("\n\t");
+        try {
+            for (String s : wolf.availableTimes(tot)) {
+                System.out.print(s);
+                c++;
+                if (c % 18 == 0) System.out.print("\n\t");
+            }
+            System.out.print("\n");
+        } catch (NullPointerException npe) {
+            throw new RestartOrderExc();
         }
-        System.out.print("\n");
         return scan.nextLine();
     }
 
@@ -175,7 +207,7 @@ public class TextInterface {
             if(isPrimaRichiesta)
                 System.out.print("\n");
             else
-                System.out.print("\t\t(Inserisci 'OK' se non desideri altro, oppure 'F' per annullare e ricominciare)\n");
+                System.out.print("\t\t(Inserisci 'OK' se non desideri altro, oppure 'F' per annullare.)\n");
             nomePizza = scan.nextLine().toUpperCase();
             try {
                 if (nomePizza.equals("F")) {
@@ -186,15 +218,12 @@ public class TextInterface {
                 if (nomePizza.equals("OK") && isPrimaRichiesta) {
                     err = "Numero di pizze non valido. Riprovare:";
                     System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
-                } else if (nomePizza.equals("OK")) ok = true;
-                else if (!(wolf.getMenu().containsKey(nomePizza))) throw new TryAgainExc();
+                } else if (nomePizza.equals("OK"))
+                    ok = true;
+                else if (!(wolf.getMenu().containsKey(nomePizza)))
+                    throw new TryAgainExc();
                 else    // pizza inserita correttamente
                     ok = true;
-            } catch (RestartOrderExc roe) {
-                String annullato = Services.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
-                System.out.println("\t>> " + annullato);
-                System.out.println("\n----------------------------------------------------------------------\n");
-                makeOrderText();
             } catch (TryAgainExc tae) {
                 String spiacenti = "Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:";
                 System.out.println(Services.colorSystemOut(spiacenti,Color.RED,false,false));
@@ -239,18 +268,18 @@ public class TextInterface {
      * di ingredienti, rispetto ad una specifica presente sul menu. */
     private void askModifyPizza(Order order, String nomePizza, int num) {
         String domanda = Services.colorSystemOut("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?",Color.YELLOW,false,false);
-        System.out.println(domanda + "\t(S/N):");
+        System.out.println(domanda + "\t[S/N]: ");
         String answer = scan.nextLine().toUpperCase();
         switch (answer) {
             case "S":
-                System.out.println(wolf.possibleAddictions());
+                System.out.println(possibleAddictions(wolf));
                 String adding = Services.colorSystemOut("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
                 System.out.println(adding);
                 String aggiunte = scan.nextLine();
                 String rmving = Services.colorSystemOut("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
                 System.out.println(rmving);
                 String rimozioni = scan.nextLine();
-                addPizza(order, wolf.getMenu().get(nomePizza), aggiunte, rimozioni, num, wolf.getSUPPL_PRICE());
+                addAndRmvToppingsText(order, wolf.getMenu().get(nomePizza), aggiunte, rimozioni, num, wolf.getSUPPL_PRICE());
                 break;
             case "N":
                 order.addPizza(wolf.getMenu().get(nomePizza), num);
@@ -265,38 +294,31 @@ public class TextInterface {
     }
 
     /** Gestisce l'inserimento del nome del cliente e dell'indirizzo di spedizione. */
-    private boolean insertNameAndAddress(Order order) {
+    private boolean insertNameAndAddress(Order order) throws RestartOrderExc {
         boolean ok = true;
-        try {
-            String domanda1 = Services.colorSystemOut("Come ti chiami?",Color.YELLOW,false,false);
-            System.out.println(domanda1 + "\t\t(Inserisci 'F' per annullare l'ordine e ricominciare)");
-            String nome = scan.nextLine();
-            if (nome.toUpperCase().equals("F")) {
-                ok = false;
-                throw new RestartOrderExc();
-            }
-            Customer c = new Customer(nome);
-            order.setCustomer(c);
-            String domanda2 = Services.colorSystemOut("Inserisci l'indirizzo di consegna:",Color.YELLOW,false,false);
-            System.out.println(domanda2 + "\t\t(Inserisci 'F' per annullare l'ordine e ricominciare)");
-            String indirizzo = scan.nextLine();
-            if (indirizzo.toUpperCase().equals("F")) {
-                ok = false;
-                throw new RestartOrderExc();
-            }
-            order.setAddress(indirizzo);
-        } catch (RestartOrderExc e) {
-            String annullato = Services.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
-            System.out.println("\t>> " + annullato);
-            System.out.println("\n----------------------------------------------------------------------\n");
-            makeOrderText();            makeOrderText();
+        String domanda1 = Services.colorSystemOut("Come ti chiami?",Color.YELLOW,false,false);
+        System.out.println(domanda1 + "\t\t(Inserisci 'F' per annullare l'ordine)");
+        String nome = scan.nextLine();
+        if (nome.toUpperCase().equals("F")) {
+            ok = false;
+            throw new RestartOrderExc();
         }
+        Customer c = new Customer(nome);
+        order.setCustomer(c);
+        String domanda2 = Services.colorSystemOut("Inserisci l'indirizzo di consegna:",Color.YELLOW,false,false);
+        System.out.println(domanda2 + "\t\t(Inserisci 'F' per annullare l'ordine)");
+        String indirizzo = scan.nextLine();
+        if (indirizzo.toUpperCase().equals("F")) {
+            ok = false;
+            throw new RestartOrderExc();
+        }
+        order.setAddress(indirizzo);
         return ok;
     }
 
     /** Aggiunge la pizza all'Order, nella quantità inserita.
      * Effettua, nel caso, tutte le modifiche richieste, aggiornando il prezzo. */
-    private void addPizza(Order order, Pizza pizza, String aggiunte, String rimozioni, int num, double prezzoSupl) {
+    private void addAndRmvToppingsText(Order order, Pizza pizza, String aggiunte, String rimozioni, int num, double prezzoSupl) {
         HashMap<String, Toppings> ingr = new HashMap<>(pizza.getToppings());
         Pizza p = new Pizza(pizza.getMaiuscName(), ingr, pizza.getPrice());
         int piu=0;
@@ -339,12 +361,13 @@ public class TextInterface {
         switch (risp) {
             case "S":
                 wolf.updateOvenAndDeliveryMan(orario, tot);
-                order.confirmAndSetFull();
+                System.out.println(order.confirmAndSetFull());
 				String confirmedTime = Services.timeStamp(orario.getHours(),orario.getMinutes());
 				confirmedTime = Services.colorSystemOut(confirmedTime,Color.GREEN,true,false);
 				System.out.println("\t>> Consegna prevista: " + confirmedTime + ".");
-                System.out.println("\n----------------------------------------------------------------------\n");
-                wolf.addOrder(order);
+                System.out.println(Services.getLine());
+				wolf.addOrder(order);
+                //wantNewOrder();
                 break;
             case "N":
                 try {
@@ -352,8 +375,8 @@ public class TextInterface {
                 } catch (RestartOrderExc roe) {
                     String annullato = Services.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
                     System.out.println("\t>> " + annullato);
-                    System.out.println("\n----------------------------------------------------------------------\n");
-                    makeOrderText();
+                    System.out.println(Services.getLine());
+                    wantNewOrder();
                 }
                 break;
             default:
@@ -368,12 +391,18 @@ public class TextInterface {
         }
     }
 
+    /** In TextInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
+    private String possibleAddictions(Pizzeria pizzeria) {
+        StringBuilder possibiliIngr = new StringBuilder();
+        possibiliIngr.append(Services.colorSystemOut("\tPossibili aggiunte: ",Color.ORANGE,false,false));
+        possibiliIngr.append(pizzeria.possibleAddictions());
+        return possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")); // elimina ultima virgola
+    }
+
     public static void main(String[] args) {
         TextInterface textInterface = new TextInterface();
         System.out.println(textInterface.wolf.helloThere());
         System.out.println(textInterface.wolf.printMenu());
-        textInterface.makeOrderText();
-        //textInterface.makeOrderText();  //Per prova vettori orario
-        //textInterface.makeOrderText();
+        textInterface.wantNewOrder();
     }
 }

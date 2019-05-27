@@ -1,7 +1,5 @@
 package pizzeria;
 
-import com.sun.org.apache.regexp.internal.RE;
-import graphicElements.ButtonRmvPizza;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -57,8 +55,8 @@ public class Order {
     }
 
 	/** In TextInterface, stampa a video il riepilogo dell'ordine. */
-	public void recapOrder(){
-		String line = "\n-------------------------------------------------------------------------------------\n";
+	public String recapOrder(){
+		String line = Services.getLine();
 		StringBuilder recap = new StringBuilder();
 		recap.append(Services.colorSystemOut("ORDINE N. ",Color.RED,true,false));
 		recap.append(Services.colorSystemOut(orderCode,Color.RED,true,false));
@@ -71,7 +69,7 @@ public class Order {
 		recap.append(textRecapProducts());
 		recap.append(Services.colorSystemOut("TOTALE: € ",Color.YELLOW,true,false));
 		recap.append(Services.colorSystemOut(String.valueOf(getTotalPrice()),Color.RED,true,false));
-		System.out.println(line + recap + line);
+		return line + recap + line;
 	}
 
 	/** Restituisce una stringa con i vari prodotti, per il riepilogo. */
@@ -164,11 +162,10 @@ public class Order {
     	return isFull;
     }
 
-    public void confirmAndSetFull() {
+    public String confirmAndSetFull() {
         this.isFull = true;
-
         String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
-        System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
+        return Services.colorSystemOut(confirm, Color.GREEN,true,false);
     }
 
     public void setTime(Date orario) {
