@@ -26,15 +26,24 @@ import java.util.Date;
  */
 
 public class GraphicInterface extends Application {
+
+	/**
+	 * 16 parametri: nome, indirizzo, 7 orari di apertura (da domenica a sabato), 7 orari di chiusura (da domenica a sabato).
+	 * Gli orari partono sempre da LocalTime.MIN, che corrisponde a mezzanotte.
+	 * A questo si aggiunge (.plus()) il valore totale (in minuti): ad esempio, "60*16+45" corrisponde alle 16:45.
+	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek
+	 * */
 	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
-			// orari di chiusura, da domenica a sabato
-			LocalTime.MIN.plus(60*20+45, ChronoUnit.MINUTES), LocalTime.MIN, LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
+			// orari di apertura, da domenica a sabato
+			LocalTime.MIN.plus(60*16+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1000, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
 			// orari di chiusura, da domenica a sabato
-			LocalTime.MIN.plus(60*22+45, ChronoUnit.MINUTES), LocalTime.MAX, LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(60*17+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1382, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(60*22+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES));	private Stage window;
+			LocalTime.MIN.plus(60*22+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES)
+	);
+	private Stage window;
 	private Scene scene0, scene3;
 
 	public static void main(String[] args) {

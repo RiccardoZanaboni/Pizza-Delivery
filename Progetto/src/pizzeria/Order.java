@@ -94,7 +94,7 @@ public class Order {
 		return prodotti.toString();
 	}
 
-	/** costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
+	/** Costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
 	public GridPane graphRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
 		GridPane gridPane = new GridPane();
 		Label label = new Label();
@@ -162,10 +162,9 @@ public class Order {
     	return isFull;
     }
 
-    public String confirmAndSetFull() {
+    /** Setta l'ordine come completo. */
+    public void setFull() {
         this.isFull = true;
-        String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
-        return Services.colorSystemOut(confirm, Color.GREEN,true,false);
     }
 
     public void setTime(Date orario) {

@@ -51,6 +51,8 @@ public class Pizzeria {
         //addDeliveryMan(new DeliveryMan("Zanzatroni", this));
     }
 
+    /** una tantum: riempie i vettori della pizzeria contenenti gli orari
+     * di apertura e di chiusura per ogni giorno della settimana. */
     private void setDayOfTheWeek(LocalTime op1, LocalTime op2, LocalTime op3, LocalTime op4, LocalTime op5, LocalTime op6, LocalTime op7, LocalTime cl1, LocalTime cl2, LocalTime cl3, LocalTime cl4, LocalTime cl5, LocalTime cl6, LocalTime cl7) {
         this.openings[0] = op1;
         this.openings[1] = op2;
@@ -68,10 +70,12 @@ public class Pizzeria {
         this.closings[6] = cl7;
     }
 
+    /** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. */
     public void addOrder(Order order) {
         orders.add(order);
     }
 
+    /** Aggiunge la pizza specificata al menu della pizzeria. */
     private void addPizza(Pizza pizza){
         menu.put(pizza.getMaiuscName(),pizza);
     }
@@ -87,6 +91,7 @@ public class Pizzeria {
 
         Calendar cal = new GregorianCalendar();
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+        // inizializza il vettore di infornate di oggi, in base agli orari di apertura e chiusura di oggi.
         this.ovens = new Oven[OVEN_TIMES_FOR_HOUR * (closings[dayOfWeek-1].getHour() - openings[dayOfWeek-1].getHour())];
         for(int i = 0; i< ovens.length; i++) {
             this.ovens[i] = new Oven(availablePlaces);

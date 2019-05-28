@@ -23,6 +23,12 @@ import java.util.*;
 
 public class TextInterface {
 
+    /**
+     * 16 parametri: nome, indirizzo, 7 orari di apertura (da domenica a sabato), 7 orari di chiusura (da domenica a sabato).
+     * Gli orari partono sempre da LocalTime.MIN, che corrisponde a mezzanotte.
+     * A questo si aggiunge (.plus()) il valore totale (in minuti): ad esempio, "60*16+45" corrisponde alle 16:45.
+     * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek
+     * */
     private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
             // orari di apertura, da domenica a sabato
             LocalTime.MIN.plus(60*16+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1000, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
@@ -31,7 +37,8 @@ public class TextInterface {
             // orari di chiusura, da domenica a sabato
             LocalTime.MIN.plus(60*17+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1382, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES),
             LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(60*22+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES));
+            LocalTime.MIN.plus(60*22+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES)
+    );
     private Scanner scan = new Scanner(System.in);
 
     private TextInterface() {}
@@ -361,7 +368,9 @@ public class TextInterface {
         switch (risp) {
             case "S":
                 wolf.updateOvenAndDeliveryMan(orario, tot);
-                System.out.println(order.confirmAndSetFull());
+                order.setFull();
+                String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
+                System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = Services.timeStamp(orario.getHours(),orario.getMinutes());
 				confirmedTime = Services.colorSystemOut(confirmedTime,Color.GREEN,true,false);
 				System.out.println("\t>> Consegna prevista: " + confirmedTime + ".");
