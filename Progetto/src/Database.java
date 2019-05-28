@@ -11,7 +11,7 @@ public class Database {
     public Database(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/PIZZERIA?autoReconnect=true&useSSL=false", "root", "ilrichi10");
+             con = DriverManager.getConnection("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7293749?autoReconnect=true&useSSL=false", "sql7293749", "geZxKTlyi1");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

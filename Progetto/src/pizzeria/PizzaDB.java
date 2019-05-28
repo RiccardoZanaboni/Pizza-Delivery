@@ -13,7 +13,7 @@ public class PizzaDB extends Pizza {
     public static PreparedStatement putPizza(Connection con, String nome, String ingred, int prezzo){
         PreparedStatement preparedStatement=null;
         try{
-            preparedStatement =con.prepareStatement("insert into PIZZERIA.Pizze values('"+nome+"','"+ingred+"','"+prezzo+"');");
+            preparedStatement =con.prepareStatement("insert into sql7293749.Pizze values('"+nome+"','"+ingred+"','"+prezzo+"');");
 
         }catch(Exception e) {
             ;
@@ -25,7 +25,7 @@ public class PizzaDB extends Pizza {
         ResultSet rs=null;
         try {
             Statement statement=con.createStatement();
-            rs=statement.executeQuery("select Pizze from PIZZERIA.Pizze where nome='"+name+"'");
+            rs=statement.executeQuery("select Pizze from sql7293749.Pizze where nome='"+name+"'");
             rs.next();
         }catch (Exception e){
             System.out.println(e.getMessage());
