@@ -22,7 +22,6 @@ import pizzeria.*;
 
 public class MenuPage {
 	private Scene scene1;
-	private Scene scene3 = null;
 
 	public void display(Stage window, Pizzeria pizzeria) {
 		Label label1 = new Label("Benvenuto");
@@ -49,14 +48,20 @@ public class MenuPage {
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
         String checkOpen = Services.checkTimeOrder(pizzeria);
 		makeOrderButton.setOnAction(e -> {
-			if(checkOpen.equals("OPEN")) {		// pizzeria aperta
-				Order order = pizzeria.initializeNewOrder();
-				OrderPage1 orderPage1 = new OrderPage1();
-				orderPage1.display(window, scene1, order, pizzeria);
-			} else if(checkOpen.equals("CLOSING")) {
-				ClosedPizzeriaAlert.display(true);		// pizzeria in chiusura
-			} else {
-				ClosedPizzeriaAlert.display(false);		// pizzeria già chiusa
+			switch (checkOpen) {
+				case "OPEN":        // pizzeria aperta
+					Order order = pizzeria.initializeNewOrder();
+					OrderPage1 orderPage1 = new OrderPage1();
+					orderPage1.display(window, scene1, order, pizzeria);
+					break;
+				case "CLOSING":
+					ClosedPizzeriaAlert.display(true);        // pizzeria in chiusura
+
+					break;
+				default:
+					ClosedPizzeriaAlert.display(false);        // pizzeria già chiusa
+
+					break;
 			}
 		});
 

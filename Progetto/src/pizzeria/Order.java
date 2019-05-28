@@ -26,7 +26,7 @@ public class Order {
 
     public Order(int num) {
         this.customer = null;
-        this.orderCode = "ORD.00" + num;
+        this.orderCode = "ORD-00" + num;
         this.customerAddress = "";
         this.time = null;
         this.orderedPizze = new ArrayList<>();
@@ -36,21 +36,19 @@ public class Order {
     }
 
     public int getNumPizzeProvvisorie() {
-        return numTemporaryPizze;
+        return this.numTemporaryPizze;
     }
 
-    public void increaseNumPizzeProvvisorie() {
-        this.numTemporaryPizze ++;
-    }
-
-    public void decreaseNumPizzeProvvisorie() {
-        this.numTemporaryPizze --;
-    }
+    /** aggiorna il numero temporaneo di pizze dell'ordine, in seguito ad una aggiunta o rimozione.
+	 * Due possibilità: i=+1 oppure i=-1. */
+    public void setNumTemporaryPizze(int i) {
+    	this.numTemporaryPizze += i;
+	}
 
     /** aggiunge la pizza all'ordine. */
     public void addPizza(Pizza pizza, int num) {
         for (int i = 0; i < num; i++) {
-            orderedPizze.add(pizza);
+            this.orderedPizze.add(pizza);
         }
     }
 
@@ -59,11 +57,11 @@ public class Order {
 		String line = Services.getLine();
 		StringBuilder recap = new StringBuilder();
 		recap.append(Services.colorSystemOut("ORDINE N. ",Color.RED,true,false));
-		recap.append(Services.colorSystemOut(orderCode,Color.RED,true,false));
+		recap.append(Services.colorSystemOut(this.orderCode,Color.RED,true,false));
 		recap.append(Services.colorSystemOut("\nSIG.\t\t",Color.YELLOW,false,false));
-		recap.append(Services.colorSystemOut(customer.getUsername(),Color.GREEN,true,false));
+		recap.append(Services.colorSystemOut(this.customer.getUsername(),Color.GREEN,true,false));
 		recap.append(Services.colorSystemOut("\nINDIRIZZO:\t",Color.YELLOW,false,false));
-		recap.append(Services.colorSystemOut(customerAddress,Color.GREEN,true,false));
+		recap.append(Services.colorSystemOut(this.customerAddress,Color.GREEN,true,false));
 		recap.append(Services.colorSystemOut("\nORARIO:\t\t",Color.YELLOW,false,false));
 		recap.append(Services.colorSystemOut(Services.timeStamp(time.getHours(),time.getMinutes()),Color.GREEN,true,false));
 		recap.append(textRecapProducts());
@@ -77,7 +75,7 @@ public class Order {
 		StringBuilder prodotti = new StringBuilder("\n");
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		for (int i = 0; i < getNumPizze(); i++) {
-			Pizza p = orderedPizze.get(i);
+			Pizza p = this.orderedPizze.get(i);
 			int num = 0;
 			if (!(elencate.contains(p))) {
 				elencate.add(p);
@@ -94,15 +92,15 @@ public class Order {
 		return prodotti.toString();
 	}
 
-	/** costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
+	/** Costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
 	public GridPane graphRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
 		GridPane gridPane = new GridPane();
 		Label label = new Label();
-		label.setText(numTemporaryPizze+"");
+		label.setText(this.numTemporaryPizze+"");
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		int numTipo = 0;
 		for (int i = 0; i < getNumPizze(); i++) {
-			Pizza p = orderedPizze.get(i);
+			Pizza p = this.orderedPizze.get(i);
 			int num = 0;
 			boolean contains = false;
 			for (Pizza pizza : elencate) {
@@ -115,11 +113,12 @@ public class Order {
 				elencate.add(p);
 				for (int j = 0; j < getNumPizze(); j++) {
 					if (p.getMaiuscName().equals(getOrderedPizze().get(j).getMaiuscName()) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
-						num++;		// di quel "tipo di pizza" ce n'è una in più
+						// di quel "tipo di pizza" ce n'è una in più
+						num++;
 				}
-				nomiLabels.add(numTipo, new Label(Services.getCamelName(orderedPizze.get(i))));
-				ingrLabels.add(numTipo, new Label(orderedPizze.get(i).getDescription()));
-				prezziLabels.add(numTipo, new Label((orderedPizze.get(i).getPrice()*num + " €")));
+				nomiLabels.add(numTipo, new Label(Services.getCamelName(this.orderedPizze.get(i))));
+				ingrLabels.add(numTipo, new Label(this.orderedPizze.get(i).getDescription()));
+				prezziLabels.add(numTipo, new Label((this.orderedPizze.get(i).getPrice()*num + " €")));
 				countPizzeLabels.add(numTipo, new Label());
 				countPizzeLabels.get(numTipo).setText("" + num);
 
@@ -139,33 +138,32 @@ public class Order {
 		return gridPane;
     }
 
-    /** calcola e restituisce la spesa totale. */
+    /** Calcola e restituisce la spesa totale. */
 	public double getTotalPrice() {
 		double totale = 0;
 		for(int i = 0; i< getNumPizze(); i++){
-			totale += orderedPizze.get(i).getPrice();
+			totale += this.orderedPizze.get(i).getPrice();
 		}
 		return totale;
 	}
 
-	/** restituisce true se la pizza specificata è stata ordinata. */
+	/** Restituisce true se la pizza specificata è stata ordinata. */
 	public boolean searchPizza(Pizza pizza){
-		for (Pizza pizza1 : orderedPizze) {
+		for (Pizza pizza1 : this.orderedPizze) {
 			if (pizza1.equals(pizza))
 				return true;
 		}
 		return false;
 	}
 
-    /** il server-pizzeria inizia a preparare le pizze solo se isFull = true. */
+    /** Il server-pizzeria inizia a preparare le pizze solo se isFull = true. */
     public boolean isFull() {
-    	return isFull;
+    	return this.isFull;
     }
 
-    public String confirmAndSetFull() {
+    /** Setta l'ordine come completo. */
+    public void setFull() {
         this.isFull = true;
-        String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
-        return Services.colorSystemOut(confirm, Color.GREEN,true,false);
     }
 
     public void setTime(Date orario) {
@@ -181,31 +179,31 @@ public class Order {
 	}
 
 	public int getCountModifiedPizze() {
-		return countModifiedPizze;
+		return this.countModifiedPizze;
 	}
 
 	public Customer getCustomer() {
-		return customer;
+		return this.customer;
 	}
 
 	public String getAddress() {
-		return customerAddress;
+		return this.customerAddress;
 	}
 
 	public Date getTime() {
-		return time;
+		return this.time;
 	}
 
 	public ArrayList<Pizza> getOrderedPizze() {
-		return orderedPizze;
+		return this.orderedPizze;
 	}
 
 	public String getOrderCode() {
-		return orderCode;
+		return this.orderCode;
 	}
 
 	public int getNumPizze() {
-        return orderedPizze.size();
+        return this.orderedPizze.size();
     }
 
 	public void increaseCountModifiedPizze() {

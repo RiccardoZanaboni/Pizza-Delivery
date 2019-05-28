@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import pizzeria.Order;
 import pizzeria.Pizza;
@@ -19,15 +18,19 @@ public class ButtonRmvPizza extends Button {
 		imageView.setFitHeight(20);
 		imageView.setFitWidth(20);
 		this.setGraphic(imageView);
-		//this.setText("✘");
+		setId("rmvpizza");
+        getStylesheets().addAll(this.getClass().getResource("buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
 		this.setShape(new Circle(100000));
 		this.setOnAction(e-> {
 			if (order.getOrderedPizze().contains(pizza)) {
 				order.getOrderedPizze().remove(pizza);
-				pizzeria.getMenu().get(pizza.getMaiuscName()).decreaseCount();
-				order.decreaseNumPizzeProvvisorie();
+                // FIXME: 28/05/2019 sistemare il decremento per le pizze modificate
+                // FIXME: 28/05/2019 quando si elimina una pizza modificata il Count va a -1, ne puoi eliminare 
+                // FIXME: 28/05/2019 solo una alla volta , uscendo dallo ShoppingCart ogni volta
+				pizza.decreaseCount();
+				order.setNumTemporaryPizze(-1);
 				shoppingCartButton.setText(order.getNumPizzeProvvisorie()+"");
-				countPizza.setText(""+pizzeria.getMenu().get(pizza.getMaiuscName()).getCount());
+				countPizza.setText(""+pizza.getCount());
 
 			} else {
 				MinPizzasAlert.display(pizza.getMaiuscName());

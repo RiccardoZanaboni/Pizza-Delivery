@@ -7,7 +7,11 @@ public class Pizza {
     private String name;
     private double price;
     private HashMap <String, Toppings> ingredients;
-    private int count = 0;      // FIXME: ma che senso ha "count" in Pizza?
+    private int count = 0;
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /**
      * Il prodotto Pizza è caratterizzato da un nome, un prezzo ed una lista di ingredienti.
@@ -24,18 +28,18 @@ public class Pizza {
     @Override
     public String toString() {
         String descrizione = this.getDescription();
-        String nome = Services.colorSystemOut(name, Color.YELLOW, false, true);
+        String nome = Services.colorSystemOut(this.name, Color.YELLOW, false, true);
         String prezzo = Services.colorSystemOut("\n\t\tPrezzo: ",Color.ORANGE,false,false);
         String ingr = Services.colorSystemOut("\n\t\tIngredienti: ",Color.ORANGE,false,false);
-        return "- " + nome + prezzo + price + " €" + ingr + descrizione;
+        return "- " + nome + prezzo + this.price + " €" + ingr + descrizione;
     }
 
     public String getMaiuscName() {
-        return name.toUpperCase();
+        return this.name.toUpperCase();
     }
 
     public HashMap<String, Toppings> getToppings() {
-        return ingredients;
+        return this.ingredients;
     }
 
     /** Restituisce un'unica String che corrisponde alla lista degli ingredienti della pizza. */
@@ -50,18 +54,18 @@ public class Pizza {
 
     /** Se assente, aggiunge l'ingrediente richiesto alla pizza. */
     public void addIngredients(Toppings ing){
-        if(!(ingredients.containsKey(ing.name())))
-            ingredients.put(ing.name(),ing);
+        if(!(this.ingredients.containsKey(ing.name())))
+            this.ingredients.put(ing.name(),ing);
     }
 
     /** Se presente, rimuove l'ingrediente selezionato dalla pizza. */
     public void rmvIngredients(Toppings ing){
-        if(ingredients.containsKey(ing.name()))
-            ingredients.remove(ing.name(),ing);
+        if(this.ingredients.containsKey(ing.name()))
+            this.ingredients.remove(ing.name(),ing);
     }
 
     public double getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setPrice(double prezzo) {
@@ -69,7 +73,7 @@ public class Pizza {
     }
 
     public int getCount() {
-        return count;
+        return this.count;
     }
 
     public void increaseCount() {

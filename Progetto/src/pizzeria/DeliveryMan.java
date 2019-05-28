@@ -13,7 +13,7 @@ public class DeliveryMan {
         this.name = name;
         int startMinutes = 60*pizzeria.getOpeningTime().getHours() + pizzeria.getOpeningTime().getMinutes();
         int endMinutes = 60*pizzeria.getClosingTime().getHours() + pizzeria.getClosingTime().getMinutes();
-        int length = (int) ((endMinutes-startMinutes)/5);
+        int length = (endMinutes-startMinutes)*pizzeria.getDELIVERYMAN_TIMES_FOR_HOUR()/60;     // (..-..)/5
         this.deliveryManTimes = new TimeBoxDeliveryMan[length];
         for(int i = 0; i < length; i++){
             deliveryManTimes[i] = new TimeBoxDeliveryMan();
