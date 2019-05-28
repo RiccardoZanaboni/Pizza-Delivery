@@ -8,6 +8,7 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 import pizzeria.Pizzeria;
+import pizzeria.Services;
 
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -27,21 +28,34 @@ import java.time.temporal.ChronoUnit;
 public class GraphicInterface extends Application {
 
 	/**
-	 * 16 parametri: nome, indirizzo, 7 orari di apertura (da domenica a sabato), 7 orari di chiusura (da domenica a sabato).
+	 * 16 parametri: nome, indirizzo, 7 orari di apertura (da domenica a sabato),
+	 * 7 orari di chiusura (da domenica a sabato).
+	 *
 	 * Gli orari partono sempre da LocalTime.MIN, che corrisponde a mezzanotte.
-	 * A questo si aggiunge (.plus()) il valore totale (in minuti): ad esempio, "60*16+45" corrisponde alle 16:45.
-	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek
+	 * A questo si aggiunge (con il metodo plus()) ora e minuti desiderati.
+	 *
+	 * ATTENZIONE: Per lasciare la pizzeria chiusa in un particolare giorno, porre openTime = closeTime.
+	 *
+	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
 	 * */
 	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
 			// orari di apertura, da domenica a sabato
-			LocalTime.MIN.plus(60*16+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1000, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
 			// orari di chiusura, da domenica a sabato
-			LocalTime.MIN.plus(60*17+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1382, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(60*22+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES)
-	);
+			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
+			);
 	private Stage window;
 	private Scene scene0, scene3;
 

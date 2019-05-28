@@ -22,7 +22,7 @@ class ButtonModPizza extends Button {
                     order.increaseCountModifiedPizze();
                     //countModificheLabel.setText("" + order.getCountModifiedPizze());
                     ModifyBox.setAnswer();
-                    order.increaseNumPizzeProvvisorie();
+                    order.setNumTemporaryPizze(1);
                     shoppingCartButton.setText(order.getNumPizzeProvvisorie()+"");
                 }
             }else

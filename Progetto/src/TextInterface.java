@@ -24,20 +24,33 @@ import java.util.*;
 public class TextInterface {
 
     /**
-     * 16 parametri: nome, indirizzo, 7 orari di apertura (da domenica a sabato), 7 orari di chiusura (da domenica a sabato).
+     * 16 parametri: nome, indirizzo, 7 orari di apertura (da domenica a sabato),
+     * 7 orari di chiusura (da domenica a sabato).
+     *
      * Gli orari partono sempre da LocalTime.MIN, che corrisponde a mezzanotte.
-     * A questo si aggiunge (.plus()) il valore totale (in minuti): ad esempio, "60*16+45" corrisponde alle 16:45.
-     * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek
+     * A questo si aggiunge (con il metodo plus()) ora e minuti desiderati.
+     *
+     * ATTENZIONE: Per lasciare la pizzeria chiusa in un particolare giorno, porre openTime = closeTime.
+     *
+     * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
      * */
     private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
             // orari di apertura, da domenica a sabato
-            LocalTime.MIN.plus(60*16+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1000, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*11+30, ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
             // orari di chiusura, da domenica a sabato
-            LocalTime.MIN.plus(60*17+45, ChronoUnit.MINUTES), LocalTime.MIN.plus(1382, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*21+30, ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(60*22+30, ChronoUnit.MINUTES), LocalTime.MIN.plus(60*23+30, ChronoUnit.MINUTES)
+            LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
     );
     private Scanner scan = new Scanner(System.in);
 
@@ -94,6 +107,7 @@ public class TextInterface {
     private void wantNewOrder() {
         String open = Services.checkTimeOrder(wolf);
         switch (open) {
+            // se la pizzeria è aperta.
             case "OPEN":
                 String domanda = Services.colorSystemOut("Desideri eseguire un nuovo ordine?   ", Color.YELLOW, false, false);
                 System.out.println(domanda + "[S/N]");
@@ -111,10 +125,12 @@ public class TextInterface {
                         break;
                 }
                 break;
+            // se la pizzeria è ancora aperta, ma non ci sono i tempi per eseguire un nuovo ordine.
             case "CLOSING":
                 String chiusura = "Spiacenti: la pizzeria al momento è in chiusura. Torna a trovarci domani!";
                 System.out.println(Services.colorSystemOut(chiusura, Color.RED, false, false));
                 break;
+            // se la pizzeria per oggi ha terminato il turno lavorativo, quindi è chiusa.
             case "CLOSED":
                 String chiusa = "Spiacenti: la pizzeria al momento è chiusa. Torna a trovarci domani!";
                 System.out.println(Services.colorSystemOut(chiusa, Color.RED, false, false));
@@ -133,7 +149,7 @@ public class TextInterface {
             }
             if (Services.checkValidTime(orarioScelto)) {
                 d = Services.stringToDate(orarioScelto);
-                assert d != null :"Error"; // se condizione non è verificata, il programma viene terminato
+                assert d != null : "Error"; // se condizione non è verificata, il programma viene terminato
                 int ora = d.getHours();
                 int minuti = d.getMinutes();
                 if (!wolf.isOpen(d)) {
@@ -166,7 +182,8 @@ public class TextInterface {
         return d;
     }
 
-    /** Stampa a video tutti gli orari disponibili per la consegna e ritorna la stringa inserita dall'utente. */
+    /** Stampa a video tutti gli orari disponibili per la consegna
+     * e ritorna la stringa inserita dall'utente. */
     private String insertTime (int tot) throws RestartOrderExc {
         String domanda = Services.colorSystemOut("A che ora vuoi ricevere la consegna? [formato HH:mm]",Color.YELLOW,false,false);
         System.out.println(domanda + " \t\t(Inserisci 'F' per annullare.)");
@@ -177,7 +194,7 @@ public class TextInterface {
             for (String s : wolf.availableTimes(tot)) {
                 System.out.print(s);
                 c++;
-                if (c % 18 == 0) System.out.print("\n\t");
+                if (c % 18 == 0) System.out.print("\n\t");      // stampa 18 orari su ogni riga
             }
             System.out.print("\n");
         } catch (NullPointerException npe) {
@@ -186,21 +203,16 @@ public class TextInterface {
         return scan.nextLine();
     }
 
+    /** Assicura che all'orario attuale della richiesta
+     * sia effettivamente possibile portare a termine un ordine */
     private boolean checkNotTooLate(Date orarioScelto, int tot) {
-        int orderHour = orarioScelto.getHours();
-        int orderMinutes = orarioScelto.getMinutes();
-        Calendar cal = new GregorianCalendar();
+        int chosenTime = Services.getMinutes(orarioScelto);
+        int nowTime = Services.getNowMinutes();
         if(tot<wolf.getOvens()[0].getPostiDisp())
-            cal.add(Calendar.MINUTE, 14);       // tengo conto dei tempi minimi di una infornata e consegna.
+            nowTime += 14;       // tengo conto dei tempi minimi di una infornata e consegna.
         else
-            cal.add(Calendar.MINUTE, 19);       // tengo conto dei tempi minimi di due infornate e consegna.
-        int nowHour = cal.get(Calendar.HOUR_OF_DAY);
-        int nowMinutes = cal.get(Calendar.MINUTE);
-
-        if(orderHour < nowHour || (orderHour == nowHour && orderMinutes < nowMinutes))
-            return false;
-        else
-            return true;
+            nowTime += 19;       // tengo conto dei tempi minimi di due infornate e consegna.
+        return (chosenTime >= nowTime);
     }
 
     /** Restituisce il nome della pizza desiderata, dopo avere effettuato i dovuti controlli:
@@ -248,13 +260,13 @@ public class TextInterface {
         int totOrdinate = order.getNumPizze();
         do {
             String domanda = Services.colorSystemOut("Quante " + nomePizza + " vuoi?",Color.YELLOW,false,false);
-            System.out.println(domanda + "\t[1.." + (16-totOrdinate) + "]");
+            System.out.println(domanda + "\t[1.." + (2*(wolf.getAvailablePlaces())-totOrdinate) + "]");
             String line = scan.nextLine();
             try {
                 num = Integer.parseInt(line);
                 if (num <= 0)
                     throw new NumberFormatException();
-                else if (totOrdinate + num > 16)    // max 16 pizze per ordine
+                else if (totOrdinate + num > 2*wolf.getAvailablePlaces())    // max 16 pizze per ordine
                     throw new TryAgainExc();
                 else {
                     ok = true;
@@ -367,6 +379,7 @@ public class TextInterface {
         String risp = scan.nextLine().toUpperCase();
         switch (risp) {
             case "S":
+                // conferma l'ordine e lo aggiunge a quelli della pizzeria.
                 wolf.updateOvenAndDeliveryMan(orario, tot);
                 order.setFull();
                 String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
@@ -379,6 +392,7 @@ public class TextInterface {
                 //wantNewOrder();
                 break;
             case "N":
+                // annulla l'ordine.
                 try {
                     throw new RestartOrderExc();
                 } catch (RestartOrderExc roe) {
@@ -389,6 +403,7 @@ public class TextInterface {
                 }
                 break;
             default:
+                // è stato inserito un carattere diverso da 'S' o 'N'.
                 try {
                     throw new TryAgainExc();
                 } catch (TryAgainExc re) {
@@ -407,6 +422,7 @@ public class TextInterface {
         possibiliIngr.append(pizzeria.possibleAddictions());
         return possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")); // elimina ultima virgola
     }
+
 
     public static void main(String[] args) {
         TextInterface textInterface = new TextInterface();

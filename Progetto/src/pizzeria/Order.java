@@ -26,7 +26,7 @@ public class Order {
 
     public Order(int num) {
         this.customer = null;
-        this.orderCode = "ORD.00" + num;
+        this.orderCode = "ORD-00" + num;
         this.customerAddress = "";
         this.time = null;
         this.orderedPizze = new ArrayList<>();
@@ -36,16 +36,14 @@ public class Order {
     }
 
     public int getNumPizzeProvvisorie() {
-        return numTemporaryPizze;
+        return this.numTemporaryPizze;
     }
 
-    public void increaseNumPizzeProvvisorie() {
-        this.numTemporaryPizze ++;
-    }
-
-    public void decreaseNumPizzeProvvisorie() {
-        this.numTemporaryPizze --;
-    }
+    /** aggiorna il numero temporaneo di pizze dell'ordine, in seguito ad una aggiunta o rimozione.
+	 * Due possibilità: i=+1 oppure i=-1. */
+    public void setNumTemporaryPizze(int i) {
+    	this.numTemporaryPizze += i;
+	}
 
     /** aggiunge la pizza all'ordine. */
     public void addPizza(Pizza pizza, int num) {
@@ -115,7 +113,8 @@ public class Order {
 				elencate.add(p);
 				for (int j = 0; j < getNumPizze(); j++) {
 					if (p.getMaiuscName().equals(getOrderedPizze().get(j).getMaiuscName()) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
-						num++;		// di quel "tipo di pizza" ce n'è una in più
+						// di quel "tipo di pizza" ce n'è una in più
+						num++;
 				}
 				nomiLabels.add(numTipo, new Label(Services.getCamelName(this.orderedPizze.get(i))));
 				ingrLabels.add(numTipo, new Label(this.orderedPizze.get(i).getDescription()));
@@ -139,7 +138,7 @@ public class Order {
 		return gridPane;
     }
 
-    /** calcola e restituisce la spesa totale. */
+    /** Calcola e restituisce la spesa totale. */
 	public double getTotalPrice() {
 		double totale = 0;
 		for(int i = 0; i< getNumPizze(); i++){
@@ -148,7 +147,7 @@ public class Order {
 		return totale;
 	}
 
-	/** restituisce true se la pizza specificata è stata ordinata. */
+	/** Restituisce true se la pizza specificata è stata ordinata. */
 	public boolean searchPizza(Pizza pizza){
 		for (Pizza pizza1 : this.orderedPizze) {
 			if (pizza1.equals(pizza))
@@ -157,7 +156,7 @@ public class Order {
 		return false;
 	}
 
-    /** il server-pizzeria inizia a preparare le pizze solo se isFull = true. */
+    /** Il server-pizzeria inizia a preparare le pizze solo se isFull = true. */
     public boolean isFull() {
     	return this.isFull;
     }

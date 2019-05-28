@@ -28,7 +28,7 @@ public class ButtonRmvPizza extends Button {
                 // FIXME: 28/05/2019 quando si elimina una pizza modificata il Count va a -1, ne puoi eliminare 
                 // FIXME: 28/05/2019 solo una alla volta , uscendo dallo ShoppingCart ogni volta
 				pizza.decreaseCount();
-				order.decreaseNumPizzeProvvisorie();
+				order.setNumTemporaryPizze(-1);
 				shoppingCartButton.setText(order.getNumPizzeProvvisorie()+"");
 				countPizza.setText(""+pizza.getCount());
 
