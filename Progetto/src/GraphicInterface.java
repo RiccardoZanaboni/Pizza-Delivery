@@ -1,4 +1,5 @@
 import graphicElements.MenuPage;
+import graphicElements.ProfilePage;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -96,6 +97,8 @@ public class GraphicInterface extends Application {
 			fadeOut.play();
 			MenuPage menuPage = new MenuPage();
 			menuPage.display(window, wolf);
+			ProfilePage profilePage = new ProfilePage();
+			profilePage.display(window, wolf);
 		});
 
 	}
