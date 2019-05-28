@@ -31,6 +31,7 @@ public class TextInterface {
      * A questo si aggiunge (con il metodo plus()) ora e minuti desiderati.
      *
      * ATTENZIONE: Per lasciare la pizzeria chiusa in un particolare giorno, porre openTime = closeTime.
+     * PRESTARE PARTICOLARE ATTENZIONE: assicurarsi che ogni giorno la pizzeria rimanga aperta almeno 20 minuti.
      *
      * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
      * */
@@ -38,7 +39,7 @@ public class TextInterface {
             // orari di apertura, da domenica a sabato
             LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(16,40), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
@@ -46,7 +47,7 @@ public class TextInterface {
             // orari di chiusura, da domenica a sabato
             LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(17,0), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
@@ -60,46 +61,38 @@ public class TextInterface {
      * Utilizzo la sigla-chiave "OK" una volta terminata la scelta delle pizze, per continuare.
      * Utilizzo ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio. */
     private void makeOrderText() {
-        if(Services.checkTimeOrder(wolf).equals("OPEN")) {
-            Order order = wolf.initializeNewOrder();
-            int num;
-            String nomePizza;
-            int tot = 0;
-            boolean isPrimaRichiesta = true;
-            try {
-                do {
-                    nomePizza = whichPizza(isPrimaRichiesta);
-                    if (nomePizza.equals("OK")) {
-                        break;      // smette di chiedere pizze
-                    }
-                    isPrimaRichiesta = false;
-                    num = howManySpecificPizza(order, nomePizza);
-                    if (order.getNumPizze() == 16) {
-                        tot += num;
-                        break;      // hai chiesto esattamente 16 pizze in totale: smette di chiedere pizze
-                    }
-                    tot += num;
-                } while (true);
-
-                Date orario;
-                orario = orderTime(order, tot);
-                System.out.println(orario);
-                if (insertNameAndAddress(order)) {
-                    System.out.println(order.recapOrder());
-                    askConfirm(order, orario, tot);
+        Order order = wolf.initializeNewOrder();
+        int num;
+        String nomePizza;
+        int tot = 0;
+        boolean isPrimaRichiesta = true;
+        try {
+            do {
+                nomePizza = whichPizza(isPrimaRichiesta);
+                if (nomePizza.equals("OK")) {
+                    break;      // smette di chiedere pizze
                 }
-            } catch (RestartOrderExc e) {
-                String annullato = Services.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
-                System.out.println("\t>> " + annullato);
-                System.out.println(Services.getLine());
-                wantNewOrder();
+                isPrimaRichiesta = false;
+                num = howManySpecificPizza(order, nomePizza);
+                if (order.getNumPizze() == 16) {
+                    tot += num;
+                    break;      // hai chiesto esattamente 16 pizze in totale: smette di chiedere pizze
+                }
+                tot += num;
+            } while (true);
+
+            Date orario;
+            orario = orderTime(order, tot);
+            System.out.println(orario);
+            if (insertNameAndAddress(order)) {
+                System.out.println(order.recapOrder());
+                askConfirm(order, orario, tot);
             }
-        } else if (Services.checkTimeOrder(wolf).equals("CLOSING")) {
-            String spiacenti = "Spiacenti: la pizzeria al momento è in chiusura. Torna a trovarci domani!";
-            System.out.println(Services.colorSystemOut(spiacenti,Color.RED,false,false));
-        } else {
-            String spiacenti = "Spiacenti: la pizzeria al momento è chiusa. Torna a trovarci domani!";
-            System.out.println(Services.colorSystemOut(spiacenti,Color.RED,false,false));
+        } catch (RestartOrderExc e) {
+            String annullato = Services.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
+            System.out.println("\t>> " + annullato);
+            System.out.println(Services.getLine());
+            wantNewOrder();
         }
     }
 
@@ -132,7 +125,7 @@ public class TextInterface {
                 break;
             // se la pizzeria per oggi ha terminato il turno lavorativo, quindi è chiusa.
             case "CLOSED":
-                String chiusa = "Spiacenti: la pizzeria al momento è chiusa. Torna a trovarci domani!";
+                String chiusa = "Spiacenti: la pizzeria per oggi è chiusa. Torna a trovarci domani!";
                 System.out.println(Services.colorSystemOut(chiusa, Color.RED, false, false));
                 break;
         }

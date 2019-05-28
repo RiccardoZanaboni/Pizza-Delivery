@@ -35,6 +35,7 @@ public class GraphicInterface extends Application {
 	 * A questo si aggiunge (con il metodo plus()) ora e minuti desiderati.
 	 *
 	 * ATTENZIONE: Per lasciare la pizzeria chiusa in un particolare giorno, porre openTime = closeTime.
+	 * PRESTARE PARTICOLARE ATTENZIONE: assicurarsi che ogni giorno la pizzeria rimanga aperta almeno 20 minuti.
 	 *
 	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
 	 * */

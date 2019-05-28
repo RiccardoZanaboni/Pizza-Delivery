@@ -54,8 +54,8 @@ public class Pizza {
 
     /** Se assente, aggiunge l'ingrediente richiesto alla pizza. */
     public void addIngredients(Toppings ing){
-        if(!(ingredients.containsKey(ing.name())))
-            ingredients.put(ing.name(),ing);
+        if(!(this.ingredients.containsKey(ing.name())))
+            this.ingredients.put(ing.name(),ing);
     }
 
     /** Se presente, rimuove l'ingrediente selezionato dalla pizza. */

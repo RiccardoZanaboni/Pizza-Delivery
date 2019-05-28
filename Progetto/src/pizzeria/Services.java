@@ -139,15 +139,14 @@ public class Services {
 	/** Controlla, prima di un nuovo ordine, se sei ancora in tempo prima che la pizzeria chiuda. */
 	public static String checkTimeOrder(Pizzeria pizzeria) {
 		int nowMin = getNowMinutes();
+		int openMin = getMinutes(pizzeria.getOpeningTime());
 		int closeMin = getMinutes(pizzeria.getClosingTime());
-		if(closeMin - nowMin >= 20)
+		if(closeMin <= nowMin || openMin == closeMin)
+			return "CLOSED";
+		else if(closeMin - nowMin >= 20)
 			return "OPEN";
-		else {
-			if (closeMin > nowMin)
-				return "CLOSING";
-			else	// if (closeMin < nowMin)
-				return "CLOSED";
-		}
+		else
+			return "CLOSING";
 	}
 
 	/** Stringa-key a cui aggiungere il testo della stringa:
