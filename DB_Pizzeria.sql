@@ -1,5 +1,6 @@
 CREATE SCHEMA `PIZZERIA` ;
-CREATE TABLE `PIZZERIA`.`Utenti` (
-  `idUtenti` VARCHAR(45),
-  `num_pizze` INT NULL,
-  PRIMARY KEY (`idUtenti`));
+CREATE TABLE `PIZZERIA`.`Pizze` (
+  `nome` VARCHAR(45),
+  `ingrediente` VARCHAR(45),
+  `prezzo` INT NULL,
+  PRIMARY KEY (`nome`));
