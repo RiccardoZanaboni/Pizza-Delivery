@@ -34,10 +34,6 @@ public class OrderPage1 {
 
     public void display(Stage window, Scene scene1, Order order, Pizzeria pizzeria) {
 
-		// TODO AGGIUNGERE BOTTONE PER POTER TOGLIERE UNA PIZZA MODIFICATA
-
-		// FIXME SISTEMARE DISTANZA TRA BOTTONI ADD, REMOVE, MODIFICA DI UNA PIZZA E QUELLA SUCCESSIVA
-
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
         ArrayList<Label> prezziLabels = new ArrayList<>();
@@ -81,7 +77,6 @@ public class OrderPage1 {
         fillVBoxesButtons(pizzeria, vBoxBottoni, addButtons, modButtons);
         fillHBoxesPrezzoAndBottoni(pizzeria, hBoxPrezzoBottoni, prezziLabels, vBoxBottoni);
 
-        //TODO AGGIUNGERE BOTTONE PER POTER TOGLIERE UNA PIZZA MODIFICATA
 
         //Label modifiche = new Label();
         //modifiche.setText("Pizze Modificate");
@@ -150,7 +145,7 @@ public class OrderPage1 {
             //countPizzeLabels.get(i).setId("countpizzeLabel");
             //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getMaiuscName()).getCount());
             //addButtons.add(new ButtonAddPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
-            addButtons.add(new ButtonAddPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getMaiuscName()));
+            addButtons.add(new ButtonAddPizza(shoppingCartButton, order, pizzeria, pizzaMenu));
             modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getMaiuscName()));
             //modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getMaiuscName(), countModificheLabel));
             //rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));

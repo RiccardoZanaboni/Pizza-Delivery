@@ -54,6 +54,7 @@ public class ModifyBox{
                 ToppingsAlert.display();
             else {
                 handleOptions(checkBoxes, nuovaPizza);
+                nuovaPizza.setName("PizzaModificata");
                 order.addPizza(nuovaPizza, 1);
                 answer = true;
                 window.close();

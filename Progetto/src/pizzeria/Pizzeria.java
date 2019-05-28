@@ -230,11 +230,11 @@ public class Pizzeria {
     }
 
     public HashMap<String, Pizza> getMenu() {
-        return menu;
+        return this.menu;
     }
 
     public HashMap<String, Toppings> getIngredientsPizzeria() {
-        return pizzeriaIngredients;
+        return this.pizzeriaIngredients;
     }
 
     /** Crea un nuovo ordine e aggiorna il numero di ordini giornalieri. */
@@ -285,14 +285,14 @@ public class Pizzeria {
     private int findTimeBoxOven(int oraDesiderata, int minutiDesiderati){
         int openMinutes = 60*openingToday.getHours() + openingToday.getMinutes();
         int desiredMinutes = 60*oraDesiderata + minutiDesiderati;
-        return (desiredMinutes - openMinutes)/OVEN_TIMES_FOR_HOUR;
+        return (desiredMinutes - openMinutes)/this.OVEN_TIMES_FOR_HOUR;
     }
 
     /** ritorna l'indice della casella temporale (fattorino) desiderata. */
     private int findTimeBoxDeliveryMan(int oraDesiderata, int minutiDesiderati){
         int openMinutes = 60*openingToday.getHours() + openingToday.getMinutes();
         int desiredMinutes = 60*oraDesiderata + minutiDesiderati;
-        return (desiredMinutes - openMinutes)/ DELIVERYMAN_TIMES_FOR_HOUR;
+        return (desiredMinutes - openMinutes)/ this.DELIVERYMAN_TIMES_FOR_HOUR;
     }
 
     /** restituisce il primo fattorino della pizzeria che sia disponibile all'orario indicato. */
@@ -315,10 +315,10 @@ public class Pizzeria {
 
         for(int i = esclusiIniziali; i < restaAperta; i++) {    // considera i tempi minimi di preparazione e consegna
             if(i % 5 == 0) {
-                if (ovens[i / 12].getPostiDisp() + ovens[(i / 12) - 1].getPostiDisp() >= tot) {
+                if (this.ovens[i / 12].getPostiDisp() + this.ovens[(i / 12) - 1].getPostiDisp() >= tot) {
                     for (DeliveryMan a : this.deliveryMen) {
                         if (a.getDeliveryManTimes()[i / 24].isFree()) {
-                            int newMinutes = Services.getMinutes(openingToday) + i;   // NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
+                            int newMinutes = Services.getMinutes(this.openingToday) + i;   // NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
                             int ora = newMinutes / 60;
                             int min = newMinutes % 60;
                             String nuovoOrario = Services.timeStamp(ora,min);
@@ -343,30 +343,30 @@ public class Pizzeria {
      * in base alla disponibilità di forno e fattorini. */
     public void updateOvenAndDeliveryMan(Date d, int tot) {
         // PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
-        if(ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp()<tot){
-            int disp = ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp();
-            ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].inserisciInfornate(disp);
-            ovens[findTimeBoxOven(d.getHours(), d.getMinutes())-1].inserisciInfornate(tot-disp);
+        if(this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp()<tot){
+            int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp();
+            this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].inserisciInfornate(disp);
+            this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())-1].inserisciInfornate(tot-disp);
         } else{
-            ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].inserisciInfornate(tot);
+            this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].inserisciInfornate(tot);
         }
         Objects.requireNonNull(aFreeDeliveryMan(d.getHours(), d.getMinutes())).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
     }
 
     Date getClosingTime() {
-        return closingToday;
+        return this.closingToday;
     }
 
     Date getOpeningTime() {
-        return openingToday;
+        return this.openingToday;
     }
 
     public double getSUPPL_PRICE() {
-        return SUPPL_PRICE;
+        return this.SUPPL_PRICE;
     }
 
     public Oven[] getOvens() {
-        return ovens;
+        return this.ovens;
     }
 
     /** In TextInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
@@ -384,7 +384,7 @@ public class Pizzeria {
 
     /** Verifica che sia possibile cuocere le pizze nell' infornata richiesta e in quella appena precedente. */
     public boolean checkTimeBoxOven(int ora, int minuti, int tot) {
-        if (ovens[findTimeBoxOven(ora, minuti)].getPostiDisp() + ovens[findTimeBoxOven(ora, minuti) - 1].getPostiDisp() < tot)
+        if (this.ovens[findTimeBoxOven(ora, minuti)].getPostiDisp() + this.ovens[findTimeBoxOven(ora, minuti) - 1].getPostiDisp() < tot)
             return false;
         else
             return true;
@@ -395,6 +395,6 @@ public class Pizzeria {
     }
 
     public int getNumDailyOrders() {
-        return numDailyOrders;
+        return this.numDailyOrders;
     }
 }

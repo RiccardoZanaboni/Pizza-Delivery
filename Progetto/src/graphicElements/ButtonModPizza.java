@@ -2,7 +2,6 @@ package graphicElements;
 
 import graphicAlerts.MaxPizzasAlert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
