@@ -22,7 +22,7 @@ public class ToppingsAlert {
         layout.getChildren().add(printError);
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Modifica la pizza");
+        window.setTitle("ATTENZIONE");
         Scene scene = new Scene(layout, 430, 150);
         window.setScene(scene);
         window.show();

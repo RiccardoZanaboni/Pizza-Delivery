@@ -17,7 +17,7 @@ public class ClosedPizzeriaAlert {
 		if(b)
 			printError = new Label("Spiacenti: la pizzeria al momento è in chiusura. Torna a trovarci domani!");
 		else
-			printError = new Label("Spiacenti: la pizzeria al momento è chiusa. Torna a trovarci domani!");
+			printError = new Label("Spiacenti: la pizzeria per oggi è chiusa. Torna a trovarci domani!");
 		printError.autosize();
 
 		StackPane layout = new StackPane();

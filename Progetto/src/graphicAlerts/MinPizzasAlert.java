@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class MinPizzasAlert {
     public static void display(String s) {
         Stage window = new Stage();
-        Label printError = new Label("Attenzione: non ci sono "+s+" da rimuovere!");
+        Label printError = new Label("Attenzione: non ci sono " + s + " da rimuovere!");
 
         printError.autosize();
 
@@ -23,7 +23,7 @@ public class MinPizzasAlert {
 
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Rimuovi la pizza");
+        window.setTitle("ATTENZIONE");
         //window.setMinWidth(250);
         Scene scene = new Scene(layout, 430, 150);
         window.setScene(scene);
