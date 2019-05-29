@@ -69,7 +69,7 @@ public class GraphicInterface extends Application {
 
 		window = primaryStage;
 
-		Image image = new Image("graphicElements/wolf_pizza.png");
+		Image image = new Image("graphicElements/jpgPackage/wolf_pizza.png");
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(600);
 		imageView.setFitWidth(800);

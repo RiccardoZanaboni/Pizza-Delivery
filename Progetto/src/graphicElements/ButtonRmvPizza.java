@@ -13,7 +13,7 @@ public class ButtonRmvPizza extends Button {
 
 	public ButtonRmvPizza(Label nomeLabels, Label prezzoLabel, Label toppingLabel, Button shoppingCartButton, Order order, Pizza pizza, Label countPizza) {
 		//  Label prezzoLabel, Label toppingLabel,
-		Image image1 = new Image("graphicElements/cestino.png");
+		Image image1 = new Image("graphicElements/jpgPackage/cestino.png");
 		ImageView imageView = new ImageView(image1);
 		imageView.setFitHeight(20);
 		imageView.setFitWidth(20);

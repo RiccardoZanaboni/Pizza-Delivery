@@ -51,7 +51,7 @@ public class OrderPage1 {
 
 
         //Label pizzasInCart = new Label();
-        Image image = new Image("graphicElements/shopping_cart.png");
+        Image image = new Image("graphicElements/jpgPackage/shopping_cart.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);

@@ -19,13 +19,15 @@
     -fx-font-size: 20px;
 }
 
+
+
 .layout {
     -fx-background-color: linear-gradient(#a61022,  #f39f18);
     -fx-background-size: 600 500;
 }
 
 #pane {
-    -fx-background-image: url("wolf_pizza.png");
+    -fx-background-image: url("jpgPackage/wolf_pizza.png");
     -fx-opacity:0.6;
     -fx-background-repeat: stretch;
     -fx-background-size: 300 150;

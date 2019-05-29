@@ -28,7 +28,7 @@ public class MenuPage {
 		stackPane.getChildren().add(label1);
 		stackPane.getStyleClass().add("stackpane");
 
-		Image image1 = new Image("graphicElements/banner_pizza.jpg");
+		Image image1 = new Image("graphicElements/jpgPackage/banner_pizza.jpg");
 		ImageView imageView = new ImageView(image1);
 		imageView.setFitHeight(150);
 		imageView.setFitWidth(880);
@@ -101,7 +101,7 @@ public class MenuPage {
 		//window.setResizable(false);
 		window.setScene(scene1);
 		window.setTitle("Wolf of Pizza");
-		window.getIcons().add(new Image("graphicElements/wolf_pizza.png"));
+		window.getIcons().add(new Image("graphicElements/jpgPackage/wolf_pizza.png"));
 		window.show();
 	}
 }
