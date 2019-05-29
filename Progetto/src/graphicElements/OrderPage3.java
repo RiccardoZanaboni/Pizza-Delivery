@@ -27,7 +27,7 @@ public class OrderPage3 {
 
     public void display(Stage window, Order order, Pizzeria pizzeria, Scene scene3) {
 
-        //TODO MIGLIORARE LA PAGINA
+        //TODO MIGLIORARE LA PAGINA @ MUSI
 
         VBox layout = new VBox();
 

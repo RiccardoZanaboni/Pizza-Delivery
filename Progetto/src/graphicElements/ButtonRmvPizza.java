@@ -24,7 +24,7 @@ public class ButtonRmvPizza extends Button {
 		this.setOnAction(e-> {
 			if (order.getOrderedPizze().contains(pizza)) {
 				order.getOrderedPizze().remove(pizza);
-                // FIXME: 28/05/2019 sistemare il decremento per le pizze modificate
+                // FIXME: 28/05/2019 sistemare il decremento per le pizze modificate  @ MUSI
                 // FIXME: 28/05/2019 quando si elimina una pizza modificata il Count va a -1, ne puoi eliminare 
                 // FIXME: 28/05/2019 solo una alla volta , uscendo dallo ShoppingCart ogni volta
 				pizza.decreaseCount();
