@@ -25,9 +25,9 @@ import java.util.ArrayList;
 
 public class OrderPage3 {
 
-    public void display(Stage window, Order order, Pizzeria pizzeria, int tot, Scene scene3) {
+    public void display(Stage window, Order order, Pizzeria pizzeria, Scene scene3) {
 
-        //TODO MIGLIORARE LA PAGINA
+        //TODO MIGLIORARE LA PAGINA @ MUSI
 
         VBox layout = new VBox();
 
@@ -35,9 +35,12 @@ public class OrderPage3 {
         ArrayList<Label> ingrLabels = new ArrayList<>();
         ArrayList<Label> prezziLabels = new ArrayList<>();
         ArrayList<Label> countPizzeLabels = new ArrayList<>();
-        ArrayList<ButtonRmvPizza> buttonRmvPizzas = new ArrayList<>();
+        //ArrayList<ButtonRmvPizza> buttonRmvPizzas = new ArrayList<>();
 
-        GridPane gridPane = addEverythingToGridPane(buttonRmvPizzas, order, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
+        GridPane gridPane = addEverythingToGridPane( order, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setHgap(10);
+        gridPane.setVgap(30);
 
         Label yourOrder = new Label("Il tuo ordine:\t\t"+ order.getOrderCode());
 
@@ -92,7 +95,7 @@ public class OrderPage3 {
         window.setScene(scene4);
     }
 
-    private static GridPane addEverythingToGridPane(ArrayList<ButtonRmvPizza> buttonRmvPizzas, Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
+    private static GridPane addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
         HBox totalBox = new HBox();
         Label labelTot = new Label("Totale: ");
         Label label2 = new Label("" + order.getTotalPrice());
@@ -103,9 +106,6 @@ public class OrderPage3 {
 		gridPane = order.graphRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
 		gridPane.getChildren().add(totalBox);
         GridPane.setConstraints(totalBox, 1, nomiLabels.size()+2);
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(30);
         return gridPane;
     }
 }

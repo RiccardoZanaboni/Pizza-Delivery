@@ -1,5 +1,6 @@
 package pizzeria;
 
+@SuppressWarnings("deprecation")
 public class DeliveryMan {
     private String name;
     private TimeBoxDeliveryMan[] deliveryManTimes;

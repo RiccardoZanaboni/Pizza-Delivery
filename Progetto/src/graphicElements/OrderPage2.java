@@ -7,12 +7,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -70,7 +68,7 @@ public class OrderPage2 {
 			order.setCustomer(customer);
 			order.setTime(time);
 			OrderPage3 orderPage3 = new OrderPage3();
-			orderPage3.display(window, order, pizzeria, tot, scene3);
+			orderPage3.display(window, order, pizzeria, scene3);
 		});
 
 		Button backButton = new Button("← Torna indietro");
@@ -79,7 +77,7 @@ public class OrderPage2 {
 			this.name = getName(nameInput);
 			this.address = getAddress(addressInput);
 			OrderPage1 orderPage1 = new OrderPage1();
-			orderPage1.display(window, scene2, order, pizzeria);
+			orderPage1.display(window, order, pizzeria);
 		});
 
 		HBox buttonBox = new HBox(10);

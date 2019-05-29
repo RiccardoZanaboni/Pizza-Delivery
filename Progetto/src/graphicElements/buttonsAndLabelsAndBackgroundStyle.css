@@ -73,11 +73,7 @@
 }
 
 #grid {
-    -fx-background-image: url("pizza_background.jpg");
-    -fx-background-repeat: repeat-y;
-}
-#grido {
-    -fx-background-image: url("ciao1.jpg");
+    -fx-background-image: url("jpgPackage/pizza_background.jpg");
     -fx-background-repeat: repeat-y;
 }
 #layout {
@@ -85,7 +81,7 @@
 }
 
 #countpizzeLabel {
-    -fx-background-color:#FEBDA2;  /*FIXME STI CAZZO DI COUNTLABEL VENGONO UN PO SFASATI CON LE PIZZE NON CI CAPISCO UNA FAVA*/
+    -fx-background-color:#FEBDA2;
     -fx-border-color:green;
     -fx-border-width: 1px ;
     -fx-font-size: 13pt;

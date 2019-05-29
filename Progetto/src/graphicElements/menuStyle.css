@@ -11,13 +11,33 @@
         -fx-font-variant: small-caps;
 }
 
-.button {
+/*.button {
     -fx-background-color: transparent;
     -fx-border-style: solid solid solid solid;
     -fx-font-family: Helvetica, Arial, sans-serif;
     -fx-text-fill: black;
     -fx-font-size: 20px;
+}*/
+.button {
+  -fx-background-color: #eda615; //*FIXME DA CAMBIARE IL COLORE   @MUSI*/
+  -fx-color: black;
+  -fx-padding: 16px 32px;
+  -fx-text-align: center;
+  -fx-display: inline-block;
+  -fx-font-family: Helvetica, Arial, sans-serif;
+  -fx-text-fill: black;
+  -fx-font-size: 20px;
+  -fx-transition-duration: 0.4s;
+  -fx-cursor: pointer;
 }
+
+.button:hover {
+ /* -fx-background-color: #f44336;*/
+  -fx-background-color: linear-gradient(#a61022,  #f39f18);
+  -fx-border-color: black;
+}
+
+
 
 .layout {
     -fx-background-color: linear-gradient(#a61022,  #f39f18);
@@ -25,7 +45,7 @@
 }
 
 #pane {
-    -fx-background-image: url("wolf_pizza.png");
+    -fx-background-image: url("jpgPackage/wolf_pizza.png");
     -fx-opacity:0.6;
     -fx-background-repeat: stretch;
     -fx-background-size: 300 150;
