@@ -15,7 +15,7 @@ public class Order {
     private ArrayList<Pizza> orderedPizze;
     private boolean isFull;
     private int countModifiedPizze;
-    private int numTemporaryPizze;
+	private int numTemporaryPizze;
 
     /**
 	 * L'ordine è identificato con un orderCode univoco.
@@ -43,6 +43,9 @@ public class Order {
 	 * Due possibilità: i=+1 oppure i=-1. */
     public void setNumTemporaryPizze(int i) {
     	this.numTemporaryPizze += i;
+	}
+	public void decreaseNumTemporaryPizze() {
+    	this.numTemporaryPizze--;
 	}
 
     /** aggiunge la pizza all'ordine. */

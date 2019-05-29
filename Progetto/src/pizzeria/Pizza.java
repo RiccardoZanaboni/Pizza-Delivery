@@ -25,6 +25,10 @@ public class Pizza {
         this.ingredients = ingred;
     }
 
+    // FIXME DA TOGLIERE
+    public Pizza() {
+    }
+
     @Override
     public String toString() {
         String descrizione = this.getDescription();
@@ -58,6 +62,10 @@ public class Pizza {
             this.ingredients.put(ing.name(),ing);
     }
 
+    public void setIngredients(Toppings ingredients) {
+        this.ingredients.put(ingredients.name(), ingredients);
+    }
+
     /** Se presente, rimuove l'ingrediente selezionato dalla pizza. */
     public void rmvIngredients(Toppings ing){
         if(this.ingredients.containsKey(ing.name()))
@@ -66,6 +74,14 @@ public class Pizza {
 
     public double getPrice() {
         return this.price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public HashMap<String, Toppings> getIngredients() {
+        return ingredients;
     }
 
     public void setPrice(double prezzo) {

@@ -79,7 +79,7 @@ public class ShoppingCart {
                 prezziLabels.add(numTipo, new Label((order.getOrderedPizze().get(i).getPrice()*num + " €")));
                 countPizzeLabels.add(numTipo, new Label());
                 countPizzeLabels.get(numTipo).setText("" + num);
-                buttonRmvPizzas.add(new ButtonRmvPizza(shoppingCartButton, order, pizzeria, order.getOrderedPizze().get(i), countPizzeLabels.get(numTipo)));
+                buttonRmvPizzas.add(new ButtonRmvPizza(nomiLabels.get(numTipo), ingrLabels.get(numTipo), prezziLabels.get(numTipo), shoppingCartButton, order, order.getOrderedPizze().get(i), countPizzeLabels.get(numTipo)));
 
                 gridPane.getChildren().add(nomiLabels.get(numTipo));
                 gridPane.getChildren().add(ingrLabels.get(numTipo));
@@ -94,7 +94,6 @@ public class ShoppingCart {
                 GridPane.setConstraints(buttonRmvPizzas.get(numTipo), 4, numTipo + 1);
 
                 numTipo++;		// ho un "tipo di pizza" in piu
-
 
             }
 

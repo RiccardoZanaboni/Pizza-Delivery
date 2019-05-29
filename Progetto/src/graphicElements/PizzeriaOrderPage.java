@@ -1,10 +1,16 @@
 package graphicElements;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.Order;
 import pizzeria.Pizza;
@@ -15,15 +21,16 @@ import java.util.ArrayList;
 
 public class PizzeriaOrderPage {
 
-    public static void display(Pizzeria pizzeria, Stage window) {
+    /*public static void display(Pizzeria pizzeria, Stage window) {
         ArrayList<Label> orderNameLabels = new ArrayList<>();
         ArrayList<Label> nameLabels = new ArrayList<>();
         ArrayList<Label> toppingLabels = new ArrayList<>();
         ArrayList<Label> priceLabels = new ArrayList<>();
+        ArrayList<Label> countPizzeLabels = new ArrayList<>();
 
         GridPane gridPane;
 
-        fillLabelsAndButtons(pizzeria, orderNameLabels, nameLabels, toppingLabels, priceLabels);
+        fillLabelsAndButtons(pizzeria, countPizzeLabels, orderNameLabels, nameLabels, toppingLabels, priceLabels);
         gridPane = setGridPaneContraints(pizzeria, orderNameLabels, nameLabels, toppingLabels, priceLabels);
 
         for (int i=0; i<pizzeria.getOrders().size(); i++) {
@@ -39,7 +46,7 @@ public class PizzeriaOrderPage {
 
     }
 
-    private static void fillLabelsAndButtons (Pizzeria pizzeria, ArrayList<Label> orderNameLabels, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
+    private static void fillLabelsAndButtons (Pizzeria pizzeria, ArrayList<Label> countPizzeLabels, ArrayList<Label> orderNameLabels, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
         for (int i = 0; i<pizzeria.getOrders().size(); i++) {
             orderNameLabels.add(i, new Label(pizzeria.getOrders().get(i).getOrderCode()));
             for (int j=0; j<pizzeria.getOrders().get(i).getOrderedPizze().size(); j++) {
@@ -47,7 +54,7 @@ public class PizzeriaOrderPage {
                 ingrLabels.add(j, new Label(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getDescription()));
                 prezziLabels.add(i, new Label(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getPrice() + " €"));
                 //countPizzeLabels.add(i, new Label());
-                //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getMaiuscName()).getCount());
+                //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getMaiuscName()).getCount());
             }
         }
     }
@@ -63,6 +70,7 @@ public class PizzeriaOrderPage {
                 gridPane.getChildren().add(priceLabels.get(j));
             }
         }
+
         for (int i = 0; i < pizzeria.getOrders().size(); i++) {
             GridPane.setConstraints(orderNameLabels.get(i), 0, i+1);
             for (int j=0; j<pizzeria.getOrders().get(i).getOrderedPizze().size(); j++) {
@@ -80,5 +88,35 @@ public class PizzeriaOrderPage {
 
 
         return gridPane;
+    }*/
+
+    public void display (Pizzeria pizzeria, Stage window) {
+
+        TableView<Order> table = new TableView<>();
+
+        TableColumn<Order, String> codeColumn = new TableColumn<>("Codice");
+        codeColumn.setMinWidth(300);
+        codeColumn.setCellValueFactory(new PropertyValueFactory<>("orderCode"));
+
+        TableColumn<Order, ArrayList<Pizza>> orderedColumn = new TableColumn<>("Pizze");
+        orderedColumn.setMinWidth(300);
+        orderedColumn.setCellValueFactory(new PropertyValueFactory<>("orderedPizze"));
+
+        table.setItems(getOrder(pizzeria));
+        table.getColumns().addAll(codeColumn, orderedColumn);
+
+        VBox layout = new VBox();
+        layout.getChildren().addAll(table);
+
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.show();
     }
+
+    private ObservableList<Order> getOrder(Pizzeria pizzeria){
+        ObservableList<Order> orders = FXCollections.observableArrayList();
+        orders.addAll(pizzeria.getOrders());
+        return orders;
+    }
+
 }
