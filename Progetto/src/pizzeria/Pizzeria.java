@@ -73,6 +73,10 @@ public class Pizzeria {
         this.closings[6] = cl7;
     }
 
+    public ArrayList<Order> getOrders() {
+        return orders;
+    }
+
     /** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. */
     public void addOrder(Order order) {
         this.orders.add(order);

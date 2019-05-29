@@ -10,9 +10,11 @@ import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
 
-public class ButtonRmvPizza extends Button {
-	public ButtonRmvPizza(Button shoppingCartButton, Order order, Pizzeria pizzeria, Pizza pizza, Label countPizza) {
+import java.util.ArrayList;
 
+public class ButtonRmvPizza extends Button {
+	public ButtonRmvPizza(Label nomeLabels, Label prezzoLabel, Label toppingLabel, Button shoppingCartButton, Order order, Pizza pizza, Label countPizza) {
+		//  Label prezzoLabel, Label toppingLabel,
 		Image image1 = new Image("graphicElements/cestino.png");
 		ImageView imageView = new ImageView(image1);
 		imageView.setFitHeight(20);
@@ -31,6 +33,14 @@ public class ButtonRmvPizza extends Button {
 				order.setNumTemporaryPizze(-1);
 				shoppingCartButton.setText(order.getNumPizzeProvvisorie()+"");
 				countPizza.setText(""+pizza.getCount());
+
+				if (pizza.getCount()<=0) {
+					nomeLabels.setText("");
+					prezzoLabel.setText("");
+					toppingLabel.setText("");
+					countPizza.setText("");
+					this.setVisible(false);
+				}
 
 			} else {
 				MinPizzasAlert.display(pizza.getMaiuscName());
