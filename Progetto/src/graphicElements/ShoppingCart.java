@@ -13,18 +13,17 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pizzeria.Order;
 import pizzeria.Pizza;
-import pizzeria.Pizzeria;
 import pizzeria.Services;
 
-import javax.xml.ws.Service;
+
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class ShoppingCart {
     Stage window = new Stage();
 
 
-    public void display(Order order, Pizzeria pizzeria, Button shoppingCartButton) {
+    public void display(Order order, Button shoppingCartButton) {
 
         VBox layout = new VBox();
 
@@ -34,7 +33,10 @@ public class ShoppingCart {
         hBox.setAlignment(Pos.CENTER);
 
         //GridPane gridPane = addEverythingToGridPane(pizzasInCart, order, pizzeria, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
-        GridPane gridPane = createGridPane(shoppingCartButton, order, pizzeria);
+        GridPane gridPane = createGridPane(shoppingCartButton, order);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setHgap(10);
+        gridPane.setVgap(30);
 
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setMinSize(600, 400);
@@ -47,7 +49,7 @@ public class ShoppingCart {
     }
 
 
-    private static GridPane createGridPane(Button shoppingCartButton, Order order, Pizzeria pizzeria) {
+    private static GridPane createGridPane(Button shoppingCartButton, Order order) {
         GridPane gridPane = new GridPane();
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -96,12 +98,7 @@ public class ShoppingCart {
                 numTipo++;		// ho un "tipo di pizza" in piu
 
             }
-
-
         }
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(30);
         return gridPane;
     }
 

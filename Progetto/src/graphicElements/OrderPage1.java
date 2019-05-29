@@ -32,7 +32,7 @@ public class OrderPage1 {
     private Button confirmButton;
     private static Button backButton;
 
-    public void display(Stage window, Scene scene1, Order order, Pizzeria pizzeria) {
+    public void display(Stage window, Order order, Pizzeria pizzeria) {
 
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -62,7 +62,7 @@ public class OrderPage1 {
         shoppingCartButton.setGraphic(imageView);
         shoppingCartButton.setOnAction(e->{
             ShoppingCart shoppingCart = new ShoppingCart();
-            shoppingCart.display(order, pizzeria, shoppingCartButton);
+            shoppingCart.display(order, shoppingCartButton);
         });
         shoppingCartButton.setText(order.getNumPizze() + "");
         shoppingCartBox.getChildren().addAll(shoppingCartButton);
@@ -88,7 +88,7 @@ public class OrderPage1 {
 
         int tot = 0;
         confirmButton = createConfirmButton(window, orderPage2, scene2, order, pizzeria, tot);
-        backButton = createBackButton(pizzeria, order, window, scene1);
+        backButton = createBackButton(pizzeria, order, window);
 
         HBox hBoxIntestazione = new HBox();
         Label labelOrdine = new Label("Totali pizze ordinate: ");
@@ -145,7 +145,7 @@ public class OrderPage1 {
             //countPizzeLabels.get(i).setId("countpizzeLabel");
             //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getMaiuscName()).getCount());
             //addButtons.add(new ButtonAddPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
-            addButtons.add(new ButtonAddPizza(shoppingCartButton, order, pizzeria, pizzaMenu));
+            addButtons.add(new ButtonAddPizza(shoppingCartButton, order, pizzaMenu));
             modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getMaiuscName()));
             //modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getMaiuscName(), countModificheLabel));
             //rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
@@ -218,12 +218,12 @@ public class OrderPage1 {
     /**
      * costruisce il backButton
      */
-    private Button createBackButton(Pizzeria pizzeria, Order order, Stage window, Scene scene1) {
+    private Button createBackButton(Pizzeria pizzeria, Order order, Stage window) {
         backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
-            int i = 0;
-            /*for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
+            /*int i = 0;
+            for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
                 removePizze(rmvButtons.get(i), pizzeria, order, pizzaMenu.getMaiuscName());
                 i++;
             }*/

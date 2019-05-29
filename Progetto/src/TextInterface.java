@@ -307,12 +307,11 @@ public class TextInterface {
 
     /** Gestisce l'inserimento del nome del cliente e dell'indirizzo di spedizione. */
     private boolean insertNameAndAddress(Order order) throws RestartOrderExc {
-        boolean ok = true;
+
         String domanda1 = Services.colorSystemOut("Come ti chiami?",Color.YELLOW,false,false);
         System.out.println(domanda1 + "\t\t(Inserisci 'F' per annullare l'ordine)");
         String nome = scan.nextLine();
         if (nome.toUpperCase().equals("F")) {
-            ok = false;
             throw new RestartOrderExc();
         }
         Customer c = new Customer(nome);
@@ -321,11 +320,11 @@ public class TextInterface {
         System.out.println(domanda2 + "\t\t(Inserisci 'F' per annullare l'ordine)");
         String indirizzo = scan.nextLine();
         if (indirizzo.toUpperCase().equals("F")) {
-            ok = false;
+
             throw new RestartOrderExc();
         }
         order.setAddress(indirizzo);
-        return ok;
+        return true;
     }
 
     /** Aggiunge la pizza all'Order, nella quantità inserita.

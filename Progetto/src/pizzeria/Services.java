@@ -10,6 +10,7 @@ import java.util.*;
  * il buon funzionamento del programma (e tuttavia non direttamente imputabili
  * a nessuna delle classi fino ad ora definite).
  * */
+@SuppressWarnings("deprecation")
 public class Services {
 
 	/** Restituisce i minuti passati dalla mezzanotte all'orario richiesto. */

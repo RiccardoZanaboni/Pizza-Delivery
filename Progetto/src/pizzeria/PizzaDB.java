@@ -15,8 +15,7 @@ public class PizzaDB extends Pizza {
         try{
             preparedStatement =con.prepareStatement("insert into sql7293749.Pizze values('"+nome+"','"+ingred+"','"+prezzo+"');");
 
-        }catch(Exception e) {
-            ;
+        }catch(Exception ignored) {
         }
         return preparedStatement;
     }

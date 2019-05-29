@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+@SuppressWarnings("deprecation")
 public class Order {
     private Customer customer;
     private String orderCode;

@@ -21,7 +21,6 @@ import pizzeria.*;
  */
 
 public class MenuPage {
-	private Scene scene1;
 
 	public void display(Stage window, Pizzeria pizzeria) {
 		Label label1 = new Label("Benvenuto");
@@ -52,7 +51,7 @@ public class MenuPage {
 				case "OPEN":        // pizzeria aperta
 					Order order = pizzeria.initializeNewOrder();
 					OrderPage1 orderPage1 = new OrderPage1();
-					orderPage1.display(window, scene1, order, pizzeria);
+					orderPage1.display(window, order, pizzeria);
 					break;
 				case "CLOSING":
 					ClosedPizzeriaAlert.display(true);        // pizzeria in chiusura
@@ -97,7 +96,7 @@ public class MenuPage {
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
 
-		scene1 = new Scene(layout);
+		Scene scene1 = new Scene(layout);
 		scene1.getStylesheets().addAll(this.getClass().getResource("menuStyle.css").toExternalForm());
 		//window.setResizable(false);
 		window.setScene(scene1);

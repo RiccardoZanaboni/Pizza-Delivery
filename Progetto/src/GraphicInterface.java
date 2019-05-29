@@ -59,14 +59,13 @@ public class GraphicInterface extends Application {
 			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
 			);
 	private Stage window;
-	private Scene scene0, scene3;
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage){
 
 		window = primaryStage;
 
@@ -78,7 +77,7 @@ public class GraphicInterface extends Application {
 		StackPane stackPane = new StackPane();
 		stackPane.getChildren().addAll(imageView);
 
-		scene0 = new Scene(stackPane, 880, 600);
+		Scene scene0 = new Scene(stackPane, 880, 600);
 		window.setScene(scene0);
 		window.show();
 		FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), stackPane);

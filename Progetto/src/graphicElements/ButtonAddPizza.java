@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.shape.Circle;
 import pizzeria.Order;
 import pizzeria.Pizza;
-import pizzeria.Pizzeria;
 
 class ButtonAddPizza extends Button {
 
@@ -14,7 +13,7 @@ class ButtonAddPizza extends Button {
 	 * un'istanza della pizza desiderata.
 	 */
 
-	ButtonAddPizza(Button shoppingCartButton, Order order, Pizzeria pizzeria, Pizza pizza){
+	ButtonAddPizza(Button shoppingCartButton, Order order, Pizza pizza){
 		this.setId("addpizza");
 		this.setShape(new Circle(1000));
 		this.setText("✚");//("Aggiungi al carrello ✔︎");

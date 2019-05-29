@@ -9,15 +9,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
-import pizzeria.Services;
 import pizzeria.Toppings;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 
 public class PizzeriaMenuPage {
 
