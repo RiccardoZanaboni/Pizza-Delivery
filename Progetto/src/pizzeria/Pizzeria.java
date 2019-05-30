@@ -433,17 +433,19 @@ public class Pizzeria {
         }
     }
 
-    // TODO: sistemare quando avremo login
     public String createAccount(String newUser, String newPsw, String confPsw) {
+        // TODO: sistemare quando avremo login
         boolean existing = false;
         // faccio scorrere tutti gli account e controllo che non esista già.
         // se esistente, pongo existing a true.
 
         if(!existing && newPsw.equals(confPsw)){
-            if(newPsw.length()>2)
+            if(newPsw.length()>2) {
                 // se si registra correttamente, va bene.
+                // createNewAccount(newUser,newPsw);
+                checkLogin(newUser, newPsw);
                 return "OK";
-            else
+            } else
                 // password troppo breve.
                 return "SHORT";
         } else if (existing){

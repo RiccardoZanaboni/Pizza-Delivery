@@ -3,6 +3,7 @@ import exceptions.TryAgainExc;
 import pizzeria.*;
 
 import java.awt.*;
+import java.io.*;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -37,21 +38,21 @@ public class TextInterface {
      * */
     public Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
             // orari di apertura, da domenica a sabato
-            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(16,40), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(1,30), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
             // orari di chiusura, da domenica a sabato
-            LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(17,0), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(2,30), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
+            LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+            LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES)
     );
     private Scanner scan = new Scanner(System.in);
 
@@ -65,7 +66,7 @@ public class TextInterface {
             // se la pizzeria è aperta.
             case "OPEN":
                 System.out.println(Services.whatDoYouWantPossibilities(true));
-                System.out.print("\t>> ");
+                System.out.print(Services.colorSystemOut("\t>> ",Color.YELLOW,false,false));
                 risposta = scan.nextLine().toUpperCase();
                 whatDoYouWantAnswers(true,risposta);
                 break;
@@ -93,8 +94,8 @@ public class TextInterface {
     }
 
     /** In whatDoYouWant(), gestisce le possibili risposte alla domanda. */
-    public void whatDoYouWantAnswers(boolean isOpen, String risposta) {
-        switch (risposta) {
+    private void whatDoYouWantAnswers(boolean isOpen, String risposta) {
+        switch (risposta){
             case "L":
                 System.out.println(Services.colorSystemOut("Ora visualizzerai l'ultimo ordine effettuato...", Color.YELLOW, false, false));
                 break;
@@ -102,7 +103,8 @@ public class TextInterface {
                 System.out.println(Services.colorSystemOut("Ora visualizzerai le tue offerte attive...", Color.YELLOW, false, false));
                 break;
             case "I":
-                System.out.println(Services.colorSystemOut("Ora ti spiegheremo le nostre attività...", Color.YELLOW, false, false));
+                System.out.println(Services.getHistory());
+                whatDoYouWant();
                 break;
             default:
                 if(isOpen && risposta.equals("N")){
@@ -360,7 +362,7 @@ public class TextInterface {
     private void addAndRmvToppingsText(Order order, Pizza pizza, String aggiunte, String rimozioni, int num, double prezzoSupl) {
         HashMap<String, Toppings> ingr = new HashMap<>(pizza.getToppings());
         Pizza p = new Pizza(pizza.getMaiuscName(), ingr, pizza.getPrice());
-        int piu=0;
+        int piu = 0;
         StringTokenizer stAgg = new StringTokenizer(aggiunte);
         while (stAgg.hasMoreTokens()) {
             try {
@@ -409,7 +411,7 @@ public class TextInterface {
 				System.out.println("\t>> Consegna prevista: " + confirmedTime + ".");
                 System.out.println(Services.getLine());
 				wolf.addOrder(order);
-                //whatDoYouWant();
+                whatDoYouWant();
                 break;
             case "N":
                 // annulla l'ordine.
@@ -513,7 +515,7 @@ public class TextInterface {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         TextInterface textInterface = new TextInterface();
         System.out.println(textInterface.wolf.helloThere());
         //System.out.println(textInterface.wolf.printMenu());

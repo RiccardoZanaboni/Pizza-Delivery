@@ -19,7 +19,7 @@ public class Database {
         try {
             Class.forName("com.mysql.jdbc.Driver");
              con = DriverManager.getConnection("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7293749?autoReconnect=true&useSSL=false", "sql7293749", "geZxKTlyi1");
-        }catch (Exception e){
+        }catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         }
     }

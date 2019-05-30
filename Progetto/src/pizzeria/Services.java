@@ -1,6 +1,8 @@
 package pizzeria;
 
 import java.awt.*;
+import java.io.*;
+import java.nio.Buffer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -273,5 +275,25 @@ public class Services {
 	/** Restituisce una linea, utile per la stampa in TextInterface. */
 	public static String getLine(){
 		return "\n---------------------------------------------------------------------------------------------------\n";
+	}
+
+	public static String getHistory() {
+		StringBuilder history = new StringBuilder("\n");
+		try {
+			Scanner fileIn = new Scanner(new File("Progetto/src/pizzeria/history.txt"));
+			while (fileIn.hasNextLine()) {
+				String line = fileIn.nextLine();
+				if (!line.startsWith("*"))
+					history.append(line).append("\n");
+				else {
+					line = line.substring(1);
+					history.append(colorSystemOut(line + "\n", Color.YELLOW, true, true));
+				}
+			}
+
+		} catch (FileNotFoundException fnfe){
+			System.out.println("ERROR");
+		}
+		return history.toString();
 	}
 }
