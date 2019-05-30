@@ -17,8 +17,8 @@ public class PizzeriaHomePage {
 
         Button visualizeOrdersButton = new Button("Visualizza Ordini");
         visualizeOrdersButton.setOnAction(e-> {
-            PizzeriaOrderPage pizzeriaOrderPage = new PizzeriaOrderPage();
-            pizzeriaOrderPage.display(pizzeria, window);
+            //PizzeriaOrderPage pizzeriaOrderPage = new PizzeriaOrderPage();
+            PizzeriaOrderPage.display(pizzeria, window);
         });
         visualizeOrdersButton.prefWidthProperty().bind(window.widthProperty());
         visualizeOrdersButton.prefHeightProperty().bind(window.heightProperty());

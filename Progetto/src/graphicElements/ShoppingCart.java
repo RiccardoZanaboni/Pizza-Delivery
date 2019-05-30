@@ -24,12 +24,10 @@ public class ShoppingCart {
 
 
     public void display(Order order, Button shoppingCartButton) {
-
         VBox layout = new VBox();
-
         Label label = new Label("Il tuo carrello");
         HBox hBox = new HBox();
-        hBox.getChildren().addAll(label);
+        hBox.getChildren().add(label);
         hBox.setAlignment(Pos.CENTER);
 
         //GridPane gridPane = addEverythingToGridPane(pizzasInCart, order, pizzeria, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
@@ -47,7 +45,6 @@ public class ShoppingCart {
         window.show();
 
     }
-
 
     private static GridPane createGridPane(Button shoppingCartButton, Order order) {
         GridPane gridPane = new GridPane();

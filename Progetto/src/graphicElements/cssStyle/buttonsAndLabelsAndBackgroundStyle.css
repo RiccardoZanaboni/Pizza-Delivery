@@ -73,7 +73,7 @@
 }
 
 #grid {
-    -fx-background-image: url("jpgPackage/pizza_background.jpg");
+    -fx-background-image: url("../images/pizza_background.jpg");
     -fx-background-repeat: repeat-y;
 }
 #layout {

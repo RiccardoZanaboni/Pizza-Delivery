@@ -49,9 +49,8 @@ public class OrderPage1 {
         //int countModifiche = 0;
         //countModificheLabel.setText("" + countModifiche);
 
-
         //Label pizzasInCart = new Label();
-        Image image = new Image("graphicElements/jpgPackage/shopping_cart.png");
+        Image image = new Image("graphicElements/images/shopping_cart.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);
@@ -67,7 +66,7 @@ public class OrderPage1 {
         shoppingCartButton.setText(order.getNumPizze() + "");
         shoppingCartBox.getChildren().addAll(shoppingCartButton);
 
-        // metodi esterni per non appesantire
+        /* metodi esterni per non appesantire */
         //fillLabelsAndButtons(pizzasInCart, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels, addButtons, modButtons, rmvButtons, countModificheLabel);
         //fillLabelsAndButtons(pizzasInCart, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, countPizzeLabels, addButtons, modButtons, countModificheLabel);
         //fillLabelsAndButtons(shoppingCartButton, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, addButtons, modButtons, countModificheLabel);
@@ -76,7 +75,6 @@ public class OrderPage1 {
         //fillVBoxesButtons(pizzeria, vBoxBottoni, addButtons, modButtons, rmvButtons);
         fillVBoxesButtons(pizzeria, vBoxBottoni, addButtons, modButtons);
         fillHBoxesPrezzoAndBottoni(pizzeria, hBoxPrezzoBottoni, prezziLabels, vBoxBottoni);
-
 
         //Label modifiche = new Label();
         //modifiche.setText("Pizze Modificate");
@@ -126,15 +124,18 @@ public class OrderPage1 {
         layout.prefHeightProperty().bind(window.heightProperty());
 
         scene2 = new Scene(layout, 800, 600);
-        scene2.getStylesheets().addAll(this.getClass().getResource("buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
+        scene2.getStylesheets().addAll(this.getClass().getResource("cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
         window.setScene(scene2);
         window.show();
     }
 
     /**
-     * costruisce i vari Labels e Buttons per ogni pizza del menu.
+     * Costruisce i vari Labels e Buttons per ogni pizza del menu.
      */
-    private static void fillLabelsAndButtons(Button shoppingCartButton, Pizzeria pizzeria, Order order, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons) {
+    private static void fillLabelsAndButtons(Button shoppingCartButton, Pizzeria pizzeria, Order order,
+                                             ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels,
+                                             ArrayList<Label> prezziLabels, ArrayList<ButtonAddPizza> addButtons,
+                                             ArrayList<ButtonModPizza> modButtons) {
         int i = 0;
         for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
             nomiLabels.add(i, new Label(Services.getCamelName(pizzaMenu)));
@@ -154,7 +155,7 @@ public class OrderPage1 {
     }
 
     /**
-     * riempie i vari HBoxes di Buttons.
+     * Riempie i vari HBoxes di Buttons.
      */
     private static void fillVBoxesButtons(Pizzeria pizzeria, ArrayList<VBox> vBoxBottoni, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
@@ -164,7 +165,7 @@ public class OrderPage1 {
     }
 
     /**
-     * riempie i vari VBoxes di Labels.
+     * Riempie i vari VBoxes di Labels.
      */
     private static void fillVBoxesNomeAndIngr(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
@@ -174,7 +175,7 @@ public class OrderPage1 {
     }
 
     /**
-     * riempie i vari HBoxes di Labels e Buttons.
+     * Riempie i vari HBoxes di Labels e Buttons.
      */
     private static void fillHBoxesPrezzoAndBottoni(Pizzeria pizzeria, ArrayList<HBox> hBoxPrezzoBottoni, ArrayList<Label> prezziLabels, ArrayList<VBox> vBoxBottoni) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
@@ -184,7 +185,7 @@ public class OrderPage1 {
     }
 
     /**
-     * riempie il GridPane con Labels e Buttons per ogni pizza del menu.
+     * Riempie il GridPane con Labels e Buttons per ogni pizza del menu.
      */
     private static GridPane setGridPaneContraints(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr, ArrayList<HBox> hBoxPrezzoBottoni) {
         int i;
@@ -216,7 +217,7 @@ public class OrderPage1 {
     }
 
     /**
-     * costruisce il backButton
+     * Costruisce il backButton
      */
     private Button createBackButton(Pizzeria pizzeria, Order order, Stage window) {
         backButton = new Button("← Torna indietro");
@@ -234,7 +235,7 @@ public class OrderPage1 {
     }
 
     /**
-     * costruisce il bottone di conferma, che consente il passaggio ad OrderPage2
+     * Costruisce il bottone di conferma, che consente il passaggio ad OrderPage2
      */
     private Button createConfirmButton(Stage window, OrderPage2 orderPage2, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
         confirmButton = new Button("Prosegui  →");
@@ -248,7 +249,7 @@ public class OrderPage1 {
     }
 
     /**
-     * attiva buttonRmvPizza sulla pizza selezionata
+     * Attiva buttonRmvPizza sulla pizza selezionata
      */
     private static void removePizze(ButtonRmvPizza buttonRmvPizza, Pizzeria pizzeria, Order order, String pizza) {
         while (order.searchPizza(pizzeria.getMenu().get(pizza))) {
@@ -256,7 +257,7 @@ public class OrderPage1 {
         }
     }
 
-    /** restituisce il backButton */
+    /** Restituisce il backButton */
     static Button getBackButton() {
         return backButton;
     }

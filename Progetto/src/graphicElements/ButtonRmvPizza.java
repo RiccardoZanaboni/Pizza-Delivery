@@ -13,13 +13,13 @@ public class ButtonRmvPizza extends Button {
 
 	public ButtonRmvPizza(Label nomeLabels, Label prezzoLabel, Label toppingLabel, Button shoppingCartButton, Order order, Pizza pizza, Label countPizza) {
 		//  Label prezzoLabel, Label toppingLabel,
-		Image image1 = new Image("graphicElements/jpgPackage/cestino.png");
+		Image image1 = new Image("graphicElements/images/cestino.png");
 		ImageView imageView = new ImageView(image1);
 		imageView.setFitHeight(20);
 		imageView.setFitWidth(20);
 		this.setGraphic(imageView);
 		setId("rmvpizza");
-        getStylesheets().addAll(this.getClass().getResource("buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
+        getStylesheets().addAll(this.getClass().getResource("cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
 		this.setShape(new Circle(100000));
 		this.setOnAction(e-> {
 			if (order.getOrderedPizze().contains(pizza)) {

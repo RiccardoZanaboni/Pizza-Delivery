@@ -110,7 +110,7 @@ public class OrderPage2 {
 		scene3 = new Scene(layout);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
-        scene3.getStylesheets().addAll(this.getClass().getResource("orderPage2.css").toExternalForm());
+        scene3.getStylesheets().addAll(this.getClass().getResource("cssStyle/orderPage2.css").toExternalForm());
         window.setScene(scene3);
 	}
 

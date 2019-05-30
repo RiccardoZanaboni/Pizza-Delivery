@@ -22,6 +22,8 @@ public class Pizzeria {
     private final int OVEN_TIMES_FOR_HOUR = 12;      // ogni 5 minuti
     private final int DELIVERYMAN_TIMES_FOR_HOUR = 6;   // ogni 10 minuti
     private final double SUPPL_PRICE;
+    private String userPizzeria;
+    private final String pswPizzeria;
 
     /**
      * La Pizzeria è il locale che riceve le ordinazioni e le evade nei tempi richiesti.
@@ -36,6 +38,8 @@ public class Pizzeria {
                     LocalTime op1, LocalTime op2, LocalTime op3, LocalTime op4, LocalTime op5, LocalTime op6, LocalTime op7,
                     LocalTime cl1, LocalTime cl2, LocalTime cl3, LocalTime cl4, LocalTime cl5, LocalTime cl6, LocalTime cl7) {
         //System.out.println(Calendar.getInstance().toString());
+        this.userPizzeria = "wolf";
+        this.pswPizzeria = "wolf";
         this.menu = new HashMap<>();
         this.pizzeriaIngredients = new HashMap<>();
         this.name = name;
@@ -255,8 +259,9 @@ public class Pizzeria {
     public String helloThere(){
         String opTime = Services.timeStamp(this.openingToday.getHours(), this.openingToday.getMinutes());
         String clTime = Services.timeStamp(this.closingToday.getHours(), this.closingToday.getMinutes());
-        StringBuilder hello = new StringBuilder(Services.getLine());
-        hello.append(Services.colorSystemOut("PIZZERIA ", Color.ORANGE,false,false));
+        StringBuilder hello = new StringBuilder("\n");
+        hello.append(Services.colorSystemOut("\nBenvenuto!\n",Color.GREEN,true,true));
+        hello.append(Services.colorSystemOut("\nPIZZERIA ", Color.ORANGE,false,false));
         hello.append(Services.colorSystemOut("\"" + this.name + "\"\n\t",Color.RED,true,false));
         hello.append(Services.colorSystemOut(this.address,Color.ORANGE,false,false));
         if(this.openingToday.equals(this.closingToday))
@@ -265,6 +270,7 @@ public class Pizzeria {
             hello.append(Services.colorSystemOut("\n\tApertura oggi: ", Color.ORANGE, false, false));
             hello.append(Services.colorSystemOut(opTime + " - " + clTime, Color.RED, true, false));
         }
+        hello.append("\n").append(Services.getLine());
         return hello.toString();
     }
 
@@ -299,7 +305,7 @@ public class Pizzeria {
     private int findTimeBoxDeliveryMan(int oraDesiderata, int minutiDesiderati){
         int openMinutes = Services.getMinutes(this.openingToday);
         int desiredMinutes = Services.getMinutes(oraDesiderata,minutiDesiderati);
-        return (desiredMinutes - openMinutes)/ this.DELIVERYMAN_TIMES_FOR_HOUR;
+        return (desiredMinutes - openMinutes)/ (2*this.DELIVERYMAN_TIMES_FOR_HOUR);
     }
 
     /** restituisce il primo fattorino della pizzeria che sia disponibile all'orario indicato. */
@@ -411,5 +417,41 @@ public class Pizzeria {
 
     public int getDELIVERYMAN_TIMES_FOR_HOUR() {
         return this.DELIVERYMAN_TIMES_FOR_HOUR;
+    }
+
+    //TODO: sistemare quando avremo login
+    public String checkLogin(String user, String psw) {
+        if(user.equals(this.userPizzeria) && psw.equals(this.pswPizzeria)){
+            // se è la pizzeria, allora accede come tale.
+            return "P";
+        } else if (true){
+            // se è un utente identificato, accede come tale.
+            return "OK";
+        } else {
+            // se la combinazione utente-password è errata
+            return "NO";
+        }
+    }
+
+    // TODO: sistemare quando avremo login
+    public String createAccount(String newUser, String newPsw, String confPsw) {
+        boolean existing = false;
+        // faccio scorrere tutti gli account e controllo che non esista già.
+        // se esistente, pongo existing a true.
+
+        if(!existing && newPsw.equals(confPsw)){
+            if(newPsw.length()>2)
+                // se si registra correttamente, va bene.
+                return "OK";
+            else
+                // password troppo breve.
+                return "SHORT";
+        } else if (existing){
+            // se esiste già un account con questo nome, non va bene.
+            return "EXISTING";
+        } else {
+            // se la password non viene confermata correttamente
+            return "DIFFERENT";
+        }
     }
 }

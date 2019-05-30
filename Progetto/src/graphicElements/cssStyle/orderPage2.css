@@ -35,7 +35,7 @@
 }
 
 #grid {
-    -fx-background-image: url("jpgPackage/backPizza2.jpg");
+    -fx-background-image: url("../images/backPizza2.jpg");
     -fx-background-repeat: repeat-y;
 }
 

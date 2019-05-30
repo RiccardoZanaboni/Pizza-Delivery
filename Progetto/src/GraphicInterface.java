@@ -53,11 +53,11 @@ public class GraphicInterface extends Application {
 			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
-			);
+	);
 	private Stage window;
 
 	public static void main(String[] args) {
@@ -69,7 +69,7 @@ public class GraphicInterface extends Application {
 
 		window = primaryStage;
 
-		Image image = new Image("graphicElements/jpgPackage/wolf_pizza.png");
+		Image image = new Image("graphicElements/images/wolf_pizza.png");
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(600);
 		imageView.setFitWidth(800);
@@ -92,7 +92,7 @@ public class GraphicInterface extends Application {
 
 		fadeIn.play();
 
-		fadeIn.setOnFinished((e) -> {
+		fadeIn.setOnFinished(e -> {
 			fadeOut.play();
 			MenuPage menuPage = new MenuPage();
 			menuPage.display(window, wolf);

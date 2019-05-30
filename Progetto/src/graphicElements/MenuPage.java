@@ -28,7 +28,7 @@ public class MenuPage {
 		stackPane.getChildren().add(label1);
 		stackPane.getStyleClass().add("stackpane");
 
-		Image image1 = new Image("graphicElements/jpgPackage/banner_pizza.jpg");
+		Image image1 = new Image("graphicElements/images/banner_pizza.jpg");
 		ImageView imageView = new ImageView(image1);
 		imageView.setFitHeight(150);
 		imageView.setFitWidth(880);
@@ -55,7 +55,6 @@ public class MenuPage {
 					break;
 				case "CLOSING":
 					ClosedPizzeriaAlert.display(true);        // pizzeria in chiusura
-
 					break;
 				default:
 					ClosedPizzeriaAlert.display(false);        // pizzeria già chiusa
@@ -97,11 +96,11 @@ public class MenuPage {
         layout.prefHeightProperty().bind(window.heightProperty());
 
 		Scene scene1 = new Scene(layout);
-		scene1.getStylesheets().addAll(this.getClass().getResource("menuStyle.css").toExternalForm());
+		scene1.getStylesheets().addAll(this.getClass().getResource("cssStyle/menuStyle.css").toExternalForm());
 		//window.setResizable(false);
 		window.setScene(scene1);
 		window.setTitle("Wolf of Pizza");
-		window.getIcons().add(new Image("graphicElements/jpgPackage/wolf_pizza.png"));
+		window.getIcons().add(new Image("graphicElements/images/wolf_pizza.png"));
 		window.show();
 	}
 }

@@ -91,7 +91,7 @@ public class OrderPage3 {
         layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
         Scene scene4;
         scene4 = new Scene(layout, 600, 800);
-        scene4.getStylesheets().addAll(this.getClass().getResource("buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
+        scene4.getStylesheets().addAll(this.getClass().getResource("cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
         window.setScene(scene4);
     }
 

@@ -57,6 +57,29 @@ public class Services {
 		return esclusiIniziali + tempiFissi;
 	}
 
+	/** In TextInterface.whatDoYouWant(), chiede quali siano le intenzioni del cliente per procedere. */
+	public static String whatDoYouWantPossibilities(boolean isOpen){
+		String ecco = Services.colorSystemOut("\nEcco che cosa puoi fare:\n",Color.YELLOW,false,false);
+		String con = "\t- con '";
+		String newOrd = Services.colorSystemOut("N",Color.ORANGE,true,false);
+		String newOrdS = "' puoi effetturare un nuovo ordine;\n";
+		String last = Services.colorSystemOut("L",Color.ORANGE,true,false);
+		String lastS = "' puoi visualizzare il tuo ultimo ordine;\n";
+		String off = Services.colorSystemOut("O",Color.ORANGE,true,false);
+		String offS = "' puoi visualizzare le tue offerte attive;\n";
+		String info = Services.colorSystemOut("I",Color.ORANGE,true,false);
+		String infoS = "' puoi sapere di più sulla nostra attività.\n";
+
+		StringBuilder string = new StringBuilder(getLine() + ecco);
+		if(isOpen)
+			string.append(con).append(newOrd).append(newOrdS);
+		string.append(con).append(last).append(lastS);
+		string.append(con).append(off).append(offS);
+		string.append(con).append(info).append(infoS);
+
+		return string.toString();
+	}
+
 	/** In TextInterface, gestisce eventuali errori di inserimento da tastiera (spazi/virgole) degli ingredienti. */
 	public static String arrangeIngredientString(StringTokenizer st){
 		String ingred = st.nextToken(",");
@@ -144,7 +167,7 @@ public class Services {
 		int closeMin = getMinutes(pizzeria.getClosingTime());
 		if(closeMin <= nowMin || openMin == closeMin)
 			return "CLOSED";
-		else if(closeMin - nowMin >= 20)
+		if(closeMin - nowMin >= 20)
 			return "OPEN";
 		else
 			return "CLOSING";
@@ -243,7 +266,8 @@ public class Services {
 		l2 = setBackgroundColorString(Color.CYAN) + colorSystemOut(l2,Color.WHITE,true,false);
 		l2 = v+l2+v;
 
-		System.out.println("\n"+getLine()+"\n"+tab+l1+"\n"+tab+v+colorTab+a+colorTab+v+"\n"+tab+v+colorTab+b+colorTab+v+"\n"+tab+v+colorTab+c+colorTab+v+"\n"+tab+v+colorTab+d+colorTab+v+"\n"+tab+v+colorTab+e+colorTab+v+"\n"+tab+l2);
+		System.out.println("\n"+tab+l1+"\n"+tab+v+colorTab+a+colorTab+v+"\n"+tab+v+colorTab+b+colorTab+v+
+				"\n"+tab+v+colorTab+c+colorTab+v+"\n"+tab+v+colorTab+d+colorTab+v+"\n"+tab+v+colorTab+e+colorTab+v+"\n"+tab+l2);
 	}
 
 	/** Restituisce una linea, utile per la stampa in TextInterface. */
