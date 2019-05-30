@@ -41,7 +41,7 @@ public class GraphicInterface extends Application {
 	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
 	 * */
 	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
-			// orari di apertura, da domenica a sabato
+			// orari di apertura, da domenica a sabato   //FIXME PIZZERIA QUASI SEMPRE CHIUSA?
 			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),

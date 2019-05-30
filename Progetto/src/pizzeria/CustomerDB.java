@@ -1,26 +1,27 @@
 package pizzeria;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
 
-public class PizzaDB {
+public class CustomerDB {
 
-    public static PreparedStatement putPizza(Connection con, String nome, String ingred, double prezzo){
+    public static PreparedStatement putCostumer(Connection con, String nome, String password){
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = con.prepareStatement("insert into sql7293749.Pizze values ('" + nome + "', '" + ingred + "', '" + prezzo + "');");
+            preparedStatement = con.prepareStatement("insert into sql7293749.Users values ('" + nome + "', '" + password +"');");
 
         } catch(Exception ignored){ }
         return preparedStatement;
     }
 
-    public static ResultSet getPizzaByName(Connection con){
+    public static ResultSet getCustomers(Connection con){
         ResultSet rs = null;
         try {
             Statement statement=con.createStatement();
-            rs = statement.executeQuery("select * from sql7293749.Pizze");
+
+            rs = statement.executeQuery("select * from sql7293749.Users");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

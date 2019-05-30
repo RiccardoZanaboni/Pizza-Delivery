@@ -30,6 +30,7 @@ public class OrderPage2 {
 	private Scene scene3;
 	private String address;
 	private String name;
+	private String password;
 	private Date time;
 
 	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
@@ -42,6 +43,12 @@ public class OrderPage2 {
 		username.setId("nomiLabel");
 		HBox usernameBox = new HBox(50);
 		usernameBox.getChildren().addAll(username, nameInput);
+		Label password = new Label("Password:");
+		TextField passwordInput = new TextField();
+		passwordInput.setPromptText("Your Password");
+		password.setId("nomiLabel");
+		HBox passwordBox = new HBox(50);
+		passwordBox.getChildren().addAll(password, passwordInput);
 
 		Label address = new Label("Indirizzo:");
         address.setId("nomiLabel");
@@ -61,10 +68,11 @@ public class OrderPage2 {
         confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e-> {
 			this.name = getName(nameInput);
+			this.password=getPassword(passwordInput);
 			this.address = getAddress(addressInput);
 			this.time = getChoice(choiceBox);
 			order.setAddress(getAddress(addressInput));
-			Customer customer = new Customer(getName(nameInput));
+			Customer customer = new Customer(getName(nameInput),getPassword(passwordInput));
 			order.setCustomer(customer);
 			order.setTime(time);
 			OrderPage3 orderPage3 = new OrderPage3();
@@ -90,10 +98,11 @@ public class OrderPage2 {
 		hBoxIntestazione.setAlignment(Pos.CENTER);
 
 		GridPane.setConstraints(usernameBox,0,0);
-		GridPane.setConstraints(addressBox, 0, 1);
-		GridPane.setConstraints(choiceHBox, 0, 2);
+		GridPane.setConstraints(passwordBox,0,1);
+		GridPane.setConstraints(addressBox, 0, 2);
+		GridPane.setConstraints(choiceHBox, 0, 3);
 
-		gridPane.getChildren().addAll(usernameBox, addressBox, choiceHBox);
+		gridPane.getChildren().addAll(usernameBox,passwordBox, addressBox, choiceHBox);
 		gridPane.setPadding(new Insets(130, 5, 20, 70));
 		gridPane.setVgap(20);
 		//gridPane.setHgap(150);
@@ -142,11 +151,18 @@ public class OrderPage2 {
 		return a;
 	}
 
-	/** legge e restituisce l'username inserito */
+	/** legge e restituisce l'username inserito */    //FIXME @ZANA PENSO CHE SIANO TUTTI UGUALI QUESTI GET NO?
 	private String getName (TextField nInput) {
 		String a = "";
 		a += nInput.getText();
     	return a;
+	}
+
+	/** legge e restituisce la password inserita */
+	private String getPassword (TextField nInput) {
+		String a = "";
+		a += nInput.getText();
+		return a;
 	}
 
 	/** aggiunge tutti gli orari disponibili alla ObservableList */

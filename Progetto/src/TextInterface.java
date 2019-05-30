@@ -337,10 +337,16 @@ public class TextInterface {
         if (nome.toUpperCase().equals("F")) {
             throw new RestartOrderExc();
         }
-        Customer c = new Customer(nome);
-        order.setCustomer(c);
-        String domanda2 = Services.colorSystemOut("Inserisci l'indirizzo di consegna:",Color.YELLOW,false,false);
+        String domanda2 = Services.colorSystemOut("Password?",Color.YELLOW,false,false);
         System.out.println(domanda2 + "\t\t(Inserisci 'F' per annullare l'ordine)");
+        String password = scan.nextLine();
+        if (nome.toUpperCase().equals("F")) {
+            throw new RestartOrderExc();
+        }
+        Customer c = new Customer(nome,password);
+        order.setCustomer(c);
+        String domanda3 = Services.colorSystemOut("Inserisci l'indirizzo di consegna:",Color.YELLOW,false,false);
+        System.out.println(domanda3 + "\t\t(Inserisci 'F' per annullare l'ordine)");
         String indirizzo = scan.nextLine();
         if (indirizzo.toUpperCase().equals("F")) {
             throw new RestartOrderExc();

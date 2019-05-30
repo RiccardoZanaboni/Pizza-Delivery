@@ -49,7 +49,7 @@ public class Database {
         }
     }
 
-    public static void GetPizze(ArrayList<Pizza> menu) throws SQLException{
+    public static void getPizze(ArrayList<Pizza> menu) throws SQLException{  //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI IL MENU
         ResultSet rs=PizzaDB.getPizzaByName(con);
         while(rs.next()){
             HashMap<String, Toppings> ingr = new HashMap<>();
@@ -67,6 +67,33 @@ public class Database {
             Pizza p=new Pizza(nomePizza,ingr,prezzo);
             menu.add(p);
         }
+    }
+
+    public static void putCustomer(){
+        try {
+            System.out.print("Inserisci username: ");
+            String name = scan.nextLine();
+            System.out.print("Inserisci password: ");
+            String password = scan.nextLine();
+            CustomerDB.putCostumer(con,name,password).execute();
+        } catch (NumberFormatException nfe){
+            String err = "Errore nell'inserimento dei dati utente. Riprovare:";
+            System.out.println(Services.colorSystemOut(err,Color.RED,false,false));
+        } catch (SQLException sqle){
+            String err = "Errore nell'inserimento dell'utente nel database. Riprovare:";
+            System.out.println(Services.colorSystemOut(err,Color.RED,false,false));
+        }
+    }
+
+    public static void getCustomers(ArrayList<Customer> users)throws SQLException{//TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI ARRAYLIST DI CUSTOMER
+        ResultSet rs=CustomerDB.getCustomers(con);
+        while(rs.next()) {
+            String username = rs.getString(1);
+            String password = rs.getString(2);
+            Customer c = new Customer(username,password);
+            users.add(c);
+        }
+
     }
 
     public static void main(String[] args) {
@@ -87,10 +114,10 @@ public class Database {
                 LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
                 LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
         );
-        putPizza(wolf);
+        putCustomer();
         try {
-            ArrayList<Pizza> pizzas=new ArrayList<>();
-            GetPizze(pizzas);
+            ArrayList<Customer> users=new ArrayList<>();
+            getCustomers(users);
             System.out.println("Ciao");
         } catch (SQLException e) {
             e.printStackTrace();
