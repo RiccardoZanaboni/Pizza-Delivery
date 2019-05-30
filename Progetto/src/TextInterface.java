@@ -72,7 +72,7 @@ public class TextInterface {
 
             // se la pizzeria è ancora aperta, ma non ci sono i tempi per eseguire un nuovo ordine.
             case "CLOSING":
-                String chiusura = "La pizzeria è in chiusura. Impossibile effettuare ordini al momento.\n";
+                String chiusura = "\nLa pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
                 System.out.println(Services.colorSystemOut(chiusura, Color.RED, false, false));
                 System.out.println(Services.whatDoYouWantPossibilities(false));
                 System.out.print("\t>> ");
@@ -82,7 +82,7 @@ public class TextInterface {
 
             // se la pizzeria per oggi ha terminato il turno lavorativo, quindi è chiusa.
             case "CLOSED":
-                String chiusa = "La pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.\n";
+                String chiusa = "\nLa pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
                 System.out.println(Services.colorSystemOut(chiusa, Color.RED, false, false));
                 System.out.println(Services.whatDoYouWantPossibilities(false));
                 System.out.print("\t>> ");
@@ -118,6 +118,7 @@ public class TextInterface {
      * Utilizzo la sigla-chiave "OK" una volta terminata la scelta delle pizze, per continuare.
      * Utilizzo ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio. */
     private void makeOrderText() {
+        System.out.println(wolf.printMenu());
         Order order = wolf.initializeNewOrder();
         int num;
         String nomePizza;
@@ -440,12 +441,13 @@ public class TextInterface {
     public void askAccess() {
         String log = Services.colorSystemOut("L",Color.ORANGE,true,false);
         String newAcc = Services.colorSystemOut("N",Color.ORANGE,true,false);
-        System.out.println("\t>> Digitare:\n\t\t'" + log + "' per eseguire il login,\n\t\t'" + newAcc + "' per creare un nuovo account.");
-        System.out.print("\t>> ");
+        System.out.println(Services.colorSystemOut("\t>> Digitare:\n",Color.YELLOW,false,false)
+                + "\t\t'" + log + "' per eseguire il login,\n\t\t'" + newAcc + "' per creare un nuovo account.");
+        System.out.print(Services.colorSystemOut("\t>>\t",Color.YELLOW,false,false));
         String answer = scan.nextLine().toUpperCase();
         switch (answer) {
             case "L":
-                String userQuestion = Services.colorSystemOut("\tUsername:\t", Color.YELLOW, false, false);
+                String userQuestion = Services.colorSystemOut("\n\tUsername:\t", Color.YELLOW, false, false);
                 System.out.print(userQuestion);
                 String user = scan.nextLine().toUpperCase();
                 String pswQuestion = Services.colorSystemOut("\tPassword:\t", Color.YELLOW, false, false);
@@ -453,50 +455,52 @@ public class TextInterface {
                 String psw = scan.nextLine().toUpperCase();
                 switch(wolf.checkLogin(user,psw)){
                     case "OK":
-                        System.out.println("ok, accesso cliente.");
+                        System.out.println("\nok, accesso cliente.");
                         whatDoYouWant();
                         break;
                     case "P":
-                        System.out.println("ok, accesso pizzeria.");
+                        System.out.println("\nok, accesso pizzeria.");
                         //PizzeriaInterface pizzeriaInterface = new PizzeriaInterface();
                         //pizzeriaInterface.cosaVuoiFare();
                         break;
                     case "NO":
-                        System.out.println("username o password errati. Riprovare: ");
+                        System.out.println(Services.colorSystemOut("Username o password errati: riprovare.\n",Color.RED,false,false));
                         askAccess();
                         break;
                 }
                 break;
             case "N":
-                String newUserQuestion = Services.colorSystemOut("Nuovo username:\t", Color.YELLOW, false, false);
-                System.out.println(newUserQuestion);
+                String newUserQuestion = Services.colorSystemOut("\n\tNuovo username:\t\t", Color.YELLOW, false, false);
+                System.out.print(newUserQuestion);
                 String newUser = scan.nextLine().toUpperCase();
-                String newPswQuestion = Services.colorSystemOut("Nuova password:\t", Color.YELLOW, false, false);
-                System.out.println(newPswQuestion);
+                String newPswQuestion = Services.colorSystemOut("\tNuova password:\t\t", Color.YELLOW, false, false);
+                System.out.print(newPswQuestion);
                 String newPsw = scan.nextLine().toUpperCase();
-                String confPswQuestion = Services.colorSystemOut("Conferma password:\t", Color.YELLOW, false, false);
-                System.out.println(confPswQuestion);
+                String confPswQuestion = Services.colorSystemOut("\tConferma psw:\t\t", Color.YELLOW, false, false);
+                System.out.print(confPswQuestion);
                 String confPsw = scan.nextLine().toUpperCase();
                 switch(wolf.createAccount(newUser,newPsw,confPsw)) {
                     case "OK":
-                        System.out.println("ok, creato nuovo cliente.");
+                        System.out.println("\nOk, creato nuovo cliente.\n");
+                        // TODO: login automatico
+                        whatDoYouWant();
                         break;
                     case "SHORT":
-                        System.out.println("password troppo breve. Riprovare: ");
+                        System.out.println(Services.colorSystemOut("\nPassword troppo breve: riprovare.\n",Color.RED,false,false));
                         askAccess();
                         break;
                     case "EXISTING":
-                        System.out.println("username già utilizzato. Riprovare: ");
+                        System.out.println(Services.colorSystemOut("\nUsername già utilizzato: riprovare.\n",Color.RED,false,false));
                         askAccess();
                         break;
                     case "DIFFERENT":
-                        System.out.println("la password confermata non coincide. Riprovare: ");
+                        System.out.println(Services.colorSystemOut("\nPassword non coincidente: riprovare.\n",Color.RED,false,false));
                         askAccess();
                         break;
                 }
                 break;
             default:
-                String spiacenti = "Spiacenti: carattere inserito non valido. Riprovare: ";
+                String spiacenti = "\nSpiacenti: carattere inserito non valido. Riprovare:\n";
                 System.out.println(Services.colorSystemOut(spiacenti,Color.RED,false,false));
                 askAccess();
                 break;
@@ -506,8 +510,7 @@ public class TextInterface {
     public static void main(String[] args) {
         TextInterface textInterface = new TextInterface();
         System.out.println(textInterface.wolf.helloThere());
-        //textInterface.askAccess();
-        System.out.println(textInterface.wolf.printMenu());
+        //System.out.println(textInterface.wolf.printMenu());
         textInterface.askAccess();
         //textInterface.whatDoYouWant();
     }
