@@ -42,21 +42,21 @@ public class GraphicInterface extends Application {
 	 * */
 	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
 			// orari di apertura, da domenica a sabato
-			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
 			// orari di chiusura, da domenica a sabato
-			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
+			LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+			LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES)
 	);
 	private Stage window;
 

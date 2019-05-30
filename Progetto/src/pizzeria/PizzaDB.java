@@ -1,8 +1,5 @@
 package pizzeria;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashMap;
 
 public class PizzaDB extends Pizza {
@@ -15,7 +12,7 @@ public class PizzaDB extends Pizza {
         try {
             preparedStatement = con.prepareStatement("insert into sql7293749.Pizze values ('" + nome + "', '" + ingred + "', '" + prezzo + "');");
 
-        } catch(Exception ignored){ }
+        } catch(SQLException ignored){ }
         return preparedStatement;
     }
 
@@ -25,8 +22,8 @@ public class PizzaDB extends Pizza {
             Statement statement=con.createStatement();
             rs = statement.executeQuery("select Pizze from sql7293749.Pizze where nome = '" + name + "'");
             rs.next();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        }catch (SQLException sqle){
+            System.out.println(sqle.getMessage());
         }
         return rs;
     }
