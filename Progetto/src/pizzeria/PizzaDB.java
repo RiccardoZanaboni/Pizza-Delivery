@@ -7,7 +7,7 @@ public class PizzaDB extends Pizza {
         super(name, ingred, price);
     }
 
-    public static PreparedStatement putPizza(Connection con, String nome, String ingred, int prezzo){
+    public static PreparedStatement putPizza(Connection con, String nome, String ingred, double prezzo){
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = con.prepareStatement("insert into sql7293749.Pizze values ('" + nome + "', '" + ingred + "', '" + prezzo + "');");
@@ -16,12 +16,11 @@ public class PizzaDB extends Pizza {
         return preparedStatement;
     }
 
-    public static ResultSet getPizzaByName(Connection con, String name){
+    public static ResultSet getPizzaByName(Connection con){
         ResultSet rs = null;
         try {
             Statement statement=con.createStatement();
-            rs = statement.executeQuery("select Pizze from sql7293749.Pizze where nome = '" + name + "'");
-            rs.next();
+            rs = statement.executeQuery("select * from sql7293749.Pizze");
         }catch (SQLException sqle){
             System.out.println(sqle.getMessage());
         }
