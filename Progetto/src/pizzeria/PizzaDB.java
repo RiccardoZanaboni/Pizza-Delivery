@@ -19,12 +19,11 @@ public class PizzaDB extends Pizza {
         return preparedStatement;
     }
 
-    public static ResultSet getPizzaByName(Connection con, String name){
+    public static ResultSet getPizzaByName(Connection con){
         ResultSet rs = null;
         try {
             Statement statement=con.createStatement();
-            rs = statement.executeQuery("select Pizze from sql7293749.Pizze where nome = '" + name + "'");
-            rs.next();
+            rs = statement.executeQuery("select * from sql7293749.Pizze");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
