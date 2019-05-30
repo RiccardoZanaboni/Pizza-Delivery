@@ -10,7 +10,7 @@ public class PizzaDB extends Pizza {
         super(name, ingred, price);
     }
 
-    public static PreparedStatement putPizza(Connection con, String nome, String ingred, int prezzo){
+    public static PreparedStatement putPizza(Connection con, String nome, String ingred, double prezzo){
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = con.prepareStatement("insert into sql7293749.Pizze values ('" + nome + "', '" + ingred + "', '" + prezzo + "');");

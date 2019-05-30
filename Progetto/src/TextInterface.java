@@ -35,7 +35,7 @@ public class TextInterface {
      *
      * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
      * */
-    private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
+    public Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
             // orari di apertura, da domenica a sabato
             LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
@@ -430,7 +430,7 @@ public class TextInterface {
     }
 
     /** Elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
-    private String possibleAddictions(Pizzeria pizzeria) {
+    public static String possibleAddictions(Pizzeria pizzeria) {
         StringBuilder possibiliIngr = new StringBuilder();
         possibiliIngr.append(Services.colorSystemOut("\tPossibili aggiunte: ",Color.ORANGE,false,false));
         possibiliIngr.append(pizzeria.possibleAddictions());
