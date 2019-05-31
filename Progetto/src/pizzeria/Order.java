@@ -45,6 +45,7 @@ public class Order {
     public void setNumTemporaryPizze(int i) {
     	this.numTemporaryPizze += i;
 	}
+
 	public void decreaseNumTemporaryPizze() {
     	this.numTemporaryPizze--;
 	}

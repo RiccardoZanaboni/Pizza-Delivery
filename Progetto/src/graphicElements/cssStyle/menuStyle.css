@@ -52,3 +52,9 @@
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
 }
+.textArea{
+    -fx-font-family: Helvetica, Arial, sans-serif;
+    -fx-font-size: 40px;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}

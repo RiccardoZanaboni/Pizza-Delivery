@@ -65,6 +65,10 @@ public class MenuPage {
 
 
 		Button chiSiamoButton = new Button("Chi siamo");
+		chiSiamoButton.setOnAction(event -> {
+		    WhoWeArePage whoWeArePage=new WhoWeArePage();
+		    whoWeArePage.display(window,pizzeria);
+        });
 		chiSiamoButton.prefWidthProperty().bind(window.widthProperty());
         chiSiamoButton.prefHeightProperty().bind(window.heightProperty());
         //chiSiamoButton.setShape(new Rectangle(10,10));
