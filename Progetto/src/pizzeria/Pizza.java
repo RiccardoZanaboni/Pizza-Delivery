@@ -25,6 +25,10 @@ public class Pizza {
         this.ingredients = ingred;
     }
 
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     @Override
     public String toString() {
         String descrizione = this.getDescription();
@@ -74,10 +78,6 @@ public class Pizza {
 
     public String getName() {
         return name;
-    }
-
-    public HashMap<String, Toppings> getIngredients() {
-        return ingredients;
     }
 
     public void setPrice(double prezzo) {

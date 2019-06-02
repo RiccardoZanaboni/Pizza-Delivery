@@ -22,31 +22,48 @@ public class ButtonRmvPizza extends Button {
         getStylesheets().addAll(this.getClass().getResource("cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
 		this.setShape(new Circle(100000));
 		this.setOnAction(e-> {
-            if (order.getOrderedPizze().contains(pizza)) {
+		    if (order.getOrderedPizze().contains(pizza)) {
                 order.getOrderedPizze().remove(pizza);
-                // FIXME: 28/05/2019 sistemare il decremento per le pizze modificate  @ MUSI
-                // FIXME: 28/05/2019 quando si elimina una pizza modificata il Count va a 0, ne puoi eliminare
-                // FIXME: 28/05/2019 solo una alla volta per tipo, uscendo dallo ShoppingCart ogni volta
-                pizza.decreaseCount();
                 order.setNumTemporaryPizze(-1);
                 shoppingCartButton.setText(order.getNumPizzeProvvisorie() + "");
-                countPizza.setText("" + pizza.getCount());
-            }
 
-            //FIXME MUSI: COMMENTATO SOLO PER VISUALIZZARE IL CONTO DELLE PIZZE MODIFICATE
-				/*if (pizza.getCount()==0) {
+                if(pizza.getName().equals("PizzaModificata"))
+                {
+                    int i = order.countPizzaModificata(pizza);
+                    pizza.setCount(i);
+                    countPizza.setText("" + pizza.getCount());
+                } else {
+                    pizza.decreaseCount();
+                    countPizza.setText("" + pizza.getCount());
+                }
+		    }
+            else if (order.searchModificata(pizza) ){
+                if(pizza.getName().equals("PizzaModificata"))
+                {
+                    for(int j=0;j<order.getNumPizze();j++)
+                    {
+                       if(order.getOrderedPizze().get(j).getDescription().equals(pizza.getDescription())) {
+                           order.getOrderedPizze().remove(j);
+                           break;
+                       }
+                    }
+                    int i=order.countPizzaModificata(pizza);
+                    pizza.setCount(i);
+                    countPizza.setText("" + pizza.getCount());
+                    order.setNumTemporaryPizze(-1);
+                    shoppingCartButton.setText(order.getNumPizzeProvvisorie() + "");
+            }
+        }
+            if (pizza.getCount()==0) {
 					nomeLabels.setText("");
 					prezzoLabel.setText("");
 					toppingLabel.setText("");
 					countPizza.setText("");
 					this.setVisible(false);
 				}
-
-			} else {
+			else if(pizza.getCount()<0) {
 				MinPizzasAlert.display(pizza.getMaiuscName());
 			}
-		});*/
-
-            });
-        }
+		});
 	}
+}

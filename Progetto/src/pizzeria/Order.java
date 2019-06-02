@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 @SuppressWarnings("deprecation")
 public class Order {
@@ -160,6 +161,22 @@ public class Order {
 		}
 		return false;
 	}
+
+    public boolean searchModificata(Pizza pizza){   //ricerca se esiste una pizza con le stesse modifiche alla pizza, non é uguale a searchPizza
+        for (Pizza pizza1 : this.orderedPizze) {
+            if (pizza1.getDescription().equals(pizza.getDescription()))
+                return true;
+        }
+        return false;
+    }
+    public int countPizzaModificata(Pizza pizza){ // conta quante pizze modificate dello stesso tipo ci sono
+	    int i=0;
+        for (Pizza pizza1 : this.orderedPizze) {
+            if (pizza1.getMaiuscName().equals(pizza.getMaiuscName()) && pizza1.getToppings().equals(pizza.getToppings()))
+                i++;
+        }
+        return i;
+    }
 
     /** Il server-pizzeria inizia a preparare le pizze solo se isFull = true. */
     public boolean isFull() {
