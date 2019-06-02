@@ -434,7 +434,6 @@ public class Pizzeria {
     }
 
     public String createAccount(String newUser, String newPsw, String confPsw) {
-        // TODO: sistemare quando avremo login
         boolean existing = false;
         // faccio scorrere tutti gli account e controllo che non esista già.
         // se esistente, pongo existing a true.

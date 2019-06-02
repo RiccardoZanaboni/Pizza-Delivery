@@ -1,4 +1,4 @@
-package graphicElements;
+package graphicElements.PizzeriaPages;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

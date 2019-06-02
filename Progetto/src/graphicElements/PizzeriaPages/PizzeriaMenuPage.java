@@ -1,4 +1,4 @@
-package graphicElements;
+package graphicElements.PizzeriaPages;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

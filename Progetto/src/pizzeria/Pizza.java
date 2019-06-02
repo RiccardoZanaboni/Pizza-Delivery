@@ -25,10 +25,6 @@ public class Pizza {
         this.ingredients = ingred;
     }
 
-    // FIXME DA TOGLIERE
-    public Pizza() {
-    }
-
     @Override
     public String toString() {
         String descrizione = this.getDescription();

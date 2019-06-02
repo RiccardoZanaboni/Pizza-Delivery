@@ -56,6 +56,7 @@ public class ModifyBox{
                 handleOptions(checkBoxes, nuovaPizza);
                 nuovaPizza.setName("PizzaModificata");
                 order.addPizza(nuovaPizza, 1);
+                nuovaPizza.increaseCount();
                 answer = true;
                 window.close();
             }

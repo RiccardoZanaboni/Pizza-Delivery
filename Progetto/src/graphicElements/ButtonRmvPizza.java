@@ -22,17 +22,19 @@ public class ButtonRmvPizza extends Button {
         getStylesheets().addAll(this.getClass().getResource("cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
 		this.setShape(new Circle(100000));
 		this.setOnAction(e-> {
-			if (order.getOrderedPizze().contains(pizza)) {
-				order.getOrderedPizze().remove(pizza);
+            if (order.getOrderedPizze().contains(pizza)) {
+                order.getOrderedPizze().remove(pizza);
                 // FIXME: 28/05/2019 sistemare il decremento per le pizze modificate  @ MUSI
-                // FIXME: 28/05/2019 quando si elimina una pizza modificata il Count va a -1, ne puoi eliminare 
-                // FIXME: 28/05/2019 solo una alla volta , uscendo dallo ShoppingCart ogni volta
-				pizza.decreaseCount();
-				order.setNumTemporaryPizze(-1);
-				shoppingCartButton.setText(order.getNumPizzeProvvisorie()+"");
-				countPizza.setText(""+pizza.getCount());
+                // FIXME: 28/05/2019 quando si elimina una pizza modificata il Count va a 0, ne puoi eliminare
+                // FIXME: 28/05/2019 solo una alla volta per tipo, uscendo dallo ShoppingCart ogni volta
+                pizza.decreaseCount();
+                order.setNumTemporaryPizze(-1);
+                shoppingCartButton.setText(order.getNumPizzeProvvisorie() + "");
+                countPizza.setText("" + pizza.getCount());
+            }
 
-				if (pizza.getCount()<=0) {
+            //FIXME MUSI: COMMENTATO SOLO PER VISUALIZZARE IL CONTO DELLE PIZZE MODIFICATE
+				/*if (pizza.getCount()==0) {
 					nomeLabels.setText("");
 					prezzoLabel.setText("");
 					toppingLabel.setText("");
@@ -43,6 +45,8 @@ public class ButtonRmvPizza extends Button {
 			} else {
 				MinPizzasAlert.display(pizza.getMaiuscName());
 			}
-		});
+		});*/
+
+            });
+        }
 	}
-}
