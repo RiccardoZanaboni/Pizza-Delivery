@@ -35,7 +35,7 @@ public class Order {
         this.numTemporaryPizze = 0;
     }
 
-    public int getNumPizzeProvvisorie() {
+    public int getNumTemporaryPizze() {
         return this.numTemporaryPizze;
     }
 
@@ -43,10 +43,6 @@ public class Order {
 	 * Due possibilità: i=+1 oppure i=-1. */
     public void setNumTemporaryPizze(int i) {
     	this.numTemporaryPizze += i;
-	}
-
-	public void decreaseNumTemporaryPizze() {
-    	this.numTemporaryPizze--;
 	}
 
     /** aggiunge la pizza all'ordine. */

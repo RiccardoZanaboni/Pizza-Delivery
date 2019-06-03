@@ -102,8 +102,6 @@ public class Services {
 				nome = nome.replace(nome.substring(i,i+1)," ");
 				nome = nome.replace(nome.substring(i+1,i+2),nome.substring(i+1,i+2).toUpperCase());
 			}
-			//if(nome.substring(i-1,i+1).equals("l "))		// stampa l'apostrofo dove necessario
-			//	nome = nome.replace(nome.substring(i-1,i+1),"'");
 		}
 		return nome;
 	}
@@ -291,8 +289,6 @@ public class Services {
 						history.append(colorSystemOut(line + "\n", Color.YELLOW, true, true));
 				}
 			}
-
-
 		} catch (FileNotFoundException fnfe){
 			System.out.println("ERROR");
 		}

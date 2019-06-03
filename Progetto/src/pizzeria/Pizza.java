@@ -30,7 +30,7 @@ public class Pizza {
         return "- " + nome + prezzo + this.price + " €" + ingr + descrizione;
     }
 
-    /** Restituisce il nome (così come è salvato) */
+    /** Restituisce il nome (così come è salvato, se non è da visualizzare) */
     public String getName(boolean isToVisualize) {
         if(isToVisualize)
             return Services.getSettledName(this.name);

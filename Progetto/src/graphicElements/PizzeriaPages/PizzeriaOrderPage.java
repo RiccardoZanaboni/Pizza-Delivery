@@ -30,11 +30,9 @@ public class PizzeriaOrderPage {
                 System.out.println(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getName(true));
             }
         }
-
         Scene scene = new Scene(gridPane, 880, 600);
         window.setScene(scene);
         window.show();
-
     }
 
     private static void fillLabelsAndButtons (Pizzeria pizzeria, ArrayList<Label> countPizzeLabels, ArrayList<Label> orderNameLabels, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
@@ -69,14 +67,11 @@ public class PizzeriaOrderPage {
                 GridPane.setConstraints(toppingLabels.get(j), 2, j+1);
                 GridPane.setConstraints(priceLabels.get(j), 3, j+1);
             }
-
         }
 
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setHgap(1);
         gridPane.setVgap(30);
-
-
 
         return gridPane;
     }

@@ -43,7 +43,6 @@ public class ShoppingCart {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(scene);
         window.show();
-
     }
 
     private static GridPane createGridPane(Button shoppingCartButton, Order order) {
@@ -93,7 +92,6 @@ public class ShoppingCart {
                 GridPane.setConstraints(buttonRmvPizzas.get(numTipo), 4, numTipo + 1);
 
                 numTipo++;		// ho un "tipo di pizza" in piu
-
             }
         }
         return gridPane;

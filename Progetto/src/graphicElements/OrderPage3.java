@@ -98,7 +98,7 @@ public class OrderPage3 {
     private static GridPane addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
         HBox totalBox = new HBox();
         Label labelTot = new Label("Totale: ");
-        Label label2 = new Label("" + order.getTotalPrice());
+        Label label2 = new Label("" + order.getTotalPrice() + " €");
         totalBox.getChildren().addAll(labelTot,label2);
         totalBox.setAlignment(Pos.CENTER);
 

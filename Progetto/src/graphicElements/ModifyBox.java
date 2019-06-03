@@ -1,6 +1,6 @@
 package graphicElements;
 
-import graphicAlerts.ToppingsAlert;
+import graphicAlerts.GenericAlert;
 import javafx.stage.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -23,14 +23,10 @@ import javafx.stage.Stage;
 public class ModifyBox{
     private static boolean answer = false;  // answer = true se la pizza ha subìto modifiche
 
-    public static boolean display(Order order, Pizzeria pizzeria, String pizza) {
+    public static boolean display(Order order, Pizzeria pizzeria, String pizzaName) {
         Stage window = new Stage();
 
-        Pizza pizzaMenu = new Pizza(
-                pizza,//pizzeria.getMenu().get(pizza).getName(false),
-                pizzeria.getMenu().get(pizza).getToppings(),
-                pizzeria.getMenu().get(pizza).getPrice()
-        );
+        Pizza pizzaMenu = new Pizza(pizzaName, pizzeria.getMenu().get(pizzaName).getToppings(), pizzeria.getMenu().get(pizzaName).getPrice());
         HashMap<String, Toppings> ingr = new HashMap<>(pizzaMenu.getToppings());
         Pizza nuovaPizza = new Pizza(pizzaMenu.getName(false), ingr, pizzaMenu.getPrice());
 
@@ -49,10 +45,11 @@ public class ModifyBox{
         confirmButton.setOnAction(e -> {
             handleOptions(checkBoxes, nuovaPizza);
             if (!checkCheckBoxTopping(checkBoxes))
-                ToppingsAlert.display();
+                GenericAlert.display("Attenzione: inserire almeno un ingrediente!");
             else {
                 handleOptions(checkBoxes, nuovaPizza);
-                nuovaPizza.setName("PizzaModificata");
+                //if(!pizzaMenu.getToppings().equals(nuovaPizza.getToppings()))
+                nuovaPizza.setName(pizzaName + "*");           // aggiungo un asterisco al nome della pizza modificata
                 order.addPizza(nuovaPizza, 1);
                 nuovaPizza.setCount(true);
                 answer = true;
@@ -66,8 +63,8 @@ public class ModifyBox{
         layout.setAlignment(Pos.CENTER);
 
         window.initModality(Modality.APPLICATION_MODAL);    // Impedisce di fare azioni sulle altre finestre
-        window.setTitle("Modifica la pizza \"" + nuovaPizza.getName(true) + "\"");
-        window.setMinWidth(330);
+        window.setTitle("Modifica la pizza (+0.50 € per aggiunta)");
+        window.setMinWidth(350);
         window.setMaxWidth(400);
         window.setMaxHeight(300);
 

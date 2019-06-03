@@ -1,5 +1,6 @@
 package graphicElements;
 
+import graphicAlerts.GenericAlert;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +14,6 @@ import javafx.geometry.Insets;
 import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
-import pizzeria.Services;
 
 import java.util.ArrayList;
 
@@ -54,7 +54,7 @@ public class OrderPage1 {
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);
-        HBox shoppingCartBox = new HBox(order.getNumPizzeProvvisorie());
+        HBox shoppingCartBox = new HBox(order.getNumTemporaryPizze());
         shoppingCartBox.setId("shoppingCart");
 
         Button shoppingCartButton = new Button();
@@ -241,9 +241,12 @@ public class OrderPage1 {
         confirmButton = new Button("Prosegui  →");
         confirmButton.setId("confirmButton");
         confirmButton.setOnAction(e -> {
-            //System.out.println("Sono state ordinate in tutto " + tot + " pizze.");
-            //System.out.println(order.getOrderedPizze());
-            orderPage2.display(window, scene2, order, pizzeria, tot);
+            if(order.getNumTemporaryPizze()>0)
+                //System.out.println("Sono state ordinate in tutto " + tot + " pizze.");
+                //System.out.println(order.getOrderedPizze());
+                orderPage2.display(window, scene2, order, pizzeria, tot);
+            else
+                GenericAlert.display("Attenzione: aggiungere almeno una pizza all'ordine!");
         });
         return confirmButton;
     }

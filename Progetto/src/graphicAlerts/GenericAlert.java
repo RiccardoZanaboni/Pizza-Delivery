@@ -8,13 +8,13 @@ import javafx.stage.Stage;
 
 /**
  * Risolve, stampando un messaggio in una nuova finestra, la possibilità che l'utente
- * richieda una pizza, modificata dal menu, senza alcun ingrediente.
+ * esegua una generica operazione non consentita.
  */
 
-public class ToppingsAlert {
-    public static void display() {
+public class GenericAlert {
+    public static void display(String err) {
         Stage window = new Stage();
-        Label printError = new Label("Attenzione: inserire almeno un ingrediente!");
+        Label printError = new Label(err);
 
         printError.autosize();
 
