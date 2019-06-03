@@ -79,8 +79,8 @@ public class Order {
 			int num = 0;
 
 			boolean contains = false;
-			for (int numElencate = 0; numElencate < elencate.size(); numElencate++) {
-				if(p.getName(false).equals(elencate.get(numElencate).getName(false)) && p.getToppings().equals(elencate.get(numElencate).getToppings())){
+			for (Pizza pizza : elencate) {
+				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
 					contains = true;
 					break;
 				}
@@ -110,6 +110,7 @@ public class Order {
 		for (int i = 0; i < getNumPizze(); i++) {
 			Pizza p = this.orderedPizze.get(i);
 			int num = 0;
+
 			boolean contains = false;
 			for (Pizza pizza : elencate) {
 				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {

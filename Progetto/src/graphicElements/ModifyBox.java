@@ -48,12 +48,15 @@ public class ModifyBox{
                 GenericAlert.display("Attenzione: inserire almeno un ingrediente!");
             else {
                 handleOptions(checkBoxes, nuovaPizza);
-                //if(!pizzaMenu.getToppings().equals(nuovaPizza.getToppings()))
-                nuovaPizza.setName(pizzaName + "*");           // aggiungo un asterisco al nome della pizza modificata
-                order.addPizza(nuovaPizza, 1);
-                nuovaPizza.setCount(true);
-                answer = true;
-                window.close();
+                if(!pizzaMenu.getToppings().equals(nuovaPizza.getToppings())){
+                    nuovaPizza.setName(pizzaName + "*");           // aggiungo un asterisco al nome della pizza modificata
+                    order.addPizza(nuovaPizza, 1);
+                    nuovaPizza.setCount(true);
+                    answer = true;
+                    window.close();
+                } else {
+                    GenericAlert.display("Attenzione: nessuna modifica effettuata!");
+                }
             }
         });
 
