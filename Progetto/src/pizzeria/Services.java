@@ -1,8 +1,7 @@
 package pizzeria;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 import java.io.*;
-import java.nio.Buffer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -63,7 +62,7 @@ public class Services {
 	public static String whatDoYouWantPossibilities(boolean isOpen){
 		String ecco = Services.colorSystemOut("\nEcco che cosa puoi fare:\n",Color.YELLOW,false,false);
 		String con = "\t- con '";
-		String newOrd = Services.colorSystemOut("N",Color.ORANGE,true,false);
+		String newOrd = Services.colorSystemOut("N", Color.ORANGE,true,false);
 		String newOrdS = "' puoi effetturare un nuovo ordine;\n";
 		String last = Services.colorSystemOut("L",Color.ORANGE,true,false);
 		String lastS = "' puoi visualizzare il tuo ultimo ordine;\n";

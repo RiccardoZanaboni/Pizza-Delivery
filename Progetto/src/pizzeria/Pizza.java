@@ -1,6 +1,6 @@
 package pizzeria;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 import java.util.HashMap;
 
 public class Pizza {

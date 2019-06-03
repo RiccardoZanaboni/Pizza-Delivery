@@ -1,8 +1,5 @@
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
+import javafx.scene.paint.Color;
 import pizzeria.*;
-
-import java.awt.*;
-import java.lang.invoke.SerializedLambda;
 import java.sql.*;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -42,7 +39,7 @@ public class Database {
             PizzaDB.putPizza(con, name, ingred, prezzo).execute();
         } catch (NumberFormatException nfe){
             String err = "Errore nell'inserimento dei dati della pizza. Riprovare:";
-            System.out.println(Services.colorSystemOut(err,Color.RED,false,false));
+            System.out.println(Services.colorSystemOut(err, Color.RED,false,false));
         } catch (SQLException sqle){
             String err = "Errore nell'inserimento della pizza nel database. Riprovare:";
             System.out.println(Services.colorSystemOut(err,Color.RED,false,false));

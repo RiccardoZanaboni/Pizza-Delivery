@@ -6,10 +6,8 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 import pizzeria.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

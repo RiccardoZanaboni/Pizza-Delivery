@@ -1,8 +1,7 @@
 import exceptions.RestartOrderExc;
 import exceptions.TryAgainExc;
+import javafx.scene.paint.Color;
 import pizzeria.*;
-
-import java.awt.*;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -65,7 +64,7 @@ public class TextInterface {
             // se la pizzeria è aperta.
             case "OPEN":
                 System.out.println(Services.whatDoYouWantPossibilities(true));
-                System.out.print(Services.colorSystemOut("\t>> ",Color.YELLOW,false,false));
+                System.out.print(Services.colorSystemOut("\t>> ", Color.YELLOW,false,false));
                 risposta = scan.nextLine().toUpperCase();
                 whatDoYouWantAnswers(true,risposta);
                 break;

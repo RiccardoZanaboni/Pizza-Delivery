@@ -2,11 +2,9 @@ package pizzeria;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-
-import java.awt.*;
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 @SuppressWarnings("deprecation")
 public class Order {
@@ -62,7 +60,7 @@ public class Order {
 	public String recapOrder(){
 		String line = Services.getLine();
 		StringBuilder recap = new StringBuilder();
-		recap.append(Services.colorSystemOut("ORDINE N. ",Color.RED,true,false));
+		recap.append(Services.colorSystemOut("ORDINE N. ", Color.RED,true,false));
 		recap.append(Services.colorSystemOut(this.orderCode,Color.RED,true,false));
 		recap.append(Services.colorSystemOut("\nSIG.\t\t",Color.YELLOW,false,false));
 		recap.append(Services.colorSystemOut(this.customer.getUsername(),Color.GREEN,true,false));
