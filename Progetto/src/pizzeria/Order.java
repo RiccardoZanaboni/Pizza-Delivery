@@ -77,10 +77,18 @@ public class Order {
 		for (int i = 0; i < getNumPizze(); i++) {
 			Pizza p = this.orderedPizze.get(i);
 			int num = 0;
-			if (!(elencate.contains(p))) {
+
+			boolean contains = false;
+			for (int numElencate = 0; numElencate < elencate.size(); numElencate++) {
+				if(p.getName(false).equals(elencate.get(numElencate).getName(false)) && p.getToppings().equals(elencate.get(numElencate).getToppings())){
+					contains = true;
+					break;
+				}
+			}
+			if (!contains) {
 				elencate.add(p);
 				for (int j = 0; j < getNumPizze(); j++) {
-					if (p.equals(getOrderedPizze().get(j)))
+					if (p.getName(false).equals(getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
 						num++;
 				}
 				prodotti.append("\t€ ").append(p.getPrice()).append("  x  ");
