@@ -65,7 +65,7 @@ public class OrderPage3 {
         Button newOrderButton = new Button("Conferma e torna alla Home ✔");
         newOrderButton.setId("confirmButton");
         newOrderButton.setOnAction(e -> {
-        	order.setFull();
+        	order.setCompleted();
         	pizzeria.addOrder(order);
             MenuPage menuPage = new MenuPage();
             OrderPage1.getBackButton().fire();
@@ -75,7 +75,7 @@ public class OrderPage3 {
         Button closeButton = new Button("Conferma ed esci ☓");
         closeButton.setId("closeButton");
         closeButton.setOnAction(e-> {
-        	order.setFull();
+        	order.setCompleted();
         	pizzeria.addOrder(order);
         	window.close();
         });
@@ -91,7 +91,7 @@ public class OrderPage3 {
         layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
         Scene scene4;
         scene4 = new Scene(layout, 600, 800);
-        scene4.getStylesheets().addAll(this.getClass().getResource("cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
+        //scene4.getStylesheets().addAll(this.getClass().getResource("cssStyle/orderPage2.css").toExternalForm());
         window.setScene(scene4);
     }
 

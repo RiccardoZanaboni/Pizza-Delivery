@@ -138,18 +138,18 @@ public class OrderPage1 {
                                              ArrayList<ButtonModPizza> modButtons) {
         int i = 0;
         for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
-            nomiLabels.add(i, new Label(Services.getCamelName(pizzaMenu)));
+            nomiLabels.add(i, new Label(pizzaMenu.getName(true)));
             nomiLabels.get(i).setId("nomiLabel");
             ingrLabels.add(i, new Label(pizzaMenu.getDescription()));
             prezziLabels.add(i, new Label(pizzaMenu.getPrice() + " €"));
             //countPizzeLabels.add(i, new Label());
             //countPizzeLabels.get(i).setId("countpizzeLabel");
-            //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getMaiuscName()).getCount());
-            //addButtons.add(new ButtonAddPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
+            //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getName()).getCount());
+            //addButtons.add(new ButtonAddPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getName()));
             addButtons.add(new ButtonAddPizza(shoppingCartButton, order, pizzaMenu));
-            modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getMaiuscName()));
-            //modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getMaiuscName(), countModificheLabel));
-            //rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
+            modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getName(false)));
+            //modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getName(), countModificheLabel));
+            //rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getName()));
             i++;
         }
     }
@@ -225,7 +225,7 @@ public class OrderPage1 {
         backButton.setOnAction(e -> {
             /*int i = 0;
             for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
-                removePizze(rmvButtons.get(i), pizzeria, order, pizzaMenu.getMaiuscName());
+                removePizze(rmvButtons.get(i), pizzeria, order, pizzaMenu.getName());
                 i++;
             }*/
             MenuPage menuPage = new MenuPage();

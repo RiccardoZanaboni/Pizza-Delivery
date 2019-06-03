@@ -101,7 +101,7 @@ public class TextInterface {
                 System.out.println(Services.colorSystemOut("Ora visualizzerai le tue offerte attive...", Color.YELLOW, false, false));
                 break;
             case "I":
-                System.out.println(Services.getHistory());
+                System.out.println(Services.getHistory(false));
                 whatDoYouWant();
                 break;
             default:
@@ -319,6 +319,8 @@ public class TextInterface {
             case "N":
                 order.addPizza(wolf.getMenu().get(nomePizza), num);
                 System.out.println("\t> Aggiunte " + num + " pizze " + nomePizza);
+                String conferma = Services.colorSystemOut("Aggiunte " + num + " pizze " + nomePizza.toUpperCase(),Color.YELLOW,false,false);
+                //System.out.println("\t> " + conferma + " (" + p.getDescription() + ").");
                 break;
             default:
                 String spiacenti = "Spiacenti: inserito carattere non corretto. Riprovare: ";
@@ -359,7 +361,7 @@ public class TextInterface {
      * Effettua, nel caso, tutte le modifiche richieste, aggiornando il prezzo. */
     private void addAndRmvToppingsText(Order order, Pizza pizza, String aggiunte, String rimozioni, int num, double prezzoSupl) {
         HashMap<String, Toppings> ingr = new HashMap<>(pizza.getToppings());
-        Pizza p = new Pizza(pizza.getMaiuscName(), ingr, pizza.getPrice());
+        Pizza p = new Pizza(pizza.getName(false), ingr, pizza.getPrice());
         int piu = 0;
         StringTokenizer stAgg = new StringTokenizer(aggiunte);
         while (stAgg.hasMoreTokens()) {
@@ -385,7 +387,7 @@ public class TextInterface {
         for (int i = 0; i < num; i++) {
             order.getOrderedPizze().add(p);
         }
-        String conferma = Services.colorSystemOut("Aggiunte " + num + " pizze " + p.getMaiuscName(),Color.YELLOW,false,false);
+        String conferma = Services.colorSystemOut("Aggiunte " + num + " pizze " + p.getName(true).toUpperCase(),Color.YELLOW,false,false);
         System.out.println("\t> " + conferma + " (" + p.getDescription() + ").");
     }
 
@@ -401,7 +403,7 @@ public class TextInterface {
             case "S":
                 // conferma l'ordine e lo aggiunge a quelli della pizzeria.
                 wolf.updateOvenAndDeliveryMan(orario, tot);
-                order.setFull();
+                order.setCompleted();
                 String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
                 System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = Services.timeStamp(orario.getHours(),orario.getMinutes());

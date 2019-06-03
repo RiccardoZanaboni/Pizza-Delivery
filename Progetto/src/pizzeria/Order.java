@@ -13,7 +13,7 @@ public class Order {
     private String customerAddress;
     private Date time;
     private ArrayList<Pizza> orderedPizze;
-    private boolean isFull;
+    private boolean isCompleted;
     private int countModifiedPizze;
 	private int numTemporaryPizze;
 
@@ -30,7 +30,7 @@ public class Order {
         this.customerAddress = "";
         this.time = null;
         this.orderedPizze = new ArrayList<>();
-        this.isFull = false;
+        this.isCompleted = false;
         this.countModifiedPizze = 0;
         this.numTemporaryPizze = 0;
     }
@@ -89,7 +89,7 @@ public class Order {
 				}
 				prodotti.append("\t€ ").append(p.getPrice()).append("  x  ");
 				prodotti.append(Services.colorSystemOut(String.valueOf(num),Color.WHITE,true,false));
-				prodotti.append("  ").append(Services.colorSystemOut(p.getMaiuscName(),Color.WHITE,true,false));
+				prodotti.append("  ").append(Services.colorSystemOut(p.getName(true).toUpperCase(),Color.WHITE,true,false));
 				prodotti.append("\t\t").append(p.getDescription()).append("\n");
 			}
 		}
@@ -108,7 +108,7 @@ public class Order {
 			int num = 0;
 			boolean contains = false;
 			for (Pizza pizza : elencate) {
-				if (p.getMaiuscName().equals(pizza.getMaiuscName()) && p.getToppings().equals(pizza.getToppings())) {
+				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
 					contains = true;
 					break;
 				}
@@ -116,11 +116,12 @@ public class Order {
 			if (!contains) {
 				elencate.add(p);
 				for (int j = 0; j < getNumPizze(); j++) {
-					if (p.getMaiuscName().equals(getOrderedPizze().get(j).getMaiuscName()) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
+					if (p.getName(false).equals(getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
 						// di quel "tipo di pizza" ce n'è una in più
 						num++;
 				}
-				nomiLabels.add(numTipo, new Label(Services.getCamelName(this.orderedPizze.get(i))));
+				nomiLabels.add(numTipo, new Label(this.orderedPizze.get(i).getName(true)));
+				//nomiLabels.get(numTipo).setStyle("-fx-font-color: yellow");
 				ingrLabels.add(numTipo, new Label(this.orderedPizze.get(i).getDescription()));
 				prezziLabels.add(numTipo, new Label((this.orderedPizze.get(i).getPrice()*num + " €")));
 				countPizzeLabels.add(numTipo, new Label());
@@ -170,20 +171,20 @@ public class Order {
     public int countPizzaModificata(Pizza pizza){ // conta quante pizze modificate dello stesso tipo ci sono
 	    int i=0;
         for (Pizza pizza1 : this.orderedPizze) {
-            if (pizza1.getMaiuscName().equals(pizza.getMaiuscName()) && pizza1.getToppings().equals(pizza.getToppings()))
+            if (pizza1.getName(false).equals(pizza.getName(false)) && pizza1.getToppings().equals(pizza.getToppings()))
                 i++;
         }
         return i;
     }
 
-    /** Il server-pizzeria inizia a preparare le pizze solo se isFull = true. */
-    public boolean isFull() {
-    	return this.isFull;
+    /** Il server-pizzeria inizia a preparare le pizze solo se isCompleted = true. */
+    public boolean isCompleted() {
+    	return this.isCompleted;
     }
 
     /** Setta l'ordine come completo. */
-    public void setFull() {
-        this.isFull = true;
+    public void setCompleted() {
+        this.isCompleted = true;
     }
 
     public void setTime(Date orario) {

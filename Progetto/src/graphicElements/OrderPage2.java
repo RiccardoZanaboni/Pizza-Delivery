@@ -6,11 +6,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -67,12 +71,12 @@ public class OrderPage2 {
 		Button confirmButton = new Button("Prosegui →");
         confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e-> {
-			this.name = getName(nameInput);
-			this.password=getPassword(passwordInput);
-			this.address = getAddress(addressInput);
+			this.name = getInfo(nameInput);
+			this.password= getInfo(passwordInput);
+			this.address = getInfo(addressInput);
 			this.time = getChoice(choiceBox);
-			order.setAddress(getAddress(addressInput));
-			Customer customer = new Customer(getName(nameInput),getPassword(passwordInput));
+			order.setAddress(getInfo(addressInput));
+			Customer customer = new Customer(getInfo(nameInput), getInfo(passwordInput));
 			order.setCustomer(customer);
 			order.setTime(time);
 			OrderPage3 orderPage3 = new OrderPage3();
@@ -82,8 +86,8 @@ public class OrderPage2 {
 		Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
-			this.name = getName(nameInput);
-			this.address = getAddress(addressInput);
+			this.name = getInfo(nameInput);
+			this.address = getInfo(addressInput);
 			OrderPage1 orderPage1 = new OrderPage1();
 			orderPage1.display(window, order, pizzeria);
 		});
@@ -144,26 +148,11 @@ public class OrderPage2 {
 		return oraScelta;
 	}
 
-	/** legge e restituisce l'indirizzo inserito */
-	private String getAddress (TextField aInput) {
-		String a = "";
-		a += aInput.getText();
-		return a;
+	/** legge e restituisce l'informazione inserita */
+	private String getInfo(TextField nInput) {
+    	return nInput.getText();
 	}
 
-	/** legge e restituisce l'username inserito */    //FIXME @ZANA PENSO CHE SIANO TUTTI UGUALI QUESTI GET NO?
-	private String getName (TextField nInput) {
-		String a = "";
-		a += nInput.getText();
-    	return a;
-	}
-
-	/** legge e restituisce la password inserita */
-	private String getPassword (TextField nInput) {
-		String a = "";
-		a += nInput.getText();
-		return a;
-	}
 
 	/** aggiunge tutti gli orari disponibili alla ObservableList */
 	private ObservableList<String> getTime(Pizzeria pizzeria, int tot) {

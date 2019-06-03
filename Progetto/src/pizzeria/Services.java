@@ -94,17 +94,16 @@ public class Services {
 		return ingred;
 	}
 
-	/** Restituisce il nome della pizza, con tutte le iniziali maiuscole. */
-	public static String getCamelName(Pizza pizza) {
-		String nome = pizza.getMaiuscName();
+	/** Restituisce il nome della pizza, sistemato con tutte le iniziali maiuscole. */
+	public static String getSettledName(String nome) {
 		nome = nome.charAt(0) + nome.substring(1).toLowerCase();
 		for(int i=1; i<nome.length(); i++){
 			if(nome.substring(i,i+1).equals("_") || nome.substring(i,i+1).equals(" ")){
 				nome = nome.replace(nome.substring(i,i+1)," ");
 				nome = nome.replace(nome.substring(i+1,i+2),nome.substring(i+1,i+2).toUpperCase());
 			}
-			if(nome.substring(i-1,i+1).equals("l "))		// stampa l'apostrofo dove necessario
-				nome = nome.replace(nome.substring(i-1,i+1),"'");
+			//if(nome.substring(i-1,i+1).equals("l "))		// stampa l'apostrofo dove necessario
+			//	nome = nome.replace(nome.substring(i-1,i+1),"'");
 		}
 		return nome;
 	}
@@ -276,7 +275,7 @@ public class Services {
 		return "\n---------------------------------------------------------------------------------------------------\n";
 	}
 
-	public static String getHistory() {
+	public static String getHistory(boolean isGraphicRequest) {
 		StringBuilder history = new StringBuilder("\n");
 		try {
 			Scanner fileIn = new Scanner(new File("Progetto/src/pizzeria/history.txt"));
@@ -286,7 +285,10 @@ public class Services {
 					history.append(line).append("\n");
 				else {
 					line = line.substring(1);
-					history.append(colorSystemOut(line + "\n", Color.YELLOW, true, true));
+					if(isGraphicRequest)
+						history.append(line.toUpperCase()).append("\n");
+					else
+						history.append(colorSystemOut(line + "\n", Color.YELLOW, true, true));
 				}
 			}
 

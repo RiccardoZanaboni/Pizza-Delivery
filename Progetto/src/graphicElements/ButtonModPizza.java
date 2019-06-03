@@ -13,7 +13,7 @@ class ButtonModPizza extends Button {
      * aggiunta o rimozione di ingredienti, tramite apposito box di modifica.
      */
 
-    ButtonModPizza(Button shoppingCartButton, Order order, Pizzeria pizzeria,String pizza){
+    ButtonModPizza(Button shoppingCartButton, Order order, Pizzeria pizzeria, String pizza){
         this.setId("modPizza");
         this.setText("Modifica");
         this.setOnAction(e-> {

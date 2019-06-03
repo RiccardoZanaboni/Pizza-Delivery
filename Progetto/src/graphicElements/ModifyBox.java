@@ -27,12 +27,12 @@ public class ModifyBox{
         Stage window = new Stage();
 
         Pizza pizzaMenu = new Pizza(
-                Services.getCamelName(pizzeria.getMenu().get(pizza)),
+                pizza,//pizzeria.getMenu().get(pizza).getName(false),
                 pizzeria.getMenu().get(pizza).getToppings(),
                 pizzeria.getMenu().get(pizza).getPrice()
         );
         HashMap<String, Toppings> ingr = new HashMap<>(pizzaMenu.getToppings());
-        Pizza nuovaPizza = new Pizza(pizzaMenu.getMaiuscName(), ingr, pizzaMenu.getPrice());
+        Pizza nuovaPizza = new Pizza(pizzaMenu.getName(false), ingr, pizzaMenu.getPrice());
 
         ArrayList<Label> ingrLabels = new ArrayList<>();
         //ArrayList<ButtonAddRmvIngr> ingrButtons = new ArrayList<>();
@@ -54,7 +54,7 @@ public class ModifyBox{
                 handleOptions(checkBoxes, nuovaPizza);
                 nuovaPizza.setName("PizzaModificata");
                 order.addPizza(nuovaPizza, 1);
-                nuovaPizza.increaseCount();
+                nuovaPizza.setCount(true);
                 answer = true;
                 window.close();
             }
@@ -66,7 +66,7 @@ public class ModifyBox{
         layout.setAlignment(Pos.CENTER);
 
         window.initModality(Modality.APPLICATION_MODAL);    // Impedisce di fare azioni sulle altre finestre
-        window.setTitle("Modifica la pizza \"" + Services.getCamelName(nuovaPizza) + "\"");
+        window.setTitle("Modifica la pizza \"" + nuovaPizza.getName(true) + "\"");
         window.setMinWidth(330);
         window.setMaxWidth(400);
         window.setMaxHeight(300);

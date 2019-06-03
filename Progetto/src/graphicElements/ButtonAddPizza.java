@@ -20,7 +20,7 @@ class ButtonAddPizza extends Button {
 		this.setOnAction(e-> {
 			if (order.getNumPizze()<16) {
 				order.addPizza(pizza, 1);
-				pizza.increaseCount();
+				pizza.setCount(true);
 				//countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
 				order.setNumTemporaryPizze(1);
 				shoppingCartButton.setText(order.getNumPizzeProvvisorie()+"");

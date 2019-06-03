@@ -22,23 +22,23 @@ public class ButtonRmvPizza extends Button {
         getStylesheets().addAll(this.getClass().getResource("cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
 		this.setShape(new Circle(100000));
 		this.setOnAction(e-> {
-		    if(pizza.getName().equals("PizzaModificata"))
+		    if(pizza.getName(false).equals("PizzaModificata"))
 		    {
                 for(int j=0;j<order.getNumPizze();j++)
                 {
-                    if(order.getOrderedPizze().get(j).getDescription().equals(pizza.getDescription()) && order.getOrderedPizze().get(j).getName().equals("PizzaModificata"))
+                    if(order.getOrderedPizze().get(j).getDescription().equals(pizza.getDescription()) && order.getOrderedPizze().get(j).getName(false).equals("PizzaModificata"))
                     {
                         order.getOrderedPizze().remove(j);
                         break;
                     }
                 }
-		        int i=order.countPizzaModificata(pizza);
+		        int i = order.countPizzaModificata(pizza);
 		        pizza.setCount(i);
 		    }
 		    else
 		    {
                 order.getOrderedPizze().remove(pizza);
-		        pizza.decreaseCount();
+		        pizza.setCount(false);
 		    }
 		    countPizza.setText("" + pizza.getCount());
 		    order.setNumTemporaryPizze(-1);
@@ -53,7 +53,7 @@ public class ButtonRmvPizza extends Button {
 		        this.setVisible(false);
 		    }
 		    else if(pizza.getCount()<0) {
-		        MinPizzasAlert.display(pizza.getMaiuscName());
+		        MinPizzasAlert.display(pizza.getName(false));
 		    }
 		});
     }

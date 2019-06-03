@@ -61,7 +61,7 @@ public class ShoppingCart {
             int num = 0;
             boolean contains = false;
             for (Pizza pizza : elencate) {
-                if (p.getMaiuscName().equals(pizza.getMaiuscName()) && p.getToppings().equals(pizza.getToppings())) {
+                if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
                     contains = true;
                     break;
                 }
@@ -69,11 +69,11 @@ public class ShoppingCart {
             if (!contains) {
                 elencate.add(p);
                 for (int j = 0; j < order.getNumPizze(); j++) {
-                    if (p.getMaiuscName().equals(order.getOrderedPizze().get(j).getMaiuscName()) && p.getToppings().equals(order.getOrderedPizze().get(j).getToppings()))
+                    if (p.getName(false).equals(order.getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(order.getOrderedPizze().get(j).getToppings()))
                         num++;		// di quel "tipo di pizza" ce n'è una in più
                 }
 
-                nomiLabels.add(numTipo, new Label(Services.getCamelName(order.getOrderedPizze().get(i))));
+                nomiLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getName(true)));
                 ingrLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getDescription()));
                 prezziLabels.add(numTipo, new Label((order.getOrderedPizze().get(i).getPrice()*num + " €")));
                 countPizzeLabels.add(numTipo, new Label());

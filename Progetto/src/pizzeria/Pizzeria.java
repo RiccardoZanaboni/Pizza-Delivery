@@ -89,7 +89,7 @@ public class Pizzeria {
 
     /** Aggiunge la pizza specificata al menu della pizzeria. */
     private void addPizza(Pizza pizza){
-        this.menu.put(pizza.getMaiuscName(),pizza);
+        this.menu.put(pizza.getName(false),pizza);
     }
 
     public void addDeliveryMan(DeliveryMan deliveryMan){

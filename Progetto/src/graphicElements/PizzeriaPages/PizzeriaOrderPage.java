@@ -27,7 +27,7 @@ public class PizzeriaOrderPage {
         for (int i=0; i<pizzeria.getOrders().size(); i++) {
             System.out.println(pizzeria.getOrders().get(i));
             for (int j=0; j<pizzeria.getOrders().get(i).getOrderedPizze().size(); j++) {
-                System.out.println(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getMaiuscName());
+                System.out.println(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getName(true));
             }
         }
 
@@ -41,11 +41,11 @@ public class PizzeriaOrderPage {
         for (int i = 0; i<pizzeria.getOrders().size(); i++) {
             orderNameLabels.add(i, new Label(pizzeria.getOrders().get(i).getOrderCode()));
             for (int j=0; j<pizzeria.getOrders().get(i).getOrderedPizze().size(); j++) {
-                nomiLabels.add(j, new Label(Services.getCamelName(pizzeria.getOrders().get(i).getOrderedPizze().get(j))));
+                nomiLabels.add(j, new Label(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getName(true)));
                 ingrLabels.add(j, new Label(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getDescription()));
                 prezziLabels.add(i, new Label(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getPrice() + " €"));
                 //countPizzeLabels.add(i, new Label());
-                //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getMaiuscName()).getCount());
+                //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getName()).getCount());
             }
         }
     }
