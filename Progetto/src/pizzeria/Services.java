@@ -36,13 +36,13 @@ public class Services {
 
 	/** Calcola i minuti totali in cui la pizzeria rimane aperta oggi. */
 	public static int calculateOpeningMinutesPizzeria(Pizzeria pizzeria){
-		int openMinutes = getMinutes(pizzeria.getOpeningTime());
-		int closeMinutes = getMinutes(pizzeria.getClosingTime());
-		return closeMinutes - openMinutes;
+		int openMinutes = getMinutes(pizzeria.getOpeningToday());
+		int closeMinutes = getMinutes(pizzeria.getClosingToday());
+		return closeMinutes - openMinutes - 10;
 	}
 
 	/** esegue i controlli necessari per determinare il primo orario disponibile da restituire. */
-	public static int calculateStartIndex(Pizzeria pizzeria, int now, int tot, int restaAperta) {
+	public static int calculateStartIndex(Pizzeria pizzeria, int now, int tot) {
 		int esclusiIniziali = 0;
 		int giaPassati;     // minuti attualmente già passati dall'apertura
 		int tempiFissi;      // tempi da considerare per la cottura e la consegna
@@ -50,8 +50,8 @@ public class Services {
 			tempiFissi = 15;      // 1 infornata: 5 minuti per la cottura e 10 minuti per la consegna
 		else
 			tempiFissi = 20;      // 2 infornate: 10 minuti per la cottura e 10 minuti per la consegna
-		if(now > getMinutes(pizzeria.getOpeningTime())) {     // Se adesso la pizzeria è già aperta...
-			giaPassati = now - getMinutes(pizzeria.getOpeningTime());	// ... allora calcolo da quanti minuti lo è.
+		if(now > getMinutes(pizzeria.getOpeningToday())) {     // Se adesso la pizzeria è già aperta...
+			giaPassati = now - getMinutes(pizzeria.getOpeningToday());	// ... allora calcolo da quanti minuti lo è.
 			if(tempiFissi < giaPassati)
 				esclusiIniziali = giaPassati;	// i tempi fissi sono già compresi
 		}
@@ -161,8 +161,8 @@ public class Services {
 	/** Controlla, prima di un nuovo ordine, se sei ancora in tempo prima che la pizzeria chiuda. */
 	public static String checkTimeOrder(Pizzeria pizzeria) {
 		int nowMin = getNowMinutes();
-		int openMin = getMinutes(pizzeria.getOpeningTime());
-		int closeMin = getMinutes(pizzeria.getClosingTime());
+		int openMin = getMinutes(pizzeria.getOpeningToday());
+		int closeMin = getMinutes(pizzeria.getClosingToday());
 		if(closeMin <= nowMin || openMin == closeMin)
 			return "CLOSED";
 		if(closeMin - nowMin >= 20)

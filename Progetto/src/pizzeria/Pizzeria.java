@@ -10,10 +10,8 @@ import java.util.*;
 public class Pizzeria {
     private String name;
     private String address;
-    private LocalTime[] openings = new LocalTime[7];    // apertura in tutti i giorni della settimana
-    private LocalTime[] closings = new LocalTime[7];    // chiusura in tutti i giorni della settimana
-    private Date openingToday = new Date();
-    private Date closingToday = new Date();
+    private LocalTime[] openings = new LocalTime[7];    // orari di apertura in tutti i giorni della settimana
+    private LocalTime[] closings = new LocalTime[7];    // orari di chiusura in tutti i giorni della settimana
     private Oven[] ovens;
     private ArrayList<DeliveryMan> deliveryMen;
     private HashMap<String, Pizza> menu;
@@ -21,10 +19,10 @@ public class Pizzeria {
     private ArrayList<Order> orders;
     private int availablePlaces;
     private int numDailyOrders;
-    private final int OVEN_TIMES_FOR_HOUR = 12;      // ogni 5 minuti
-    private final int DELIVERYMAN_TIMES_FOR_HOUR = 6;   // ogni 10 minuti
+    private final int OVEN_MINUTES = 5;      // ogni 5 minuti
+    private final int DELIVERYMAN_MINUTES = 10;   // ogni 10 minuti
     private final double SUPPL_PRICE;
-    private String userPizzeria;
+    private final String userPizzeria;
     private final String pswPizzeria;
 
     /**
@@ -39,7 +37,6 @@ public class Pizzeria {
     public Pizzeria(String name, String address,
                     LocalTime op1, LocalTime op2, LocalTime op3, LocalTime op4, LocalTime op5, LocalTime op6, LocalTime op7,
                     LocalTime cl1, LocalTime cl2, LocalTime cl3, LocalTime cl4, LocalTime cl5, LocalTime cl6, LocalTime cl7) {
-        //System.out.println(Calendar.getInstance().toString());
         this.userPizzeria = "wolf";
         this.pswPizzeria = "wolf";
         this.menu = new HashMap<>();
@@ -99,22 +96,35 @@ public class Pizzeria {
 
     /** Crea o ripristina il vettore di infornate, ad ogni apertura della pizzeria */
     public void openPizzeriaToday(){
-        setIngredientsPizzeria();
+
+        setIngredientsPizzeria();       // FIXME: questi due andrebbero fatti una tantum con Database.
         createMenu();
 
         // inizializza il vettore di infornate di oggi, in base agli orari di apertura e chiusura di oggi.
-        Calendar cal = new GregorianCalendar();
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        this.ovens = new Oven[this.OVEN_TIMES_FOR_HOUR * (this.closings[dayOfWeek-1].getHour() - this.openings[dayOfWeek-1].getHour())];
+        int closeMinutes = Services.getMinutes(getClosingToday());
+        int openMinutes = Services.getMinutes(getOpeningToday());
+        this.ovens = new Oven[(closeMinutes - openMinutes)/ this.OVEN_MINUTES];    // minutiTotali/5
         for(int i = 0; i< this.ovens.length; i++) {
             this.ovens[i] = new Oven(this.availablePlaces);
         }
+    }
 
-        this.openingToday.setHours(1);
-        this.openingToday.setHours(this.openings[dayOfWeek-1].getHour());
-        this.openingToday.setMinutes(this.openings[dayOfWeek-1].getMinute());
-        this.closingToday.setHours(this.closings[dayOfWeek-1].getHour());
-        this.closingToday.setMinutes(this.closings[dayOfWeek-1].getMinute());
+    public Date getOpeningToday(){
+        Calendar cal = new GregorianCalendar();
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);  // oggi
+        Date op = new Date();
+        op.setHours(this.openings[dayOfWeek-1].getHour());
+        op.setMinutes(this.openings[dayOfWeek-1].getMinute());
+        return op;
+    }
+
+    public Date getClosingToday(){
+        Calendar cal = new GregorianCalendar();
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);  // oggi
+        Date cl = new Date();
+        cl.setHours(this.closings[dayOfWeek-1].getHour());
+        cl.setMinutes(this.closings[dayOfWeek-1].getMinute());
+        return cl;
     }
 
     /** Una tantum: vengono aggiunti a "pizzeriaIngredients" tutti gli ingredienti utilizzabili. */
@@ -259,14 +269,14 @@ public class Pizzeria {
 
     /** Su Interfaces.TextInterface dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria. */
     public String helloThere(){
-        String opTime = Services.timeStamp(this.openingToday.getHours(), this.openingToday.getMinutes());
-        String clTime = Services.timeStamp(this.closingToday.getHours(), this.closingToday.getMinutes());
+        String opTime = Services.timeStamp(getOpeningToday().getHours(), getOpeningToday().getMinutes());
+        String clTime = Services.timeStamp(getClosingToday().getHours(), getClosingToday().getMinutes());
         StringBuilder hello = new StringBuilder("\n");
         hello.append(Services.colorSystemOut("\nBenvenuto!\n", Color.GREEN,true,true));
         hello.append(Services.colorSystemOut("\nPIZZERIA ", Color.ORANGE,false,false));
         hello.append(Services.colorSystemOut("\"" + this.name + "\"\n\t",Color.RED,true,false));
         hello.append(Services.colorSystemOut(this.address,Color.ORANGE,false,false));
-        if(this.openingToday.equals(this.closingToday))
+        if(getOpeningToday().equals(getClosingToday()))
             hello.append(Services.colorSystemOut("\n\tOGGI CHIUSO", Color.RED, true, false));
         else {
             hello.append(Services.colorSystemOut("\n\tApertura oggi: ", Color.ORANGE, false, false));
@@ -289,8 +299,8 @@ public class Pizzeria {
 
     /** Controlla che la pizzeria sia aperta in un determinato orario, nella giornata odierna. */
     public boolean isOpen(Date d){
-        int openTime = Services.getMinutes(this.openingToday);
-        int closeTime = Services.getMinutes(this.closingToday);
+        int openTime = Services.getMinutes(getOpeningToday());
+        int closeTime = Services.getMinutes(getClosingToday());
         int requestTime = Services.getMinutes(d);
 
         return (requestTime >= openTime && requestTime < closeTime);
@@ -298,16 +308,16 @@ public class Pizzeria {
 
     /** ritorna l'indice della casella temporale (forno) desiderata. */
     public int findTimeBoxOven(int oraDesiderata, int minutiDesiderati){
-        int openMinutes = Services.getMinutes(this.openingToday);
+        int openMinutes = Services.getMinutes(getOpeningToday());
         int desiredMinutes = Services.getMinutes(oraDesiderata,minutiDesiderati);
-        return (desiredMinutes - openMinutes)/this.OVEN_TIMES_FOR_HOUR;
+        return (desiredMinutes - openMinutes)/this.OVEN_MINUTES;
     }
 
     /** ritorna l'indice della casella temporale (fattorino) desiderata. */
     public int findTimeBoxDeliveryMan(int oraDesiderata, int minutiDesiderati){
-        int openMinutes = Services.getMinutes(this.openingToday);
+        int openMinutes = Services.getMinutes(getOpeningToday());
         int desiredMinutes = Services.getMinutes(oraDesiderata,minutiDesiderati);
-        return (desiredMinutes - openMinutes)/ (2*this.DELIVERYMAN_TIMES_FOR_HOUR);
+        return (desiredMinutes - openMinutes)/this.DELIVERYMAN_MINUTES;
     }
 
     /** restituisce il primo fattorino della pizzeria che sia disponibile all'orario indicato. */
@@ -326,14 +336,14 @@ public class Pizzeria {
         ArrayList<String> availables = new ArrayList<>();
         int now = Services.getNowMinutes();
         int restaAperta = Services.calculateOpeningMinutesPizzeria(this);
-        int esclusiIniziali = Services.calculateStartIndex(this, now, tot, restaAperta);     // primo orario da visualizzare (in minuti)
+        int esclusiIniziali = Services.calculateStartIndex(this, now, tot);     // primo orario da visualizzare (in minuti)
 
         for(int i = esclusiIniziali; i < restaAperta; i++) {    // considera i tempi minimi di preparazione e consegna
             if(i % 5 == 0) {
-                if (this.ovens[i / 12].getPostiDisp() + this.ovens[(i / 12) - 1].getPostiDisp() >= tot) {
+                if (this.ovens[i / 5].getPostiDisp() + this.ovens[(i / 5) - 1].getPostiDisp() >= tot) {
                     for (DeliveryMan a : this.deliveryMen) {
-                        if (a.getDeliveryManTimes()[i / 24].isFree()) {
-                            int newMinutes = Services.getMinutes(this.openingToday) + i;   // NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
+                        if (a.getDeliveryManTimes()[i / 10].isFree()) {
+                            int newMinutes = Services.getMinutes(getOpeningToday()) + i;   // NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
                             int ora = newMinutes / 60;
                             int min = newMinutes % 60;
                             String nuovoOrario = Services.timeStamp(ora,min);
@@ -366,14 +376,6 @@ public class Pizzeria {
             this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].inserisciInfornate(tot);
         }
         Objects.requireNonNull(aFreeDeliveryMan(d.getHours(), d.getMinutes())).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
-    }
-
-    Date getClosingTime() {
-        return this.closingToday;
-    }
-
-    Date getOpeningTime() {
-        return this.openingToday;
     }
 
     public double getSUPPL_PRICE() {
@@ -413,12 +415,12 @@ public class Pizzeria {
         return this.numDailyOrders;
     }
 
-    public int getOVEN_TIMES_FOR_HOUR() {
-        return this.OVEN_TIMES_FOR_HOUR;
+    public int getOVEN_MINUTES() {
+        return this.OVEN_MINUTES;
     }
 
-    public int getDELIVERYMAN_TIMES_FOR_HOUR() {
-        return this.DELIVERYMAN_TIMES_FOR_HOUR;
+    public int getDELIVERYMAN_MINUTES() {
+        return this.DELIVERYMAN_MINUTES;
     }
 
     //TODO: sistemare quando avremo login

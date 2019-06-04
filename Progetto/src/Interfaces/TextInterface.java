@@ -408,8 +408,7 @@ public class TextInterface {
 		switch (risp) {
 			case "S":
 				/* conferma l'ordine e lo aggiunge a quelli della pizzeria. */
-				wolf.updateOvenAndDeliveryMan(orario, tot);
-				order.setCompleted();
+				order.setCompleted(wolf);
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
 				System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = Services.timeStamp(orario.getHours(),orario.getMinutes());
@@ -525,10 +524,11 @@ public class TextInterface {
         Database.openDatabase();
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
-        try {
+        textInterface.whatDoYouWant();
+		/*try {
             textInterface.askAccess();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
