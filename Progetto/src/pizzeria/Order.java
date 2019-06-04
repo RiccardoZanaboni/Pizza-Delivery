@@ -52,7 +52,7 @@ public class Order {
         }
     }
 
-	/** In TextInterface, stampa a video il riepilogo dell'ordine. */
+	/** In Interfaces.TextInterface, stampa a video il riepilogo dell'ordine. */
 	public String recapOrder(){
 		String line = Services.getLine();
 		StringBuilder recap = new StringBuilder();

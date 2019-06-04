@@ -1,3 +1,5 @@
+package Interfaces;
+
 import graphicElements.MenuPage;
 import graphicElements.ProfilePage;
 import javafx.animation.FadeTransition;

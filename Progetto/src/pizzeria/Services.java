@@ -58,7 +58,7 @@ public class Services {
 		return esclusiIniziali + tempiFissi;
 	}
 
-	/** In TextInterface.whatDoYouWant(), chiede quali siano le intenzioni del cliente per procedere. */
+	/** In Interfaces.TextInterface.whatDoYouWant(), chiede quali siano le intenzioni del cliente per procedere. */
 	public static String whatDoYouWantPossibilities(boolean isOpen){
 		String ecco = Services.colorSystemOut("\nEcco che cosa puoi fare:\n",Color.YELLOW,false,false);
 		String con = "\t- con '";
@@ -81,7 +81,7 @@ public class Services {
 		return string.toString();
 	}
 
-	/** In TextInterface, gestisce eventuali errori di inserimento da tastiera (spazi/virgole) degli ingredienti. */
+	/** In Interfaces.TextInterface, gestisce eventuali errori di inserimento da tastiera (spazi/virgole) degli ingredienti. */
 	public static String arrangeIngredientString(StringTokenizer st){
 		String ingred = st.nextToken(",");
 		while (ingred.startsWith(" "))		// elimina tutti gli spazi prima della stringa
@@ -242,7 +242,7 @@ public class Services {
 		return cString.toString();
 	}
 
-	/** Consente di disegnare, in TextInterface, l'intestazione del menu. */
+	/** Consente di disegnare, in Interfaces.TextInterface, l'intestazione del menu. */
 	public static void paintMenuString() {
 		String l1 = "__________________________________________";
 		l1 = colorSystemOut(l1,Color.WHITE,true,false);
@@ -268,7 +268,7 @@ public class Services {
 				"\n"+tab+v+colorTab+c+colorTab+v+"\n"+tab+v+colorTab+d+colorTab+v+"\n"+tab+v+colorTab+e+colorTab+v+"\n"+tab+l2);
 	}
 
-	/** Restituisce una linea, utile per la stampa in TextInterface. */
+	/** Restituisce una linea, utile per la stampa in Interfaces.TextInterface. */
 	public static String getLine(){
 		return "\n---------------------------------------------------------------------------------------------------\n";
 	}

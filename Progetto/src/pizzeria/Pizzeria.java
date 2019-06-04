@@ -2,6 +2,7 @@ package pizzeria;
 
 import javafx.scene.paint.Color;
 
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.*;
 @SuppressWarnings("deprecation")
@@ -87,7 +88,7 @@ public class Pizzeria {
         this.orders.add(order);
     }
 
-    /** Aggiunge la pizza specificata al menu della pizzeria. */
+    /** Aggiunge la pizza specificata al menu dnameella pizzeria. */
     private void addPizza(Pizza pizza){
         this.menu.put(pizza.getName(false),pizza);
     }
@@ -256,7 +257,7 @@ public class Pizzeria {
         return order;
     }
 
-    /** Su TextInterface dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria. */
+    /** Su Interfaces.TextInterface dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria. */
     public String helloThere(){
         String opTime = Services.timeStamp(this.openingToday.getHours(), this.openingToday.getMinutes());
         String clTime = Services.timeStamp(this.closingToday.getHours(), this.closingToday.getMinutes());
@@ -275,7 +276,7 @@ public class Pizzeria {
         return hello.toString();
     }
 
-    /** Da TextInterface, permette di stampare a video il menu completo. */
+    /** Da Interfaces.TextInterface, permette di stampare a video il menu completo. */
     public String printMenu() {
         String line = Services.getLine();
         Services.paintMenuString();
@@ -383,7 +384,7 @@ public class Pizzeria {
         return this.ovens;
     }
 
-    /** In TextInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
+    /** In Interfaces.TextInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
     public String possibleAddictions() {
         StringBuilder possibiliIngr = new StringBuilder();
         int i = 0;
@@ -421,11 +422,11 @@ public class Pizzeria {
     }
 
     //TODO: sistemare quando avremo login
-    public String checkLogin(String user, String psw) {
+    public String checkLogin(String user, String psw) throws SQLException {
         if(user.equals(this.userPizzeria) && psw.equals(this.pswPizzeria)){
             // se è la pizzeria, allora accede come tale.
             return "P";
-        } else if (true){
+        } else if (Database.getCustomers(user,psw)){
             // se è un utente identificato, accede come tale.
             return "OK";
         } else {
@@ -434,7 +435,7 @@ public class Pizzeria {
         }
     }
 
-    public String createAccount(String newUser, String newPsw, String confPsw) {
+    public String createAccount(String newUser, String newPsw, String confPsw) throws SQLException {
         boolean existing = false;
         // faccio scorrere tutti gli account e controllo che non esista già.
         // se esistente, pongo existing a true.
@@ -443,7 +444,8 @@ public class Pizzeria {
             if(newPsw.length()>2) {
                 // se si registra correttamente, va bene.
                 // createNewAccount(newUser,newPsw);
-                checkLogin(newUser, newPsw);
+                Database.putCustomer(newUser,newPsw);
+                //checkLogin(newUser, newPsw);
                 return "OK";
             } else
                 // password troppo breve.

@@ -1,5 +1,8 @@
+package pizzeria;
+
+import Interfaces.TextInterface;
 import javafx.scene.paint.Color;
-import pizzeria.*;
+
 import java.sql.*;
 import java.sql.Date;
 import java.text.ParseException;
@@ -12,7 +15,7 @@ public class Database {
     private static Connection con;
     private static Scanner scan = new Scanner(System.in);
 
-    public Database(){
+    public static void openDatabase(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
              con = DriverManager.getConnection("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7293749?autoReconnect=true&useSSL=false", "sql7293749", "geZxKTlyi1");
@@ -22,7 +25,7 @@ public class Database {
     }
 
     /** Consente alla pizzeria di aggiungere una pizza al Menu
-     * che è salvato sul Database. */
+     * che è salvato sul pizzeria.Database. */
     public static void putPizza(Pizzeria pizzeria){
         try {
             System.out.print("Inserisci nome della pizza da inserire: (usa \"_\" al posto di \" \"):\t");
@@ -46,7 +49,7 @@ public class Database {
         }
     }
 
-    public static void getPizze(ArrayList<Pizza> menu) throws SQLException{  //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI IL MENU
+    public static ArrayList<Pizza> getPizze(ArrayList<Pizza> menu) throws SQLException{  //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI IL MENU
         ResultSet rs=PizzaDB.getPizzaByName(con);
         while(rs.next()){
             HashMap<String, Toppings> ingr = new HashMap<>();
@@ -64,15 +67,12 @@ public class Database {
             Pizza p=new Pizza(nomePizza,ingr,prezzo);
             menu.add(p);
         }
+        return menu;
     }
 
-    public static void putCustomer(){
+    public static void putCustomer(String username,String password){
         try {
-            System.out.print("Inserisci username: ");
-            String name = scan.nextLine();
-            System.out.print("Inserisci password: ");
-            String password = scan.nextLine();
-            CustomerDB.putCostumer(con,name,password).execute();
+            CustomerDB.putCostumer(con,username,password).execute();
         } catch (NumberFormatException nfe){
             String err = "Errore nell'inserimento dei dati utente. Riprovare:";
             System.out.println(Services.colorSystemOut(err,Color.RED,false,false));
@@ -82,19 +82,17 @@ public class Database {
         }
     }
 
-    public static void getCustomers(ArrayList<Customer> users)throws SQLException{//TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI ARRAYLIST DI CUSTOMER
-        ResultSet rs=CustomerDB.getCustomers(con);
+    public static boolean getCustomers(String username,String password)throws SQLException{//TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI ARRAYLIST DI CUSTOMER
+        ResultSet rs=CustomerDB.getCustomers(con,username,password);
+        boolean rows=false;
         while(rs.next()) {
-            String username = rs.getString(1);
-            String password = rs.getString(2);
-            Customer c = new Customer(username,password);
-            users.add(c);
+            rows=true;
         }
-
+        return rows;
     }
 
     public static void main(String[] args) {
-        Database d = new Database();
+        openDatabase();
         Pizzeria wolf=new Pizzeria("wolf","via bolzano 10", LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
                 LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
                 LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
@@ -111,6 +109,11 @@ public class Database {
                 LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
                 LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
         );
+        try {
+            getCustomers("username","password");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }/*
         String sDate1="21:15:00";
         Calendar calendar = new GregorianCalendar();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -131,14 +134,7 @@ public class Database {
             OrderDB.putOrder(con,"ORD-01","ILRICHI","CIAO",dati).execute(); //todo con data
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        try {
-            ArrayList<Customer> users=new ArrayList<>();
-            getCustomers(users);
-            System.out.println("Ciao");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        }*/
     }
 
 }
