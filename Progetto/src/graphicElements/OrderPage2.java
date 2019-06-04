@@ -3,6 +3,7 @@ package graphicElements;
 import graphicAlerts.GenericAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,6 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pizzeria.Customer;
@@ -124,6 +127,17 @@ public class OrderPage2 {
 		layout.setId("grid");
 
 		scene3 = new Scene(layout);
+        scene3.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                if(ke.getCode()== KeyCode.ENTER) {
+                    confirmButton.fire();
+                }
+                if(ke.getCode()==KeyCode.CONTROL)
+                {
+                    backButton.fire();
+                }
+            }
+        });
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
         scene3.getStylesheets().addAll(this.getClass().getResource("cssStyle/orderPage2.css").toExternalForm());

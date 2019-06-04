@@ -1,12 +1,15 @@
 package graphicElements;
 
 import graphicAlerts.GenericAlert;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
@@ -122,6 +125,19 @@ public class OrderPage1 {
         layout.getChildren().addAll(hBoxIntestazione, hBox, hBoxAvantiIndietro);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
+
+        layout.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                if(ke.getCode()== KeyCode.ENTER) {
+                    confirmButton.fire();
+                }if(ke.getCode()==KeyCode.CONTROL)
+                   backButton.fire();
+                if(ke.getCode()==KeyCode.SHIFT)
+                {   shoppingCartButton.fire();
+                }
+            }
+        });
+
 
         scene2 = new Scene(layout, 800, 600);
         scene2.getStylesheets().addAll(this.getClass().getResource("cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
@@ -263,5 +279,8 @@ public class OrderPage1 {
     /** Restituisce il backButton */
     static Button getBackButton() {
         return backButton;
+    }
+
+    private class VK_ENTER {
     }
 }
