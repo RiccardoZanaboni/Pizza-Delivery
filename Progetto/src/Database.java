@@ -1,15 +1,16 @@
 import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import pizzeria.*;
+import sun.util.calendar.LocalGregorianCalendar;
 
 import java.awt.*;
 import java.lang.invoke.SerializedLambda;
 import java.sql.*;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Database {
     private static Connection con;
@@ -114,7 +115,27 @@ public class Database {
                 LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
                 LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
         );
-        putCustomer();
+        String sDate1="21:15:00";
+        Calendar calendar = new GregorianCalendar();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        sDate1 = day + "/" + month + "/" + year + " " + sDate1;
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        java.util.Date data=null;
+        Date dati=null;
+        try {
+            data=formato.parse(sDate1);
+             dati=new java.sql.Date(data.getTime());
+            System.out.println(dati.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            OrderDB.putOrder(con,"ORD-01","ILRICHI","CIAO",dati).execute(); //todo con data
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         try {
             ArrayList<Customer> users=new ArrayList<>();
             getCustomers(users);
