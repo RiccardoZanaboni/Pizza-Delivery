@@ -1,6 +1,6 @@
 package graphicElements;
 
-import graphicAlerts.MaxPizzasAlert;
+import graphicAlerts.GenericAlert;
 import javafx.scene.control.Button;
 import javafx.scene.shape.Circle;
 import pizzeria.Order;
@@ -20,12 +20,12 @@ class ButtonAddPizza extends Button {
 		this.setOnAction(e-> {
 			if (order.getNumPizze()<16) {
 				order.addPizza(pizza, 1);
-				pizza.increaseCount();
+				pizza.setCount(true);
 				//countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
 				order.setNumTemporaryPizze(1);
-				shoppingCartButton.setText(order.getNumPizzeProvvisorie()+"");
+				shoppingCartButton.setText(order.getNumTemporaryPizze()+"");
 			} else
-				MaxPizzasAlert.display();
+				GenericAlert.display("Attenzione: numero massimo di pizze raggiunto!");
 		});
 	}
 

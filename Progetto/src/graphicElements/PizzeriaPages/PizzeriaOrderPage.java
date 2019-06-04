@@ -1,19 +1,10 @@
-package graphicElements;
+package graphicElements.PizzeriaPages;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import pizzeria.Order;
-import pizzeria.Pizza;
 import pizzeria.Pizzeria;
 import pizzeria.Services;
 
@@ -36,25 +27,23 @@ public class PizzeriaOrderPage {
         for (int i=0; i<pizzeria.getOrders().size(); i++) {
             System.out.println(pizzeria.getOrders().get(i));
             for (int j=0; j<pizzeria.getOrders().get(i).getOrderedPizze().size(); j++) {
-                System.out.println(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getMaiuscName());
+                System.out.println(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getName(true));
             }
         }
-
         Scene scene = new Scene(gridPane, 880, 600);
         window.setScene(scene);
         window.show();
-
     }
 
     private static void fillLabelsAndButtons (Pizzeria pizzeria, ArrayList<Label> countPizzeLabels, ArrayList<Label> orderNameLabels, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
         for (int i = 0; i<pizzeria.getOrders().size(); i++) {
             orderNameLabels.add(i, new Label(pizzeria.getOrders().get(i).getOrderCode()));
             for (int j=0; j<pizzeria.getOrders().get(i).getOrderedPizze().size(); j++) {
-                nomiLabels.add(j, new Label(Services.getCamelName(pizzeria.getOrders().get(i).getOrderedPizze().get(j))));
+                nomiLabels.add(j, new Label(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getName(true)));
                 ingrLabels.add(j, new Label(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getDescription()));
                 prezziLabels.add(i, new Label(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getPrice() + " €"));
                 //countPizzeLabels.add(i, new Label());
-                //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getMaiuscName()).getCount());
+                //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzeria.getOrders().get(i).getOrderedPizze().get(j).getName()).getCount());
             }
         }
     }
@@ -78,14 +67,11 @@ public class PizzeriaOrderPage {
                 GridPane.setConstraints(toppingLabels.get(j), 2, j+1);
                 GridPane.setConstraints(priceLabels.get(j), 3, j+1);
             }
-
         }
 
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setHgap(1);
         gridPane.setVgap(30);
-
-
 
         return gridPane;
     }

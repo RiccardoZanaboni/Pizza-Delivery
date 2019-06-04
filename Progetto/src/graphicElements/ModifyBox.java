@@ -1,15 +1,13 @@
 package graphicElements;
 
-import graphicAlerts.ToppingsAlert;
+import graphicAlerts.GenericAlert;
 import javafx.stage.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 import pizzeria.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,16 +23,12 @@ import javafx.stage.Stage;
 public class ModifyBox{
     private static boolean answer = false;  // answer = true se la pizza ha subìto modifiche
 
-    public static boolean display(Order order, Pizzeria pizzeria, String pizza) {
+    public static boolean display(Order order, Pizzeria pizzeria, String pizzaName) {
         Stage window = new Stage();
 
-        Pizza pizzaMenu = new Pizza(
-                Services.getCamelName(pizzeria.getMenu().get(pizza)),
-                pizzeria.getMenu().get(pizza).getToppings(),
-                pizzeria.getMenu().get(pizza).getPrice()
-        );
+        Pizza pizzaMenu = new Pizza(pizzaName, pizzeria.getMenu().get(pizzaName).getToppings(), pizzeria.getMenu().get(pizzaName).getPrice());
         HashMap<String, Toppings> ingr = new HashMap<>(pizzaMenu.getToppings());
-        Pizza nuovaPizza = new Pizza(pizzaMenu.getMaiuscName(), ingr, pizzaMenu.getPrice());
+        Pizza nuovaPizza = new Pizza(pizzaMenu.getName(false), ingr, pizzaMenu.getPrice());
 
         ArrayList<Label> ingrLabels = new ArrayList<>();
         //ArrayList<ButtonAddRmvIngr> ingrButtons = new ArrayList<>();
@@ -51,13 +45,18 @@ public class ModifyBox{
         confirmButton.setOnAction(e -> {
             handleOptions(checkBoxes, nuovaPizza);
             if (!checkCheckBoxTopping(checkBoxes))
-                ToppingsAlert.display();
+                GenericAlert.display("Attenzione: inserire almeno un ingrediente!");
             else {
                 handleOptions(checkBoxes, nuovaPizza);
-                nuovaPizza.setName("PizzaModificata");
-                order.addPizza(nuovaPizza, 1);
-                answer = true;
-                window.close();
+                if(!pizzaMenu.getToppings().equals(nuovaPizza.getToppings())){
+                    nuovaPizza.setName(pizzaName + "*");           // aggiungo un asterisco al nome della pizza modificata
+                    order.addPizza(nuovaPizza, 1);
+                    nuovaPizza.setCount(true);
+                    answer = true;
+                    window.close();
+                } else {
+                    GenericAlert.display("Attenzione: nessuna modifica effettuata!");
+                }
             }
         });
 
@@ -67,8 +66,8 @@ public class ModifyBox{
         layout.setAlignment(Pos.CENTER);
 
         window.initModality(Modality.APPLICATION_MODAL);    // Impedisce di fare azioni sulle altre finestre
-        window.setTitle("Modifica la pizza \"" + Services.getCamelName(nuovaPizza) + "\"");
-        window.setMinWidth(330);
+        window.setTitle("Modifica la pizza (+0.50 € per aggiunta)");
+        window.setMinWidth(350);
         window.setMaxWidth(400);
         window.setMaxHeight(300);
 

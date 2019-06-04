@@ -1,4 +1,4 @@
-package graphicElements;
+package graphicElements.PizzeriaPages;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -84,7 +84,7 @@ public class PizzeriaMenuPage {
                 System.out.println(toppings.get(i).name()+ toppings.get(i));
         }
         Pizza pizza = new Pizza(nameInput.getText(), h, Double.parseDouble(priceInput.getText()));
-        pizzeria.getMenu().put(pizza.getMaiuscName(), pizza);
+        pizzeria.getMenu().put(pizza.getName(false), pizza);
         table.getItems().add(pizza);
 
         nameInput.clear();

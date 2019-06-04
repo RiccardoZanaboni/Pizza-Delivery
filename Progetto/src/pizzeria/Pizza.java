@@ -1,6 +1,6 @@
 package pizzeria;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 import java.util.HashMap;
 
 public class Pizza {
@@ -8,10 +8,6 @@ public class Pizza {
     private double price;
     private HashMap <String, Toppings> ingredients;
     private int count = 0;
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * Il prodotto Pizza è caratterizzato da un nome, un prezzo ed una lista di ingredienti.
@@ -25,10 +21,6 @@ public class Pizza {
         this.ingredients = ingred;
     }
 
-    // FIXME DA TOGLIERE
-    public Pizza() {
-    }
-
     @Override
     public String toString() {
         String descrizione = this.getDescription();
@@ -38,8 +30,12 @@ public class Pizza {
         return "- " + nome + prezzo + this.price + " €" + ingr + descrizione;
     }
 
-    public String getMaiuscName() {
-        return this.name.toUpperCase();
+    /** Restituisce il nome (così come è salvato, se non è da visualizzare) */
+    public String getName(boolean isToVisualize) {
+        if(isToVisualize)
+            return Services.getSettledName(this.name);
+        else
+            return this.name;
     }
 
     public HashMap<String, Toppings> getToppings() {
@@ -72,31 +68,30 @@ public class Pizza {
             this.ingredients.remove(ing.name(),ing);
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getPrice() {
         return this.price;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public HashMap<String, Toppings> getIngredients() {
-        return ingredients;
-    }
-
-    public void setPrice(double prezzo) {
-        this.price = prezzo;
+    public void setPrice(double p) {
+        this.price = p;
     }
 
     public int getCount() {
         return this.count;
     }
 
-    public void increaseCount() {
-        this.count++;
+    public void setCount(int count) {
+        this.count = count;
     }
 
-    public void decreaseCount() {
-        this.count--;
+    public void setCount(boolean incr) {
+        if (incr)
+            this.count++;
+        else
+            this.count--;
     }
 }

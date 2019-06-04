@@ -2,8 +2,7 @@ package pizzeria;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-
-import java.awt.*;
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,7 +13,7 @@ public class Order {
     private String customerAddress;
     private Date time;
     private ArrayList<Pizza> orderedPizze;
-    private boolean isFull;
+    private boolean isCompleted;
     private int countModifiedPizze;
 	private int numTemporaryPizze;
 
@@ -31,12 +30,12 @@ public class Order {
         this.customerAddress = "";
         this.time = null;
         this.orderedPizze = new ArrayList<>();
-        this.isFull = false;
+        this.isCompleted = false;
         this.countModifiedPizze = 0;
         this.numTemporaryPizze = 0;
     }
 
-    public int getNumPizzeProvvisorie() {
+    public int getNumTemporaryPizze() {
         return this.numTemporaryPizze;
     }
 
@@ -44,10 +43,6 @@ public class Order {
 	 * Due possibilità: i=+1 oppure i=-1. */
     public void setNumTemporaryPizze(int i) {
     	this.numTemporaryPizze += i;
-	}
-
-	public void decreaseNumTemporaryPizze() {
-    	this.numTemporaryPizze--;
 	}
 
     /** aggiunge la pizza all'ordine. */
@@ -61,7 +56,7 @@ public class Order {
 	public String recapOrder(){
 		String line = Services.getLine();
 		StringBuilder recap = new StringBuilder();
-		recap.append(Services.colorSystemOut("ORDINE N. ",Color.RED,true,false));
+		recap.append(Services.colorSystemOut("ORDINE N. ", Color.RED,true,false));
 		recap.append(Services.colorSystemOut(this.orderCode,Color.RED,true,false));
 		recap.append(Services.colorSystemOut("\nSIG.\t\t",Color.YELLOW,false,false));
 		recap.append(Services.colorSystemOut(this.customer.getUsername(),Color.GREEN,true,false));
@@ -82,15 +77,23 @@ public class Order {
 		for (int i = 0; i < getNumPizze(); i++) {
 			Pizza p = this.orderedPizze.get(i);
 			int num = 0;
-			if (!(elencate.contains(p))) {
+
+			boolean contains = false;
+			for (Pizza pizza : elencate) {
+				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
+					contains = true;
+					break;
+				}
+			}
+			if (!contains) {
 				elencate.add(p);
 				for (int j = 0; j < getNumPizze(); j++) {
-					if (p.equals(getOrderedPizze().get(j)))
+					if (p.getName(false).equals(getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
 						num++;
 				}
 				prodotti.append("\t€ ").append(p.getPrice()).append("  x  ");
 				prodotti.append(Services.colorSystemOut(String.valueOf(num),Color.WHITE,true,false));
-				prodotti.append("  ").append(Services.colorSystemOut(p.getMaiuscName(),Color.WHITE,true,false));
+				prodotti.append("  ").append(Services.colorSystemOut(p.getName(true).toUpperCase(),Color.WHITE,true,false));
 				prodotti.append("\t\t").append(p.getDescription()).append("\n");
 			}
 		}
@@ -107,9 +110,10 @@ public class Order {
 		for (int i = 0; i < getNumPizze(); i++) {
 			Pizza p = this.orderedPizze.get(i);
 			int num = 0;
+
 			boolean contains = false;
 			for (Pizza pizza : elencate) {
-				if (p.getMaiuscName().equals(pizza.getMaiuscName()) && p.getToppings().equals(pizza.getToppings())) {
+				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
 					contains = true;
 					break;
 				}
@@ -117,11 +121,12 @@ public class Order {
 			if (!contains) {
 				elencate.add(p);
 				for (int j = 0; j < getNumPizze(); j++) {
-					if (p.getMaiuscName().equals(getOrderedPizze().get(j).getMaiuscName()) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
+					if (p.getName(false).equals(getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
 						// di quel "tipo di pizza" ce n'è una in più
 						num++;
 				}
-				nomiLabels.add(numTipo, new Label(Services.getCamelName(this.orderedPizze.get(i))));
+				nomiLabels.add(numTipo, new Label(this.orderedPizze.get(i).getName(true)));
+				//nomiLabels.get(numTipo).setStyle("-fx-font-color: yellow");
 				ingrLabels.add(numTipo, new Label(this.orderedPizze.get(i).getDescription()));
 				prezziLabels.add(numTipo, new Label((this.orderedPizze.get(i).getPrice()*num + " €")));
 				countPizzeLabels.add(numTipo, new Label());
@@ -161,14 +166,30 @@ public class Order {
 		return false;
 	}
 
-    /** Il server-pizzeria inizia a preparare le pizze solo se isFull = true. */
-    public boolean isFull() {
-    	return this.isFull;
+    public boolean searchModificata(Pizza pizza){   //ricerca se esiste una pizza con le stesse modifiche alla pizza, non é uguale a searchPizza
+        for (Pizza pizza1 : this.orderedPizze) {
+            if (pizza1.getDescription().equals(pizza.getDescription()))
+                return true;
+        }
+        return false;
+    }
+    public int countPizzaModificata(Pizza pizza){ // conta quante pizze modificate dello stesso tipo ci sono
+	    int i=0;
+        for (Pizza pizza1 : this.orderedPizze) {
+            if (pizza1.getName(false).equals(pizza.getName(false)) && pizza1.getToppings().equals(pizza.getToppings()))
+                i++;
+        }
+        return i;
+    }
+
+    /** Il server-pizzeria inizia a preparare le pizze solo se isCompleted = true. */
+    public boolean isCompleted() {
+    	return this.isCompleted;
     }
 
     /** Setta l'ordine come completo. */
-    public void setFull() {
-        this.isFull = true;
+    public void setCompleted() {
+        this.isCompleted = true;
     }
 
     public void setTime(Date orario) {

@@ -9,6 +9,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.Pizzeria;
+import pizzeria.Services;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -17,26 +19,9 @@ public class WhoWeArePage {
 
     public void display(Stage window, Pizzeria pizzeria) {
 
-        StringBuilder history = new StringBuilder("\n");
-        try {
-            Scanner fileIn = new Scanner(new File("Progetto/src/pizzeria/history.txt"));
-            while (fileIn.hasNextLine()) {
-                String line = fileIn.nextLine();
-                if (!line.startsWith("*"))
-                    history.append(line).append("\n");
-                else {
-                    line = line.substring(1);
-                    history.append(line.toUpperCase()).append("\n");
-                }
-            }
-
-        } catch (FileNotFoundException fnfe){
-            System.out.println("ERROR");
-        }
-
-
+        String history = Services.getHistory(true);
         TextArea textField=new TextArea();
-        textField.setText(String.valueOf(history));
+        textField.setText(history);
 
         textField.setEditable(false);
         textField.prefWidthProperty().bind(window.widthProperty());

@@ -1,8 +1,7 @@
 package pizzeria;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 import java.io.*;
-import java.nio.Buffer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -63,7 +62,7 @@ public class Services {
 	public static String whatDoYouWantPossibilities(boolean isOpen){
 		String ecco = Services.colorSystemOut("\nEcco che cosa puoi fare:\n",Color.YELLOW,false,false);
 		String con = "\t- con '";
-		String newOrd = Services.colorSystemOut("N",Color.ORANGE,true,false);
+		String newOrd = Services.colorSystemOut("N", Color.ORANGE,true,false);
 		String newOrdS = "' puoi effetturare un nuovo ordine;\n";
 		String last = Services.colorSystemOut("L",Color.ORANGE,true,false);
 		String lastS = "' puoi visualizzare il tuo ultimo ordine;\n";
@@ -95,17 +94,14 @@ public class Services {
 		return ingred;
 	}
 
-	/** Restituisce il nome della pizza, con tutte le iniziali maiuscole. */
-	public static String getCamelName(Pizza pizza) {
-		String nome = pizza.getMaiuscName();
+	/** Restituisce il nome della pizza, sistemato con tutte le iniziali maiuscole. */
+	public static String getSettledName(String nome) {
 		nome = nome.charAt(0) + nome.substring(1).toLowerCase();
 		for(int i=1; i<nome.length(); i++){
 			if(nome.substring(i,i+1).equals("_") || nome.substring(i,i+1).equals(" ")){
 				nome = nome.replace(nome.substring(i,i+1)," ");
 				nome = nome.replace(nome.substring(i+1,i+2),nome.substring(i+1,i+2).toUpperCase());
 			}
-			if(nome.substring(i-1,i+1).equals("l "))		// stampa l'apostrofo dove necessario
-				nome = nome.replace(nome.substring(i-1,i+1),"'");
 		}
 		return nome;
 	}
@@ -277,7 +273,7 @@ public class Services {
 		return "\n---------------------------------------------------------------------------------------------------\n";
 	}
 
-	public static String getHistory() {
+	public static String getHistory(boolean isGraphicRequest) {
 		StringBuilder history = new StringBuilder("\n");
 		try {
 			Scanner fileIn = new Scanner(new File("Progetto/src/pizzeria/history.txt"));
@@ -287,11 +283,12 @@ public class Services {
 					history.append(line).append("\n");
 				else {
 					line = line.substring(1);
-					history.append(colorSystemOut(line + "\n", Color.YELLOW, true, true));
+					if(isGraphicRequest)
+						history.append(line.toUpperCase()).append("\n");
+					else
+						history.append(colorSystemOut(line + "\n", Color.YELLOW, true, true));
 				}
 			}
-
-
 		} catch (FileNotFoundException fnfe){
 			System.out.println("ERROR");
 		}

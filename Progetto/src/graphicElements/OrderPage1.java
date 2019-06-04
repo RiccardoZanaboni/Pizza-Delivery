@@ -1,5 +1,6 @@
 package graphicElements;
 
+import graphicAlerts.GenericAlert;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +14,6 @@ import javafx.geometry.Insets;
 import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
-import pizzeria.Services;
 
 import java.util.ArrayList;
 
@@ -54,7 +54,7 @@ public class OrderPage1 {
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);
-        HBox shoppingCartBox = new HBox(order.getNumPizzeProvvisorie());
+        HBox shoppingCartBox = new HBox(order.getNumTemporaryPizze());
         shoppingCartBox.setId("shoppingCart");
 
         Button shoppingCartButton = new Button();
@@ -138,18 +138,18 @@ public class OrderPage1 {
                                              ArrayList<ButtonModPizza> modButtons) {
         int i = 0;
         for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
-            nomiLabels.add(i, new Label(Services.getCamelName(pizzaMenu)));
+            nomiLabels.add(i, new Label(pizzaMenu.getName(true)));
             nomiLabels.get(i).setId("nomiLabel");
             ingrLabels.add(i, new Label(pizzaMenu.getDescription()));
             prezziLabels.add(i, new Label(pizzaMenu.getPrice() + " €"));
             //countPizzeLabels.add(i, new Label());
             //countPizzeLabels.get(i).setId("countpizzeLabel");
-            //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getMaiuscName()).getCount());
-            //addButtons.add(new ButtonAddPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
+            //countPizzeLabels.get(i).setText("" + pizzeria.getMenu().get(pizzaMenu.getName()).getCount());
+            //addButtons.add(new ButtonAddPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getName()));
             addButtons.add(new ButtonAddPizza(shoppingCartButton, order, pizzaMenu));
-            modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getMaiuscName()));
-            //modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getMaiuscName(), countModificheLabel));
-            //rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getMaiuscName()));
+            modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getName(false)));
+            //modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getName(), countModificheLabel));
+            //rmvButtons.add(new ButtonRmvPizza(pizzasInCart, order, pizzeria, countPizzeLabels.get(i), pizzaMenu.getName()));
             i++;
         }
     }
@@ -225,7 +225,7 @@ public class OrderPage1 {
         backButton.setOnAction(e -> {
             /*int i = 0;
             for (Pizza pizzaMenu : pizzeria.getMenu().values()) {
-                removePizze(rmvButtons.get(i), pizzeria, order, pizzaMenu.getMaiuscName());
+                removePizze(rmvButtons.get(i), pizzeria, order, pizzaMenu.getName());
                 i++;
             }*/
             MenuPage menuPage = new MenuPage();
@@ -241,9 +241,12 @@ public class OrderPage1 {
         confirmButton = new Button("Prosegui  →");
         confirmButton.setId("confirmButton");
         confirmButton.setOnAction(e -> {
-            //System.out.println("Sono state ordinate in tutto " + tot + " pizze.");
-            //System.out.println(order.getOrderedPizze());
-            orderPage2.display(window, scene2, order, pizzeria, tot);
+            if(order.getNumTemporaryPizze()>0)
+                //System.out.println("Sono state ordinate in tutto " + tot + " pizze.");
+                //System.out.println(order.getOrderedPizze());
+                orderPage2.display(window, scene2, order, pizzeria, tot);
+            else
+                GenericAlert.display("Attenzione: aggiungere almeno una pizza all'ordine!");
         });
         return confirmButton;
     }

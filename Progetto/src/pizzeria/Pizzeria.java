@@ -1,6 +1,7 @@
 package pizzeria;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
+
 import java.time.LocalTime;
 import java.util.*;
 @SuppressWarnings("deprecation")
@@ -88,7 +89,7 @@ public class Pizzeria {
 
     /** Aggiunge la pizza specificata al menu della pizzeria. */
     private void addPizza(Pizza pizza){
-        this.menu.put(pizza.getMaiuscName(),pizza);
+        this.menu.put(pizza.getName(false),pizza);
     }
 
     public void addDeliveryMan(DeliveryMan deliveryMan){
@@ -260,7 +261,7 @@ public class Pizzeria {
         String opTime = Services.timeStamp(this.openingToday.getHours(), this.openingToday.getMinutes());
         String clTime = Services.timeStamp(this.closingToday.getHours(), this.closingToday.getMinutes());
         StringBuilder hello = new StringBuilder("\n");
-        hello.append(Services.colorSystemOut("\nBenvenuto!\n",Color.GREEN,true,true));
+        hello.append(Services.colorSystemOut("\nBenvenuto!\n", Color.GREEN,true,true));
         hello.append(Services.colorSystemOut("\nPIZZERIA ", Color.ORANGE,false,false));
         hello.append(Services.colorSystemOut("\"" + this.name + "\"\n\t",Color.RED,true,false));
         hello.append(Services.colorSystemOut(this.address,Color.ORANGE,false,false));
@@ -434,7 +435,6 @@ public class Pizzeria {
     }
 
     public String createAccount(String newUser, String newPsw, String confPsw) {
-        // TODO: sistemare quando avremo login
         boolean existing = false;
         // faccio scorrere tutti gli account e controllo che non esista già.
         // se esistente, pongo existing a true.
