@@ -297,14 +297,14 @@ public class Pizzeria {
     }
 
     /** ritorna l'indice della casella temporale (forno) desiderata. */
-    private int findTimeBoxOven(int oraDesiderata, int minutiDesiderati){
+    public int findTimeBoxOven(int oraDesiderata, int minutiDesiderati){
         int openMinutes = Services.getMinutes(this.openingToday);
         int desiredMinutes = Services.getMinutes(oraDesiderata,minutiDesiderati);
         return (desiredMinutes - openMinutes)/this.OVEN_TIMES_FOR_HOUR;
     }
 
     /** ritorna l'indice della casella temporale (fattorino) desiderata. */
-    private int findTimeBoxDeliveryMan(int oraDesiderata, int minutiDesiderati){
+    public int findTimeBoxDeliveryMan(int oraDesiderata, int minutiDesiderati){
         int openMinutes = Services.getMinutes(this.openingToday);
         int desiredMinutes = Services.getMinutes(oraDesiderata,minutiDesiderati);
         return (desiredMinutes - openMinutes)/ (2*this.DELIVERYMAN_TIMES_FOR_HOUR);
