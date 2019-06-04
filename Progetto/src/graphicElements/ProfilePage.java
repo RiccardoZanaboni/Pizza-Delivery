@@ -1,9 +1,12 @@
 package graphicElements;
 
 import graphicElements.PizzeriaPages.PizzeriaHomePage;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.Pizzeria;
@@ -29,6 +32,15 @@ public class ProfilePage {
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
         layout.getChildren().addAll(pizzeriaButton, userButton);
+        layout.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                if(ke.getCode()== KeyCode.DOWN) {
+                    userButton.fire();
+                }if(ke.getCode()== KeyCode.UP)
+                {   pizzeriaButton.fire();
+                }
+            }
+        });
 
         Scene scene = new Scene(layout, 880, 600);
         window.setScene(scene);

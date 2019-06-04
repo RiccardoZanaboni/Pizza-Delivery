@@ -1,9 +1,12 @@
 package graphicElements;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pizzeria.Order;
@@ -89,9 +92,21 @@ public class OrderPage3 {
         scrollPane.setMinSize(600, 400);
         buttonBox.setMinSize(600, 100);
         layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
+
+        layout.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                if(ke.getCode()== KeyCode.ENTER)
+                    newOrderButton.fire();
+                if(ke.getCode()== KeyCode.CONTROL)
+                    backButton.fire();
+                if(ke.getCode()== KeyCode.ESCAPE)
+                    closeButton.fire();
+
+            }
+        });
         Scene scene4;
         scene4 = new Scene(layout, 600, 800);
-        //scene4.getStylesheets().addAll(this.getClass().getResource("cssStyle/orderPage2.css").toExternalForm());
+        scene4.getStylesheets().addAll(this.getClass().getResource("cssStyle/orderPage2.css").toExternalForm());
         window.setScene(scene4);
     }
 

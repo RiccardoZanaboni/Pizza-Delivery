@@ -1,6 +1,9 @@
 package graphicElements;
 
 import graphicAlerts.GenericAlert;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -70,6 +73,12 @@ public class ModifyBox{
         window.setMinWidth(350);
         window.setMaxWidth(400);
         window.setMaxHeight(300);
+        layout.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                if(ke.getCode()== KeyCode.ENTER)
+                    confirmButton.fire();
+            }
+        });
 
         Scene scene = new Scene(layout);
         window.setScene(scene);

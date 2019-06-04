@@ -1,6 +1,7 @@
 package graphicElements;
 
 import graphicAlerts.ClosedPizzeriaAlert;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -76,7 +79,6 @@ public class MenuPage {
         Button recapOrdiniButton = new Button("Riepilogo ordini");
         recapOrdiniButton.prefWidthProperty().bind(window.widthProperty());
         recapOrdiniButton.prefHeightProperty().bind(window.heightProperty());
-
         Button altroButton = new Button("Altro");
 		altroButton.prefWidthProperty().bind(window.widthProperty());
         altroButton.prefHeightProperty().bind(window.heightProperty());
@@ -99,7 +101,16 @@ public class MenuPage {
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
 
-		Scene scene1 = new Scene(layout);
+        layout.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                if(ke.getCode()== KeyCode.RIGHT) {
+                    chiSiamoButton.fire();
+                }if(ke.getCode()==KeyCode.LEFT)
+                {   makeOrderButton.fire();
+                }
+            }
+        });
+		Scene scene1 = new Scene(layout,800, 600);
 		scene1.getStylesheets().addAll(this.getClass().getResource("cssStyle/menuStyle.css").toExternalForm());
 		//window.setResizable(false);
 		window.setScene(scene1);
