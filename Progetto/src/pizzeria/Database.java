@@ -18,7 +18,7 @@ public class Database {
     public static void openDatabase(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-             con = DriverManager.getConnection("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7293749?autoReconnect=true&useSSL=false", "sql7293749", "geZxKTlyi1");
+            con = DriverManager.getConnection("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7293749?autoReconnect=true&useSSL=false", "sql7293749", "geZxKTlyi1");
         }catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         }
@@ -39,7 +39,7 @@ public class Database {
             }while(ingred.toUpperCase().equals("OK"));
             System.out.print("Inserisci prezzo della pizza da inserire (usa il punto per i decimali):\t");
             double prezzo = Double.parseDouble(scan.nextLine());
-            PizzaDB.putPizza(con, name, ingred, prezzo).execute();
+            PizzaDB.putPizza(con, name.toUpperCase(), ingred.toUpperCase(), prezzo).execute();
         } catch (NumberFormatException nfe){
             String err = "Errore nell'inserimento dei dati della pizza. Riprovare:";
             System.out.println(Services.colorSystemOut(err,Color.RED,false,false));
@@ -49,7 +49,7 @@ public class Database {
         }
     }
 
-    public static ArrayList<Pizza> getPizze(ArrayList<Pizza> menu) throws SQLException{  //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI IL MENU
+    public static HashMap<String,Pizza> getPizze(HashMap<String,Pizza> menu) throws SQLException{  //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI IL MENU
         ResultSet rs=PizzaDB.getPizzaByName(con);
         while(rs.next()){
             HashMap<String, Toppings> ingr = new HashMap<>();
@@ -65,7 +65,7 @@ public class Database {
             }
             double prezzo=rs.getDouble(3);
             Pizza p=new Pizza(nomePizza,ingr,prezzo);
-            menu.add(p);
+            menu.put(nomePizza,p);
         }
         return menu;
     }
@@ -110,7 +110,11 @@ public class Database {
                 LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
         );
         try {
-            getCustomers("username","password");
+            putPizza(wolf);
+            HashMap<String,Pizza> menu=new HashMap<>();
+            getPizze(menu);
+            getPizze(menu);
+            System.out.println("ciao");
         } catch (SQLException e) {
             e.printStackTrace();
         }/*

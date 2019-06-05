@@ -145,6 +145,15 @@ public class Pizzeria {
 
     /** Una tantum: viene creato il menu della pizzeria; ad ogni pizza vengono aggiunti i rispettivi toppings. */
     private void createMenu(){
+
+        try {
+            for(String s :Database.getPizze(menu).keySet()){
+                addPizza(menu.get(s));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+/*
         HashMap<String, Toppings> i1 = new HashMap <>();
         i1.put(Toppings.POMODORO.name(), Toppings.POMODORO);
         i1.put(Toppings.ORIGANO.name(), Toppings.ORIGANO);
@@ -239,7 +248,7 @@ public class Pizzeria {
         i13.put(Toppings.ONNIPOTENZA.name(), Toppings.ONNIPOTENZA);
         i13.put(Toppings.ORIGANO.name(), Toppings.ORIGANO);
         Pizza thanos = new Pizza("THANOS", i13, 0.50);
-        addPizza(thanos);
+        addPizza(thanos);*/
     }
 
     public HashMap<String, Pizza> getMenu() {
