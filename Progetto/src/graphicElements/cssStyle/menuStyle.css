@@ -19,8 +19,8 @@
     -fx-font-size: 20px;
 }*/
 .button {
-  -fx-background-color: #eda615; //*FIXME DA CAMBIARE IL COLORE   @MUSI*/
-  -fx-color: black;
+  -fx-color: tomato; //*FIXME DA CAMBIARE IL COLORE   @MUSI*/
+  /*-fx-color: black;*/
   -fx-padding: 16px 32px;
   -fx-text-align: center;
   -fx-display: inline-block;
@@ -29,6 +29,9 @@
   -fx-font-size: 20px;
   -fx-transition-duration: 0.4s;
   -fx-cursor: pointer;
+  
+
+
 }
 
 .button:hover {

@@ -16,12 +16,12 @@ public class CustomerDB {
         return preparedStatement;
     }
 
-    public static ResultSet getCustomers(Connection con){
+    public static ResultSet getCustomers(Connection con,String username,String password){
         ResultSet rs = null;
         try {
             Statement statement=con.createStatement();
 
-            rs = statement.executeQuery("select * from sql7293749.Users");
+            rs = statement.executeQuery("select * from sql7293749.Users where User = '"+ username + "' and Pass= '"+ password +"'"  );
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

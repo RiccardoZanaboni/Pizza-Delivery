@@ -1,7 +1,11 @@
+package Interfaces;
+
 import exceptions.RestartOrderExc;
 import exceptions.TryAgainExc;
 import javafx.scene.paint.Color;
 import pizzeria.*;
+
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -54,8 +58,7 @@ public class TextInterface {
 	);
 	private Scanner scan = new Scanner(System.in);
 
-
-	/** Al lancio di TextInterface, inizia un nuovo ordine solo se richiesto. */
+	/** Al lancio di Interfaces.TextInterface, inizia un nuovo ordine solo se richiesto. */
 	private void whatDoYouWant() {
 		String risposta;
 		String isOpen = Services.checkTimeOrder(wolf);
@@ -405,8 +408,7 @@ public class TextInterface {
 		switch (risp) {
 			case "S":
 				/* conferma l'ordine e lo aggiunge a quelli della pizzeria. */
-				wolf.updateOvenAndDeliveryMan(orario, tot);
-				order.setCompleted();
+				order.setCompleted(wolf);
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
 				System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = Services.timeStamp(orario.getHours(),orario.getMinutes());
@@ -449,7 +451,7 @@ public class TextInterface {
 	}
 
 	/** Chiede se si vuole procedere con il login o con la creazione di un nuovo account. */
-	public void askAccess() {
+	public void askAccess() throws SQLException {
 		String log = Services.colorSystemOut("L",Color.ORANGE,true,false);
 		String newAcc = Services.colorSystemOut("N",Color.ORANGE,true,false);
 		System.out.println(Services.colorSystemOut("\t>> Digitare:\n",Color.YELLOW,false,false)
@@ -519,8 +521,14 @@ public class TextInterface {
 	}
 
 	public static void main(String[] args){
+        Database.openDatabase();
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
-		textInterface.askAccess();
-	}
+        textInterface.whatDoYouWant();
+		/*try {
+            textInterface.askAccess();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+    }
 }

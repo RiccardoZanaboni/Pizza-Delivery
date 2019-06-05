@@ -52,7 +52,7 @@ public class Order {
         }
     }
 
-	/** In TextInterface, stampa a video il riepilogo dell'ordine. */
+	/** In Interfaces.TextInterface, stampa a video il riepilogo dell'ordine. */
 	public String recapOrder(){
 		String line = Services.getLine();
 		StringBuilder recap = new StringBuilder();
@@ -188,7 +188,10 @@ public class Order {
     }
 
     /** Setta l'ordine come completo. */
-    public void setCompleted() {
+    public void setCompleted(Pizzeria pizzeria) {
+    	Date orario = this.getTime();
+    	int tot = this.getNumPizze();
+		pizzeria.updateOvenAndDeliveryMan(orario, tot);
         this.isCompleted = true;
     }
 
