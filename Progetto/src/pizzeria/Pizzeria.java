@@ -155,7 +155,7 @@ public class Pizzeria {
 
     /** Una tantum: viene creato il menu della pizzeria; ad ogni pizza vengono aggiunti i rispettivi toppings. */
     private void createMenu(){
-
+        Database.openDatabase();
         try {
             for(String s :Database.getPizze(menu).keySet()){
                 addPizza(menu.get(s));

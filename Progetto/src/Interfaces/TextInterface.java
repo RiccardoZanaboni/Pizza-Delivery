@@ -521,14 +521,13 @@ public class TextInterface {
 	}
 
 	public static void main(String[] args){
-        Database.openDatabase();
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
-        textInterface.whatDoYouWant();
-		/*try {
+        //textInterface.whatDoYouWant();
+		try {
             textInterface.askAccess();
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }

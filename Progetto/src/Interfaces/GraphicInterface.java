@@ -64,7 +64,6 @@ public class GraphicInterface extends Application {
 	private Stage window;
 
 	public static void main(String[] args) {
-		Database.openDatabase();
 		launch(args);
 	}
 
