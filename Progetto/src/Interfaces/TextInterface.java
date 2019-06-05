@@ -524,11 +524,10 @@ public class TextInterface {
         Database.openDatabase();
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
-        textInterface.whatDoYouWant();
-		/*try {
+		try {
             textInterface.askAccess();
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }
