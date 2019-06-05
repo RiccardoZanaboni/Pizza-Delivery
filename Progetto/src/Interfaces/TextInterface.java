@@ -59,7 +59,7 @@ public class TextInterface {
 	private Scanner scan = new Scanner(System.in);
 
 	/** Al lancio di Interfaces.TextInterface, inizia un nuovo ordine solo se richiesto. */
-	private void whatDoYouWant() {
+	private void whatDoYouWant(Customer customer) throws SQLException {
 		String risposta;
 		String isOpen = Services.checkTimeOrder(wolf);
 		switch (isOpen) {
@@ -69,7 +69,7 @@ public class TextInterface {
 				System.out.println(Services.whatDoYouWantPossibilities(true));
 				System.out.print(Services.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
-				whatDoYouWantAnswers(true,risposta);
+				whatDoYouWantAnswers(true,risposta,customer);
 				break;
 
 			// se la pizzeria è ancora aperta, ma non ci sono i tempi per eseguire un nuovo ordine.
@@ -79,7 +79,7 @@ public class TextInterface {
 				System.out.println(Services.whatDoYouWantPossibilities(false));
 				System.out.print("\t>> ");
 				risposta = scan.nextLine().toUpperCase();
-				whatDoYouWantAnswers(false,risposta);
+				whatDoYouWantAnswers(false,risposta,customer);
 				break;
 
 			// se la pizzeria per oggi ha terminato il turno lavorativo, quindi è chiusa.
@@ -89,13 +89,13 @@ public class TextInterface {
 				System.out.println(Services.whatDoYouWantPossibilities(false));
 				System.out.print("\t>> ");
 				risposta = scan.nextLine().toUpperCase();
-				whatDoYouWantAnswers(false,risposta);
+				whatDoYouWantAnswers(false,risposta,customer);
 				break;
 		}
 	}
 
 	/** In whatDoYouWant(), gestisce le possibili risposte alla domanda. */
-	private void whatDoYouWantAnswers(boolean isOpen, String risposta) {
+	private void whatDoYouWantAnswers(boolean isOpen, String risposta, Customer customer) throws SQLException {
 		switch (risposta){
 			case "L":
 				System.out.println(Services.colorSystemOut("Ora visualizzerai l'ultimo ordine effettuato...", Color.YELLOW, false, false));
@@ -105,14 +105,19 @@ public class TextInterface {
 				break;
 			case "I":
 				System.out.println(Services.getHistory(false));
-				whatDoYouWant();
+				whatDoYouWant(customer);
+				break;
+			case "E":
+				System.out.println(Services.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
+				//TODO: logout
+				askAccess();
 				break;
 			default:
 				if(isOpen && risposta.equals("N")){
-					makeOrderText();
+					makeOrderText(customer);
 				} else {
-					System.out.println(Services.colorSystemOut("Spiacenti: inserito carattere non corretto. Riprovare: ", Color.RED, false, false));
-					whatDoYouWant();
+					System.out.println(Services.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
+					whatDoYouWant(customer);
 				} break;
 		}
 	}
@@ -120,9 +125,10 @@ public class TextInterface {
 	/** Effettua tutte le operazioni necessarie ad effettuare un nuovo ordine.
 	 * Utilizzo la sigla-chiave "OK" una volta terminata la scelta delle pizze, per continuare.
 	 * Utilizzo ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio. */
-	private void makeOrderText() {
+	private void makeOrderText(Customer customer) throws SQLException {
 		System.out.println(wolf.printMenu());
 		Order order = wolf.initializeNewOrder();
+		order.setCustomer(customer);
 		int num;
 		String nomePizza;
 		int tot = 0;
@@ -153,7 +159,7 @@ public class TextInterface {
 			String annullato = Services.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
 			System.out.println("\t>> " + annullato);
 			System.out.println(Services.getLine());
-			whatDoYouWant();
+			whatDoYouWant(customer);
 		}
 	}
 
@@ -309,7 +315,7 @@ public class TextInterface {
 		System.out.println(domanda + "\t[S/N]: ");
 		String answer = scan.nextLine().toUpperCase();
 		switch (answer) {
-			case "S":		// FIXME: @fetch: se non modifichi delle COTTO e altre le modifichi, poi non te le mette insieme nel recap
+			case "S":
 				System.out.println(possibleAddictions(wolf));
 				String advise = Services.colorSystemOut("(Attenzione: è prevista una maggiorazione di 0.50 € per ogni ingrediente aggiunto)",Color.YELLOW,false,false);
 				System.out.println(advise);
@@ -341,21 +347,22 @@ public class TextInterface {
 
 	/** Gestisce l'inserimento del nome del cliente e dell'indirizzo di spedizione. */
 	private boolean insertNameAndAddress(Order order) throws RestartOrderExc {
-		String domanda1 = Services.colorSystemOut("Come ti chiami?",Color.YELLOW,false,false);
+		String domanda1 = Services.colorSystemOut("Nome sul citofono:",Color.YELLOW,false,false);
 		System.out.println(domanda1 + "\t\t(Inserisci 'F' per annullare l'ordine)");
 		String nome = scan.nextLine();
 		if (nome.toUpperCase().equals("F")) {
 			throw new RestartOrderExc();
 		}
-		String domanda2 = Services.colorSystemOut("Password?",Color.YELLOW,false,false);
+		order.setName(nome);	// perchè uno può avere come user "Banana33", ma al fattorino interessa il nome sul citofono!
+		/*String domanda2 = Services.colorSystemOut("Password?",Color.YELLOW,false,false);
 		System.out.println(domanda2 + "\t\t(Inserisci 'F' per annullare l'ordine)");
 		String password = scan.nextLine();
 		if (nome.toUpperCase().equals("F")) {
 			throw new RestartOrderExc();
 		}
 		Customer c = new Customer(nome,password);
-		order.setCustomer(c);
-		String domanda3 = Services.colorSystemOut("Inserisci l'indirizzo di consegna:",Color.YELLOW,false,false);
+		order.setCustomer(c);*/
+		String domanda3 = Services.colorSystemOut("Indirizzo di consegna:",Color.YELLOW,false,false);
 		System.out.println(domanda3 + "\t\t(Inserisci 'F' per annullare l'ordine)");
 		String indirizzo = scan.nextLine();
 		if (indirizzo.toUpperCase().equals("F")) {
@@ -399,7 +406,8 @@ public class TextInterface {
 
 	/** Chiede conferma dell'ordine e lo salva tra quelli completati
 	 * (pronti all'evasione), aggiornando il vettore orario del forno e del fattorino. */
-	private void askConfirm(Order order, Date orario, int tot) {
+	private void askConfirm(Order order, Date orario, int tot) throws SQLException {
+		Customer customer = order.getCustomer();
 		String domanda = Services.colorSystemOut("Confermi l'ordine?",Color.YELLOW,false,false);
 		String s = Services.colorSystemOut("S",Color.ORANGE,true,false);
 		String n = Services.colorSystemOut("N",Color.ORANGE,true,false);
@@ -416,7 +424,7 @@ public class TextInterface {
 				System.out.println("\t>> Consegna prevista: " + confirmedTime + ".");
 				System.out.println(Services.getLine());
 				wolf.addOrder(order);
-				whatDoYouWant();
+				whatDoYouWant(customer);
 				break;
 			case "N":
 				/* annulla l'ordine. */
@@ -426,7 +434,7 @@ public class TextInterface {
 					String annullato = Services.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
 					System.out.println("\t>> " + annullato);
 					System.out.println(Services.getLine());
-					whatDoYouWant();
+					whatDoYouWant(customer);
 				}
 				break;
 			default:
@@ -468,16 +476,18 @@ public class TextInterface {
 				String psw = scan.nextLine().toUpperCase();
 				switch(wolf.checkLogin(user,psw)){
 					case "OK":
-						System.out.println("\nok, accesso cliente.");
-						whatDoYouWant();
+						//Customer c = wolf.getCustomer(user,psw);
+						Customer c = new Customer(user,psw);
+						System.out.println("\nBenvenuto: " + user.toUpperCase());
+						whatDoYouWant(c);
 						break;
 					case "P":
-						System.out.println("\nok, accesso pizzeria.");
+						System.out.println("\nBenvenuto: " + user.toUpperCase() + " (utente privilegiato)");
 						//PizzeriaInterface pizzeriaInterface = new PizzeriaInterface();
 						//pizzeriaInterface.cosaVuoiFare();
 						break;
 					case "NO":
-						System.out.println(Services.colorSystemOut("Username o password errati: riprovare.\n",Color.RED,false,false));
+						System.out.println(Services.colorSystemOut("\nUsername o password errati: riprovare.\n",Color.RED,false,false));
 						askAccess();
 						break;
 				}
@@ -494,16 +504,18 @@ public class TextInterface {
 				String confPsw = scan.nextLine().toUpperCase();
 				switch(wolf.createAccount(newUser,newPsw,confPsw)) {
 					case "OK":
-						System.out.println("\nOk, creato nuovo cliente.\n");
+						//Customer c = wolf.getCustomer(user,psw);
+						Customer c = new Customer(newUser,newPsw);
+						System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
 						// TODO: login automatico
-						whatDoYouWant();
+						whatDoYouWant(c);
 						break;
 					case "SHORT":
 						System.out.println(Services.colorSystemOut("\nPassword troppo breve: riprovare.\n",Color.RED,false,false));
 						askAccess();
 						break;
 					case "EXISTING":
-						System.out.println(Services.colorSystemOut("\nUsername già utilizzato: riprovare.\n",Color.RED,false,false));
+						System.out.println(Services.colorSystemOut("\nUtente già registrato: riprovare con un username differente.\n",Color.RED,false,false));
 						askAccess();
 						break;
 					case "DIFFERENT":
@@ -521,9 +533,9 @@ public class TextInterface {
 	}
 
 	public static void main(String[] args){
-        Database.openDatabase();
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
+        //textInterface.whatDoYouWant();
 		try {
             textInterface.askAccess();
         } catch (SQLException e) {

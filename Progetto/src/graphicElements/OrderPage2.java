@@ -45,31 +45,32 @@ public class OrderPage2 {
 
 		GridPane gridPane = new GridPane();
 
-		Label username = new Label("Username:");
+		Label username = new Label(" Nome:\t  ");
 		TextField nameInput = new TextField();
-		nameInput.setPromptText("Your name");
+		nameInput.setPromptText("Your Name");
 		username.setId("nomiLabel");
 		HBox usernameBox = new HBox(50);
 		usernameBox.getChildren().addAll(username, nameInput);
-		Label password = new Label("Password:");
+
+		Label password = new Label(" Password: ");
 		TextField passwordInput = new TextField();
 		passwordInput.setPromptText("Your Password");
 		password.setId("nomiLabel");
 		HBox passwordBox = new HBox(50);
 		passwordBox.getChildren().addAll(password, passwordInput);
 
-		Label address = new Label("Indirizzo:");
-        address.setId("nomiLabel");
+		Label address = new Label(" Indirizzo:   ");
         TextField addressInput = new TextField();
-		addressInput.setPromptText("Your address");
-		HBox addressBox = new HBox(61);
+		addressInput.setPromptText("Your Address");
+		address.setId("nomiLabel");
+		HBox addressBox = new HBox(50);
 		addressBox.getChildren().addAll(address, addressInput);
 
-		Label choiceLabel = new Label("Scegli l'ora:");
-        choiceLabel.setId("nomiLabel");
+		Label choiceLabel = new Label(" Orario:\t  ");
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
 		choiceBox.getItems().addAll(getTime(pizzeria, tot));
-		HBox choiceHBox = new HBox(44);
+		choiceLabel.setId("nomiLabel");
+		HBox choiceHBox = new HBox(50);
 		choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
 
 		Button confirmButton = new Button("Prosegui →");
@@ -79,8 +80,9 @@ public class OrderPage2 {
 			this.password= getInfo(passwordInput);
 			this.address = getInfo(addressInput);
 			this.time = getChoice(choiceBox);
-			order.setAddress(getInfo(addressInput));
-			Customer customer = new Customer(this.name, this.password);
+			order.setName(this.name);
+			order.setAddress(this.address);
+			Customer customer = new Customer(this.name, this.password);		//TODO: questo andrebbe alla pagina iniziale di login!!
 			order.setCustomer(customer);
 			order.setTime(time);
 			// FIXME: questo "if" va riaggiunto!!!	 if (checkInsert(this.name,this.password,this.address,this.time)) {
@@ -132,7 +134,7 @@ public class OrderPage2 {
                 if(ke.getCode()== KeyCode.ENTER) {
                     confirmButton.fire();
                 }
-                if(ke.getCode()==KeyCode.CONTROL)
+                if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
                 {
                     backButton.fire();
                 }

@@ -70,6 +70,8 @@ public class Services {
 		String offS = "' puoi visualizzare le tue offerte attive;\n";
 		String info = Services.colorSystemOut("I",Color.ORANGE,true,false);
 		String infoS = "' puoi sapere di più sulla nostra attività.\n";
+		String exit = Services.colorSystemOut("E",Color.ORANGE,true,false);
+		String exitS = "' puoi uscire dalla tua area riservata.\n";
 
 		StringBuilder string = new StringBuilder(getLine() + ecco);
 		if(isOpen)
@@ -77,6 +79,7 @@ public class Services {
 		string.append(con).append(last).append(lastS);
 		string.append(con).append(off).append(offS);
 		string.append(con).append(info).append(infoS);
+		string.append(con).append(exit).append(exitS);
 
 		return string.toString();
 	}

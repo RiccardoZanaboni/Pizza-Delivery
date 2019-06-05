@@ -54,10 +54,11 @@ public class OrderPage3 {
         titleBox.setMinSize(600, 50);
 
         VBox recapBox = new VBox(20);
-        Label yourNameLabel = new Label("SIG.\t" + order.getCustomer().getUsername());
+        Label userLabel = new Label("SIG.\t\t\t" + order.getCustomer().getUsername());
+        Label interphoneNameLabel = new Label("CITOFONO:\t" + order.getName());
         Label yourAddressLabel = new Label("INDIRIZZO:\t" + order.getAddress());
-        Label yourOrderTimeLabel = new Label ("ORARIO:\t" + order.getTime());
-        recapBox.getChildren().addAll(yourNameLabel, yourAddressLabel, yourOrderTimeLabel);
+        Label yourOrderTimeLabel = new Label ("ORARIO:\t\t" + order.getTime());
+        recapBox.getChildren().addAll(userLabel, interphoneNameLabel, yourAddressLabel, yourOrderTimeLabel);
 
         Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
@@ -97,7 +98,7 @@ public class OrderPage3 {
             public void handle(KeyEvent ke) {
                 if(ke.getCode()== KeyCode.ENTER)
                     newOrderButton.fire();
-                if(ke.getCode()== KeyCode.CONTROL)
+                if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
                     backButton.fire();
                 if(ke.getCode()== KeyCode.ESCAPE)
                     closeButton.fire();

@@ -9,6 +9,7 @@ import java.util.Date;
 @SuppressWarnings("deprecation")
 public class Order {
     private Customer customer;
+    private String name;
     private String orderCode;
     private String customerAddress;
     private Date time;
@@ -60,6 +61,8 @@ public class Order {
 		recap.append(Services.colorSystemOut(this.orderCode,Color.RED,true,false));
 		recap.append(Services.colorSystemOut("\nSIG.\t\t",Color.YELLOW,false,false));
 		recap.append(Services.colorSystemOut(this.customer.getUsername(),Color.GREEN,true,false));
+		recap.append(Services.colorSystemOut("\nCITOFONO:\t",Color.YELLOW,false,false));
+		recap.append(Services.colorSystemOut(this.name,Color.GREEN,true,false));
 		recap.append(Services.colorSystemOut("\nINDIRIZZO:\t",Color.YELLOW,false,false));
 		recap.append(Services.colorSystemOut(this.customerAddress,Color.GREEN,true,false));
 		recap.append(Services.colorSystemOut("\nORARIO:\t\t",Color.YELLOW,false,false));
@@ -237,5 +240,13 @@ public class Order {
 
 	public void increaseCountModifiedPizze() {
 		this.countModifiedPizze++;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

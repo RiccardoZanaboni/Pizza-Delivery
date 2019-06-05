@@ -155,6 +155,15 @@ public class Pizzeria {
 
     /** Una tantum: viene creato il menu della pizzeria; ad ogni pizza vengono aggiunti i rispettivi toppings. */
     private void createMenu(){
+        Database.openDatabase();
+        try {
+            for(String s :Database.getPizze(menu).keySet()){
+                addPizza(menu.get(s));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+/*
         HashMap<String, Toppings> i1 = new HashMap <>();
         i1.put(Toppings.POMODORO.name(), Toppings.POMODORO);
         i1.put(Toppings.ORIGANO.name(), Toppings.ORIGANO);
@@ -249,7 +258,7 @@ public class Pizzeria {
         i13.put(Toppings.ONNIPOTENZA.name(), Toppings.ONNIPOTENZA);
         i13.put(Toppings.ORIGANO.name(), Toppings.ORIGANO);
         Pizza thanos = new Pizza("THANOS", i13, 0.50);
-        addPizza(thanos);
+        addPizza(thanos);*/
     }
 
     public HashMap<String, Pizza> getMenu() {
@@ -437,24 +446,27 @@ public class Pizzeria {
         }
     }
 
-    public String createAccount(String newUser, String newPsw, String confPsw) throws SQLException {
-        boolean existing = false;
+    public String createAccount(String newUser, String newPsw, String confPsw) {
+        /*boolean existing = false;*/
         // faccio scorrere tutti gli account e controllo che non esista già.
         // se esistente, pongo existing a true.
 
-        if(!existing && newPsw.equals(confPsw)){
+        if(/*!existing &&*/ newPsw.equals(confPsw)){
             if(newPsw.length()>2) {
                 // se si registra correttamente, va bene.
                 // createNewAccount(newUser,newPsw);
-                Database.putCustomer(newUser,newPsw);
-                //checkLogin(newUser, newPsw);
-                return "OK";
+				if (!Database.putCustomer(newUser,newPsw))
+					return "EXISTING";
+				else
+					return "OK";
+				//checkLogin(newUser, newPsw);
             } else
                 // password troppo breve.
                 return "SHORT";
-        } else if (existing){
+        /*} else if (existing){
             // se esiste già un account con questo nome, non va bene.
             return "EXISTING";
+        */
         } else {
             // se la password non viene confermata correttamente
             return "DIFFERENT";
