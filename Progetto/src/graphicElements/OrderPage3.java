@@ -97,7 +97,7 @@ public class OrderPage3 {
             public void handle(KeyEvent ke) {
                 if(ke.getCode()== KeyCode.ENTER)
                     newOrderButton.fire();
-                if(ke.getCode()== KeyCode.CONTROL)
+                if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
                     backButton.fire();
                 if(ke.getCode()== KeyCode.ESCAPE)
                     closeButton.fire();
