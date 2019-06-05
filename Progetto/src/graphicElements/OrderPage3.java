@@ -68,7 +68,7 @@ public class OrderPage3 {
         Button newOrderButton = new Button("Conferma e torna alla Home ✔");
         newOrderButton.setId("confirmButton");
         newOrderButton.setOnAction(e -> {
-        	order.setCompleted();
+        	order.setCompleted(pizzeria);
         	pizzeria.addOrder(order);
             MenuPage menuPage = new MenuPage();
             OrderPage1.getBackButton().fire();
@@ -78,7 +78,7 @@ public class OrderPage3 {
         Button closeButton = new Button("Conferma ed esci ☓");
         closeButton.setId("closeButton");
         closeButton.setOnAction(e-> {
-        	order.setCompleted();
+        	order.setCompleted(pizzeria);
         	pizzeria.addOrder(order);
         	window.close();
         });
@@ -97,7 +97,7 @@ public class OrderPage3 {
             public void handle(KeyEvent ke) {
                 if(ke.getCode()== KeyCode.ENTER)
                     newOrderButton.fire();
-                if(ke.getCode()== KeyCode.CONTROL)
+                if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
                     backButton.fire();
                 if(ke.getCode()== KeyCode.ESCAPE)
                     closeButton.fire();

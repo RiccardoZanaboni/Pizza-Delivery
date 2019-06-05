@@ -82,18 +82,18 @@ public class Database {
         }
     }
 
-    public static boolean getCustomers(String username,String password)throws SQLException{//TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI ARRAYLIST DI CUSTOMER
-        ResultSet rs=CustomerDB.getCustomers(con,username,password);
-        boolean rows=false;
+    public static boolean getCustomers(String username,String password) throws SQLException{    //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI ARRAYLIST DI CUSTOMER
+        ResultSet rs = CustomerDB.getCustomers(con,username,password);
+        boolean rows = false;
         while(rs.next()) {
-            rows=true;
+            rows = true;
         }
         return rows;
     }
 
     public static void main(String[] args) {
         openDatabase();
-        Pizzeria wolf=new Pizzeria("wolf","via bolzano 10", LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+        Pizzeria wolf = new Pizzeria("wolf","via bolzano 10", LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
                 LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
                 LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
                 LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),

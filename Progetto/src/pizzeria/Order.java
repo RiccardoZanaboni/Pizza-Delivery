@@ -188,7 +188,10 @@ public class Order {
     }
 
     /** Setta l'ordine come completo. */
-    public void setCompleted() {
+    public void setCompleted(Pizzeria pizzeria) {
+    	Date orario = this.getTime();
+    	int tot = this.getNumPizze();
+		pizzeria.updateOvenAndDeliveryMan(orario, tot);
         this.isCompleted = true;
     }
 

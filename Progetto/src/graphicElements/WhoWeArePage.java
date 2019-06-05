@@ -46,7 +46,7 @@ public class WhoWeArePage {
         layout.prefHeightProperty().bind(window.heightProperty());
         layout.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
-                if(ke.getCode()== KeyCode.CONTROL){
+                if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE){
                     backButton.fire();
                 }
             }

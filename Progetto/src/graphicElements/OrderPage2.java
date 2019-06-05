@@ -83,7 +83,7 @@ public class OrderPage2 {
 			Customer customer = new Customer(this.name, this.password);
 			order.setCustomer(customer);
 			order.setTime(time);
-			// FIXME: questo va riaggiunto!!!	 if (checkInsert(this.name,this.password,this.address,this.time)) {
+			// FIXME: questo "if" va riaggiunto!!!	 if (checkInsert(this.name,this.password,this.address,this.time)) {
 				OrderPage3 orderPage3 = new OrderPage3();
 				orderPage3.display(window, order, pizzeria, scene3);
 			//}
@@ -132,7 +132,7 @@ public class OrderPage2 {
                 if(ke.getCode()== KeyCode.ENTER) {
                     confirmButton.fire();
                 }
-                if(ke.getCode()==KeyCode.CONTROL)
+                if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
                 {
                     backButton.fire();
                 }
