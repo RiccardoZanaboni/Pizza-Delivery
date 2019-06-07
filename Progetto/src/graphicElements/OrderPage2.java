@@ -3,7 +3,6 @@ package graphicElements;
 import graphicAlerts.GenericAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pizzeria.Customer;
@@ -38,7 +36,6 @@ public class OrderPage2 {
 	private Scene scene3;
 	private String address;
 	private String name;
-	private String password;
 	private Date time;
 
 	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot, Customer customer) {
@@ -54,12 +51,6 @@ public class OrderPage2 {
 		HBox usernameBox = new HBox(50);
 		usernameBox.getChildren().addAll(username, nameInput);
 
-		/*Label password = new Label(" Password: ");
-		PasswordField passwordInput = new PasswordField();
-		passwordInput.setPromptText("Your Password");
-		password.setId("nomiLabel");
-		HBox passwordBox = new HBox(50);
-		passwordBox.getChildren().addAll(password, passwordInput);*/
 
 		Label address = new Label(" Indirizzo:   ");
         TextField addressInput = new TextField();
@@ -78,8 +69,6 @@ public class OrderPage2 {
 		Button confirmButton = new Button("Prosegui →");
         confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e-> {
-			//this.name = getInfo(nameInput);
-			//this.password= getInfo(passwordInput);
 			this.address = getInfo(addressInput);
 			this.time = getChoice(choiceBox);
 			order.setName(customer.getUsername());
@@ -111,14 +100,12 @@ public class OrderPage2 {
 		hBoxIntestazione.setAlignment(Pos.CENTER);
 
 		GridPane.setConstraints(usernameBox,0,0);
-		//GridPane.setConstraints(passwordBox,0,1);
 		GridPane.setConstraints(addressBox, 0, 1);
 		GridPane.setConstraints(choiceHBox, 0, 2);
 
 		gridPane.getChildren().addAll(usernameBox, addressBox, choiceHBox);
 		gridPane.setPadding(new Insets(130, 5, 20, 70));
 		gridPane.setVgap(20);
-		//gridPane.setHgap(150);
 
         HBox hBox=new HBox(40);
         gridPane.setHgap(50);
@@ -130,15 +117,13 @@ public class OrderPage2 {
 		layout.setId("grid");
 
 		scene3 = new Scene(layout);
-        scene3.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                if(ke.getCode()== KeyCode.ENTER) {
-                    confirmButton.fire();
-                }
-                if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
-                {
-                    backButton.fire();
-                }
+        scene3.setOnKeyPressed(ke -> {
+            if(ke.getCode()== KeyCode.ENTER) {
+                confirmButton.fire();
+            }
+            if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
+            {
+                backButton.fire();
             }
         });
         layout.prefWidthProperty().bind(window.widthProperty());

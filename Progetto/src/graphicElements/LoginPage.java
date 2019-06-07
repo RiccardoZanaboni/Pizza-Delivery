@@ -1,7 +1,6 @@
 package graphicElements;
 
 import graphicElements.PizzeriaPages.PizzeriaHomePage;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -52,8 +50,10 @@ public class LoginPage {
 
         Button pizzeriaButton = new Button("Apri pizzeria");  // Bottone aggiunto solo per comodità
         pizzeriaButton.setOnAction(e->{
-            PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
-            pizzeriaHomePage.display(pizzeria);
+            if(nameInput.getText().equals("pizzeria") &&passwordInput.getText().equals("password")) {
+                PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
+                pizzeriaHomePage.display(pizzeria);
+            }
         });
 
         Button signUpButton = new Button("Registrati");
@@ -90,7 +90,7 @@ public class LoginPage {
                     insertErrorLabel.setTextFill(Color.RED);
                     insertErrorLabel.setText("Username o password errati");
                 }
-            } catch (SQLException e1) {}
+            } catch (SQLException ignored) {}
         });
 
         HBox buttonBox = new HBox(50);
@@ -104,14 +104,13 @@ public class LoginPage {
         layout.setAlignment(Pos.CENTER);
         layout.getChildren().addAll(pizzeriaButton,usernameBox, passwordBox, vBox);
 
-        layout.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                if(ke.getCode()== KeyCode.DOWN) {
-                    loginButton.fire();
-                }if(ke.getCode()== KeyCode.UP)
-                {   signUpButton.fire();
-                }
+        layout.setOnKeyPressed(ke -> {
+            if(ke.getCode()== KeyCode.ENTER) {
+                loginButton.fire();
+            }if(ke.getCode()== KeyCode.SHIFT)
+            {   signUpButton.fire();
             }
+
         });
 
         Scene scene = new Scene(layout, 880, 600);

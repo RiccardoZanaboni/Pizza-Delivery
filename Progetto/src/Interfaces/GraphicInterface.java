@@ -96,8 +96,6 @@ public class GraphicInterface extends Application {
 
 		fadeIn.setOnFinished(e -> {
 			fadeOut.play();
-			//MenuPage menuPage = new MenuPage();
-			//menuPage.display(window, wolf, );
 			LoginPage loginPage = new LoginPage();
 			loginPage.display(window, wolf);
 		});

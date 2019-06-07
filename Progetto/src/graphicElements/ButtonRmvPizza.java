@@ -9,9 +9,9 @@ import javafx.scene.shape.Circle;
 import pizzeria.Order;
 import pizzeria.Pizza;
 
-public class ButtonRmvPizza extends Button {
+class ButtonRmvPizza extends Button {
 
-	public ButtonRmvPizza(Label nomeLabels, Label prezzoLabel, Label toppingLabel, Button shoppingCartButton, Order order, Pizza pizza, Label countPizza) {
+	ButtonRmvPizza(Label nomeLabels, Label prezzoLabel, Label toppingLabel, Button shoppingCartButton, Order order, Pizza pizza, Label countPizza) {
 		Image image1 = new Image("graphicElements/images/cestino.png");
 		ImageView imageView = new ImageView(image1);
 		imageView.setFitHeight(20);

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 
 public class ShoppingCart {
-    Stage window = new Stage();
+    private Stage window = new Stage();
 
 
     public void display(Order order, Button shoppingCartButton) {

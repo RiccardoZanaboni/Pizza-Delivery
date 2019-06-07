@@ -4,9 +4,6 @@ import Interfaces.TextInterface;
 import javafx.scene.paint.Color;
 
 import java.sql.*;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -46,12 +43,13 @@ public class Database {
         try {
             System.out.print("Inserisci nome della pizza da inserire: (usa \"_\" al posto di \" \"):\t");
             String name = scan.nextLine();
-            String ingred="";
+            String ingred;
             do {
                 String adding = Services.colorSystemOut("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
                 System.out.println(adding);
                 System.out.println(TextInterface.possibleAddictions(pizzeria));
                 ingred=scan.nextLine();
+
             }while(ingred.toUpperCase().equals("OK"));
             System.out.print("Inserisci prezzo della pizza da inserire (usa il punto per i decimali):\t");
             double prezzo = Double.parseDouble(scan.nextLine());

@@ -1,9 +1,7 @@
 package graphicElements;
 
 import graphicAlerts.GenericAlert;
-import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -34,7 +32,6 @@ public class ModifyBox{
         Pizza nuovaPizza = new Pizza(pizzaMenu.getName(false), ingr, pizzaMenu.getPrice());
 
         ArrayList<Label> ingrLabels = new ArrayList<>();
-        //ArrayList<ButtonAddRmvIngr> ingrButtons = new ArrayList<>();
         ArrayList<CheckBoxTopping> checkBoxes = new ArrayList<>();
         ArrayList<HBox> hBoxes = new ArrayList<>();
         fillLabelsAndCheckBoxes(pizzeria, nuovaPizza, ingrLabels, checkBoxes);
@@ -73,11 +70,9 @@ public class ModifyBox{
         window.setMinWidth(350);
         window.setMaxWidth(400);
         window.setMaxHeight(300);
-        layout.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                if(ke.getCode()== KeyCode.ENTER)
-                    confirmButton.fire();
-            }
+        layout.setOnKeyPressed(ke -> {
+            if(ke.getCode()== KeyCode.ENTER)
+                confirmButton.fire();
         });
 
         Scene scene = new Scene(layout);

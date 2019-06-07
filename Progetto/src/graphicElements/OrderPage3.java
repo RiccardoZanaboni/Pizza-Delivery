@@ -1,12 +1,10 @@
 package graphicElements;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pizzeria.Customer;
@@ -39,7 +37,6 @@ public class OrderPage3 {
         ArrayList<Label> ingrLabels = new ArrayList<>();
         ArrayList<Label> prezziLabels = new ArrayList<>();
         ArrayList<Label> countPizzeLabels = new ArrayList<>();
-        //ArrayList<ButtonRmvPizza> buttonRmvPizzas = new ArrayList<>();
 
         GridPane gridPane = addEverythingToGridPane( order, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
@@ -95,16 +92,14 @@ public class OrderPage3 {
         buttonBox.setMinSize(600, 100);
         layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
 
-        layout.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                if(ke.getCode()== KeyCode.ENTER)
-                    newOrderButton.fire();
-                if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
-                    backButton.fire();
-                if(ke.getCode()== KeyCode.ESCAPE)
-                    closeButton.fire();
+        layout.setOnKeyPressed(ke -> {
+            if(ke.getCode()== KeyCode.ENTER)
+                newOrderButton.fire();
+            if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
+                backButton.fire();
+            if(ke.getCode()== KeyCode.ESCAPE)
+                closeButton.fire();
 
-            }
         });
         Scene scene4;
         scene4 = new Scene(layout, 600, 800);
