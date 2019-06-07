@@ -54,6 +54,7 @@ public class OrderPage2 {
 
 		Label address = new Label(" Indirizzo:   ");
         TextField addressInput = new TextField();
+        addressInput.setText(customer.getAddress());
 		addressInput.setPromptText("Your Address");
 		address.setId("nomiLabel");
 		HBox addressBox = new HBox(50);

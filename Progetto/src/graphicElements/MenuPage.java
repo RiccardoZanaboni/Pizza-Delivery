@@ -1,6 +1,7 @@
 package graphicElements;
 
 import graphicAlerts.ClosedPizzeriaAlert;
+import graphicElements.PizzeriaPages.PizzeriaHomePage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -30,7 +31,21 @@ public class MenuPage {
 		if (customer.isLoggedIn())
 		    usernameLabel.setText(customer.getUsername());
         HBox hBox = new HBox(20);
-        hBox.getChildren().addAll(label1, usernameLabel);
+        Button logoutButton = new Button();
+        Image image = new Image("graphicElements/images/logout-128.png");
+        ImageView imageView1 = new ImageView(image);
+        imageView1.setFitHeight(20);
+        imageView1.setFitWidth(20);
+        logoutButton.setGraphic(imageView1);
+        //logoutButton.setMinSize(100, 50);
+        logoutButton.setOnAction(e->{
+            LoginPage loginPage=new LoginPage();
+            customer.setLoggedIn(false);
+            loginPage.display(window, pizzeria);
+
+        });
+        hBox.getChildren().addAll(label1, usernameLabel,logoutButton);
+
         hBox.setAlignment(Pos.CENTER);
 		StackPane stackPane = new StackPane();
 		stackPane.getChildren().addAll(hBox);

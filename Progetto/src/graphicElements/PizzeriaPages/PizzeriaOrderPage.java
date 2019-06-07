@@ -3,7 +3,9 @@ package graphicElements.PizzeriaPages;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -32,6 +34,20 @@ public class PizzeriaOrderPage {
             layout.getChildren().add(gridPane);
         }
 
+        Button backButton = new Button("← Torna indietro");
+        backButton.setOnAction(e -> {
+            PizzeriaHomePage pizzeriaHomePage=new PizzeriaHomePage();
+            pizzeriaHomePage.display(pizzeria, window);
+        });
+        HBox hBox1=new HBox(10);
+        hBox1.getChildren().add(backButton);
+        hBox1.setAlignment(Pos.CENTER);
+
+        layout.setOnKeyPressed(ke -> {
+            if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
+                backButton.fire();
+        });
+        layout.getChildren().add(hBox1);
         Scene scene = new Scene(layout, 880, 600);
         window.setScene(scene);
         window.show();

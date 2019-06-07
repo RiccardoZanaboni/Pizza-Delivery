@@ -3,9 +3,11 @@ package graphicElements.PizzeriaPages;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -58,8 +60,21 @@ public class PizzeriaMenuPage {
         table.setItems(getMenu(pizzeria));
         table.getColumns().addAll(nameColumn, toppingColumn, priceColumn);
 
+        Button backButton = new Button("← Torna indietro");
+        backButton.setOnAction(e -> {
+            PizzeriaHomePage pizzeriaHomePage=new PizzeriaHomePage();
+            pizzeriaHomePage.display(pizzeria, window);
+        });
+        HBox hBox1=new HBox(10);
+        hBox1.getChildren().add(backButton);
+        hBox1.setAlignment(Pos.CENTER);
+
         VBox layout = new VBox();
-        layout.getChildren().addAll(table, hBox);
+        layout.getChildren().addAll(table, hBox,hBox1);
+        layout.setOnKeyPressed(ke -> {
+            if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
+                backButton.fire();
+        });
 
         Scene scene = new Scene(layout);
         window.setScene(scene);
@@ -76,17 +91,19 @@ public class PizzeriaMenuPage {
 
         ObservableList<Toppings> toppings;
         toppings = toppingInput.getSelectionModel().getSelectedItems();
-        String ingr = "";
+        StringBuilder ingr =new StringBuilder();
 
         HashMap<String, Toppings> h = new HashMap <>();
         for (int i=0; i<toppings.size(); i++) {
             h.put(toppings.get(i).name(), toppings.get(i));
-            ingr += toppings.get(i).name();
+            ingr.append(toppings.get(i).name()).append(",");
         }
+        String ingredienti=ingr.toString();
+        ingredienti= ingredienti.substring(0,ingr.length()-1);
         Pizza pizza = new Pizza(nameInput.getText().toUpperCase(), h, Double.parseDouble(priceInput.getText()));
         pizzeria.getMenu().put(pizza.getName(false).toUpperCase(), pizza);
         table.getItems().add(pizza);
-        Database.putPizza(nameInput.getText(), ingr, Double.parseDouble(priceInput.getText()));
+        Database.putPizza(nameInput.getText(), ingredienti, Double.parseDouble(priceInput.getText()));
 
         nameInput.clear();
         priceInput.clear();

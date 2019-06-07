@@ -26,7 +26,18 @@ import java.sql.SQLException;
  *
  */
 
+
 public class LoginPage {
+
+   /* private boolean OpenPizzeria=true;
+
+    public boolean isOpenPizzeria() {
+        return OpenPizzeria;
+    }
+
+    public void setOpenPizzeria(boolean openPizzeria) {
+        OpenPizzeria = openPizzeria;
+    }*/
 
     public void display(Stage window, Pizzeria pizzeria) {
 
@@ -79,9 +90,11 @@ public class LoginPage {
         loginButton.setMinSize(100, 50);
         loginButton.setOnAction(e->{
             try {
-                if (nameInput.getText().equals("pizzeria") && passwordInput.getText().equals("password")) {
+                if (nameInput.getText().equals("pizzeria") && passwordInput.getText().equals("password") ) {
                     PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
-                    pizzeriaHomePage.display(pizzeria);
+                    Stage window1 = new Stage();
+                   // this.OpenPizzeria=false;
+                    pizzeriaHomePage.display(pizzeria, window1);
                 }
                 else if (nameInput.getText().equals("") && passwordInput.getText().equals("")){
                     insertErrorLabel.setTextFill(Color.DARKRED);

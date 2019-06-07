@@ -1,19 +1,36 @@
 package graphicElements.PizzeriaPages;
 
+import graphicElements.LoginPage;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.Pizzeria;
 
 public class PizzeriaHomePage {
-    private Stage window = new Stage();
 
-    public void display (Pizzeria pizzeria) {
+    public void display (Pizzeria pizzeria,Stage window) {
 
         Label label = new Label("PIZZERIA");
+        Button logoutButton = new Button();
+        Image image = new Image("graphicElements/images/logout-128.png");
+        ImageView imageView1 = new ImageView(image);
+        imageView1.setFitHeight(20);
+        imageView1.setFitWidth(20);
+        logoutButton.setGraphic(imageView1);
+        //logoutButton.setMinSize(100, 50);
+        logoutButton.setOnAction(e->{
+            window.close();
+        });
+        HBox hBox=new HBox(10);
+        hBox.getChildren().addAll(label,logoutButton);
+        hBox.setAlignment(Pos.CENTER);
 
         Button visualizeOrdersButton = new Button("Visualizza Ordini");
         visualizeOrdersButton.setOnAction(e-> {
@@ -47,8 +64,9 @@ public class PizzeriaHomePage {
         GridPane.setConstraints(altroButton, 1, 1);
 
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(label, gridPane);
+        layout.getChildren().addAll(hBox, gridPane);
         Scene scene = new Scene(layout, 880, 600);
+        scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/pizzeriaHomePage.css").toExternalForm());
         window.setScene(scene);
         window.show();
     }
