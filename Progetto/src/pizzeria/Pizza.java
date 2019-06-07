@@ -97,9 +97,9 @@ public class Pizza {
 
     public String getName() {
         return name;
-    }
+    }       // non cancellatelo
 
     public HashMap<String, Toppings> getIngredients() {
         return ingredients;
-    }
+    }       // non cancellatelo
 }

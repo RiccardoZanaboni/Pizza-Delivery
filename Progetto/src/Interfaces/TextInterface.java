@@ -2,9 +2,13 @@ package Interfaces;
 
 import exceptions.RestartOrderExc;
 import exceptions.TryAgainExc;
+import javafx.scene.control.PasswordField;
 import javafx.scene.paint.Color;
 import pizzeria.*;
 
+import javax.swing.text.PasswordView;
+import java.net.PasswordAuthentication;
+import java.security.KeyStore;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -153,7 +157,7 @@ public class TextInterface {
 			System.out.println(orario);
 			if (insertNameAndAddress(order)) {
 				System.out.println(order.recapOrder());
-				askConfirm(order, orario, tot);
+				askConfirm(order, orario);
 			}
 		} catch (RestartOrderExc e) {
 			String annullato = Services.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
@@ -325,7 +329,7 @@ public class TextInterface {
 				String rmving = Services.colorSystemOut("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
 				System.out.println(rmving);
 				String rimozioni = scan.nextLine();
-				Pizza modPizza = addAndRmvToppingsText(order, wolf.getMenu().get(nomePizza), aggiunte, rimozioni, num, wolf.getSUPPL_PRICE());
+				Pizza modPizza = addAndRmvToppingsText(wolf.getMenu().get(nomePizza), aggiunte, rimozioni, wolf.getSUPPL_PRICE());
 				for (int i = 0; i < num; i++) {
 					order.getOrderedPizze().add(modPizza);
 				}
@@ -374,7 +378,7 @@ public class TextInterface {
 
 	/** Aggiunge la pizza all'Order, nella quantità inserita.
 	 * Effettua, nel caso, tutte le modifiche richieste, aggiornando il prezzo. */
-	private Pizza addAndRmvToppingsText(Order order, Pizza pizza, String aggiunte, String rimozioni, int num, double prezzoSuppl) {
+	private Pizza addAndRmvToppingsText(Pizza pizza, String aggiunte, String rimozioni, double prezzoSuppl) {
 		HashMap<String, Toppings> ingr = new HashMap<>(pizza.getToppings());
 		Pizza p = new Pizza(pizza.getName(false), ingr, pizza.getPrice());
 		int suppl = 0;
@@ -406,7 +410,7 @@ public class TextInterface {
 
 	/** Chiede conferma dell'ordine e lo salva tra quelli completati
 	 * (pronti all'evasione), aggiornando il vettore orario del forno e del fattorino. */
-	private void askConfirm(Order order, Date orario, int tot) throws SQLException {
+	private void askConfirm(Order order, Date orario) throws SQLException {
 		Customer customer = order.getCustomer();
 		String domanda = Services.colorSystemOut("Confermi l'ordine?",Color.YELLOW,false,false);
 		String s = Services.colorSystemOut("S",Color.ORANGE,true,false);
@@ -444,7 +448,7 @@ public class TextInterface {
 				} catch (TryAgainExc re) {
 					String spiacenti = "Spiacenti: carattere inserito non valido. Riprovare: ";
 					System.out.println(Services.colorSystemOut(spiacenti,Color.RED,false,false));
-					askConfirm(order, orario, tot);
+					askConfirm(order, orario);
 				}
 				break;
 		}
@@ -476,15 +480,12 @@ public class TextInterface {
 				String psw = scan.nextLine().toUpperCase();
 				switch(wolf.checkLogin(user,psw)){
 					case "OK":
-						//Customer c = wolf.getCustomer(user,psw);
 						Customer c = new Customer(user,psw);
 						System.out.println("\nBenvenuto: " + user.toUpperCase());
 						whatDoYouWant(c);
 						break;
 					case "P":
 						System.out.println("\nBenvenuto: " + user.toUpperCase() + " (utente privilegiato)");
-						//PizzeriaInterface pizzeriaInterface = new PizzeriaInterface();
-						//pizzeriaInterface.cosaVuoiFare();
 						break;
 					case "NO":
 						System.out.println(Services.colorSystemOut("\nUsername o password errati: riprovare.\n",Color.RED,false,false));

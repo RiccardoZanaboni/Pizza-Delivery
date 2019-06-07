@@ -1,7 +1,6 @@
 package graphicElements;
 
 import graphicAlerts.ClosedPizzeriaAlert;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -48,7 +46,6 @@ public class MenuPage {
 		spazioPane.setMinSize(800, 150);
 		spazioPane.getChildren().add(imageView);
 		spazioPane.setAlignment(Pos.CENTER);
-		//spazioPane.setId("pane");
 
 		// makeNewOrder - login - register - myAccount (bloccato se non loggato)
 
@@ -86,7 +83,12 @@ public class MenuPage {
         Button recapOrdiniButton = new Button("Riepilogo ordini");
         recapOrdiniButton.prefWidthProperty().bind(window.widthProperty());
         recapOrdiniButton.prefHeightProperty().bind(window.heightProperty());
-        Button altroButton = new Button("Altro");
+
+        Button altroButton = new Button("Il tuo profilo");
+        altroButton.setOnAction(e->{
+            YourProfilePage yourProfilePage = new YourProfilePage();
+            yourProfilePage.display(window, pizzeria, customer);
+        });
 		altroButton.prefWidthProperty().bind(window.widthProperty());
         altroButton.prefHeightProperty().bind(window.heightProperty());
 
@@ -102,19 +104,16 @@ public class MenuPage {
 		gridPane.setVgap(10);
 
 		VBox layout = new VBox();
-		//layout.getChildren().addAll(stackPane, spazioPane, makeOrderButton, chiSiamoButton, recapOrdiniButton, altroButton);
 		layout.getChildren().addAll(stackPane, imageView, gridPane);
 		layout.getStyleClass().add("layout");
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
 
-        layout.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                if(ke.getCode()== KeyCode.RIGHT) {
-                    chiSiamoButton.fire();
-                }if(ke.getCode()==KeyCode.LEFT)
-                {   makeOrderButton.fire();
-                }
+        layout.setOnKeyPressed(ke -> {
+            if(ke.getCode()== KeyCode.RIGHT) {
+                chiSiamoButton.fire();
+            }if(ke.getCode()==KeyCode.LEFT)
+            {   makeOrderButton.fire();
             }
         });
 		Scene scene1 = new Scene(layout,800, 600);
