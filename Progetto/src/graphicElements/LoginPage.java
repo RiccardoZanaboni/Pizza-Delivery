@@ -59,6 +59,8 @@ public class LoginPage {
         Label insertErrorLabel = new Label("");
         insertErrorLabel.setId("errorLabel");
 
+
+
         /*Button pizzeriaButton = new Button("Apri pizzeria");  // Bottone aggiunto solo per comodità
         pizzeriaButton.setOnAction(e->{
             if(nameInput.getText().equals(pizzeria.getUserPizzeria()) && passwordInput.getText().equals(pizzeria.getPswPizzeria())) {
@@ -78,8 +80,11 @@ public class LoginPage {
                     customer.setLoggedIn(true);
                     menuPage.display(window, pizzeria, customer);
                     }
-                else
-                    System.out.println("Utente gia esistente");
+                else {
+					insertErrorLabel.setTextFill(Color.DARKRED);
+					insertErrorLabel.setText("Utente già registrato");
+                	//System.out.println("Utente gia esistente");
+				}
             } catch (SQLException e1) {
                 System.out.println("Problema");
             }
@@ -102,7 +107,8 @@ public class LoginPage {
                         PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
 						Stage window1 = new Stage();
 						// this.OpenPizzeria=false;
-						pizzeriaHomePage.display(pizzeria, window1);                        break;
+						pizzeriaHomePage.display(pizzeria, window1);
+						break;
                     default:
                         insertErrorLabel.setTextFill(Color.DARKRED);
                         insertErrorLabel.setText("Username o password errati");

@@ -9,8 +9,8 @@ public class PizzaDB {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = con.prepareStatement("insert into sql7293749.Pizze values ('" + nome + "', '" + ingred + "', '" + prezzo + "');");
-
         } catch(SQLException ignored){ }
+
         return preparedStatement;
     }
 
@@ -30,10 +30,10 @@ public class PizzaDB {
         try {
             Statement statement = con.createStatement();
             rs = statement.executeQuery("select * from sql7293749.Pizze");
-        } catch (SQLException sqle){
-            //TODO: fare in modo che stampi questo e chiuda il programma, se non c'è connessione.
-            System.out.println(Services.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.\n", Color.RED,true,false));
-            System.out.println(sqle.getMessage());
+        } catch (NullPointerException | SQLException e){
+            /* Chiude il programma, se non c'è connessione. */
+            System.out.println(Services.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
+            System.exit(1);
         }
         return rs;
     }

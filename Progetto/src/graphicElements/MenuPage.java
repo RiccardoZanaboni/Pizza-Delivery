@@ -136,7 +136,7 @@ public class MenuPage {
 		//window.setResizable(false);
 		window.setScene(scene1);
 		window.setTitle("Wolf of Pizza");
-		window.getIcons().add(new Image("graphicElements/images/wolf_pizza.png"));
+		//window.getIcons().add(new Image("graphicElements/images/wolf_pizza.png"));
 		window.show();
 	}
 }
