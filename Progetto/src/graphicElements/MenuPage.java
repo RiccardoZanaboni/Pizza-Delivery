@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,10 +26,16 @@ import pizzeria.*;
 
 public class MenuPage {
 
-	public void display(Stage window, Pizzeria pizzeria) {
+	public void display(Stage window, Pizzeria pizzeria, Customer customer) {
 		Label label1 = new Label("Benvenuto");
+		Label usernameLabel = new Label("");
+		if (customer.isLoggedIn())
+		    usernameLabel.setText(customer.getUsername());
+        HBox hBox = new HBox(20);
+        hBox.getChildren().addAll(label1, usernameLabel);
+        hBox.setAlignment(Pos.CENTER);
 		StackPane stackPane = new StackPane();
-		stackPane.getChildren().add(label1);
+		stackPane.getChildren().addAll(hBox);
 		stackPane.getStyleClass().add("stackpane");
 
 		Image image1 = new Image("graphicElements/images/banner_pizza.jpg");
@@ -54,7 +61,7 @@ public class MenuPage {
 				case "OPEN":        // pizzeria aperta
 					Order order = pizzeria.initializeNewOrder();
 					OrderPage1 orderPage1 = new OrderPage1();
-					orderPage1.display(window, order, pizzeria);
+					orderPage1.display(window, order, pizzeria, customer);
 					break;
 				case "CLOSING":
 					ClosedPizzeriaAlert.display(true);        // pizzeria in chiusura
@@ -70,7 +77,7 @@ public class MenuPage {
 		Button chiSiamoButton = new Button("Chi siamo");
 		chiSiamoButton.setOnAction(event -> {
 		    WhoWeArePage whoWeArePage=new WhoWeArePage();
-		    whoWeArePage.display(window,pizzeria);
+		    whoWeArePage.display(window,pizzeria, customer);
         });
 		chiSiamoButton.prefWidthProperty().bind(window.widthProperty());
         chiSiamoButton.prefHeightProperty().bind(window.heightProperty());

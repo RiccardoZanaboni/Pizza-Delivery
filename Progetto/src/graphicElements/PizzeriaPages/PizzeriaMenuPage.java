@@ -9,9 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import pizzeria.Pizza;
-import pizzeria.Pizzeria;
-import pizzeria.Toppings;
+import pizzeria.*;
+
 import java.util.HashMap;
 
 public class PizzeriaMenuPage {
@@ -77,31 +76,35 @@ public class PizzeriaMenuPage {
 
         ObservableList<Toppings> toppings;
         toppings = toppingInput.getSelectionModel().getSelectedItems();
+        String ingr = "";
 
         HashMap<String, Toppings> h = new HashMap <>();
         for (int i=0; i<toppings.size(); i++) {
-                h.put(toppings.get(i).name(), toppings.get(i));
-                System.out.println(toppings.get(i).name()+ toppings.get(i));
+            h.put(toppings.get(i).name(), toppings.get(i));
+            ingr += toppings.get(i).name();
         }
-        Pizza pizza = new Pizza(nameInput.getText(), h, Double.parseDouble(priceInput.getText()));
-        pizzeria.getMenu().put(pizza.getName(false), pizza);
+        Pizza pizza = new Pizza(nameInput.getText().toUpperCase(), h, Double.parseDouble(priceInput.getText()));
+        pizzeria.getMenu().put(pizza.getName(false).toUpperCase(), pizza);
         table.getItems().add(pizza);
+        Database.putPizza(nameInput.getText(), ingr, Double.parseDouble(priceInput.getText()));
 
         nameInput.clear();
         priceInput.clear();
     }
 
 
-    public void deleteButtonClicked(Pizzeria pizzeria, TableView table){     // FIXME non cancella la pizza dal menu
+    public void deleteButtonClicked(Pizzeria pizzeria, TableView table){
 
-        ObservableList<Pizza> productSelected, allProducts;
+        ObservableList<Pizza> pizzaSelected, allPizzas;
 
-        allProducts = table.getItems();
-        productSelected = table.getSelectionModel().getSelectedItems();
-        productSelected.forEach(allProducts::remove);
+        allPizzas = table.getItems();
+        pizzaSelected = table.getSelectionModel().getSelectedItems();
 
-        pizzeria.getMenu().remove(table.getSelectionModel().getSelectedItems());
-        System.out.println(pizzeria.getMenu());
+        for (int i=0; i<pizzaSelected.size(); i++) {
+            pizzeria.getMenu().remove(pizzaSelected.get(i).getName(false).toUpperCase());
+            Database.removePizza(pizzaSelected.get(i).getName(false).toUpperCase());
+        }
+        pizzaSelected.forEach(allPizzas::remove);
+
     }
 }
-

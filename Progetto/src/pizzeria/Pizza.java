@@ -94,4 +94,12 @@ public class Pizza {
         else
             this.count--;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public HashMap<String, Toppings> getIngredients() {
+        return ingredients;
+    }
 }

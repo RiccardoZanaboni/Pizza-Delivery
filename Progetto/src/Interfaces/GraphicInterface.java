@@ -1,7 +1,7 @@
 package Interfaces;
 
 import graphicElements.MenuPage;
-import graphicElements.ProfilePage;
+import graphicElements.LoginPage;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -10,7 +10,6 @@ import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
-import pizzeria.Database;
 import pizzeria.Pizzeria;
 import pizzeria.Services;
 
@@ -97,10 +96,10 @@ public class GraphicInterface extends Application {
 
 		fadeIn.setOnFinished(e -> {
 			fadeOut.play();
-			MenuPage menuPage = new MenuPage();
-			menuPage.display(window, wolf);
-			ProfilePage profilePage = new ProfilePage();
-			profilePage.display(window, wolf);
+			//MenuPage menuPage = new MenuPage();
+			//menuPage.display(window, wolf, );
+			LoginPage loginPage = new LoginPage();
+			loginPage.display(window, wolf);
 		});
 
 	}

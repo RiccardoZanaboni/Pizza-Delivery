@@ -1,7 +1,7 @@
 //import org.junit.*;
 //import org.junit.Test;
 //import static org.junit.Assert.*;
-import org.junit.Test;
+/*import org.junit.Test;
 import pizzeria.Pizzeria;
 import pizzeria.Services;
 
@@ -35,7 +35,7 @@ public class Pizzeria_test {
         assertEquals(120,pizzeria.findTimeBoxOven(10,0));
         assertEquals(60, pizzeria.findTimeBoxDeliveryMan(10, 0));
         /**Problema : l'assert restituisce che il findBoxOven divide gli indici di 10 minuti in 10 minuti*/
-    }
+/*    }
 
 
-}
+}*/

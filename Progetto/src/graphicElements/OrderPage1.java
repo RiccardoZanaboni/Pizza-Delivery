@@ -14,6 +14,7 @@ import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
+import pizzeria.Customer;
 import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
@@ -35,7 +36,7 @@ public class OrderPage1 {
     private Button confirmButton;
     private static Button backButton;
 
-    public void display(Stage window, Order order, Pizzeria pizzeria) {
+    public void display(Stage window, Order order, Pizzeria pizzeria, Customer customer) {
 
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -88,8 +89,8 @@ public class OrderPage1 {
         OrderPage2 orderPage2 = new OrderPage2();
 
         int tot = 0;
-        confirmButton = createConfirmButton(window, orderPage2, scene2, order, pizzeria, tot);
-        backButton = createBackButton(pizzeria, order, window);
+        confirmButton = createConfirmButton(customer, window, orderPage2, scene2, order, pizzeria, tot);
+        backButton = createBackButton(pizzeria, order, window, customer);
 
         HBox hBoxIntestazione = new HBox();
         Label labelOrdine = new Label("Totali pizze ordinate: ");
@@ -235,7 +236,7 @@ public class OrderPage1 {
     /**
      * Costruisce il backButton
      */
-    private Button createBackButton(Pizzeria pizzeria, Order order, Stage window) {
+    private Button createBackButton(Pizzeria pizzeria, Order order, Stage window, Customer customer) {
         backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
@@ -245,7 +246,7 @@ public class OrderPage1 {
                 i++;
             }*/
             MenuPage menuPage = new MenuPage();
-            menuPage.display(window, pizzeria);
+            menuPage.display(window, pizzeria, customer);
         });
         return backButton;
     }
@@ -253,14 +254,14 @@ public class OrderPage1 {
     /**
      * Costruisce il bottone di conferma, che consente il passaggio ad OrderPage2
      */
-    private Button createConfirmButton(Stage window, OrderPage2 orderPage2, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
+    private Button createConfirmButton(Customer customer, Stage window, OrderPage2 orderPage2, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
         confirmButton = new Button("Prosegui  →");
         confirmButton.setId("confirmButton");
         confirmButton.setOnAction(e -> {
             if(order.getNumTemporaryPizze()>0)
                 //System.out.println("Sono state ordinate in tutto " + tot + " pizze.");
                 //System.out.println(order.getOrderedPizze());
-                orderPage2.display(window, scene2, order, pizzeria, tot);
+                orderPage2.display(window, scene2, order, pizzeria, tot, customer);
             else
                 GenericAlert.display("Attenzione: aggiungere almeno una pizza all'ordine!");
         });

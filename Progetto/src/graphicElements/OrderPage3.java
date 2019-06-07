@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import pizzeria.Customer;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 
 public class OrderPage3 {
 
-    public void display(Stage window, Order order, Pizzeria pizzeria, Scene scene3) {
+    public void display(Stage window, Order order, Pizzeria pizzeria, Scene scene3, Customer customer) {
 
         //TODO MIGLIORARE LA PAGINA @ MUSI
 
@@ -73,7 +74,7 @@ public class OrderPage3 {
         	pizzeria.addOrder(order);
             MenuPage menuPage = new MenuPage();
             OrderPage1.getBackButton().fire();
-            menuPage.display(window, pizzeria);
+            menuPage.display(window, pizzeria, customer);
         });
 
         Button closeButton = new Button("Conferma ed esci ☓");

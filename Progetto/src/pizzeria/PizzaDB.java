@@ -12,6 +12,17 @@ public class PizzaDB {
         return preparedStatement;
     }
 
+    public static PreparedStatement removePizza(Connection con, String nome){
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = con.prepareStatement("delete from sql7293749.Pizze where nome =  '"+nome+"';");
+
+        } catch(SQLException ignored){
+            System.out.println("Problema SQL rimozione pizza");
+        }
+        return preparedStatement;
+    }
+
     public static ResultSet getPizzaByName(Connection con){
         ResultSet rs = null;
         try {

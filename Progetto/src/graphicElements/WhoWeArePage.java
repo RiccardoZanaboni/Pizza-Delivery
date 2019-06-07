@@ -11,12 +11,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import pizzeria.Customer;
 import pizzeria.Pizzeria;
 import pizzeria.Services;
 
 public class WhoWeArePage {
 
-    public void display(Stage window, Pizzeria pizzeria) {
+    public void display(Stage window, Pizzeria pizzeria, Customer customer) {
 
         String history = Services.getHistory(true);
         TextArea textField=new TextArea();
@@ -33,7 +34,7 @@ public class WhoWeArePage {
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
             MenuPage menuPage = new MenuPage();
-            menuPage.display(window, pizzeria);
+            menuPage.display(window, pizzeria, customer);
         });
 
         HBox hBox = new HBox(10);

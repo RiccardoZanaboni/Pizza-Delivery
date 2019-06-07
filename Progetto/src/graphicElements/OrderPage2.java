@@ -41,7 +41,7 @@ public class OrderPage2 {
 	private String password;
 	private Date time;
 
-	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
+	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot, Customer customer) {
 
 		GridPane gridPane = new GridPane();
 
@@ -49,15 +49,17 @@ public class OrderPage2 {
 		TextField nameInput = new TextField();
 		nameInput.setPromptText("Your Name");
 		username.setId("nomiLabel");
+		if (customer.isLoggedIn())
+			nameInput.setText(customer.getUsername());
 		HBox usernameBox = new HBox(50);
 		usernameBox.getChildren().addAll(username, nameInput);
 
-		Label password = new Label(" Password: ");
-		TextField passwordInput = new TextField();
+		/*Label password = new Label(" Password: ");
+		PasswordField passwordInput = new PasswordField();
 		passwordInput.setPromptText("Your Password");
 		password.setId("nomiLabel");
 		HBox passwordBox = new HBox(50);
-		passwordBox.getChildren().addAll(password, passwordInput);
+		passwordBox.getChildren().addAll(password, passwordInput);*/
 
 		Label address = new Label(" Indirizzo:   ");
         TextField addressInput = new TextField();
@@ -76,18 +78,17 @@ public class OrderPage2 {
 		Button confirmButton = new Button("Prosegui →");
         confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e-> {
-			this.name = getInfo(nameInput);
-			this.password= getInfo(passwordInput);
+			//this.name = getInfo(nameInput);
+			//this.password= getInfo(passwordInput);
 			this.address = getInfo(addressInput);
 			this.time = getChoice(choiceBox);
-			order.setName(this.name);
+			order.setName(customer.getUsername());
 			order.setAddress(this.address);
-			Customer customer = new Customer(this.name, this.password);		//TODO: questo andrebbe alla pagina iniziale di login!!
 			order.setCustomer(customer);
 			order.setTime(time);
 			// FIXME: questo "if" va riaggiunto!!!	 if (checkInsert(this.name,this.password,this.address,this.time)) {
 				OrderPage3 orderPage3 = new OrderPage3();
-				orderPage3.display(window, order, pizzeria, scene3);
+				orderPage3.display(window, order, pizzeria, scene3, customer);
 			//}
 		});
 
@@ -97,7 +98,7 @@ public class OrderPage2 {
 			this.name = getInfo(nameInput);
 			this.address = getInfo(addressInput);
 			OrderPage1 orderPage1 = new OrderPage1();
-			orderPage1.display(window, order, pizzeria);
+			orderPage1.display(window, order, pizzeria, customer);
 		});
 
 		HBox buttonBox = new HBox(10);
@@ -110,11 +111,11 @@ public class OrderPage2 {
 		hBoxIntestazione.setAlignment(Pos.CENTER);
 
 		GridPane.setConstraints(usernameBox,0,0);
-		GridPane.setConstraints(passwordBox,0,1);
-		GridPane.setConstraints(addressBox, 0, 2);
-		GridPane.setConstraints(choiceHBox, 0, 3);
+		//GridPane.setConstraints(passwordBox,0,1);
+		GridPane.setConstraints(addressBox, 0, 1);
+		GridPane.setConstraints(choiceHBox, 0, 2);
 
-		gridPane.getChildren().addAll(usernameBox,passwordBox, addressBox, choiceHBox);
+		gridPane.getChildren().addAll(usernameBox, addressBox, choiceHBox);
 		gridPane.setPadding(new Insets(130, 5, 20, 70));
 		gridPane.setVgap(20);
 		//gridPane.setHgap(150);

@@ -24,8 +24,24 @@ public class Database {
         }
     }
 
-    /** Consente alla pizzeria di aggiungere una pizza al Menu
-     * che è salvato sul pizzeria.Database. */
+    public static void putPizza(String name, String ingred, double prezzo) {
+        try {
+            PizzaDB.putPizza(con, name.toUpperCase(), ingred.toUpperCase(), prezzo).execute();
+        } catch (SQLException sqle){
+            System.out.println("Errore nell'inserimento della pizza nel DB");
+        }
+    }
+
+    public static void removePizza(String name) {
+        try {
+            PizzaDB.removePizza(con, name.toUpperCase()).execute();
+        } catch (SQLException sqle){
+            System.out.println("Errore nell'inserimento della pizza nel DB");
+        }
+    }
+
+        /** Consente alla pizzeria di aggiungere una pizza al Menu
+         * che è salvato sul pizzeria.Database. */
     public static void putPizza(Pizzeria pizzeria){
         try {
             System.out.print("Inserisci nome della pizza da inserire: (usa \"_\" al posto di \" \"):\t");
