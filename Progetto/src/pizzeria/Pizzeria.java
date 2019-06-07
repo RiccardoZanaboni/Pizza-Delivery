@@ -37,8 +37,8 @@ public class Pizzeria {
     public Pizzeria(String name, String address,
                     LocalTime op1, LocalTime op2, LocalTime op3, LocalTime op4, LocalTime op5, LocalTime op6, LocalTime op7,
                     LocalTime cl1, LocalTime cl2, LocalTime cl3, LocalTime cl4, LocalTime cl5, LocalTime cl6, LocalTime cl7) {
-        this.userPizzeria = "wolf";
-        this.pswPizzeria = "wolf";
+        this.userPizzeria = "pizzeria";
+        this.pswPizzeria = "password";
         this.menu = new HashMap<>();
         this.pizzeriaIngredients = new HashMap<>();
         this.name = name;
@@ -49,6 +49,7 @@ public class Pizzeria {
         this.deliveryMen = new ArrayList<>();
         this.SUPPL_PRICE = 0.5;
         this.availablePlaces = 8;
+        Database.openDatabase();
         openPizzeriaToday();
         addDeliveryMan(new DeliveryMan("Musi", this));
         //addDeliveryMan(new DeliveryMan("Zanzatroni", this));
@@ -95,7 +96,7 @@ public class Pizzeria {
     }
 
     /** Crea o ripristina il vettore di infornate, ad ogni apertura della pizzeria */
-    public void openPizzeriaToday(){
+    public void openPizzeriaToday() {
 
         setIngredientsPizzeria();       // FIXME: questi due andrebbero fatti una tantum con Database.
         createMenu();
@@ -154,10 +155,9 @@ public class Pizzeria {
     }
 
     /** Una tantum: viene creato il menu della pizzeria; ad ogni pizza vengono aggiunti i rispettivi toppings. */
-    private void createMenu(){
-        Database.openDatabase();
+    private void createMenu() {
         try {
-            for(String s :Database.getPizze(menu).keySet()){
+            for(String s : Database.getPizze(menu).keySet()){
                 addPizza(menu.get(s));
             }
         } catch (SQLException e) {
@@ -432,7 +432,6 @@ public class Pizzeria {
         return this.DELIVERYMAN_MINUTES;
     }
 
-    //TODO: sistemare quando avremo login
     public String checkLogin(String user, String psw) throws SQLException {
         if(user.equals(this.userPizzeria) && psw.equals(this.pswPizzeria)){
             // se è la pizzeria, allora accede come tale.
@@ -471,5 +470,13 @@ public class Pizzeria {
             // se la password non viene confermata correttamente
             return "DIFFERENT";
         }
+    }
+
+    public String getUserPizzeria() {
+        return this.userPizzeria;
+    }
+
+    public String getPswPizzeria() {
+        return this.pswPizzeria;
     }
 }

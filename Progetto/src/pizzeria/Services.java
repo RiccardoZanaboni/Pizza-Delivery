@@ -73,13 +73,64 @@ public class Services {
 		String exit = Services.colorSystemOut("E",Color.ORANGE,true,false);
 		String exitS = "' puoi uscire dalla tua area riservata.\n";
 
-		StringBuilder string = new StringBuilder(getLine() + ecco);
-		if(isOpen)
+		StringBuilder string = new StringBuilder(getLine());
+		string.append(ecco);
+		if(isOpen) {
 			string.append(con).append(newOrd).append(newOrdS);
+		}
 		string.append(con).append(last).append(lastS);
 		string.append(con).append(off).append(offS);
 		string.append(con).append(info).append(infoS);
 		string.append(con).append(exit).append(exitS);
+
+		return string.toString();
+	}
+
+	/** In Interfaces.TextInterface.whatDoYouWant(), chiede quali siano le intenzioni della pizzeria, per procedere. */
+	public static String whatDoesPizzeriaWantPossibilities(){
+		String ecco = Services.colorSystemOut("\nPizzeria, ecco che cosa puoi fare:\n",Color.YELLOW,false,false);
+		String con = "\t- con '";
+		String ordini = Services.colorSystemOut("V", Color.ORANGE,true,false);
+		String ordiniS = "' puoi visualizzare l'elenco degli ordini da evadere;\n";
+		String pers = Services.colorSystemOut("P",Color.ORANGE,true,false);
+		String persS = "' puoi gestire il personale della pizzeria;\n";
+		String modMenu = Services.colorSystemOut("M",Color.ORANGE,true,false);
+		String modMenuS = "' puoi modificare voci del menu;\n";
+		//String info = Services.colorSystemOut("I",Color.ORANGE,true,false);
+		//String infoS = "' puoi sapere di più sulla nostra attività.\n";
+		String exit = Services.colorSystemOut("E",Color.ORANGE,true,false);
+		String exitS = "' puoi uscire dalla tua area privilegiata.\n";
+
+		StringBuilder s = new StringBuilder(getLine());
+		s.append(ecco);
+		s.append(con).append(ordini).append(ordiniS);
+		s.append(con).append(pers).append(persS);
+		s.append(con).append(modMenu).append(modMenuS);
+		//s.append(con).append(info).append(infoS);
+		s.append(con).append(exit).append(exitS);
+
+		return s.toString();
+	}
+
+	public static String textModifyMenuPossibilities() {
+		String ecco = Services.colorSystemOut("\nQuesto è ciò che puoi fare:\n",Color.YELLOW,false,false);
+		String con = "\t- con '";
+		String add = Services.colorSystemOut("A", Color.ORANGE,true,false);
+		String addS = "' puoi aggiungere una pizza al menu;\n";
+		String rmv = Services.colorSystemOut("R",Color.ORANGE,true,false);
+		String rmvS = "' puoi rimuovere una pizza dal menu;\n";
+		//String mod = Services.colorSystemOut("M",Color.ORANGE,true,false);
+		//String modS = "' puoi modificare una pizza esistente nel menu;\n";
+		String ret = Services.colorSystemOut("B",Color.ORANGE,true,false);
+		String retS = "' puoi tornare indietro.\n";
+
+		StringBuilder string = new StringBuilder();
+		string.append(ecco);
+		string.append(con).append(add).append(addS);
+		string.append(con).append(rmv).append(rmvS);
+		//string.append(con).append(mod).append(modS);
+		//string.append(con).append(info).append(infoS);
+		string.append(con).append(ret).append(retS);
 
 		return string.toString();
 	}

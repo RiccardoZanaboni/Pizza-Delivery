@@ -1,4 +1,6 @@
 package pizzeria;
+import javafx.scene.paint.Color;
+
 import java.sql.*;
 
 public class PizzaDB {
@@ -26,9 +28,11 @@ public class PizzaDB {
     public static ResultSet getPizzaByName(Connection con){
         ResultSet rs = null;
         try {
-            Statement statement=con.createStatement();
+            Statement statement = con.createStatement();
             rs = statement.executeQuery("select * from sql7293749.Pizze");
-        }catch (SQLException sqle){
+        } catch (SQLException sqle){
+            //TODO: fare in modo che stampi questo e chiuda il programma, se non c'è connessione.
+            System.out.println(Services.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.\n", Color.RED,true,false));
             System.out.println(sqle.getMessage());
         }
         return rs;
