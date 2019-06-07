@@ -32,10 +32,11 @@ public class YourProfilePage {
 
         Label surnameLabel = new Label("Cognome: ");
         TextField surnameInput = new TextField();
-        nameInput.setPromptText("Il tuo cognome");
+        surnameInput.setPromptText("Il tuo cognome");
         HBox surnameBox = new HBox(50);
         surnameBox.getChildren().addAll(surnameLabel, surnameInput);
         surnameBox.setAlignment(Pos.CENTER);
+
 
         Label addressLabel = new Label("Indirizzo: ");
         TextField addressInput = new TextField();

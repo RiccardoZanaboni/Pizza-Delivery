@@ -57,7 +57,8 @@ public class PizzeriaOrderPage {
         HBox hBox = new HBox();
         Label orderLabel = new Label(order.getOrderCode()+"");
         Label timeLabel = new Label(order.getTime()+"");
-        hBox.getChildren().addAll(orderLabel, timeLabel);
+        Label label=new Label(order.getName()+" "+order.getAddress()+" ");
+        hBox.getChildren().addAll(orderLabel, timeLabel,label);
         hBox.setAlignment(Pos.CENTER);
 
         GridPane gridPane;

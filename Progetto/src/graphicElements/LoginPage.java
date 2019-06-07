@@ -72,7 +72,7 @@ public class LoginPage {
         signUpButton.setMinSize(100, 50);
         signUpButton.setOnAction(e->{
             try {
-                if (!Database.getCustomers(nameInput.getText(), passwordInput.getText())){
+                if (!Database.getCustomers(nameInput.getText(), passwordInput.getText()) && !passwordInput.getText().equals("") && !nameInput.getText().equals("")){
                     Database.putCustomer(nameInput.getText(), passwordInput.getText());
                     MenuPage menuPage = new MenuPage();
                     Customer customer = new Customer(nameInput.getText(), passwordInput.getText());
