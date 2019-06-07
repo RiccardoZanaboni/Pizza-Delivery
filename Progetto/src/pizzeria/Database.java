@@ -12,103 +12,121 @@ public class Database {
     private static Connection con;
     private static Scanner scan = new Scanner(System.in);
 
-    public static void openDatabase(){
+    public static void openDatabase() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7293749?autoReconnect=true&useSSL=false", "sql7293749", "geZxKTlyi1");
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public static void putPizza(String name, String ingred, double prezzo) {
+    public static boolean putPizza(String name, String ingred, double prezzo) {
         try {
             PizzaDB.putPizza(con, name.toUpperCase(), ingred.toUpperCase(), prezzo).execute();
-        } catch (SQLException sqle){
-            System.out.println("Errore nell'inserimento della pizza nel DB");
+            return true;
+        } catch (SQLException sqle) {
+            return false;
         }
     }
 
-    public static void removePizza(String name) {
+    public static boolean removePizza(String name) {
         try {
             PizzaDB.removePizza(con, name.toUpperCase()).execute();
-        } catch (SQLException sqle){
+            return true;
+        } catch (SQLException sqle) {
             System.out.println("Errore nell'inserimento della pizza nel DB");
+            return false;
         }
     }
 
-        /** Consente alla pizzeria di aggiungere una pizza al Menu
-         * che è salvato sul pizzeria.Database. */
-    public static void putPizza(Pizzeria pizzeria){
+    public static void removePizza() {
         try {
-            System.out.print("Inserisci nome della pizza da inserire: (usa \"_\" al posto di \" \"):\t");
+            System.out.print(Services.colorSystemOut("Inserisci il nome della pizza da rimuovere: (usa \"_\" al posto di \" \"):\t", Color.YELLOW, false, false));
+            String name = scan.nextLine();
+            if (!removePizza(name.toUpperCase())) throw new SQLException();
+        } catch (SQLException sqle) {
+            String err = "Errore nella rimozione della pizza nel database. Riprovare:";
+            System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
+        }
+    }
+
+    /**
+     * Consente alla pizzeria di aggiungere una pizza al Menu
+     * che è salvato sul Database.
+     */
+    public static void putPizza(Pizzeria pizzeria) {
+        try {
+            System.out.println(Services.colorSystemOut("Inserisci il nome della pizza da aggiungere: (usa \"_\" al posto di \" \"):\t", Color.YELLOW, false, false));
             String name = scan.nextLine();
             String ingred;
             do {
-                String adding = Services.colorSystemOut("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
+                String adding = Services.colorSystemOut("Inserisci gli ingredienti da aggiungere, separati da virgola, poi invio:", Color.YELLOW, false, false);
                 System.out.println(adding);
                 System.out.println(TextInterface.possibleAddictions(pizzeria));
-                ingred=scan.nextLine();
+                ingred = scan.nextLine();
 
-            }while(ingred.toUpperCase().equals("OK"));
-            System.out.print("Inserisci prezzo della pizza da inserire (usa il punto per i decimali):\t");
+            } while (ingred.toUpperCase().equals("OK"));
+            System.out.print(Services.colorSystemOut("Inserisci prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
             double prezzo = Double.parseDouble(scan.nextLine());
-            PizzaDB.putPizza(con, name.toUpperCase(), ingred.toUpperCase(), prezzo).execute();
-        } catch (NumberFormatException nfe){
+            if (!putPizza(name.toUpperCase(), ingred.toUpperCase(), prezzo)) throw new SQLException();
+        } catch (NumberFormatException nfe) {
             String err = "Errore nell'inserimento dei dati della pizza. Riprovare:";
-            System.out.println(Services.colorSystemOut(err,Color.RED,false,false));
-        } catch (SQLException sqle){
+            System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
+        } catch (SQLException sqle) {
             String err = "Errore nell'inserimento della pizza nel database. Riprovare:";
-            System.out.println(Services.colorSystemOut(err,Color.RED,false,false));
+            System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
         }
     }
 
-    public static HashMap<String,Pizza> getPizze(HashMap<String,Pizza> menu) throws SQLException{  //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI IL MENU
-        ResultSet rs=PizzaDB.getPizzaByName(con);
-        while(rs.next()){
+    public static HashMap<String, Pizza> getPizze(HashMap<String, Pizza> menu) throws SQLException {
+        //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI IL MENU
+        ResultSet rs = PizzaDB.getPizzaByName(con);
+        while (rs.next()) {
             HashMap<String, Toppings> ingr = new HashMap<>();
-            String nomePizza=rs.getString(1);
-            String ingrediente=rs.getString(2);
+            String nomePizza = rs.getString(1);
+            String ingrediente = rs.getString(2);
             StringTokenizer stAgg = new StringTokenizer(ingrediente);
             while (stAgg.hasMoreTokens()) {
                 try {
                     String ingredienteAggiuntoString = Services.arrangeIngredientString(stAgg);
                     Toppings toppings = Toppings.valueOf(ingredienteAggiuntoString);
-                    ingr.put(toppings.name(),toppings);
-                } catch (Exception ignored) { }
+                    ingr.put(toppings.name(), toppings);
+                } catch (Exception ignored) {}
             }
-            double prezzo=rs.getDouble(3);
-            Pizza p=new Pizza(nomePizza,ingr,prezzo);
-            menu.put(nomePizza,p);
+            double prezzo = rs.getDouble(3);
+            Pizza p = new Pizza(nomePizza, ingr, prezzo);
+            menu.put(nomePizza, p);
         }
         return menu;
     }
 
-    public static boolean putCustomer(String username,String password){
+    public static boolean putCustomer(String username, String password) {
         try {
-            CustomerDB.putCostumer(con,username,password).execute();
+            CustomerDB.putCostumer(con, username, password).execute();
             return true;
-        } catch (NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
             String err = "\nErrore nell'inserimento dei dati utente. Riprovare:";
-            System.out.println(Services.colorSystemOut(err,Color.RED,false,false));
+            System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
             return false;
-        } catch (SQLException sqle){
+        } catch (SQLException sqle) {
             //String err = "\nErrore nell'inserimento dell'utente nel database. Riprovare:";
             //System.out.println(Services.colorSystemOut(err,Color.RED,false,false));
             return false;
         }
     }
 
-    public static boolean getCustomers(String username,String password) throws SQLException{    //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI ARRAYLIST DI CUSTOMER
-        ResultSet rs = CustomerDB.getCustomers(con,username,password);
+    public static boolean getCustomers(String username, String password) throws SQLException {    //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI ARRAYLIST DI CUSTOMER
+        ResultSet rs = CustomerDB.getCustomers(con, username, password);
         boolean rows = false;
-        while(rs.next()) {
+        while (rs.next()) {
             rows = true;
         }
         return rows;
     }
+}
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         openDatabase();
         Pizzeria wolf = new Pizzeria("wolf","via bolzano 10", LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
                 LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
@@ -135,6 +153,11 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }/*
+
+
+
+
+
         String sDate1="21:15:00";
         Calendar calendar = new GregorianCalendar();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -155,7 +178,7 @@ public class Database {
             OrderDB.putOrder(con,"ORD-01","ILRICHI","CIAO",dati).execute(); //todo con data
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
-}
+}*/

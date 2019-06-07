@@ -26,7 +26,6 @@ import java.sql.SQLException;
  *
  */
 
-
 public class LoginPage {
 
    /* private boolean OpenPizzeria=true;
@@ -62,7 +61,7 @@ public class LoginPage {
 
         /*Button pizzeriaButton = new Button("Apri pizzeria");  // Bottone aggiunto solo per comodità
         pizzeriaButton.setOnAction(e->{
-            if(nameInput.getText().equals("pizzeria") &&passwordInput.getText().equals("password")) {
+            if(nameInput.getText().equals(pizzeria.getUserPizzeria()) && passwordInput.getText().equals(pizzeria.getPswPizzeria())) {
                 PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
                 pizzeriaHomePage.display(pizzeria);
             }
@@ -90,11 +89,28 @@ public class LoginPage {
         loginButton.setMinSize(100, 50);
         loginButton.setOnAction(e->{
             try {
-                if (nameInput.getText().equals("pizzeria") && passwordInput.getText().equals("password") ) {
+                String user = nameInput.getText();
+                String psw = passwordInput.getText();
+                switch(pizzeria.checkLogin(user,psw)){
+                    case "OK":
+                        MenuPage menuPage = new MenuPage();
+                        Customer customer = new Customer(user, psw);
+                        customer.setLoggedIn(true);     //TODO: da mettere anche in Textual
+                        menuPage.display(window, pizzeria, customer);
+                        break;
+                    case "P":
+                        PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
+						Stage window1 = new Stage();
+						// this.OpenPizzeria=false;
+						pizzeriaHomePage.display(pizzeria, window1);                        break;
+                    default:
+                        insertErrorLabel.setTextFill(Color.DARKRED);
+                        insertErrorLabel.setText("Username o password errati");
+                        break;
+                }
+                /*if (nameInput.getText().equals(pizzeria.getUserPizzeria()) && passwordInput.getText().equals(pizzeria.getPswPizzeria())) {
                     PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
-                    Stage window1 = new Stage();
-                   // this.OpenPizzeria=false;
-                    pizzeriaHomePage.display(pizzeria, window1);
+                    pizzeriaHomePage.display(pizzeria);
                 }
                 else if (nameInput.getText().equals("") && passwordInput.getText().equals("")){
                     insertErrorLabel.setTextFill(Color.DARKRED);
@@ -107,7 +123,7 @@ public class LoginPage {
                 } else {
                     insertErrorLabel.setTextFill(Color.DARKRED);
                     insertErrorLabel.setText("Username o password errati");
-                }
+                }*/
             } catch (SQLException ignored) {}
         });
 

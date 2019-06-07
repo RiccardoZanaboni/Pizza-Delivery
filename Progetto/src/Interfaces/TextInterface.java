@@ -81,7 +81,7 @@ public class TextInterface {
 				String chiusura = "\nLa pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
 				System.out.println(Services.colorSystemOut(chiusura, Color.RED, false, false));
 				System.out.println(Services.whatDoYouWantPossibilities(false));
-				System.out.print("\t>> ");
+				System.out.print(Services.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				whatDoYouWantAnswers(false,risposta,customer);
 				break;
@@ -91,7 +91,7 @@ public class TextInterface {
 				String chiusa = "\nLa pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
 				System.out.println(Services.colorSystemOut(chiusa, Color.RED, false, false));
 				System.out.println(Services.whatDoYouWantPossibilities(false));
-				System.out.print("\t>> ");
+				System.out.print(Services.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				whatDoYouWantAnswers(false,risposta,customer);
 				break;
@@ -113,7 +113,7 @@ public class TextInterface {
 				break;
 			case "E":
 				System.out.println(Services.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
-				//TODO: logout
+				// logout
 				askAccess();
 				break;
 			default:
@@ -253,9 +253,9 @@ public class TextInterface {
 		do {
 			System.out.print(Services.colorSystemOut("Quale pizza desideri?",Color.YELLOW,false,false));
 			if(isPrimaRichiesta)
-				System.out.print("\n");
+				System.out.print("\t\t(Inserisci 'F' per annullare)\n");
 			else
-				System.out.print("\t\t(Inserisci 'OK' se non desideri altro, oppure 'F' per annullare.)\n");
+				System.out.print("\t\t(Inserisci 'OK' se non desideri altro, oppure 'F' per annullare)\n");
 			nomePizza = scan.nextLine().toUpperCase();
 			try {
 				if (nomePizza.equals("F")) {
@@ -474,10 +474,12 @@ public class TextInterface {
 			case "L":
 				String userQuestion = Services.colorSystemOut("\n\tUsername:\t", Color.YELLOW, false, false);
 				System.out.print(userQuestion);
-				String user = scan.nextLine().toUpperCase();
+				String user = scan.nextLine();
 				String pswQuestion = Services.colorSystemOut("\tPassword:\t", Color.YELLOW, false, false);
 				System.out.print(pswQuestion);
-				String psw = scan.nextLine().toUpperCase();
+				String psw = scan.nextLine();
+				String working1 = Services.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
+				System.out.print(working1);
 				switch(wolf.checkLogin(user,psw)){
 					case "OK":
 						Customer c = new Customer(user,psw);
@@ -486,6 +488,7 @@ public class TextInterface {
 						break;
 					case "P":
 						System.out.println("\nBenvenuto: " + user.toUpperCase() + " (utente privilegiato)");
+						whatDoesPizzeriaWant();
 						break;
 					case "NO":
 						System.out.println(Services.colorSystemOut("\nUsername o password errati: riprovare.\n",Color.RED,false,false));
@@ -503,12 +506,14 @@ public class TextInterface {
 				String confPswQuestion = Services.colorSystemOut("\tConferma psw:\t\t", Color.YELLOW, false, false);
 				System.out.print(confPswQuestion);
 				String confPsw = scan.nextLine().toUpperCase();
+				String working2 = Services.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
+				System.out.print(working2);
 				switch(wolf.createAccount(newUser,newPsw,confPsw)) {
 					case "OK":
 						//Customer c = wolf.getCustomer(user,psw);
 						Customer c = new Customer(newUser,newPsw);
 						System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
-						// TODO: login automatico
+						// login automatico
 						whatDoYouWant(c);
 						break;
 					case "SHORT":
@@ -533,6 +538,62 @@ public class TextInterface {
 		}
 	}
 
+	private void whatDoesPizzeriaWant() throws SQLException {
+		String risposta;
+		System.out.println(Services.whatDoesPizzeriaWantPossibilities());
+		System.out.print(Services.colorSystemOut("\t>> ", Color.YELLOW,false,false));
+		risposta = scan.nextLine().toUpperCase();
+		switch (risposta){
+			case "V":
+				System.out.println(Services.colorSystemOut("Ora visualizzerai gli ordini da evadere...", Color.YELLOW, false, false));
+				whatDoesPizzeriaWant();
+				break;
+			case "P":
+				System.out.println(Services.colorSystemOut("Ora potrai gestire il personale...", Color.YELLOW, false, false));
+				whatDoesPizzeriaWant();
+				break;
+			case "M":
+				System.out.println(Services.textModifyMenuPossibilities());
+				System.out.print(Services.colorSystemOut("\t>> ", Color.YELLOW,false,false));
+				risposta = scan.nextLine().toUpperCase();
+				howModifyMenuAnswer(risposta);
+				whatDoesPizzeriaWant();
+				break;
+			case "E":
+				System.out.println(Services.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
+				// logout
+				askAccess();
+				break;
+			default:
+				System.out.println(Services.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
+				whatDoesPizzeriaWant();
+				break;
+		}
+	}
+
+	private void howModifyMenuAnswer(String risposta) throws SQLException {
+		switch (risposta){
+			case "A":
+				Database.putPizza(wolf);
+				break;
+			case "R":
+				Database.removePizza();
+				break;
+			/*case "M":
+				System.out.println(Services.colorSystemOut("Inserisci il nome della pizza da modificare:\t", Color.YELLOW, false, false));
+				break;*/
+			case "B":
+				System.out.println(Services.colorSystemOut("Nessuna modifica effettuata al menu.\n", Color.YELLOW, false, false));
+				// logout
+				whatDoesPizzeriaWant();
+				break;
+			default:
+				System.out.println(Services.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
+				howModifyMenuAnswer(risposta);
+				break;
+		}
+	}
+
 	public static void main(String[] args){
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
@@ -540,7 +601,7 @@ public class TextInterface {
 		try {
             textInterface.askAccess();
         } catch (SQLException e) {
-            e.printStackTrace();
+			e.printStackTrace();
         }
     }
 }
