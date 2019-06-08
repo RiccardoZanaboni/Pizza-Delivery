@@ -249,4 +249,13 @@ public class Order {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+    	String s="";
+    	for(Pizza p:this.getOrderedPizze()){
+    		s+="\n"+p.toString();
+		}
+		return this.orderCode+" "+this.name+" "+this.customerAddress +" "+this.time +s;
+	}
 }

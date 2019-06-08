@@ -78,12 +78,17 @@ public class Pizzeria {
     }
 
     public HashMap<String,Order> getOrders() {
+        try {
+            Database.getOrder(orders);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return orders;
     }
 
     /** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. */
     public void addOrder(Order order) {
-        // fixme se non lo commento poi impazzisce perche ci sono ordini con lo stesso id //Database.putOrder(order);
+        Database.putOrder(order);
     }
 
     /** Aggiunge la pizza specificata al menu dnameella pizzeria. */
@@ -271,8 +276,12 @@ public class Pizzeria {
 
     /** Crea un nuovo ordine e aggiorna il numero di ordini giornalieri. */
     public Order initializeNewOrder() {
-        Order order = new Order(this.numDailyOrders);
-        this.numDailyOrders++;
+        Order order = null;
+        try {
+            order = new Order(Database.getOrder(this.orders).size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return order;
     }
 

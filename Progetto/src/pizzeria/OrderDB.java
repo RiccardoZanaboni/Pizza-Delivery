@@ -25,7 +25,9 @@ public class OrderDB {
                 preparedStatement = con.prepareStatement("insert into sql7293749.OrderedPizza values ('" + order.getOrderCode() + "', '" + p.getName() + "', '" + p.getDescription()+ "', '" + p.getPrice() + "');");
                 preparedStatement.execute();
             }
-        } catch(SQLException ignored){ }
+        } catch(SQLException sqle){
+            System.out.println(sqle.getMessage());
+        }
     }
 
     public static ResultSet getOrders(Connection con){

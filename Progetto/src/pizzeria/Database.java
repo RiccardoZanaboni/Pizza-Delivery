@@ -150,7 +150,7 @@ public class Database {
             String orderID=rs.getString(1);
             String username=rs.getString(2);
             String address=rs.getString(3);
-            Date date=rs.getDate(4);
+            Date date=rs.getTimestamp(4);
             Order order=new Order(i);
             if(!orders.containsKey(orderID)){
                 order.setName(username);
@@ -169,9 +169,9 @@ public class Database {
                         } catch (Exception ignored) {}
                     }
                     Pizza p=new Pizza(rsPizza.getString(1),ingr,rsPizza.getDouble(3));
-                    if(!order.getOrderedPizze().contains(p)){ //FIXME DA VERIFICARE IL CONTAINS CHE HO MODIFICATO IN PIZZA
+                    //if(!order.getOrderedPizze().contains(p)){ // FIXME @zana DA VERIFICARE IL CONTAINS CHE HO MODIFICATO IN PIZZA --Pensavo servisse ma probabilmente no,lascio ancora per poco
                         order.getOrderedPizze().add(p);
-                    }
+                    //}
                 }
                 orders.put(order.getOrderCode(),order);
             }
@@ -207,7 +207,7 @@ public class Database {
                 HashMap<String, Toppings> pizzeriaIngredients = new HashMap<>();
                 pizzeriaIngredients.put(Toppings.MOZZARELLA_DI_BUFALA.name(), Toppings.MOZZARELLA_DI_BUFALA);
                 o.addPizza(new Pizza("cotto",pizzeriaIngredients,1.),4);
-                //putOrder(o);
+                putOrder(o);
             HashMap<String,Order> orders=new HashMap<>();
             getOrder(orders);
             System.out.println("ciao");

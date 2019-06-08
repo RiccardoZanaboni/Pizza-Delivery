@@ -546,6 +546,9 @@ public class TextInterface {
 		switch (risposta){
 			case "V":
 				System.out.println(Services.colorSystemOut("Ora visualizzerai gli ordini da evadere...", Color.YELLOW, false, false));
+				for(String code:wolf.getOrders().keySet()){
+					System.out.println(wolf.getOrders().get(code).toString());
+				}
 				whatDoesPizzeriaWant();
 				break;
 			case "P":
