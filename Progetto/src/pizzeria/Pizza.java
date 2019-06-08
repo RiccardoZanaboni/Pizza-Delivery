@@ -101,5 +101,21 @@ public class Pizza {
 
     public HashMap<String, Toppings> getIngredients() {
         return ingredients;
-    }       // non cancellatelo
+    }// non cancellatelo
+
+    /** Override del metodo che viene usato da contains in modo da non confrontare il puntatore ma gli attributi dell'oggetto*/
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(obj instanceof Pizza)) {
+            return false;
+        }
+
+        Pizza p = (Pizza) obj;
+        return p.name.equals(this.name) && p.ingredients.equals(this.ingredients) && p.price==this.price;
+    }
 }

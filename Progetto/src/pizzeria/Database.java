@@ -1,12 +1,17 @@
 package pizzeria;
 
 import Interfaces.TextInterface;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import javafx.scene.paint.Color;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.Date;
 
 public class Database {
     private static Connection con;
@@ -80,7 +85,6 @@ public class Database {
     }
 
     public static HashMap<String, Pizza> getPizze(HashMap<String, Pizza> menu) throws SQLException {
-        //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI IL MENU
         ResultSet rs = PizzaDB.getPizzaByName(con);
         while (rs.next()) {
             HashMap<String, Toppings> ingr = new HashMap<>();
@@ -116,7 +120,7 @@ public class Database {
         }
     }
 
-    public static boolean getCustomers(String username, String password) throws SQLException {    //TODO BY @ZANA DA INSERIRE NELLE DUE INTERFACCE PASSANDOCI ARRAYLIST DI CUSTOMER
+    public static boolean getCustomers(String username, String password) throws SQLException {
         ResultSet rs = CustomerDB.getCustomers(con, username, password);
         boolean rows = false;
         while (rs.next()) {
@@ -124,9 +128,60 @@ public class Database {
         }
         return rows;
     }
-}
 
-    /*public static void main(String[] args) {
+    public static boolean putOrder(Order order){
+        DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String s=dateFormatYMD.format(order.getTime());
+        java.sql.Timestamp data= java.sql.Timestamp.valueOf(s);
+        try {
+            OrderDB.putOrder(con,order,data).execute();
+            OrderDB.putOrderedPizzas(con,order);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static HashMap<String,Order> getOrder(HashMap<String,Order> orders) throws SQLException {
+        ResultSet rs = OrderDB.getOrders(con);
+        int i=0;
+        while (rs.next()) {
+            String orderID=rs.getString(1);
+            String username=rs.getString(2);
+            String address=rs.getString(3);
+            Date date=rs.getDate(4);
+            Order order=new Order(i);
+            if(!orders.containsKey(orderID)){
+                order.setName(username);
+                order.setAddress(address);
+                order.setTime(date);
+                ResultSet rsPizza=OrderDB.getOrderedPizzasById(con,orderID);
+                while (rsPizza.next()){
+                    HashMap<String, Toppings> ingr = new HashMap<>();
+                    String ingrediente = rsPizza.getString(2);
+                    StringTokenizer stAgg = new StringTokenizer(ingrediente);
+                    while (stAgg.hasMoreTokens()) {
+                        try {
+                            String ingredienteAggiuntoString = Services.arrangeIngredientString(stAgg);
+                            Toppings toppings = Toppings.valueOf(ingredienteAggiuntoString);
+                            ingr.put(toppings.name(), toppings);
+                        } catch (Exception ignored) {}
+                    }
+                    Pizza p=new Pizza(rsPizza.getString(1),ingr,rsPizza.getDouble(3));
+                    if(!order.getOrderedPizze().contains(p)){ //FIXME DA VERIFICARE IL CONTAINS CHE HO MODIFICATO IN PIZZA
+                        order.getOrderedPizze().add(p);
+                    }
+                }
+                orders.put(order.getOrderCode(),order);
+            }
+            i++;
+        }
+        return orders;
+    }
+
+
+    public static void main(String[] args) {
         openDatabase();
         Pizzeria wolf = new Pizzeria("wolf","via bolzano 10", LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
                 LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
@@ -145,40 +200,20 @@ public class Database {
                 LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
         );
         try {
-            putPizza(wolf);
-            HashMap<String,Pizza> menu=new HashMap<>();
-            getPizze(menu);
-            getPizze(menu);
+                Order o=new Order(1);
+                o.setTime(new Date());
+                o.setName("c");
+                o.setAddress("ss");
+                HashMap<String, Toppings> pizzeriaIngredients = new HashMap<>();
+                pizzeriaIngredients.put(Toppings.MOZZARELLA_DI_BUFALA.name(), Toppings.MOZZARELLA_DI_BUFALA);
+                o.addPizza(new Pizza("cotto",pizzeriaIngredients,1.),4);
+                //putOrder(o);
+            HashMap<String,Order> orders=new HashMap<>();
+            getOrder(orders);
             System.out.println("ciao");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }/*
-
-
-
-
-
-        String sDate1="21:15:00";
-        Calendar calendar = new GregorianCalendar();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
-        sDate1 = day + "/" + month + "/" + year + " " + sDate1;
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        java.util.Date data=null;
-        Date dati=null;
-        try {
-            data=formato.parse(sDate1);
-             dati=new java.sql.Date(data.getTime());
-            System.out.println(dati.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        try {
-            OrderDB.putOrder(con,"ORD-01","ILRICHI","CIAO",dati).execute(); //todo con data
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-}*/
+}

@@ -16,7 +16,7 @@ public class Pizzeria {
     private ArrayList<DeliveryMan> deliveryMen;
     private HashMap<String, Pizza> menu;
     private HashMap<String, Toppings> pizzeriaIngredients;
-    private ArrayList<Order> orders;
+    private HashMap<String,Order> orders;
     private int availablePlaces;
     private int numDailyOrders;
     private final int OVEN_MINUTES = 5;      // ogni 5 minuti
@@ -43,7 +43,7 @@ public class Pizzeria {
         this.pizzeriaIngredients = new HashMap<>();
         this.name = name;
         this.numDailyOrders = 0;
-        this.orders = new ArrayList<>();
+        this.orders = new HashMap<>();
         this.address = address;
         setDayOfTheWeek(op1,op2,op3,op4,op5,op6,op7,cl1,cl2,cl3,cl4,cl5,cl6,cl7);  // 1 = domenica, 2 = lunedi, ... 7 = sabato.
         this.deliveryMen = new ArrayList<>();
@@ -77,13 +77,13 @@ public class Pizzeria {
         this.closings[6] = cl7;
     }
 
-    public ArrayList<Order> getOrders() {
+    public HashMap<String,Order> getOrders() {
         return orders;
     }
 
     /** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. */
     public void addOrder(Order order) {
-        this.orders.add(order);
+        // fixme se non lo commento poi impazzisce perche ci sono ordini con lo stesso id //Database.putOrder(order);
     }
 
     /** Aggiunge la pizza specificata al menu dnameella pizzeria. */

@@ -25,7 +25,7 @@ public class PizzeriaOrderPage {
         ArrayList<Label> countPizzeLabels = new ArrayList<>();
         //ArrayList<GridPane> gridPanes = new ArrayList<>();
         VBox layout = new VBox();
-
+//FIXME se funziona get order col db
         for (int i=0; i<pizzeria.getOrders().size(); i++) {
             GridPane gridPane = addEverythingToGridPane(pizzeria.getOrders().get(i), nameLabels, countPizzeLabels, toppingLabels, priceLabels);
             gridPane.setPadding(new Insets(10, 10, 10, 10));
