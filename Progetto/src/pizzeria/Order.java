@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @SuppressWarnings("deprecation")
-public class Order {
+public class Order implements Comparable<Order> {
     private Customer customer;
     private String name;
     private String orderCode;
@@ -257,5 +257,25 @@ public class Order {
     		s+="\n"+p.toString();
 		}
 		return this.orderCode+" "+this.name+" "+this.customerAddress +" "+this.time +s;
+	}
+
+
+	@Override
+	public int compareTo(Order o) {
+		if(this.time.getHours()>o.time.getHours()){
+			return  1;
+		}
+		if(this.time.getHours()==o.time.getHours()){
+			if(this.time.getMinutes()>o.time.getMinutes()){
+				return  1;
+			}else if(this.time.getMinutes()<o.time.getMinutes()){
+				return  -1;
+			}
+		}
+		if(this.time.getHours()<o.time.getHours()){
+			return  -1;
+		}else{
+			return 0;
+		}
 	}
 }

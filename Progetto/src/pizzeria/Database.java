@@ -177,6 +177,23 @@ public class Database {
             }
             i++;
         }
+        Set<Map.Entry<String, Order>> entries = orders.entrySet();
+        Comparator<Map.Entry<String, Order>> valueComparator=new Comparator<Map.Entry<String, Order>>() {
+            @Override
+            public int compare(Map.Entry<String, Order> o1, Map.Entry<String, Order> o2) {
+                Order v1 = o1.getValue();
+                Order v2 = o2.getValue();
+                return v1.compareTo(v2);
+            }
+        };
+        List<Map.Entry<String, Order>> listOfEntries = new ArrayList<Map.Entry<String, Order>>(entries); // Sort method needs a List, so let's first convert Set to List
+        Collections.sort(listOfEntries, valueComparator);// sorting HashMap by values using comparator
+        // copying entries from List to Map
+        LinkedHashMap<String, Order> sortedByValue = new LinkedHashMap<String, Order>(listOfEntries.size());
+        for(Map.Entry<String, Order> entry : listOfEntries){
+            sortedByValue.put(entry.getKey(), entry.getValue());
+        }
+        orders=sortedByValue;
         return orders;
     }
 
@@ -207,9 +224,12 @@ public class Database {
                 HashMap<String, Toppings> pizzeriaIngredients = new HashMap<>();
                 pizzeriaIngredients.put(Toppings.MOZZARELLA_DI_BUFALA.name(), Toppings.MOZZARELLA_DI_BUFALA);
                 o.addPizza(new Pizza("cotto",pizzeriaIngredients,1.),4);
-                putOrder(o);
+                //putOrder(o);
             HashMap<String,Order> orders=new HashMap<>();
             getOrder(orders);
+            for(String s : wolf.getOrders().keySet()){
+                System.out.println(getOrder(orders).get(s).toString());
+            }
             System.out.println("ciao");
         } catch (Exception e) {
             e.printStackTrace();

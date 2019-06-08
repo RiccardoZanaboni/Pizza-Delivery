@@ -43,7 +43,7 @@ public class Pizzeria {
         this.pizzeriaIngredients = new HashMap<>();
         this.name = name;
         this.numDailyOrders = 0;
-        this.orders = new HashMap<>();
+        this.orders = new LinkedHashMap<>();
         this.address = address;
         setDayOfTheWeek(op1,op2,op3,op4,op5,op6,op7,cl1,cl2,cl3,cl4,cl5,cl6,cl7);  // 1 = domenica, 2 = lunedi, ... 7 = sabato.
         this.deliveryMen = new ArrayList<>();
@@ -79,7 +79,7 @@ public class Pizzeria {
 
     public HashMap<String,Order> getOrders() {
         try {
-            Database.getOrder(orders);
+           orders=Database.getOrder(orders); //FIXME @ZANA SENZA QUESTO UGUALE NON FUNZIONA NON CAPISCO
         } catch (SQLException e) {
             e.printStackTrace();
         }
