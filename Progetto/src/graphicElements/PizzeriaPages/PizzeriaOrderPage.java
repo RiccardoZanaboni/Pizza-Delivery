@@ -5,7 +5,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,11 +29,9 @@ public class PizzeriaOrderPage {
         VBox layout = new VBox();
 //FIXME se funziona get order col db
         for (int i=0; i<pizzeria.getOrders().size(); i++) {
-            GridPane gridPane = addEverythingToGridPane(pizzeria.getOrders().get(i), nameLabels, countPizzeLabels, toppingLabels, priceLabels);
-            gridPane.setPadding(new Insets(10, 10, 10, 10));
-            gridPane.setHgap(10);
-            gridPane.setVgap(30);
-            layout.getChildren().add(gridPane);
+            VBox vBox = addEverythingToGridPane(pizzeria.getOrders().get(i), nameLabels, countPizzeLabels, toppingLabels, priceLabels);
+            vBox.setPadding(new Insets(10, 10, 10, 10));
+            layout.getChildren().add(vBox);
         }
 
         Button backButton = new Button("← Torna indietro");
@@ -48,23 +48,33 @@ public class PizzeriaOrderPage {
                 backButton.fire();
         });
         layout.getChildren().add(hBox1);
-        Scene scene = new Scene(layout, 880, 600);
+        ScrollPane scrollPane = new ScrollPane(layout);
+        Scene scene = new Scene(scrollPane, 880, 600);
         window.setScene(scene);
         window.show();
     }
 
-    private static GridPane addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
+    private static VBox addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
         HBox hBox = new HBox();
-        Label orderLabel = new Label(order.getOrderCode()+"");
-        Label timeLabel = new Label(order.getTime()+"");
+        Label orderLabel = new Label(order.getOrderCode()+" ");
+        Label timeLabel = new Label(order.getTime()+" ");
         Label label=new Label(order.getName()+" "+order.getAddress()+" ");
-        hBox.getChildren().addAll(orderLabel, timeLabel,label);
-        hBox.setAlignment(Pos.CENTER);
+        hBox.getChildren().addAll( timeLabel,orderLabel,label);
+        //hBox.setAlignment(Pos.CENTER);
 
         GridPane gridPane;
         gridPane = order.graphRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
-        gridPane.getChildren().add(hBox);
-        return gridPane;
+        gridPane.getColumnConstraints().add(new ColumnConstraints(80));
+        gridPane.getColumnConstraints().add(new ColumnConstraints(100));
+        gridPane.getColumnConstraints().add(new ColumnConstraints(500));
+        gridPane.getColumnConstraints().add(new ColumnConstraints(80));
+        gridPane.setHgap(10);
+        gridPane.setVgap(30);
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(hBox,gridPane);
+       // gridPane.getChildren().add(hBox);
+        return vBox;
     }
 
 }
