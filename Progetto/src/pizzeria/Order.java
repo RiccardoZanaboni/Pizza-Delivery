@@ -27,7 +27,8 @@ public class Order implements Comparable<Order> {
 
     public Order(int num) {
         this.customer = null;
-        this.orderCode = "ORD-00" + num;
+        num+=1000;
+        this.orderCode = "ORD-" + num;
         this.customerAddress = "";
         this.time = null;
         this.orderedPizze = new ArrayList<>();
