@@ -2,6 +2,7 @@ package pizzeria;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class OrderDB {
     public static PreparedStatement putOrder(Connection con,Order order, Timestamp date){
@@ -32,9 +33,11 @@ public class OrderDB {
 
     public static ResultSet getOrders(Connection con){
         ResultSet rs = null;
+        //Date date = new Date();
         try {
             Statement statement=con.createStatement();
-            rs = statement.executeQuery("select * from sql7293749.Orders");
+           rs = statement.executeQuery("select * from sql7293749.Orders");
+             // rs = statement.executeQuery("select * from sql7293749.Orders where date >= (\'"+ date +"\')");
         }catch (SQLException sqle){
             System.out.println(sqle.getMessage());
         }

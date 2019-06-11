@@ -1,6 +1,5 @@
 package Interfaces;
 
-import graphicElements.MenuPage;
 import graphicElements.LoginPage;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;

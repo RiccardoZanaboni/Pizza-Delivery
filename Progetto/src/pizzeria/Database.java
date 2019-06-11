@@ -96,8 +96,7 @@ public class Database {
                     String ingredienteAggiuntoString = Services.arrangeIngredientString(stAgg);
                     Toppings toppings = Toppings.valueOf(ingredienteAggiuntoString);
                     ingr.put(toppings.name(), toppings);
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) {}
             }
             double prezzo = rs.getDouble(3);
             Pizza p = new Pizza(nomePizza, ingr, prezzo);
@@ -130,13 +129,13 @@ public class Database {
         return rows;
     }
 
-    public static boolean putOrder(Order order) {
+    public static boolean putOrder(Order order){
         DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String s = dateFormatYMD.format(order.getTime());
-        java.sql.Timestamp data = java.sql.Timestamp.valueOf(s);
+        String s=dateFormatYMD.format(order.getTime());
+        java.sql.Timestamp data= java.sql.Timestamp.valueOf(s);
         try {
-            OrderDB.putOrder(con, order, data).execute();
-            OrderDB.putOrderedPizzas(con, order);
+            OrderDB.putOrder(con,order,data).execute();
+            OrderDB.putOrderedPizzas(con,order);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -144,21 +143,22 @@ public class Database {
         }
     }
 
-    public static HashMap<String, Order> getOrder(HashMap<String, Order> orders) throws SQLException {
+    public static HashMap<String,Order> getOrder(HashMap<String,Order> orders,Pizzeria pizzeria) throws SQLException {
         ResultSet rs = OrderDB.getOrders(con);
-        int i = 0;
+        int i=0;
         while (rs.next()) {
-            String orderID = rs.getString(1);
-            String username = rs.getString(2);
-            String address = rs.getString(3);
-            Date date = rs.getTimestamp(4);
-            Order order = new Order(i);
-            if (!orders.containsKey(orderID)) {
+            String orderID=rs.getString(1);
+            String username=rs.getString(2);
+            String address=rs.getString(3);
+            Date date=rs.getTimestamp(4);
+            Order order=new Order(i);
+            if(!orders.containsKey(orderID)){
                 order.setName(username);
                 order.setAddress(address);
                 order.setTime(date);
-                ResultSet rsPizza = OrderDB.getOrderedPizzasById(con, orderID);
-                while (rsPizza.next()) {
+                order.setCompleted(pizzeria);
+                ResultSet rsPizza=OrderDB.getOrderedPizzasById(con,orderID);
+                while (rsPizza.next()){
                     HashMap<String, Toppings> ingr = new HashMap<>();
                     String ingrediente = rsPizza.getString(2);
                     StringTokenizer stAgg = new StringTokenizer(ingrediente);
@@ -167,20 +167,19 @@ public class Database {
                             String ingredienteAggiuntoString = Services.arrangeIngredientString(stAgg);
                             Toppings toppings = Toppings.valueOf(ingredienteAggiuntoString);
                             ingr.put(toppings.name(), toppings);
-                        } catch (Exception ignored) {
-                        }
+                        } catch (Exception ignored) {}
                     }
-                    Pizza p = new Pizza(rsPizza.getString(1), ingr, rsPizza.getDouble(3));
+                    Pizza p=new Pizza(rsPizza.getString(1),ingr,rsPizza.getDouble(3));
                     //if(!order.getOrderedPizze().contains(p)){ // FIXME @zana DA VERIFICARE IL CONTAINS CHE HO MODIFICATO IN PIZZA --Pensavo servisse ma probabilmente no,lascio ancora per poco
-                    order.getOrderedPizze().add(p);
+                        order.getOrderedPizze().add(p);
                     //}
                 }
-                orders.put(order.getOrderCode(), order);
+                orders.put(order.getOrderCode(),order);
             }
             i++;
         }
         Set<Map.Entry<String, Order>> entries = orders.entrySet();
-        Comparator<Map.Entry<String, Order>> valueComparator = new Comparator<Map.Entry<String, Order>>() {
+        Comparator<Map.Entry<String, Order>> valueComparator=new Comparator<Map.Entry<String, Order>>() {
             @Override
             public int compare(Map.Entry<String, Order> o1, Map.Entry<String, Order> o2) {
                 Order v1 = o1.getValue();
@@ -192,31 +191,31 @@ public class Database {
         Collections.sort(listOfEntries, valueComparator);// sorting HashMap by values using comparator
         // copying entries from List to Map
         LinkedHashMap<String, Order> sortedByValue = new LinkedHashMap<String, Order>(listOfEntries.size());
-        for (Map.Entry<String, Order> entry : listOfEntries) {
+        for(Map.Entry<String, Order> entry : listOfEntries){
             sortedByValue.put(entry.getKey(), entry.getValue());
         }
-        orders = sortedByValue;
+        orders=sortedByValue;
         return orders;
     }
 
 
     public static void main(String[] args) {
         openDatabase();
-        Pizzeria wolf = new Pizzeria("wolf", "via bolzano 10", LocalTime.MIN.plus(Services.getMinutes(18, 30), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(0, 0), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(18, 30), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(18, 30), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(18, 30), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(18, 30), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(18, 30), ChronoUnit.MINUTES),
+        Pizzeria wolf = new Pizzeria("wolf","via bolzano 10", LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(18,30), ChronoUnit.MINUTES),
                 // orari di chiusura, da domenica a sabato
-                LocalTime.MIN.plus(Services.getMinutes(23, 30), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(0, 0), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(23, 30), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(23, 59), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(23, 30), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(23, 30), ChronoUnit.MINUTES),
-                LocalTime.MIN.plus(Services.getMinutes(23, 30), ChronoUnit.MINUTES)
+                LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(0,0), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(23,59), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES),
+                LocalTime.MIN.plus(Services.getMinutes(23,30), ChronoUnit.MINUTES)
         );
         int i = 0;
         int j = 0;
@@ -279,6 +278,6 @@ public class Database {
         }catch (SQLException e) {
                 e.printStackTrace();
         }
-
     }
+
 }
