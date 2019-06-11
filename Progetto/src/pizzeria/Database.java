@@ -143,7 +143,7 @@ public class Database {
         }
     }
 
-    public static HashMap<String,Order> getOrder(HashMap<String,Order> orders) throws SQLException {
+    public static HashMap<String,Order> getOrder(HashMap<String,Order> orders,Pizzeria pizzeria) throws SQLException {
         ResultSet rs = OrderDB.getOrders(con);
         int i=0;
         while (rs.next()) {
@@ -156,6 +156,7 @@ public class Database {
                 order.setName(username);
                 order.setAddress(address);
                 order.setTime(date);
+                order.setCompleted(pizzeria);
                 ResultSet rsPizza=OrderDB.getOrderedPizzasById(con,orderID);
                 while (rsPizza.next()){
                     HashMap<String, Toppings> ingr = new HashMap<>();
@@ -226,9 +227,9 @@ public class Database {
                 o.addPizza(new Pizza("cotto",pizzeriaIngredients,1.),4);
                 //putOrder(o);
             HashMap<String,Order> orders=new HashMap<>();
-            getOrder(orders);
+            getOrder(orders,wolf);
             for(String s : wolf.getOrders().keySet()){
-                System.out.println(getOrder(orders).get(s).toString());
+                System.out.println(getOrder(orders,wolf).get(s).toString());
             }
             System.out.println("ciao");
         } catch (Exception e) {
