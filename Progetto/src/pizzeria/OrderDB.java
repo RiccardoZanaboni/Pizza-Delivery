@@ -36,8 +36,8 @@ public class OrderDB {
         //Date date = new Date();
         try {
             Statement statement=con.createStatement();
-           rs = statement.executeQuery("select * from sql7293749.Orders");
-             // rs = statement.executeQuery("select * from sql7293749.Orders where date >= (\'"+ date +"\')");
+            rs = statement.executeQuery("select * from sql7293749.Orders");
+            // rs = statement.executeQuery("select * from sql7293749.Orders where date >= (\'"+ date +"\')");
         }catch (SQLException sqle){
             System.out.println(sqle.getMessage());
         }

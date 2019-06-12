@@ -1,6 +1,21 @@
 package pizzeria;
 
 import javafx.scene.paint.Color;
+import jdk.nashorn.internal.ir.RuntimeNode;
+import sun.misc.Request;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import javax.mail.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,8 +83,10 @@ public class Services {
 		String lastS = "' puoi visualizzare il tuo ultimo ordine;\n";
 		String off = Services.colorSystemOut("O",Color.ORANGE,true,false);
 		String offS = "' puoi visualizzare le tue offerte attive;\n";
-		String info = Services.colorSystemOut("I",Color.ORANGE,true,false);
-		String infoS = "' puoi sapere di più sulla nostra attività.\n";
+		String hist = Services.colorSystemOut("H",Color.ORANGE,true,false);
+		String histS = "' puoi sapere di più sulla nostra attività;\n";
+		String video = Services.colorSystemOut("V",Color.ORANGE,true,false);
+		String videoS = "' puoi visualizzare il video di presentazione del progetto;\n";
 		String exit = Services.colorSystemOut("E",Color.ORANGE,true,false);
 		String exitS = "' puoi uscire dalla tua area riservata.\n";
 
@@ -80,7 +97,8 @@ public class Services {
 		}
 		string.append(con).append(last).append(lastS);
 		string.append(con).append(off).append(offS);
-		string.append(con).append(info).append(infoS);
+		string.append(con).append(hist).append(histS);
+		string.append(con).append(video).append(videoS);
 		string.append(con).append(exit).append(exitS);
 
 		return string.toString();
@@ -96,8 +114,6 @@ public class Services {
 		String persS = "' puoi gestire il personale della pizzeria;\n";
 		String modMenu = Services.colorSystemOut("M",Color.ORANGE,true,false);
 		String modMenuS = "' puoi modificare voci del menu;\n";
-		//String info = Services.colorSystemOut("I",Color.ORANGE,true,false);
-		//String infoS = "' puoi sapere di più sulla nostra attività.\n";
 		String exit = Services.colorSystemOut("E",Color.ORANGE,true,false);
 		String exitS = "' puoi uscire dalla tua area privilegiata.\n";
 

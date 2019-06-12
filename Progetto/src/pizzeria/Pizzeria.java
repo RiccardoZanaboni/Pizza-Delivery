@@ -49,6 +49,7 @@ public class Pizzeria {
         this.deliveryMen = new ArrayList<>();
         this.SUPPL_PRICE = 0.5;
         this.availablePlaces = 8;
+        /* Apre la connessione con il database */
         Database.openDatabase();
         openPizzeriaToday();
         addDeliveryMan(new DeliveryMan("Musi", this));
@@ -390,10 +391,12 @@ public class Pizzeria {
             int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp();
             this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].inserisciInfornate(disp);
             this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())-1].inserisciInfornate(tot-disp);
-        } else{
+        } else {
             this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].inserisciInfornate(tot);
         }
-        Objects.requireNonNull(aFreeDeliveryMan(d.getHours(), d.getMinutes())).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
+        if(aFreeDeliveryMan(d.getHours(), d.getMinutes()) != null)
+            aFreeDeliveryMan(d.getHours(), d.getMinutes()).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
+        else System.out.println("porci...");    //TODO non ho fattorini disponibili!
     }
 
     public double getSUPPL_PRICE() {
@@ -460,7 +463,7 @@ public class Pizzeria {
         // se esistente, pongo existing a true.
 
         if(/*!existing &&*/ newPsw.equals(confPsw)){
-            if(newPsw.length()>2) {
+            if(newUser.length()>2 && newPsw.length()>2) {
                 // se si registra correttamente, va bene.
                 // createNewAccount(newUser,newPsw);
 				if (!Database.putCustomer(newUser,newPsw))

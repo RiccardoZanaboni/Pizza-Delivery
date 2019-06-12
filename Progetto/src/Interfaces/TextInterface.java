@@ -4,6 +4,12 @@ import exceptions.RestartOrderExc;
 import exceptions.TryAgainExc;
 import javafx.scene.paint.Color;
 import pizzeria.*;
+import pizzeria.pizzeriaSendMail.SendJavaMail;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -102,8 +108,17 @@ public class TextInterface {
 			case "O":
 				System.out.println(Services.colorSystemOut("Ora visualizzerai le tue offerte attive...", Color.YELLOW, false, false));
 				break;
-			case "I":
+			case "H":
 				System.out.println(Services.getHistory(false));
+				whatDoYouWant(customer);
+				break;
+			case "V":
+				try {
+					//TODO: se si vuole metterlo, gestire l'errore... altrimenti lo togliamo
+					Desktop.getDesktop().browse(new URI("https://drive.google.com/open?id=1IywtXGVTaywaYirjZSVLLV3KDOI1bBx-"));
+				} catch (IOException | URISyntaxException e) {
+					System.out.println(Services.colorSystemOut("Spiacenti: video di presentazione al momento non disponibile.", Color.RED, false, false));
+				}
 				whatDoYouWant(customer);
 				break;
 			case "E":
@@ -352,7 +367,7 @@ public class TextInterface {
 		if (nome.toUpperCase().equals("F")) {
 			throw new RestartOrderExc();
 		}
-		order.setName(nome);	// perchè uno può avere come user "Banana33", ma al fattorino interessa il nome sul citofono!
+		order.setName(nome);
 		/*String domanda2 = Services.colorSystemOut("Password?",Color.YELLOW,false,false);
 		System.out.println(domanda2 + "\t\t(Inserisci 'F' per annullare l'ordine)");
 		String password = scan.nextLine();
@@ -512,11 +527,11 @@ public class TextInterface {
 						whatDoYouWant(c);
 						break;
 					case "SHORT":
-						System.out.println(Services.colorSystemOut("\nPassword troppo breve: riprovare.\n",Color.RED,false,false));
+						System.out.println(Services.colorSystemOut("\nUsername o password troppo breve: riprovare.\n",Color.RED,false,false));
 						askAccess();
 						break;
 					case "EXISTING":
-						System.out.println(Services.colorSystemOut("\nUtente già registrato: riprovare con un username differente.\n",Color.RED,false,false));
+						System.out.println(Services.colorSystemOut("\nUtente già registrato: riprovare con un username differente.\nSe già registrato, effettuare il login.\n",Color.RED,false,false));
 						askAccess();
 						break;
 					case "DIFFERENT":
@@ -541,13 +556,14 @@ public class TextInterface {
 		switch (risposta){
 			case "V":
 				System.out.println(Services.colorSystemOut("Ora visualizzerai gli ordini da evadere...", Color.YELLOW, false, false));
-				for(String code:wolf.getOrders().keySet()){
-					System.out.println(wolf.getOrders().get(code).toString());
+				for(String code : wolf.getOrders().keySet()){
+					System.out.println(wolf.getOrders().get(code).recapOrder());
 				}
 				whatDoesPizzeriaWant();
 				break;
 			case "P":
 				System.out.println(Services.colorSystemOut("Ora potrai gestire il personale...", Color.YELLOW, false, false));
+				//TODO: gestire personale
 				whatDoesPizzeriaWant();
 				break;
 			case "M":
@@ -559,7 +575,7 @@ public class TextInterface {
 				break;
 			case "E":
 				System.out.println(Services.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
-				// logout
+				/* logout */
 				askAccess();
 				break;
 			default:
@@ -577,8 +593,8 @@ public class TextInterface {
 			case "R":
 				Database.removePizza();
 				break;
-			/*case "M":
-				System.out.println(Services.colorSystemOut("Inserisci il nome della pizza da modificare:\t", Color.YELLOW, false, false));
+			/*case "T":
+				TODO: ingredienti da aggiungere/togliere dai disponibili della pizzeria
 				break;*/
 			case "B":
 				System.out.println(Services.colorSystemOut("Nessuna modifica effettuata al menu.\n", Color.YELLOW, false, false));
@@ -587,19 +603,23 @@ public class TextInterface {
 				break;
 			default:
 				System.out.println(Services.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
-				howModifyMenuAnswer(risposta);
+				/*  torna a "ecco cosa puoi fare" */
 				break;
 		}
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
-        //textInterface.whatDoYouWant();
+
+		new SendJavaMail();
+
+		/*
 		try {
             textInterface.askAccess();
         } catch (SQLException e) {
 			e.printStackTrace();
         }
+        */
     }
 }
