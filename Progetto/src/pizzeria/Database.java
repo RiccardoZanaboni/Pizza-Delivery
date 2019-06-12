@@ -1,12 +1,9 @@
 package pizzeria;
 
 import Interfaces.TextInterface;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import javafx.scene.paint.Color;
-
 import java.sql.*;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -151,12 +148,13 @@ public class Database {
             String username=rs.getString(2);
             String address=rs.getString(3);
             Date date=rs.getTimestamp(4);
+            int quantity=rs.getInt(5);
             Order order=new Order(i);
             if(!orders.containsKey(orderID)){
                 order.setName(username);
                 order.setAddress(address);
                 order.setTime(date);
-                order.setCompleted(pizzeria);
+                order.setCompletedDb(pizzeria, quantity, date);
                 ResultSet rsPizza=OrderDB.getOrderedPizzasById(con,orderID);
                 while (rsPizza.next()){
                     HashMap<String, Toppings> ingr = new HashMap<>();

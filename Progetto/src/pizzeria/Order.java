@@ -199,7 +199,14 @@ public class Order implements Comparable<Order> {
         this.isCompleted = true;
     }
 
-    public void setTime(Date orario) {
+	public void setCompletedDb(Pizzeria pizzeria, int tot , Date orario ) {
+		//Date orario = this.getTime();
+		pizzeria.updateOvenAndDeliveryMan(orario, tot);
+		this.isCompleted = true;
+	}
+
+
+	public void setTime(Date orario) {
         this.time = orario;
     }
 

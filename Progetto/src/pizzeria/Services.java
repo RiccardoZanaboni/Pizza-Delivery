@@ -1,22 +1,9 @@
 package pizzeria;
 
 import javafx.scene.paint.Color;
-import jdk.nashorn.internal.ir.RuntimeNode;
-import sun.misc.Request;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-import javax.mail.*;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -235,7 +222,7 @@ public class Services {
 		int closeMin = getMinutes(pizzeria.getClosingToday());
 		if(closeMin <= nowMin || openMin == closeMin)
 			return "CLOSED";
-		if(closeMin - nowMin >= 20)
+		if(closeMin - nowMin >= 0)// setto a 0 per poter lavorare anche alle 23:50!!!(non sono possibili le ordinazioni)
 			return "OPEN";
 		else
 			return "CLOSING";

@@ -89,7 +89,7 @@ public class Pizzeria {
 
     /** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. */
     public void addOrder(Order order) {
-        Database.putOrder(order);
+        Database.putOrder(order);   //fixme musi al secondo ordine da errore!
     }
 
     /** Aggiunge la pizza specificata al menu dnameella pizzeria. */
