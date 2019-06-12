@@ -192,13 +192,6 @@ public class Order implements Comparable<Order> {
     }
 
     /** Setta l'ordine come completo. */
-    public void setCompleted(Pizzeria pizzeria) {
-    	Date orario = this.getTime();
-    	int tot = this.getNumPizze();
-		pizzeria.updateOvenAndDeliveryMan(orario, tot);
-        this.isCompleted = true;
-    }
-
 	public void setCompletedDb(Pizzeria pizzeria, int tot , Date orario ) {
 		//Date orario = this.getTime();
 		pizzeria.updateOvenAndDeliveryMan(orario, tot);

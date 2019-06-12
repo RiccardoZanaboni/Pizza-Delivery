@@ -430,7 +430,6 @@ public class TextInterface {
 		switch (risp) {
 			case "S":
 				/* conferma l'ordine e lo aggiunge a quelli della pizzeria. */
-				order.setCompleted(wolf);
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
 				System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = Services.timeStamp(orario.getHours(),orario.getMinutes());
