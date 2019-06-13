@@ -62,7 +62,7 @@ public class OrderPage2 {
 
 		Label choiceLabel = new Label(" Orario:\t  ");
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
-		choiceBox.getItems().addAll(getTime(pizzeria, tot));
+		choiceBox.getItems().addAll(getTime(pizzeria, order.getNumPizze()));
 		choiceLabel.setId("nomiLabel");
 		HBox choiceHBox = new HBox(50);
 		choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
