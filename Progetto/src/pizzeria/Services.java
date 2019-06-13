@@ -1,22 +1,11 @@
 package pizzeria;
 
 import javafx.scene.paint.Color;
-import jdk.nashorn.internal.ir.RuntimeNode;
-import sun.misc.Request;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-import javax.mail.*;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import java.awt.*;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -114,6 +103,8 @@ public class Services {
 		String persS = "' puoi gestire il personale della pizzeria;\n";
 		String modMenu = Services.colorSystemOut("M",Color.ORANGE,true,false);
 		String modMenuS = "' puoi modificare voci del menu;\n";
+		String mail = Services.colorSystemOut("S",Color.ORANGE,true,false);
+		String mailS = "' puoi inviare una mail a tutti gli utenti registrati;\n";
 		String exit = Services.colorSystemOut("E",Color.ORANGE,true,false);
 		String exitS = "' puoi uscire dalla tua area privilegiata.\n";
 
@@ -122,6 +113,7 @@ public class Services {
 		s.append(con).append(ordini).append(ordiniS);
 		s.append(con).append(pers).append(persS);
 		s.append(con).append(modMenu).append(modMenuS);
+		s.append(con).append(mail).append(mailS);
 		//s.append(con).append(info).append(infoS);
 		s.append(con).append(exit).append(exitS);
 
@@ -363,5 +355,11 @@ public class Services {
 			System.out.println("ERROR");
 		}
 		return history.toString();
+	}
+
+	public static void browse(){
+		Browse browse = new Browse();
+		Thread t = new Thread(browse);
+		t.start();
 	}
 }

@@ -23,23 +23,34 @@ import java.util.Properties;
  * */
 
 public class SendJavaMail {
-	private String from = "pizzeria.wolf@gmail.com";
-	private String[] to = {"fecchio.andrea@gmail.com","andrea.fecchio01@universitadipavia.it"};
-	private String subject = "Prova di messaggio multi destinatario";
-	private String bodyText = "Fecchio culo";
+	private final String host = "smtp.gmail.com";
+	private final String PORT = "465";
+	private final String from = "pizzeria.wolf@gmail.com";
+	private final String psw = "password.01";
+	private String[] to = {
+			"fecchio.andrea@gmail.com"
+			// ,"ele.repossi@gmail.com"
+			// ,"riccardo.crescenti01@universitadipavia.it"
+			// ,"fabio.rossanigo01@universitadipavia.it"
+			// ,"francesco.musitano02@universitadipavia.it"
+			// ,"fabio.rossanigo01@universitadipavia.it"
+			// ,"riccardo.zanaboni02@universitadipavia.it"
+			};
+	private String subject = "INVITO";
+	private String bodyText = "La presente per invitarti all'inaugurazione della pizzeria \"Wolf Pizza\" oggi, 12 giugno, alle ore 17, nel nuovo locale di Pavia, in via Bolzano, 10.\n\nTi aspettiamo!";
 
 	public SendJavaMail() {
 		try {
 			Properties props = new Properties();
-			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.host", host);
 			props.put("mail.smtp.auth", "true");
 			props.put("mail.debug", "true");
-			props.put("mail.smtp.port", "465");
-			props.put("mail.smtp.socketFactory.port", "465");
+			props.put("mail.smtp.port", PORT);
+			props.put("mail.smtp.socketFactory.port", PORT);
 			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 			props.put("mail.smtp.socketFactory.fallback", "false");
 
-			Authenticator auth = new SMTPAuthenticator("pizzeria.wolf@gmail.com", "password.01");
+			Authenticator auth = new SMTPAuthenticator(from,psw);
 
 			Session session = Session.getInstance(props,auth);
 			session.setDebug(true);
@@ -67,7 +78,8 @@ public class SendJavaMail {
 
 			Transport.send(message);
 
-			System.out.println(Services.colorSystemOut("\t>> Il messaggio è stato inviato!", Color.YELLOW,true,false));
+			String confirm = Services.colorSystemOut("\n\t>> Il messaggio e-mail è stato inviato!\n\n", Color.YELLOW,true,false);
+			System.out.println(confirm);
 
 		} catch (MessagingException e) {
 			e.printStackTrace();

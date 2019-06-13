@@ -10,6 +10,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -104,30 +105,35 @@ public class TextInterface {
 		switch (risposta){
 			case "L":
 				System.out.println(Services.colorSystemOut("Ora visualizzerai l'ultimo ordine effettuato...", Color.YELLOW, false, false));
+				whatDoYouWant(customer);
 				break;
 			case "O":
 				System.out.println(Services.colorSystemOut("Ora visualizzerai le tue offerte attive...", Color.YELLOW, false, false));
+				whatDoYouWant(customer);
 				break;
 			case "H":
 				System.out.println(Services.getHistory(false));
 				whatDoYouWant(customer);
 				break;
 			case "V":
-				try {
-					//TODO: se si vuole metterlo, gestire l'errore... altrimenti lo togliamo
-					Desktop.getDesktop().browse(new URI("https://drive.google.com/open?id=1IywtXGVTaywaYirjZSVLLV3KDOI1bBx-"));
+				//TODO: se si vuole metterlo, gestire l'errore... altrimenti lo togliamo
+				//String uri = "https://drive.google.com/open?id=1IywtXGVTaywaYirjZSVLLV3KDOI1bBx-";
+				Services.browse();
+				/*try {
+					Desktop.getDesktop().browse(new URI(uri));
 				} catch (IOException | URISyntaxException e) {
-					System.out.println(Services.colorSystemOut("Spiacenti: video di presentazione al momento non disponibile.", Color.RED, false, false));
-				}
+					e.printStackTrace();
+				}*/
 				whatDoYouWant(customer);
 				break;
 			case "E":
 				System.out.println(Services.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
-				// logout
+				/* logout */
 				askAccess();
 				break;
 			default:
 				if(isOpen && risposta.equals("N")){
+					/* nuovo ordine (la pizzeria è aperta) */
 					makeOrderText(customer);
 				} else {
 					System.out.println(Services.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
@@ -555,7 +561,7 @@ public class TextInterface {
 		risposta = scan.nextLine().toUpperCase();
 		switch (risposta){
 			case "V":
-				System.out.println(Services.colorSystemOut("Ora visualizzerai gli ordini da evadere...", Color.YELLOW, false, false));
+				System.out.println(Services.colorSystemOut("Ecco gli ordini da evadere...\n", Color.YELLOW, false, false));
 				for(String code : wolf.getOrders().keySet()){
 					System.out.println(wolf.getOrders().get(code).recapOrder());
 				}
@@ -571,6 +577,10 @@ public class TextInterface {
 				System.out.print(Services.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				howModifyMenuAnswer(risposta);
+				whatDoesPizzeriaWant();
+				break;
+			case "S":
+				new SendJavaMail();
 				whatDoesPizzeriaWant();
 				break;
 			case "E":
@@ -612,14 +622,10 @@ public class TextInterface {
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
 
-		new SendJavaMail();
-
-		/*
 		try {
             textInterface.askAccess();
         } catch (SQLException e) {
 			e.printStackTrace();
         }
-        */
-    }
+	}
 }
