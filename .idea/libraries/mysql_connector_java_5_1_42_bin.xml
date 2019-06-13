@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="mysql-connector-java-5.1.42-bin">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Scaricati/mysql-connector-java-5.1.42-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/jaf-1.1.1/activation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/jaf-1.1.1/javax.mail.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

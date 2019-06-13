@@ -27,7 +27,7 @@ public class PizzeriaMenuPage {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         //Topping column
-        TableColumn<Pizza,HashMap <String, Toppings>> toppingColumn = new TableColumn<>("Topping");
+        TableColumn<Pizza,HashMap <String, String>> toppingColumn = new TableColumn<>("Topping");
         toppingColumn.setMinWidth(300);
         toppingColumn.setCellValueFactory(new PropertyValueFactory<>("ingredients"));
 
@@ -44,7 +44,7 @@ public class PizzeriaMenuPage {
         priceInput.setPromptText("Price");
 
         ListView toppingInput = new ListView<>();
-        toppingInput.getItems().addAll(Toppings.values());
+        toppingInput.getItems().addAll(pizzeria.getIngredientsPizzeria().values());
         toppingInput.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         Button addButton = new Button("Add");
@@ -72,7 +72,7 @@ public class PizzeriaMenuPage {
         VBox layout = new VBox();
         layout.getChildren().addAll(table, hBox,hBox1);
         layout.setOnKeyPressed(ke -> {
-            if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
+            if(ke.getCode()== KeyCode.BACK_SPACE)
                 backButton.fire();
         });
 
@@ -89,14 +89,14 @@ public class PizzeriaMenuPage {
 
     public void addButtonClicked(Pizzeria pizzeria, TextField nameInput, ListView toppingInput, TextField priceInput, TableView table){
 
-        ObservableList<Toppings> toppings;
+        ObservableList<String> toppings;
         toppings = toppingInput.getSelectionModel().getSelectedItems();
         StringBuilder ingr =new StringBuilder();
 
-        HashMap<String, Toppings> h = new HashMap <>();
+        HashMap<String, String> h = new HashMap <>();
         for (int i=0; i<toppings.size(); i++) {
-            h.put(toppings.get(i).name(), toppings.get(i));
-            ingr.append(toppings.get(i).name()).append(",");
+            h.put(toppings.get(i), toppings.get(i));
+            ingr.append(toppings.get(i)).append(",");
         }
         String ingredienti=ingr.toString();
         ingredienti= ingredienti.substring(0,ingr.length()-1);

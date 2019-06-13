@@ -395,15 +395,14 @@ public class TextInterface {
 	/** Aggiunge la pizza all'Order, nella quantità inserita.
 	 * Effettua, nel caso, tutte le modifiche richieste, aggiornando il prezzo. */
 	private Pizza addAndRmvToppingsText(Pizza pizza, String aggiunte, String rimozioni, double prezzoSuppl) {
-		HashMap<String, Toppings> ingr = new HashMap<>(pizza.getToppings());
+		HashMap<String, String> ingr = new HashMap<>(pizza.getToppings());
 		Pizza p = new Pizza(pizza.getName(false), ingr, pizza.getPrice());
 		int suppl = 0;
 		StringTokenizer stAgg = new StringTokenizer(aggiunte);
 		while (stAgg.hasMoreTokens()) {
 			try {
 				String ingredienteAggiuntoString = Services.arrangeIngredientString(stAgg);
-				Toppings toppings = Toppings.valueOf(ingredienteAggiuntoString);
-				p.addIngredients(toppings);
+				p.addIngredients(ingredienteAggiuntoString);
 				if(!pizza.getToppings().containsKey(ingredienteAggiuntoString))
 					suppl++;
 			} catch (Exception ignored) { }
@@ -412,10 +411,9 @@ public class TextInterface {
 		while (stRmv.hasMoreTokens()) {
 			try {
 				String ingredienteRimossoString = Services.arrangeIngredientString(stRmv);
-				Toppings toppings = Toppings.valueOf(ingredienteRimossoString);
 				if(!pizza.getToppings().containsKey(ingredienteRimossoString) && p.getToppings().containsKey(ingredienteRimossoString))
 					suppl--;
-				p.rmvIngredients(toppings);
+				p.rmvIngredients(ingredienteRimossoString);
 			} catch (Exception ignored) { }
 		}
 		p.setPrice(p.getPrice() + (suppl * prezzoSuppl));        // aggiunto 0.50 per ogni ingrediente
@@ -436,7 +434,6 @@ public class TextInterface {
 		switch (risp) {
 			case "S":
 				/* conferma l'ordine e lo aggiunge a quelli della pizzeria. */
-				order.setCompleted(wolf);
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
 				System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = Services.timeStamp(orario.getHours(),orario.getMinutes());

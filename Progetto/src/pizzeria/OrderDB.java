@@ -1,19 +1,18 @@
 package pizzeria;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class OrderDB {
     public static PreparedStatement putOrder(Connection con,Order order, Timestamp date){
         PreparedStatement preparedStatement = null;
         try {
-            String requestSql="insert into sql7293749.Orders" + "(orderID, username, address, date) VALUES" + "(?,?,?,?)";
+            String requestSql="insert into sql7293749.Orders" + "(orderID, username, address, date, quantity) VALUES" + "(?,?,?,?,?)";
             preparedStatement = con.prepareStatement(requestSql);
             preparedStatement.setString(1, order.getOrderCode());
             preparedStatement.setString(2,order.getName() );
             preparedStatement.setString(3,order.getAddress() );
             preparedStatement.setTimestamp(4,date);
+            preparedStatement.setInt(5,order.getNumPizze()); //colonna quantiy
 
         } catch(SQLException ignored){ }
         return preparedStatement;
@@ -27,7 +26,7 @@ public class OrderDB {
                 preparedStatement.execute();
             }
         } catch(SQLException sqle){
-            System.out.println(sqle.getMessage());
+            System.err.println(sqle.getMessage());
         }
     }
 

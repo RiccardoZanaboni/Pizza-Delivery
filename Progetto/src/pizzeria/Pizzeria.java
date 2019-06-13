@@ -15,7 +15,7 @@ public class Pizzeria {
     private Oven[] ovens;
     private ArrayList<DeliveryMan> deliveryMen;
     private HashMap<String, Pizza> menu;
-    private HashMap<String, Toppings> pizzeriaIngredients;
+    private HashMap<String, String> pizzeriaIngredients;
     private HashMap<String,Order> orders;
     private int availablePlaces;
     private int numDailyOrders;
@@ -89,10 +89,10 @@ public class Pizzeria {
 
     /** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. */
     public void addOrder(Order order) {
-        Database.putOrder(order);
+        Database.putOrder(order);   //fixme musi al secondo ordine da errore!
     }
 
-    /** Aggiunge la pizza specificata al menu dnameella pizzeria. */
+    /** Aggiunge la pizza specificata al menu della pizzeria. */
     private void addPizza(Pizza pizza){
         this.menu.put(pizza.getName(false),pizza);
     }
@@ -136,28 +136,13 @@ public class Pizzeria {
 
     /** Una tantum: vengono aggiunti a "pizzeriaIngredients" tutti gli ingredienti utilizzabili. */
     private void setIngredientsPizzeria(){
-        this.pizzeriaIngredients.put(Toppings.ALICI.name(), Toppings.ALICI);
-        this.pizzeriaIngredients.put(Toppings.BASILICO.name(), Toppings.BASILICO);
-        this.pizzeriaIngredients.put(Toppings.BELLE_DONNE.name(), Toppings.BELLE_DONNE);
-        this.pizzeriaIngredients.put(Toppings.CAPPERI.name(), Toppings.CAPPERI);
-        this.pizzeriaIngredients.put(Toppings.COTTO.name(), Toppings.COTTO);
-        this.pizzeriaIngredients.put(Toppings.CRUDO.name(), Toppings.CRUDO);
-        this.pizzeriaIngredients.put(Toppings.FUNGHI.name(), Toppings.FUNGHI);
-        this.pizzeriaIngredients.put(Toppings.GALANTERIA.name(), Toppings.GALANTERIA);
-        this.pizzeriaIngredients.put(Toppings.GEMME_DELL_INFINITO.name(), Toppings.GEMME_DELL_INFINITO);
-        this.pizzeriaIngredients.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
-        this.pizzeriaIngredients.put(Toppings.MOZZARELLA_DI_BUFALA.name(), Toppings.MOZZARELLA_DI_BUFALA);
-        this.pizzeriaIngredients.put(Toppings.OLIVE_NERE.name(), Toppings.OLIVE_NERE);
-        this.pizzeriaIngredients.put(Toppings.ONNIPOTENZA.name(), Toppings.ONNIPOTENZA);
-        this.pizzeriaIngredients.put(Toppings.ORIGANO.name(), Toppings.ORIGANO);
-        this.pizzeriaIngredients.put(Toppings.PATATINE.name(), Toppings.PATATINE);
-        this.pizzeriaIngredients.put(Toppings.PEPERONI.name(), Toppings.PEPERONI);
-        this.pizzeriaIngredients.put(Toppings.POMODORINI.name(), Toppings.POMODORINI);
-        this.pizzeriaIngredients.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        this.pizzeriaIngredients.put(Toppings.RUCOLA.name(), Toppings.RUCOLA);
-        this.pizzeriaIngredients.put(Toppings.SALAME_PICCANTE.name(), Toppings.SALAME_PICCANTE);
-        this.pizzeriaIngredients.put(Toppings.SALSICCIA.name(), Toppings.SALSICCIA);
-        this.pizzeriaIngredients.put(Toppings.WURSTEL.name(), Toppings.WURSTEL);
+        try {
+            for(String s : Database.getToppings(this.pizzeriaIngredients).keySet()){
+                this.pizzeriaIngredients.put(s,s);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /** Una tantum: viene creato il menu della pizzeria; ad ogni pizza vengono aggiunti i rispettivi toppings. */
@@ -169,109 +154,13 @@ public class Pizzeria {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-/*
-        HashMap<String, Toppings> i1 = new HashMap <>();
-        i1.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i1.put(Toppings.ORIGANO.name(), Toppings.ORIGANO);
-        Pizza marinara = new Pizza("MARINARA", i1, 3.5);
-        addPizza(marinara);
-
-        HashMap<String, Toppings> i2 = new HashMap <>();
-        i2.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i2.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
-        Pizza margherita = new Pizza("MARGHERITA", i2, 4.5);
-        addPizza(margherita);
-
-        HashMap<String, Toppings> i3 = new HashMap <>();
-        i3.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i3.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
-        i3.put(Toppings.PATATINE.name(), Toppings.PATATINE);
-        Pizza patatine = new Pizza("PATATINE", i3, 5);
-        addPizza(patatine);
-
-        HashMap<String, Toppings> i4 = new HashMap <>();
-        i4.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i4.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
-        i4.put(Toppings.WURSTEL.name(), Toppings.WURSTEL);
-        Pizza wurstel = new Pizza("WURSTEL", i4, 5);
-        addPizza(wurstel);
-
-        HashMap<String, Toppings> i5 = new HashMap <>();
-        i5.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i5.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
-        i5.put(Toppings.ALICI.name(), Toppings.ALICI);
-        Pizza napoli = new Pizza("NAPOLI", i5, 5);
-        addPizza(napoli);
-
-        HashMap<String, Toppings> i6 = new HashMap <>();
-        i6.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i6.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
-        i6.put(Toppings.COTTO.name(), Toppings.COTTO);
-        Pizza cotto = new Pizza("COTTO", i6, 5);
-        addPizza(cotto);
-
-        HashMap<String, Toppings> i7 = new HashMap <>();
-        i7.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i7.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
-        i7.put(Toppings.COTTO.name(), Toppings.COTTO);
-        i7.put(Toppings.FUNGHI.name(), Toppings.FUNGHI);
-        Pizza cottoFunghi = new Pizza("COTTO E FUNGHI", i7, 5.5);
-        addPizza(cottoFunghi);
-
-        HashMap<String, Toppings> i8 = new HashMap <>();
-        i8.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i8.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
-        i8.put(Toppings.SALAME_PICCANTE.name(), Toppings.SALAME_PICCANTE);
-        Pizza salamePicc = new Pizza("SALAME PICCANTE", i8, 5);
-        addPizza(salamePicc);
-
-        HashMap<String, Toppings> i9 = new HashMap <>();
-        i9.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i9.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
-        i9.put(Toppings.SALSICCIA.name(), Toppings.SALSICCIA);
-        i9.put(Toppings.PEPERONI.name(), Toppings.PEPERONI);
-        Pizza americana = new Pizza("AMERICANA", i9, 6);
-        addPizza(americana);
-
-        HashMap<String, Toppings> i10 = new HashMap <>();
-        i10.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i10.put(Toppings.COTTO.name(), Toppings.COTTO);
-        i10.put(Toppings.CARCIOFI.name(), Toppings.CARCIOFI);
-        i10.put(Toppings.FUNGHI.name(), Toppings.FUNGHI);
-        i10.put(Toppings.OLIVE_NERE.name(), Toppings.OLIVE_NERE);
-        Pizza capricciosa = new Pizza("CAPRICCIOSA", i10, 6);
-        addPizza(capricciosa);
-
-        HashMap<String, Toppings> i11 = new HashMap <>();
-        i11.put(Toppings.POMODORINI.name(), Toppings.POMODORINI);
-        i11.put(Toppings.MOZZARELLA_DI_BUFALA.name(), Toppings.MOZZARELLA_DI_BUFALA);
-        i11.put(Toppings.RUCOLA.name(), Toppings.RUCOLA);
-        Pizza italia = new Pizza("ITALIA", i11, 6);
-        addPizza(italia);
-
-        HashMap<String, Toppings> i12 = new HashMap <>();
-        i12.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i12.put(Toppings.MOZZARELLA.name(), Toppings.MOZZARELLA);
-        i12.put(Toppings.GALANTERIA.name(), Toppings.GALANTERIA);
-        i12.put(Toppings.BELLE_DONNE.name(), Toppings.BELLE_DONNE);
-        Pizza allaMusi = new Pizza("ALLA MUSI", i12, 8.5);
-        addPizza(allaMusi);
-
-        HashMap<String, Toppings> i13 = new HashMap <>();
-        i13.put(Toppings.POMODORO.name(), Toppings.POMODORO);
-        i13.put(Toppings.MOZZARELLA_DI_BUFALA.name(), Toppings.MOZZARELLA_DI_BUFALA);
-        i13.put(Toppings.GEMME_DELL_INFINITO.name(), Toppings.GEMME_DELL_INFINITO);
-        i13.put(Toppings.ONNIPOTENZA.name(), Toppings.ONNIPOTENZA);
-        i13.put(Toppings.ORIGANO.name(), Toppings.ORIGANO);
-        Pizza thanos = new Pizza("THANOS", i13, 0.50);
-        addPizza(thanos);*/
     }
 
     public HashMap<String, Pizza> getMenu() {
         return this.menu;
     }
 
-    public HashMap<String, Toppings> getIngredientsPizzeria() {
+    public HashMap<String, String> getIngredientsPizzeria() {
         return this.pizzeriaIngredients;
     }
 
@@ -411,10 +300,10 @@ public class Pizzeria {
     public String possibleAddictions() {
         StringBuilder possibiliIngr = new StringBuilder();
         int i = 0;
-        for (Toppings ingr : getIngredientsPizzeria().values()) {
+        for (String ingr : getIngredientsPizzeria().values()) {
             if (i % 10 == 0)
                 possibiliIngr.append("\n\t");
-            possibiliIngr.append(ingr.name().toLowerCase().replace("_", " ")).append(", ");
+            possibiliIngr.append(ingr.toLowerCase().replace("_", " ")).append(", ");
             i++;
         }
         return possibiliIngr.toString();
@@ -446,33 +335,29 @@ public class Pizzeria {
 
     public String checkLogin(String user, String psw) throws SQLException {
         if(user.equals(this.userPizzeria) && psw.equals(this.pswPizzeria)){
-            // se è la pizzeria, allora accede come tale.
+            /* se è la pizzeria, allora accede come tale */
             return "P";
         } else if (Database.getCustomers(user,psw)){
-            // se è un utente identificato, accede come tale.
+            /* se è un utente identificato, accede come tale */
             return "OK";
         } else {
-            // se la combinazione utente-password è errata
+            /* se la combinazione utente-password è errata */
             return "NO";
         }
     }
 
     public String createAccount(String newUser, String newPsw, String confPsw) {
-        /*boolean existing = false;*/
-        // faccio scorrere tutti gli account e controllo che non esista già.
-        // se esistente, pongo existing a true.
-
-        if(/*!existing &&*/ newPsw.equals(confPsw)){
+        if(newPsw.equals(confPsw)){
             if(newUser.length()>2 && newPsw.length()>2) {
-                // se si registra correttamente, va bene.
+                /* se si registra correttamente, va bene */
                 // createNewAccount(newUser,newPsw);
-				if (!Database.putCustomer(newUser,newPsw))
+				if (!Database.putCustomer(newUser.toUpperCase(),newPsw))
 					return "EXISTING";
 				else
 					return "OK";
 				//checkLogin(newUser, newPsw);
             } else
-                // password troppo breve.
+                /* password troppo breve */
                 return "SHORT";
         /*} else if (existing){
             // se esiste già un account con questo nome, non va bene.

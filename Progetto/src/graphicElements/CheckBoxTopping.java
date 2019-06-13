@@ -1,12 +1,11 @@
 package graphicElements;
 
 import javafx.scene.control.CheckBox;
-import pizzeria.Toppings;
 import pizzeria.Pizza;
 
 class CheckBoxTopping extends CheckBox {
 
-    private Toppings ingr;
+    private String ingr;
     private boolean isPresent;
 
     /**
@@ -15,10 +14,10 @@ class CheckBoxTopping extends CheckBox {
      * gli ingredienti già compresi nella versione della pizza presente nel menu.
      */
 
-    CheckBoxTopping(Toppings ingr, Pizza nuovaPizza) {
+    CheckBoxTopping(String ingr, Pizza nuovaPizza) {
         this.ingr = ingr;
 
-        if(nuovaPizza.getToppings().containsKey(ingr.name())) {
+        if(nuovaPizza.getToppings().containsKey(ingr)) {
             this.isPresent = true;
             setSelected(true);
         } else {
@@ -35,7 +34,7 @@ class CheckBoxTopping extends CheckBox {
         return isPresent;
     }
 
-    Toppings getIngr() {
+    String getIngr() {
         return ingr;
     }
 }

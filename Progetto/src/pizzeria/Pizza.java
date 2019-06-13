@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Pizza {
     private String name;
     private double price;
-    private HashMap <String, Toppings> ingredients;
+    private HashMap <String, String> ingredients;
     private int count = 0;
 
     /**
@@ -15,7 +15,7 @@ public class Pizza {
      * possono variare su richiesta del cliente.
      */
 
-    public Pizza(String name, HashMap<String, Toppings> ingred, double price) {
+    public Pizza(String name, HashMap<String, String> ingred, double price) {
         this.name = name;
         this.price = price;
         this.ingredients = ingred;
@@ -38,34 +38,34 @@ public class Pizza {
             return this.name;
     }
 
-    public HashMap<String, Toppings> getToppings() {
+    public HashMap<String, String> getToppings() {
         return this.ingredients;
     }
 
     /** Restituisce un'unica String che corrisponde alla lista degli ingredienti della pizza. */
     public String getDescription() {
         String descrizione = "";
-        for (Toppings ingr: this.ingredients.values()) {
-            descrizione = descrizione.concat(ingr.name().replace("_"," ") + ", ");
+        for (String ingr: this.ingredients.values()) {
+            descrizione = descrizione.concat(ingr.replace("_"," ") + ", ");
         }
         descrizione = descrizione.toLowerCase().substring(0, descrizione.lastIndexOf(","));
         return descrizione;
     }
 
     /** Se assente, aggiunge l'ingrediente richiesto alla pizza. */
-    public void addIngredients(Toppings ing){
-        if(!(this.ingredients.containsKey(ing.name())))
-            this.ingredients.put(ing.name(),ing);
+    public void addIngredients(String ing){
+        if(!(this.ingredients.containsKey(ing)))
+            this.ingredients.put(ing,ing);
     }
 
-    public void setIngredients(Toppings ingredients) {
-        this.ingredients.put(ingredients.name(), ingredients);
+    public void setIngredients(String ingredients) {
+        this.ingredients.put(ingredients, ingredients);
     }
 
     /** Se presente, rimuove l'ingrediente selezionato dalla pizza. */
-    public void rmvIngredients(Toppings ing){
-        if(this.ingredients.containsKey(ing.name()))
-            this.ingredients.remove(ing.name(),ing);
+    public void rmvIngredients(String ing){
+        if(this.ingredients.containsKey(ing))
+            this.ingredients.remove(ing,ing);
     }
 
     public void setName(String name) {
@@ -99,7 +99,7 @@ public class Pizza {
         return name;
     }       // non cancellatelo
 
-    public HashMap<String, Toppings> getIngredients() {
+    public HashMap<String, String> getIngredients() {
         return ingredients;
     }// non cancellatelo
 

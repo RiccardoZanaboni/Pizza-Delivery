@@ -6,6 +6,8 @@ import java.awt.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -227,7 +229,7 @@ public class Services {
 		int closeMin = getMinutes(pizzeria.getClosingToday());
 		if(closeMin <= nowMin || openMin == closeMin)
 			return "CLOSED";
-		if(closeMin - nowMin >= 20)
+		if(closeMin - nowMin >= 0)// FIXME: risistemare alla fine.	Ho settato a 0 per poter lavorare anche alle 23:50!!!
 			return "OPEN";
 		else
 			return "CLOSING";

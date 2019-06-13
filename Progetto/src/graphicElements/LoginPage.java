@@ -73,8 +73,11 @@ public class LoginPage {
         signUpButton.setMinSize(100, 50);
         signUpButton.setOnAction(e->{
             try {
-                if (!Database.getCustomers(nameInput.getText(), passwordInput.getText()) && !passwordInput.getText().equals("") && !nameInput.getText().equals("")){
-                    Database.putCustomer(nameInput.getText(), passwordInput.getText());
+                if(nameInput.getText().equals("") || passwordInput.getText().equals("")) {
+                    insertErrorLabel.setTextFill(Color.DARKRED);
+                    insertErrorLabel.setText("Inserire utente e password");
+                } else if (!Database.getCustomers(nameInput.getText().toUpperCase(), passwordInput.getText())){
+                    Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText());
                     MenuPage menuPage = new MenuPage();
                     Customer customer = new Customer(nameInput.getText(), passwordInput.getText());
                     customer.setLoggedIn(true);
@@ -147,10 +150,12 @@ public class LoginPage {
         layout.setOnKeyPressed(ke -> {
             if(ke.getCode()== KeyCode.ENTER) {
                 loginButton.fire();
-            }if(ke.getCode()== KeyCode.SHIFT)
-            {   signUpButton.fire();
             }
-
+        /*
+            if(ke.getCode()== KeyCode.SHIFT) {
+                signUpButton.fire();
+            }
+            */
         });
 
         layout.getStyleClass().add("layout");

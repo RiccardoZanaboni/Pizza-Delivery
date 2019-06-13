@@ -28,7 +28,7 @@ public class ModifyBox{
         Stage window = new Stage();
 
         Pizza pizzaMenu = new Pizza(pizzaName, pizzeria.getMenu().get(pizzaName).getToppings(), pizzeria.getMenu().get(pizzaName).getPrice());
-        HashMap<String, Toppings> ingr = new HashMap<>(pizzaMenu.getToppings());
+        HashMap<String, String> ingr = new HashMap<>(pizzaMenu.getToppings());
         Pizza nuovaPizza = new Pizza(pizzaMenu.getName(false), ingr, pizzaMenu.getPrice());
 
         ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -106,8 +106,8 @@ public class ModifyBox{
 
     /** costruisce la lista dei vari Labels, CheckBoxes */
     private static void fillLabelsAndCheckBoxes(Pizzeria pizzeria, Pizza nuovaPizza, ArrayList<Label> ingrLabels, ArrayList<CheckBoxTopping> checkBoxes) {
-        for (Toppings ingr : pizzeria.getIngredientsPizzeria().values()) {
-            ingrLabels.add(new Label(ingr.name().toUpperCase().replace("_"," ")));
+        for (String ingr : pizzeria.getIngredientsPizzeria().values()) {
+            ingrLabels.add(new Label(ingr.toUpperCase().replace("_"," ")));
             checkBoxes.add(new CheckBoxTopping(ingr, nuovaPizza));
         }
     }

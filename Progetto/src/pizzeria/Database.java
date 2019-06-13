@@ -1,12 +1,9 @@
 package pizzeria;
 
 import Interfaces.TextInterface;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import javafx.scene.paint.Color;
-
 import java.sql.*;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -87,15 +84,14 @@ public class Database {
     public static HashMap<String, Pizza> getPizze(HashMap<String, Pizza> menu) throws SQLException {
         ResultSet rs = PizzaDB.getPizzaByName(con);
         while (rs.next()) {
-            HashMap<String, Toppings> ingr = new HashMap<>();
+            HashMap<String, String> ingr = new HashMap<>();
             String nomePizza = rs.getString(1);
             String ingrediente = rs.getString(2);
             StringTokenizer stAgg = new StringTokenizer(ingrediente);
             while (stAgg.hasMoreTokens()) {
                 try {
                     String ingredienteAggiuntoString = Services.arrangeIngredientString(stAgg);
-                    Toppings toppings = Toppings.valueOf(ingredienteAggiuntoString);
-                    ingr.put(toppings.name(), toppings);
+                    ingr.put(ingredienteAggiuntoString, ingredienteAggiuntoString);
                 } catch (Exception ignored) {}
             }
             double prezzo = rs.getDouble(3);
@@ -104,6 +100,24 @@ public class Database {
         }
         return menu;
     }
+
+    public static HashMap<String, String> getToppings(HashMap<String,String> ingr) throws SQLException {
+        ResultSet rs = null;
+        try {
+            Statement statement = con.createStatement();
+            rs = statement.executeQuery("select * from sql7293749.Toppings");
+        } catch (NullPointerException | SQLException e){
+            /* Chiude il programma, se non c'è connessione. */
+            System.out.println(Services.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
+            System.exit(1);
+        }
+        while (rs.next()) {
+            String ingrediente = rs.getString(1);
+            ingr.put(ingrediente, ingrediente);
+        }
+        return ingr;
+    }
+
 
     public static boolean putCustomer(String username, String password) {
         try {
@@ -151,22 +165,22 @@ public class Database {
             String username=rs.getString(2);
             String address=rs.getString(3);
             Date date=rs.getTimestamp(4);
+            int quantity=rs.getInt(5);
             Order order=new Order(i);
             if(!orders.containsKey(orderID)){
                 order.setName(username);
                 order.setAddress(address);
                 order.setTime(date);
-                order.setCompleted(pizzeria);
+                order.setCompletedDb(pizzeria, quantity, date);
                 ResultSet rsPizza=OrderDB.getOrderedPizzasById(con,orderID);
                 while (rsPizza.next()){
-                    HashMap<String, Toppings> ingr = new HashMap<>();
+                    HashMap<String, String> ingr = new HashMap<>();
                     String ingrediente = rsPizza.getString(2);
                     StringTokenizer stAgg = new StringTokenizer(ingrediente);
                     while (stAgg.hasMoreTokens()) {
                         try {
                             String ingredienteAggiuntoString = Services.arrangeIngredientString(stAgg);
-                            Toppings toppings = Toppings.valueOf(ingredienteAggiuntoString);
-                            ingr.put(toppings.name(), toppings);
+                            ingr.put(ingredienteAggiuntoString, ingredienteAggiuntoString);
                         } catch (Exception ignored) {}
                     }
                     Pizza p=new Pizza(rsPizza.getString(1),ingr,rsPizza.getDouble(3));
@@ -197,6 +211,8 @@ public class Database {
         orders=sortedByValue;
         return orders;
     }
+
+
 
 
     public static void main(String[] args) {
@@ -279,5 +295,4 @@ public class Database {
                 e.printStackTrace();
         }
     }
-
 }

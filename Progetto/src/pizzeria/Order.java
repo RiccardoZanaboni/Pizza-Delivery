@@ -61,7 +61,7 @@ public class Order implements Comparable<Order> {
 		recap.append(Services.colorSystemOut("ORDINE N. ", Color.RED,true,false));
 		recap.append(Services.colorSystemOut(this.orderCode,Color.RED,true,false));
 		recap.append(Services.colorSystemOut("\nSIG.\t\t",Color.YELLOW,false,false));
-		recap.append(Services.colorSystemOut(this.customer.getUsername(),Color.GREEN,true,false));
+//FIXME: recap.append(Services.colorSystemOut(this.customer.getUsername(),Color.GREEN,true,false));
 		recap.append(Services.colorSystemOut("\nCITOFONO:\t",Color.YELLOW,false,false));
 		recap.append(Services.colorSystemOut(this.name,Color.GREEN,true,false));
 		recap.append(Services.colorSystemOut("\nINDIRIZZO:\t",Color.YELLOW,false,false));
@@ -192,14 +192,14 @@ public class Order implements Comparable<Order> {
     }
 
     /** Setta l'ordine come completo. */
-    public void setCompleted(Pizzeria pizzeria) {
-    	Date orario = this.getTime();
-    	int tot = this.getNumPizze();
+	public void setCompletedDb(Pizzeria pizzeria, int tot , Date orario ) {
+		//Date orario = this.getTime();
 		pizzeria.updateOvenAndDeliveryMan(orario, tot);
-        this.isCompleted = true;
-    }
+		this.isCompleted = true;
+	}
 
-    public void setTime(Date orario) {
+
+	public void setTime(Date orario) {
         this.time = orario;
     }
 
