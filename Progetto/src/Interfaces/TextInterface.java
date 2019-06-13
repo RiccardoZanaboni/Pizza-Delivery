@@ -493,9 +493,9 @@ public class TextInterface {
 				String psw = scan.nextLine();
 				String working1 = Services.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working1);
-				switch(wolf.checkLogin(user,psw)){
+				switch(wolf.checkLogin(user.toUpperCase(),psw)){
 					case "OK":
-						Customer c = new Customer(user,psw);
+						Customer c = new Customer(user.toUpperCase(),psw);
 						System.out.println("\nBenvenuto: " + user.toUpperCase());
 						whatDoYouWant(c);
 						break;

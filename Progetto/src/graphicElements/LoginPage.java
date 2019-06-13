@@ -102,7 +102,7 @@ public class LoginPage {
             try {
                 String user = nameInput.getText();
                 String psw = passwordInput.getText();
-                switch(pizzeria.checkLogin(user,psw)){
+                switch(pizzeria.checkLogin(user.toUpperCase(),psw)){
                     case "OK":
                         MenuPage menuPage = new MenuPage();
                         Customer customer = new Customer(user, psw);
