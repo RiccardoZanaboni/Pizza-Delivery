@@ -79,7 +79,10 @@ public class LoginPage {
                     Customer customer = new Customer(nameInput.getText(), passwordInput.getText());
                     customer.setLoggedIn(true);
                     menuPage.display(window, pizzeria, customer);
-                    }
+                    }else if (nameInput.getText().equals("") || passwordInput.getText().equals("")){
+                    insertErrorLabel.setTextFill(Color.DARKRED);
+                    insertErrorLabel.setText("Riempire tutti i campi");
+                }
                 else {
 					insertErrorLabel.setTextFill(Color.DARKRED);
 					insertErrorLabel.setText("Utente già registrato");
