@@ -560,7 +560,8 @@ public class TextInterface {
 			case "V":
 				System.out.println(Services.colorSystemOut("Ecco gli ordini da evadere...\n", Color.YELLOW, false, false));
 				for(String code : wolf.getOrders().keySet()){
-					System.out.println(wolf.getOrders().get(code).recapOrder());
+					if(wolf.getOrders().get(code).getTime().getDate()==(new Date().getDate()))
+						System.out.println(wolf.getOrders().get(code).recapOrder());
 				}
 				whatDoesPizzeriaWant();
 				break;
@@ -598,11 +599,14 @@ public class TextInterface {
 				Database.putPizza(wolf);
 				break;
 			case "R":
-				Database.removePizza();
+				Database.removePizza();//todo wolf);
 				break;
-			/*case "T":
-				TODO: ingredienti da aggiungere/togliere dai disponibili della pizzeria
-				break;*/
+			case "AI":
+				//todo Database.putTopping(wolf);
+				break;
+			case "RI":
+				//todo Database.removeTopping(wolf);
+				break;
 			case "B":
 				System.out.println(Services.colorSystemOut("Nessuna modifica effettuata al menu.\n", Color.YELLOW, false, false));
 				// logout

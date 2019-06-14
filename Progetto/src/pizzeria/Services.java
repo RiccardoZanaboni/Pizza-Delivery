@@ -129,8 +129,10 @@ public class Services {
 		String addS = "' puoi aggiungere una pizza al menu;\n";
 		String rmv = Services.colorSystemOut("R",Color.ORANGE,true,false);
 		String rmvS = "' puoi rimuovere una pizza dal menu;\n";
-		//String mod = Services.colorSystemOut("M",Color.ORANGE,true,false);
-		//String modS = "' puoi modificare una pizza esistente nel menu;\n";
+		String addIng = Services.colorSystemOut("AI",Color.ORANGE,true,false);
+		String addIngS = "' puoi aggiungere un ingrediente possibile;\n";
+		String rmvIng = Services.colorSystemOut("RI",Color.ORANGE,true,false);
+		String rmvIngS = "' puoi rimuovere un ingrediente da quelli possibili;\n";
 		String ret = Services.colorSystemOut("B",Color.ORANGE,true,false);
 		String retS = "' puoi tornare indietro.\n";
 
@@ -138,8 +140,8 @@ public class Services {
 		string.append(ecco);
 		string.append(con).append(add).append(addS);
 		string.append(con).append(rmv).append(rmvS);
-		//string.append(con).append(mod).append(modS);
-		//string.append(con).append(info).append(infoS);
+		string.append(con).append(addIng).append(addIngS);
+		string.append(con).append(rmvIng).append(rmvIngS);
 		string.append(con).append(ret).append(retS);
 
 		return string.toString();

@@ -185,7 +185,7 @@ public class Database {
                     }
                     Pizza p=new Pizza(rsPizza.getString(1),ingr,rsPizza.getDouble(3));
                     //if(!order.getOrderedPizze().contains(p)){ // FIXME @zana DA VERIFICARE IL CONTAINS CHE HO MODIFICATO IN PIZZA --Pensavo servisse ma probabilmente no,lascio ancora per poco
-                        order.getOrderedPizze().add(p);
+                    order.getOrderedPizze().add(p);
                     //}
                 }
                 orders.put(order.getOrderCode(),order);
@@ -292,7 +292,7 @@ public class Database {
             }
 
         }catch (SQLException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }

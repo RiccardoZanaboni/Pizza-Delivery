@@ -80,7 +80,7 @@ public class Pizzeria {
 
     public HashMap<String,Order> getOrders() {
         try {
-           orders=Database.getOrder(orders,this); //FIXME @ZANA SENZA QUESTO UGUALE NON FUNZIONA NON CAPISCO
+           orders = Database.getOrder(orders,this); //FIXME @ZANA SENZA QUESTO UGUALE NON FUNZIONA NON CAPISCO
         } catch (SQLException e) {
             e.printStackTrace();
         }

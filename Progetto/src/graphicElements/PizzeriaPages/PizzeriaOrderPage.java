@@ -16,6 +16,7 @@ import pizzeria.Order;
 import pizzeria.Pizzeria;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PizzeriaOrderPage {
 
@@ -29,9 +30,11 @@ public class PizzeriaOrderPage {
         VBox layout = new VBox();
 //FIXME se funziona get order col db
         for (String code:pizzeria.getOrders().keySet()) {
-            VBox vBox = addEverythingToGridPane(pizzeria.getOrders().get(code), nameLabels, countPizzeLabels, toppingLabels, priceLabels);
-            vBox.setPadding(new Insets(10, 10, 10, 10));
-            layout.getChildren().add(vBox);
+            if (pizzeria.getOrders().get(code).getTime().getDate() == (new Date().getDate())) {
+                VBox vBox = addEverythingToGridPane(pizzeria.getOrders().get(code), nameLabels, countPizzeLabels, toppingLabels, priceLabels);
+                vBox.setPadding(new Insets(10, 10, 10, 10));
+                layout.getChildren().add(vBox);
+            }
         }
 
         Button backButton = new Button("← Torna indietro");

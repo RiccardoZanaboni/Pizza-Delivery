@@ -10,15 +10,13 @@ public class PizzaDB {
         try {
             preparedStatement = con.prepareStatement("insert into sql7293749.Pizze values ('" + nome + "', '" + ingred + "', '" + prezzo + "');");
         } catch(SQLException ignored){ }
-
         return preparedStatement;
     }
 
     public static PreparedStatement removePizza(Connection con, String nome){
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = con.prepareStatement("delete from sql7293749.Pizze where nome =  '"+nome+"';");
-
+            preparedStatement = con.prepareStatement("delete from sql7293749.Pizze where nome = '" + nome + "';");
         } catch(SQLException ignored){
             System.out.println("Problema SQL rimozione pizza");
         }

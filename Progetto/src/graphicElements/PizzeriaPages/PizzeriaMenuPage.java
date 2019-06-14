@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class PizzeriaMenuPage {
@@ -110,7 +111,7 @@ public class PizzeriaMenuPage {
     }
 
 
-    public void deleteButtonClicked(Pizzeria pizzeria, TableView table){
+    public void deleteButtonClicked(Pizzeria pizzeria, TableView table) {
 
         ObservableList<Pizza> pizzaSelected, allPizzas;
 
