@@ -20,7 +20,7 @@ public class CustomerDB {
         ResultSet rs = null;
         try {
             Statement statement = con.createStatement();
-            rs = statement.executeQuery("select * from sql7293749.Users where User = '" + username + "' and Pass= '" + password + "'");
+            rs = statement.executeQuery("select * from sql7293749.Users where User = '" + username + "' and Pass = '" + password + "' ");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

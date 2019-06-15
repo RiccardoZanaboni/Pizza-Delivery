@@ -487,20 +487,20 @@ public class TextInterface {
 			case "L":
 				String userQuestion = Services.colorSystemOut("\n\tUsername:\t", Color.YELLOW, false, false);
 				System.out.print(userQuestion);
-				String user = scan.nextLine();
+				String user = scan.nextLine().toUpperCase();
 				String pswQuestion = Services.colorSystemOut("\tPassword:\t", Color.YELLOW, false, false);
 				System.out.print(pswQuestion);
 				String psw = scan.nextLine();
 				String working1 = Services.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working1);
-				switch(wolf.checkLogin(user.toUpperCase(),psw)){
+				switch(wolf.checkLogin(user,psw)){
 					case "OK":
-						Customer c = new Customer(user.toUpperCase(),psw);
-						System.out.println("\nBenvenuto: " + user.toUpperCase());
+						Customer c = new Customer(user,psw);
+						System.out.println("\nBenvenuto: " + user);
 						whatDoYouWant(c);
 						break;
 					case "P":
-						System.out.println("\nBenvenuto: " + user.toUpperCase() + " (utente privilegiato)");
+						System.out.println("\nBenvenuto: " + user + " (utente privilegiato)");
 						whatDoesPizzeriaWant();
 						break;
 					case "NO":
@@ -515,18 +515,17 @@ public class TextInterface {
 				String newUser = scan.nextLine().toUpperCase();
 				String newPswQuestion = Services.colorSystemOut("\tNuova password:\t\t", Color.YELLOW, false, false);
 				System.out.print(newPswQuestion);
-				String newPsw = scan.nextLine().toUpperCase();
+				String newPsw = scan.nextLine();
 				String confPswQuestion = Services.colorSystemOut("\tConferma psw:\t\t", Color.YELLOW, false, false);
 				System.out.print(confPswQuestion);
-				String confPsw = scan.nextLine().toUpperCase();
+				String confPsw = scan.nextLine();
 				String working2 = Services.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working2);
 				switch(wolf.createAccount(newUser,newPsw,confPsw)) {
 					case "OK":
-						//Customer c = wolf.getCustomer(user,psw);
 						Customer c = new Customer(newUser,newPsw);
 						System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
-						// login automatico
+						/* login automatico */
 						whatDoYouWant(c);
 						break;
 					case "SHORT":

@@ -79,14 +79,13 @@ public class LoginPage {
                 } else if (!Database.getCustomers(nameInput.getText().toUpperCase(), passwordInput.getText())){
                     Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText());
                     MenuPage menuPage = new MenuPage();
-                    Customer customer = new Customer(nameInput.getText(), passwordInput.getText());
+                    Customer customer = new Customer(nameInput.getText().toUpperCase(), passwordInput.getText());
                     customer.setLoggedIn(true);
                     menuPage.display(window, pizzeria, customer);
-                    }else if (nameInput.getText().equals("") || passwordInput.getText().equals("")){
+                } else if (nameInput.getText().equals("") || passwordInput.getText().equals("")){
                     insertErrorLabel.setTextFill(Color.DARKRED);
                     insertErrorLabel.setText("Riempire tutti i campi");
-                }
-                else {
+                } else {
 					insertErrorLabel.setTextFill(Color.DARKRED);
 					insertErrorLabel.setText("Utente già registrato");
                 	//System.out.println("Utente gia esistente");
@@ -105,7 +104,7 @@ public class LoginPage {
                 switch(pizzeria.checkLogin(user.toUpperCase(),psw)){
                     case "OK":
                         MenuPage menuPage = new MenuPage();
-                        Customer customer = new Customer(user, psw);
+                        Customer customer = new Customer(user.toUpperCase(), psw);
                         customer.setLoggedIn(true);     //TODO: da mettere anche in Textual
                         menuPage.display(window, pizzeria, customer);
                         break;
