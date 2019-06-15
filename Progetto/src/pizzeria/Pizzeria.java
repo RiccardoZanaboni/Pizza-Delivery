@@ -38,7 +38,7 @@ public class Pizzeria {
                     LocalTime op1, LocalTime op2, LocalTime op3, LocalTime op4, LocalTime op5, LocalTime op6, LocalTime op7,
                     LocalTime cl1, LocalTime cl2, LocalTime cl3, LocalTime cl4, LocalTime cl5, LocalTime cl6, LocalTime cl7) {
         this.userPizzeria = "PIZZERIA";
-        this.pswPizzeria = "password";
+        this.pswPizzeria = "PASSWORD";
         this.menu = new HashMap<>();
         this.pizzeriaIngredients = new HashMap<>();
         this.name = name;

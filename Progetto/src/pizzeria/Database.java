@@ -159,7 +159,10 @@ public class Database {
                     descrizCorretta.append(ingr).append(",");
                 }
             }
-            descriz = descrizCorretta.toString().substring(0,descrizCorretta.toString().length()-1);
+            if(descrizCorretta.toString().length()>0)
+               descriz = descrizCorretta.toString().substring(0,descrizCorretta.toString().length()-1);
+            else
+                descriz = "";
 
             System.out.print(Services.colorSystemOut("Inserisci prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
             double prezzo = Double.parseDouble(scan.nextLine());

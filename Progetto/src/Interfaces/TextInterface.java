@@ -490,7 +490,7 @@ public class TextInterface {
 				String user = scan.nextLine().toUpperCase();
 				String pswQuestion = Services.colorSystemOut("\tPassword:\t", Color.YELLOW, false, false);
 				System.out.print(pswQuestion);
-				String psw = scan.nextLine();
+				String psw = scan.nextLine().toUpperCase();
 				String working1 = Services.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working1);
 				switch(wolf.checkLogin(user,psw)){
@@ -515,10 +515,10 @@ public class TextInterface {
 				String newUser = scan.nextLine().toUpperCase();
 				String newPswQuestion = Services.colorSystemOut("\tNuova password:\t\t", Color.YELLOW, false, false);
 				System.out.print(newPswQuestion);
-				String newPsw = scan.nextLine();
+				String newPsw = scan.nextLine().toUpperCase();
 				String confPswQuestion = Services.colorSystemOut("\tConferma psw:\t\t", Color.YELLOW, false, false);
 				System.out.print(confPswQuestion);
-				String confPsw = scan.nextLine();
+				String confPsw = scan.nextLine().toUpperCase();
 				String working2 = Services.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working2);
 				switch(wolf.createAccount(newUser,newPsw,confPsw)) {

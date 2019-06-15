@@ -29,15 +29,17 @@ public class SendJavaMail {
 	private final String psw = "password.01";
 	private String[] to = {
 			"fecchio.andrea@gmail.com"
-			// ,"ele.repossi@gmail.com"
-			// ,"riccardo.crescenti01@universitadipavia.it"
-			// ,"fabio.rossanigo01@universitadipavia.it"
-			// ,"francesco.musitano02@universitadipavia.it"
-			// ,"fabio.rossanigo01@universitadipavia.it"
-			// ,"riccardo.zanaboni02@universitadipavia.it"
+			//,"ele.repossi@gmail.com"
+			//,"martina.frigoli01@universitadipavia.it"
+			,"riccardo.crescenti01@universitadipavia.it"
+			//,"fabio.rossanigo01@universitadipavia.it"
+			//,"francesco.musitano02@universitadipavia.it"
+			//,"fabio.rossanigo01@universitadipavia.it"
+			//,"riccardo.zanaboni02@universitadipavia.it"
+			,"matteo.gobbo12@gmail.com"
 			};
 	private String subject = "INVITO";
-	private String bodyText = "La presente per invitarti all'inaugurazione della pizzeria \"Wolf Pizza\" oggi, 12 giugno, alle ore 17, nel nuovo locale di Pavia, in via Bolzano, 10.\n\nTi aspettiamo!";
+	private String bodyText = "La presente per invitarti all'inaugurazione della pizzeria \"Wolf Pizza\" oggi, 15 giugno, alle ore 17, nel nuovo locale di Pavia, in via Bolzano, 10.\n\nTi aspettiamo!";
 
 	public SendJavaMail() {
 		try {
