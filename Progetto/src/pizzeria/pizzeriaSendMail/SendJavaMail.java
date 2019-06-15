@@ -1,5 +1,7 @@
 package pizzeria.pizzeriaSendMail;
 
+import com.sun.org.apache.regexp.internal.RE;
+import com.sun.org.apache.regexp.internal.REDebugCompiler;
 import javafx.scene.paint.Color;
 import pizzeria.Services;
 
@@ -27,21 +29,22 @@ public class SendJavaMail {
 	private final String PORT = "465";
 	private final String from = "pizzeria.wolf@gmail.com";
 	private final String psw = "password.01";
-	private String[] to = {
+	/*private String[] to = {
 			"fecchio.andrea@gmail.com"
 			//,"ele.repossi@gmail.com"
 			//,"martina.frigoli01@universitadipavia.it"
-			,"riccardo.crescenti01@universitadipavia.it"
+			//,"riccardo.crescenti01@universitadipavia.it"
 			//,"fabio.rossanigo01@universitadipavia.it"
 			//,"francesco.musitano02@universitadipavia.it"
 			//,"fabio.rossanigo01@universitadipavia.it"
 			//,"riccardo.zanaboni02@universitadipavia.it"
-			,"matteo.gobbo12@gmail.com"
+			//,"matteo.gobbo12@gmail.com"
 			};
 	private String subject = "INVITO";
-	private String bodyText = "La presente per invitarti all'inaugurazione della pizzeria \"Wolf Pizza\" oggi, 15 giugno, alle ore 17, nel nuovo locale di Pavia, in via Bolzano, 10.\n\nTi aspettiamo!";
+	private String bodyText = "\"PROVA\"";
+	*/
 
-	public SendJavaMail() {
+	public SendJavaMail(String address, String subject, String txt) {
 		try {
 			Properties props = new Properties();
 			props.put("mail.smtp.host", host);
@@ -60,17 +63,19 @@ public class SendJavaMail {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(from));
 
-			InternetAddress[] addTo = new InternetAddress[to.length];
+			/*InternetAddress[] addTo = new InternetAddress[to.length];
 			for (int i = 0; i < addTo.length; i++) {
 				addTo[i] = new InternetAddress(to[i]);
-			}
-			message.setRecipients(Message.RecipientType.TO, addTo);
+			}*/
+			//InternetAddress addTo = new InternetAddress(address);
+
+			message.setRecipients(Message.RecipientType.TO, address);		//fixme ? va bene ?
 
 			message.setSubject(subject);
 			message.setSentDate(new Date());
 
 			MimeBodyPart messagePart = new MimeBodyPart();
-			messagePart.setText(bodyText);
+			messagePart.setText(txt);
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(messagePart);
@@ -80,11 +85,12 @@ public class SendJavaMail {
 
 			Transport.send(message);
 
-			String confirm = Services.colorSystemOut("\n\t>> Il messaggio e-mail è stato inviato!\n\n", Color.YELLOW,true,false);
+			String confirm = Services.colorSystemOut("\n\t>> Il messaggio e-mail è stato inviato!\n", Color.YELLOW,true,false);
 			System.out.println(confirm);
 
-		} catch (MessagingException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			String err = "\n\tSpiacenti: invio non riuscito.\n\tControllare indirizzo e-mail inserito e/o connessione di rete.";
+			System.out.println(Services.colorSystemOut(err,Color.RED,true,false));
 		}
 	}
 }

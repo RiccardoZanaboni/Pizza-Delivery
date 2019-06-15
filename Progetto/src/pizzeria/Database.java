@@ -237,11 +237,12 @@ public class Database {
 
     public static boolean putOrder(Order order){
         DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String s=dateFormatYMD.format(order.getTime());
-        java.sql.Timestamp data= java.sql.Timestamp.valueOf(s);
+        String s = dateFormatYMD.format(order.getTime());
+        java.sql.Timestamp data = java.sql.Timestamp.valueOf(s);
         try {
             OrderDB.putOrder(con,order,data).execute();
             OrderDB.putOrderedPizzas(con,order);
+            //todo: aggiornare anche la hashmap in Pizzeria
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -300,7 +301,7 @@ public class Database {
         for(Map.Entry<String, Order> entry : listOfEntries){
             sortedByValue.put(entry.getKey(), entry.getValue());
         }
-        orders=sortedByValue;
+        orders = sortedByValue;
         return orders;
     }
 

@@ -13,12 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.Order;
+import pizzeria.OrderDB;
 import pizzeria.Pizzeria;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PizzeriaOrderPage {
+public class PizzeriaOrdersPage {
 
     public static void display(Pizzeria pizzeria, Stage window) {
         //ArrayList<Label> orderNameLabels = new ArrayList<>();
@@ -29,6 +30,8 @@ public class PizzeriaOrderPage {
         //ArrayList<GridPane> gridPanes = new ArrayList<>();
         VBox layout = new VBox();
 //FIXME se funziona get order col db
+
+        //TODO: OrderDB.deleteOrdersNotToday();     // elimino dal DB tutti gli ordini che non sono per oggi
         for (String code:pizzeria.getOrders().keySet()) {
             if (pizzeria.getOrders().get(code).getTime().getDate() == (new Date().getDate())) {
                 VBox vBox = addEverythingToGridPane(pizzeria.getOrders().get(code), nameLabels, countPizzeLabels, toppingLabels, priceLabels);

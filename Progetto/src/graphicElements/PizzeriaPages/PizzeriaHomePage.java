@@ -1,6 +1,5 @@
 package graphicElements.PizzeriaPages;
 
-import graphicElements.LoginPage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -34,8 +33,8 @@ public class PizzeriaHomePage {
 
         Button visualizeOrdersButton = new Button("Visualizza Ordini");
         visualizeOrdersButton.setOnAction(e-> {
-            //PizzeriaOrderPage pizzeriaOrderPage = new PizzeriaOrderPage();
-            PizzeriaOrderPage.display(pizzeria, window);
+            //PizzeriaOrdersPage pizzeriaOrderPage = new PizzeriaOrdersPage();
+            PizzeriaOrdersPage.display(pizzeria, window);
         });
         visualizeOrdersButton.prefWidthProperty().bind(window.widthProperty());
         visualizeOrdersButton.prefHeightProperty().bind(window.heightProperty());

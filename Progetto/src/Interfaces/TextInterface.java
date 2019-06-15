@@ -558,6 +558,7 @@ public class TextInterface {
 		switch (risposta){
 			case "V":
 				System.out.println(Services.colorSystemOut("Ecco gli ordini da evadere...\n", Color.YELLOW, false, false));
+				//TODO: OrderDB.deleteOrdersNotToday();
 				for(String code : wolf.getOrders().keySet()){
 					if(wolf.getOrders().get(code).getTime().getDate()==(new Date().getDate()))
 						System.out.println(wolf.getOrders().get(code).recapOrder());
@@ -577,7 +578,8 @@ public class TextInterface {
 				whatDoesPizzeriaWant();
 				break;
 			case "S":
-				new SendJavaMail();
+				sendTextualMail();
+				//new SendJavaMail();
 				whatDoesPizzeriaWant();
 				break;
 			case "E":
@@ -588,6 +590,63 @@ public class TextInterface {
 			default:
 				System.out.println(Services.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
 				whatDoesPizzeriaWant();
+				break;
+		}
+	}
+
+	/** Mando mail per:
+	 * - confermare nuovo account alla creazione
+	 * - inviare mensilmente newsletter con aggiornamento account, pizza del mese, ecc
+	 * - ...
+	 * */
+	private void sendTextualMail() {
+		//todo? 	System.out.println(Database.getPossibleAddresses());
+		String newAddQuestion = Services.colorSystemOut("Inserire indirizzo e-mail:\t\t\t", Color.YELLOW, false, false);
+		System.out.print(newAddQuestion);
+		String address = scan.nextLine().toLowerCase();
+		String newSubjQuestion = Services.colorSystemOut("Inserire l'oggetto della mail:\t\t", Color.YELLOW, false, false);
+		System.out.print(newSubjQuestion);
+		String subject = scan.nextLine();
+		String newTxtQuestion = Services.colorSystemOut("Inserire testo della mail (inserire linea vuota per concludere):\n", Color.YELLOW, false, false);
+		System.out.print(newTxtQuestion);
+		StringBuilder txt = new StringBuilder();
+		do {
+			String line = scan.nextLine();
+			if (line.equals(""))
+				break;
+			else
+				txt.append(line+"\n");
+		} while (true);
+		askConfirmSendMail(address, subject, txt.toString());
+	}
+
+	private void askConfirmSendMail(String address, String subject, String txt){
+		String confAddrQuestion = Services.colorSystemOut("Confermi l'invio a:\t\t", Color.YELLOW, false, false);
+		System.out.print(confAddrQuestion);
+		String confAddr = Services.colorSystemOut(address,Color.WHITE,false,false);
+		System.out.print(confAddr);
+		String confSubjQuestion = Services.colorSystemOut("\ndell'email con oggetto:\t", Color.YELLOW, false, false);
+		System.out.print(confSubjQuestion);
+		String confSubj = Services.colorSystemOut(subject,Color.WHITE,false,false);
+		System.out.print(confSubj);
+		String confTxtQuestion = Services.colorSystemOut("\ncon testo:\n", Color.YELLOW,false,false);
+		System.out.print(confTxtQuestion);
+		String confTxt = Services.colorSystemOut(txt, Color.WHITE,false,false);
+		System.out.print(confTxt);
+		String confQuestion = Services.colorSystemOut("\n\t?\t(S/N):\t", Color.YELLOW,false,false);
+		System.out.print(confQuestion);
+		switch(scan.nextLine().toUpperCase()){
+			case "S":
+				new SendJavaMail(address,subject,txt);
+				break;
+			case "N":
+				String err = "\tMessaggio eliminato.";
+				System.out.println(Services.colorSystemOut(err,Color.YELLOW,true,false));
+				break;
+			default:
+				String notValid = "Spiacenti: inserito carattere non valido. Riprovare:";
+				System.out.println(Services.colorSystemOut(notValid,Color.RED,false,false));
+				askConfirmSendMail(address,subject,txt);
 				break;
 		}
 	}

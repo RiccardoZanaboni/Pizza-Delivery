@@ -37,8 +37,8 @@ public class Pizzeria {
     public Pizzeria(String name, String address,
                     LocalTime op1, LocalTime op2, LocalTime op3, LocalTime op4, LocalTime op5, LocalTime op6, LocalTime op7,
                     LocalTime cl1, LocalTime cl2, LocalTime cl3, LocalTime cl4, LocalTime cl5, LocalTime cl6, LocalTime cl7) {
-        this.userPizzeria = "PIZZERIA";
-        this.pswPizzeria = "PASSWORD";
+        this.userPizzeria = "pizzeria".toUpperCase();
+        this.pswPizzeria = "password".toUpperCase();
         this.menu = new HashMap<>();
         this.pizzeriaIngredients = new HashMap<>();
         this.name = name;
@@ -309,6 +309,8 @@ public class Pizzeria {
         return possibiliIngr.toString();
     }
 
+
+
     /** Verifica che sia possibile cuocere le pizze nell'infornata richiesta e in quella appena precedente. */
     public boolean checkTimeBoxOven(int ora, int minuti, int tot) {
         if (this.ovens[findTimeBoxOven(ora, minuti)].getPostiDisp() + this.ovens[findTimeBoxOven(ora, minuti) - 1].getPostiDisp() < tot)
@@ -350,21 +352,15 @@ public class Pizzeria {
         if(newPsw.equals(confPsw)){
             if(newUser.length()>2 && newPsw.length()>2) {
                 /* se si registra correttamente, va bene */
-                // createNewAccount(newUser,newPsw);
 				if (!Database.putCustomer(newUser.toUpperCase(),newPsw))
 					return "EXISTING";
 				else
 					return "OK";
-				//checkLogin(newUser, newPsw);
             } else
                 /* password troppo breve */
                 return "SHORT";
-        /*} else if (existing){
-            // se esiste già un account con questo nome, non va bene.
-            return "EXISTING";
-        */
         } else {
-            // se la password non viene confermata correttamente
+            /* se la password non viene confermata correttamente */
             return "DIFFERENT";
         }
     }
