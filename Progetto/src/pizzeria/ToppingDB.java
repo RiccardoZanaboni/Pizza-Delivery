@@ -22,16 +22,15 @@ public class ToppingDB {
 		return preparedStatement;
 	}
 
-	public static ResultSet getToppingByName(Connection con){
-		ResultSet rs = null;
+	public static PreparedStatement getToppingsDB(Connection con){
+		PreparedStatement preparedStatement = null;
 		try {
-			Statement statement = con.createStatement();
-			rs = statement.executeQuery("select * from sql7293749.Toppings");
+			preparedStatement = con.prepareStatement("select * from sql7293749.Toppings");
 		} catch (NullPointerException | SQLException e){
 			/* Chiude il programma, se non c'è connessione. */
 			System.out.println(Services.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
 			System.exit(1);
 		}
-		return rs;
+		return preparedStatement;
 	}
 }

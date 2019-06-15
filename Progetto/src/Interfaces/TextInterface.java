@@ -341,10 +341,10 @@ public class TextInterface {
 				System.out.println(advise);
 				String adding = Services.colorSystemOut("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
 				System.out.println(adding);
-				String aggiunte = scan.nextLine();
+				String aggiunte = scan.nextLine().toUpperCase();
 				String rmving = Services.colorSystemOut("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
 				System.out.println(rmving);
-				String rimozioni = scan.nextLine();
+				String rimozioni = scan.nextLine().toUpperCase();
 				Pizza modPizza = addAndRmvToppingsText(wolf.getMenu().get(nomePizza), aggiunte, rimozioni, wolf.getSUPPL_PRICE());
 				for (int i = 0; i < num; i++) {
 					order.getOrderedPizze().add(modPizza);
@@ -599,13 +599,13 @@ public class TextInterface {
 				Database.putPizza(wolf);
 				break;
 			case "R":
-				Database.removePizza();//todo wolf);
+				Database.removePizza(wolf);//todo wolf);
 				break;
 			case "AI":
-				//todo Database.putTopping(wolf);
+				Database.putTopping(wolf);
 				break;
 			case "RI":
-				//todo Database.removeTopping(wolf);
+				Database.removeTopping(wolf);
 				break;
 			case "B":
 				System.out.println(Services.colorSystemOut("Nessuna modifica effettuata al menu.\n", Color.YELLOW, false, false));
