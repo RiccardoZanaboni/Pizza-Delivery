@@ -10,7 +10,9 @@ public class ToppingDB {
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = con.prepareStatement("insert into sql7293749.Toppings values ('" + nome + "');");
-		} catch(SQLException ignored){ }
+		} catch(SQLException sqle){
+			Database.missingConnection();
+		}
 		return preparedStatement;
 	}
 
@@ -18,7 +20,9 @@ public class ToppingDB {
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = con.prepareStatement("delete from sql7293749.Toppings where Topping = '" + nome + "';");
-		} catch(SQLException ignored){ }
+		} catch(SQLException sqle){
+			Database.missingConnection();
+		}
 		return preparedStatement;
 	}
 
@@ -28,8 +32,7 @@ public class ToppingDB {
 			preparedStatement = con.prepareStatement("select * from sql7293749.Toppings");
 		} catch (NullPointerException | SQLException e){
 			/* Chiude il programma, se non c'è connessione. */
-			System.out.println(Services.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
-			System.exit(1);
+			Database.missingConnection();
 		}
 		return preparedStatement;
 	}

@@ -14,7 +14,8 @@ public class OrderDB {
             preparedStatement.setTimestamp(4, date);
             preparedStatement.setInt(5, order.getNumPizze()); //colonna quantiy
 
-        } catch (SQLException ignored) {
+        } catch (SQLException sqle) {
+            Database.missingConnection();
         }
         return preparedStatement;
     }
@@ -27,7 +28,7 @@ public class OrderDB {
                 preparedStatement.execute();
             }
         } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
+            Database.missingConnection();
         }
     }
 
@@ -39,7 +40,7 @@ public class OrderDB {
             rs = statement.executeQuery("select * from sql7293749.Orders");
             // rs = statement.executeQuery("select * from sql7293749.Orders where date >= (\'"+ date +"\')");
         } catch (SQLException sqle) {
-            System.out.println(sqle.getMessage());
+            Database.missingConnection();
         }
         return rs;
     }
@@ -50,7 +51,7 @@ public class OrderDB {
             Statement statement = con.createStatement();
             rs = statement.executeQuery("select nome, ingrediente, prezzo from sql7293749.Orders natural join sql7293749.OrderedPizza where orderID = " + "\"" + orderID + "\"");
         } catch (SQLException sqle) {
-            System.out.println(sqle.getMessage());
+            Database.missingConnection();
         }
         return rs;
     }

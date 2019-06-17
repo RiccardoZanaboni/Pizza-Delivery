@@ -1,7 +1,5 @@
 package pizzeria.pizzeriaSendMail;
 
-import com.sun.org.apache.regexp.internal.RE;
-import com.sun.org.apache.regexp.internal.REDebugCompiler;
 import javafx.scene.paint.Color;
 import pizzeria.Services;
 
@@ -16,12 +14,12 @@ import java.util.Properties;
 
 /**
  * Consente di inviare una e-mail di testo dall'indirizzo della pizzeria, autenticata
- * tramite password in SMTPAuthenticator, ad un elenco di indirizzi destinatari.
+ * tramite password in SMTPAuthenticator, ad un indirizzo destinatario.
  *
- * Per poter inviare mail, è necessario estrarre il contenuto di "jaf-1.1" (tra i file del progetto)
- * nella vostra cartella jdk1.8.0_201/jre/lib/ext (il contenuto sono i due file activation.jar, mail.jar).
- * A questo punto, su Intellij, clicco in alto File/Project_Structure/Libraries/+/ [qui seleziono
- * il percorso dei due file, separatamente].
+ * Per poter inviare mail, è necessario estrarre il contenuto di "jaf-1.1.zip" (tra i file del progetto)
+ * (il contenuto sono i due file: activation.jar, mail.jar).
+ * A questo punto, su Intellij, clicco in alto File/Project_Structure/Libraries/+/
+ * [qui seleziono il percorso dei due file, separatamente].
  * */
 
 public class SendJavaMail {
@@ -29,6 +27,9 @@ public class SendJavaMail {
 	private final String PORT = "465";
 	private final String from = "pizzeria.wolf@gmail.com";
 	private final String psw = "password.01";
+	private Properties props = setProperties();
+	Authenticator auth = new SMTPAuthenticator(from,psw);
+
 	/*private String[] to = {
 			"fecchio.andrea@gmail.com"
 			//,"ele.repossi@gmail.com"
@@ -44,19 +45,23 @@ public class SendJavaMail {
 	private String bodyText = "\"PROVA\"";
 	*/
 
-	public SendJavaMail(String address, String subject, String txt) {
+	private Properties setProperties(){
+		Properties props = new Properties();
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.debug", "true");
+		props.put("mail.smtp.port", PORT);
+		props.put("mail.smtp.socketFactory.port", PORT);
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.socketFactory.fallback", "false");
+		return props;
+	}
+
+	public void sendNewsletter(String subject, String txt){
+	}
+
+	public void sendMail(String address, String subject, String txt) {
 		try {
-			Properties props = new Properties();
-			props.put("mail.smtp.host", host);
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.debug", "true");
-			props.put("mail.smtp.port", PORT);
-			props.put("mail.smtp.socketFactory.port", PORT);
-			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-			props.put("mail.smtp.socketFactory.fallback", "false");
-
-			Authenticator auth = new SMTPAuthenticator(from,psw);
-
 			Session session = Session.getInstance(props,auth);
 			session.setDebug(true);
 
@@ -69,7 +74,7 @@ public class SendJavaMail {
 			}*/
 			//InternetAddress addTo = new InternetAddress(address);
 
-			message.setRecipients(Message.RecipientType.TO, address);		//fixme ? va bene ?
+			message.setRecipients(Message.RecipientType.TO, address);
 
 			message.setSubject(subject);
 			message.setSentDate(new Date());

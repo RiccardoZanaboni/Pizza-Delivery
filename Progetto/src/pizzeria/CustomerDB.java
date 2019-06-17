@@ -1,9 +1,6 @@
 package pizzeria;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class CustomerDB {
 
@@ -12,7 +9,9 @@ public class CustomerDB {
         try {
             preparedStatement = con.prepareStatement("insert into sql7293749.Users values ('" + nome + "', '" + password + "');");
 
-        } catch(Exception ignored){ }
+        } catch(SQLException sqle){
+            Database.missingConnection();
+        }
         return preparedStatement;
     }
 
@@ -21,8 +20,8 @@ public class CustomerDB {
         try {
             Statement statement = con.createStatement();
             rs = statement.executeQuery("select * from sql7293749.Users where User = '" + username + "' and Pass = '" + password + "' ");
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        }catch (SQLException sqle){
+            Database.missingConnection();
         }
         return rs;
     }

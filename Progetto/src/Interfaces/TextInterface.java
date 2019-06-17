@@ -7,10 +7,13 @@ import pizzeria.*;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
 
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -433,14 +436,16 @@ public class TextInterface {
 		String risp = scan.nextLine().toUpperCase();
 		switch (risp) {
 			case "S":
-				/* conferma l'ordine e lo aggiunge a quelli della pizzeria. */
+				/* Controlla lo stato della connessione, nel caso segnala errore. */
+				Database.openDatabase();
+				/* Conferma l'ordine e lo aggiunge a quelli della pizzeria. */
+				wolf.addOrder(order);
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
 				System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = Services.timeStamp(orario.getHours(),orario.getMinutes());
 				confirmedTime = Services.colorSystemOut(confirmedTime,Color.GREEN,true,false);
 				System.out.println("\t>> Consegna prevista: " + confirmedTime + ".");
 				System.out.println(Services.getLine());
-				wolf.addOrder(order);
 				whatDoYouWant(customer);
 				break;
 			case "N":
@@ -579,7 +584,6 @@ public class TextInterface {
 				break;
 			case "S":
 				sendTextualMail();
-				//new SendJavaMail();
 				whatDoesPizzeriaWant();
 				break;
 			case "E":
@@ -600,7 +604,6 @@ public class TextInterface {
 	 * - ...
 	 * */
 	private void sendTextualMail() {
-		//todo? 	System.out.println(Database.getPossibleAddresses());
 		String newAddQuestion = Services.colorSystemOut("Inserire indirizzo e-mail:\t\t\t", Color.YELLOW, false, false);
 		System.out.print(newAddQuestion);
 		String address = scan.nextLine().toLowerCase();
@@ -637,7 +640,8 @@ public class TextInterface {
 		System.out.print(confQuestion);
 		switch(scan.nextLine().toUpperCase()){
 			case "S":
-				new SendJavaMail(address,subject,txt);
+				SendJavaMail mail = new SendJavaMail();
+				mail.sendMail(address,subject,txt);
 				break;
 			case "N":
 				String err = "\tMessaggio eliminato.";
@@ -657,7 +661,7 @@ public class TextInterface {
 				Database.putPizza(wolf);
 				break;
 			case "R":
-				Database.removePizza(wolf);//todo wolf);
+				Database.removePizza(wolf);
 				break;
 			case "AI":
 				Database.putTopping(wolf);
