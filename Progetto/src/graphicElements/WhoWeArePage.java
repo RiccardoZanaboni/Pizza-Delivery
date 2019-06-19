@@ -8,10 +8,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Pizzeria;
 import pizzeria.Services;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class WhoWeArePage {
 
@@ -35,8 +41,17 @@ public class WhoWeArePage {
             menuPage.display(window, pizzeria, customer);
         });
 
+        Button buttonVideo= new Button("Video Presentazione!!");
+        buttonVideo.setId("confirmButton");
+        buttonVideo.setOnAction(event ->  {
+            try {
+                Desktop.getDesktop().browse(new URI("https://drive.google.com/open?id=1IywtXGVTaywaYirjZSVLLV3KDOI1bBx-"));
+            } catch (IOException | URISyntaxException e) {
+                System.out.println(Services.colorSystemOut("Spiacenti: video di presentazione al momento non disponibile.", Color.RED, false, false));
+            }
+    });
         HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(backButton);
+        hBox.getChildren().addAll(backButton,buttonVideo);
         hBox.setAlignment(Pos.CENTER);
 
         VBox layout=new VBox();

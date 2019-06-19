@@ -108,11 +108,11 @@ public class TextInterface {
 		switch (risposta){
 			case "L":
 				System.out.println(Services.colorSystemOut("Ora visualizzerai l'ultimo ordine effettuato...", Color.YELLOW, false, false));
-				whatDoYouWant(customer);
+				whatDoYouWantAnswers(isOpen,risposta,customer);
 				break;
 			case "O":
 				System.out.println(Services.colorSystemOut("Ora visualizzerai le tue offerte attive...", Color.YELLOW, false, false));
-				whatDoYouWant(customer);
+				whatDoYouWantAnswers(isOpen,risposta,customer);
 				break;
 			case "H":
 				System.out.println(Services.getHistory(false));
@@ -136,7 +136,6 @@ public class TextInterface {
 				break;
 			default:
 				if(isOpen && risposta.equals("N")){
-					/* nuovo ordine (la pizzeria è aperta) */
 					makeOrderText(customer);
 				} else {
 					System.out.println(Services.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
@@ -446,6 +445,7 @@ public class TextInterface {
 				confirmedTime = Services.colorSystemOut(confirmedTime,Color.GREEN,true,false);
 				System.out.println("\t>> Consegna prevista: " + confirmedTime + ".");
 				System.out.println(Services.getLine());
+				wolf.addOrder(order);
 				whatDoYouWant(customer);
 				break;
 			case "N":
@@ -528,6 +528,7 @@ public class TextInterface {
 				System.out.print(working2);
 				switch(wolf.createAccount(newUser,newPsw,confPsw)) {
 					case "OK":
+						//Customer c = wolf.getCustomer(user,psw);
 						Customer c = new Customer(newUser,newPsw);
 						System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
 						/* login automatico */
