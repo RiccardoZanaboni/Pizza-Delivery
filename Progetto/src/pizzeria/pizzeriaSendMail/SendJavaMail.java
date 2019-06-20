@@ -24,63 +24,43 @@ import java.util.Properties;
 
 public class SendJavaMail {
 	private String from = "pizzeria.wolf@gmail.com";
-	private String[] to = {"fecchio.andrea@gmail.com","andrea.fecchio01@universitadipavia.it"};
-	private String subject = "Prova di messaggio multi destinatario";
-	private String bodyText = " Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo" +
-			" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio " +
-			"culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo "+" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo" +
-			" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio " +
-			"culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo "+" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo" +
-			" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio " +
-			"culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo "+" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo" +
-			" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio " +
-			"culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo " +  " Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo" +
-			" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio " +
-			"culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo "+" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo" +
-			" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio " +
-			"culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo "+" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo" +
-			" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio " +
-			"culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo "+" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo" +
-			" Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio " +
-			"culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo Fecchio culo ";
+	private Properties props = setProperties();
+	private Authenticator auth = new SMTPAuthenticator("pizzeria.wolf@gmail.com", "password.01");
 
-	public SendJavaMail() {
+	private Properties setProperties(){
+		Properties props = new Properties();
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.debug", "true");
+		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.socketFactory.fallback", "false");
+		return props;
+	}
+
+	public void sendMail(String dest, String subject, String txt) {
 		try {
-			Properties props = new Properties();
-			props.put("mail.smtp.host", "smtp.gmail.com");
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.debug", "true");
-			props.put("mail.smtp.port", "465");
-			props.put("mail.smtp.socketFactory.port", "465");
-			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-			props.put("mail.smtp.socketFactory.fallback", "false");
-
-			Authenticator auth = new SMTPAuthenticator("pizzeria.wolf@gmail.com", "password.01");
-
 			Session session = Session.getInstance(props,auth);
 			session.setDebug(true);
 
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(from));
 
-			InternetAddress[] addTo = new InternetAddress[to.length];
-			for (int i = 0; i < addTo.length; i++) {
-				addTo[i] = new InternetAddress(to[i]);
-			}
-			message.setRecipients(Message.RecipientType.TO, addTo);
+			InternetAddress to = new InternetAddress(dest);
+			message.setRecipient(Message.RecipientType.TO, to);
 
 			message.setSubject(subject);
 			message.setSentDate(new Date());
 
 			MimeBodyPart messagePart = new MimeBodyPart();
-			messagePart.setText(bodyText);
+			messagePart.setText(txt);
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(messagePart);
 			//multipart.addBodyPart(attachmentPart);		// per allegati
 
 			message.setContent(multipart);
-
 			Transport.send(message);
 
 			System.out.println(Services.colorSystemOut("\t>> Il messaggio è stato inviato!", Color.YELLOW,true,false));
