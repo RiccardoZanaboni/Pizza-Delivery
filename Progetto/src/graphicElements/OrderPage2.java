@@ -70,12 +70,13 @@ public class OrderPage2 {
 		Button confirmButton = new Button("Prosegui →");
         confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e-> {
+			this.name = nameInput.getText();
 			this.address = getInfo(addressInput);
 			this.time = getChoice(choiceBox);
-			order.setName(customer.getUsername());
+			order.setName(this.name);
 			order.setAddress(this.address);
 			order.setCustomer(customer);
-			order.setTime(time);
+			order.setTime(this.time);
 			// FIXME: questo "if" va riaggiunto!!!	 if (checkInsert(this.name,this.password,this.address,this.time)) {
 				OrderPage3 orderPage3 = new OrderPage3();
 				orderPage3.display(window, order, pizzeria, scene3, customer);

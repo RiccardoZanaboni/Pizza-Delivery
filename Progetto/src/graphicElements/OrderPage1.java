@@ -35,6 +35,7 @@ public class OrderPage1 {
     private static Button backButton;
 
     public void display(Stage window, Order order, Pizzeria pizzeria, Customer customer) {
+        order.setCustomer(customer);
 
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -108,13 +109,12 @@ public class OrderPage1 {
         layout.prefHeightProperty().bind(window.heightProperty());
 
         layout.setOnKeyPressed(ke -> {
-            if(ke.getCode()== KeyCode.ENTER) {
+            if(ke.getCode()== KeyCode.ENTER)
                 confirmButton.fire();
-            }if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
+            if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
                backButton.fire();
             if(ke.getCode()==KeyCode.SHIFT)
-            {   shoppingCartButton.fire();
-            }
+                shoppingCartButton.fire();
         });
 
 

@@ -6,14 +6,7 @@ import javafx.scene.paint.Color;
 import pizzeria.*;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
 
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.io.Console;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -73,7 +66,7 @@ public class TextInterface {
 		String isOpen = Services.checkTimeOrder(wolf);
 		switch (isOpen) {
 
-			// se la pizzeria è aperta.
+			/* se la pizzeria è aperta */
 			case "OPEN":
 				System.out.println(Services.whatDoYouWantPossibilities(true));
 				System.out.print(Services.colorSystemOut("\t>> ", Color.YELLOW,false,false));
@@ -81,7 +74,7 @@ public class TextInterface {
 				whatDoYouWantAnswers(true,risposta,customer);
 				break;
 
-			// se la pizzeria è ancora aperta, ma non ci sono i tempi per eseguire un nuovo ordine.
+			/* se la pizzeria è ancora aperta, ma non ci sono i tempi per eseguire un nuovo ordine */
 			case "CLOSING":
 				String chiusura = "\nLa pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
 				System.out.println(Services.colorSystemOut(chiusura, Color.RED, false, false));
@@ -91,7 +84,7 @@ public class TextInterface {
 				whatDoYouWantAnswers(false,risposta,customer);
 				break;
 
-			// se la pizzeria per oggi ha terminato il turno lavorativo, quindi è chiusa.
+			/* se la pizzeria per oggi ha terminato il turno lavorativo, quindi è chiusa */
 			case "CLOSED":
 				String chiusa = "\nLa pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
 				System.out.println(Services.colorSystemOut(chiusa, Color.RED, false, false));
@@ -203,13 +196,7 @@ public class TextInterface {
 				if (!wolf.isOpen(d)) {
 					throw new ArrayIndexOutOfBoundsException();
 				}
-				if (!checkNotTooLate(d,tot)) {
-					throw new TryAgainExc();
-				}
-				if (!wolf.checkTimeBoxOven(ora, minuti, tot)) {
-					throw new TryAgainExc();
-				}
-				if(wolf.aFreeDeliveryMan(ora,minuti)==null){
+				if (!checkNotTooLate(d,tot) | !wolf.checkTimeBoxOven(ora,minuti,tot) | wolf.aFreeDeliveryMan(ora,minuti)==null) {
 					throw new TryAgainExc();
 				}
 				else {
@@ -370,8 +357,8 @@ public class TextInterface {
 
 	/** Gestisce l'inserimento del nome del cliente e dell'indirizzo di spedizione. */
 	private boolean insertNameAndAddress(Order order) throws RestartOrderExc {
-		String domanda1 = Services.colorSystemOut("Nome sul citofono:",Color.YELLOW,false,false);
-		System.out.println(domanda1 + "\t\t(Inserisci 'F' per annullare l'ordine)");
+		String qst = Services.colorSystemOut("Nome sul citofono:",Color.YELLOW,false,false);
+		System.out.println(qst + "\t\t(Inserisci 'F' per annullare l'ordine)");
 		String nome = scan.nextLine();
 		if (nome.toUpperCase().equals("F")) {
 			throw new RestartOrderExc();
@@ -385,8 +372,8 @@ public class TextInterface {
 		}
 		Customer c = new Customer(nome,password);
 		order.setCustomer(c);*/
-		String domanda3 = Services.colorSystemOut("Indirizzo di consegna:",Color.YELLOW,false,false);
-		System.out.println(domanda3 + "\t\t(Inserisci 'F' per annullare l'ordine)");
+		String addr = Services.colorSystemOut("Indirizzo di consegna:",Color.YELLOW,false,false);
+		System.out.println(addr + "\t\t(Inserisci 'F' per annullare l'ordine)");
 		String indirizzo = scan.nextLine();
 		if (indirizzo.toUpperCase().equals("F")) {
 			throw new RestartOrderExc();
@@ -449,7 +436,7 @@ public class TextInterface {
 				whatDoYouWant(customer);
 				break;
 			case "N":
-				/* annulla l'ordine. */
+				/* Annulla l'ordine. */
 				try {
 					throw new RestartOrderExc();
 				} catch (RestartOrderExc roe) {
@@ -684,7 +671,6 @@ public class TextInterface {
 	public static void main(String[] args) {
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
-
 		try {
             textInterface.askAccess();
         } catch (SQLException e) {

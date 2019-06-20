@@ -101,10 +101,10 @@ public class LoginPage {
 			try {
 				String user = nameInput.getText();
 				String psw = passwordInput.getText();
-				switch(pizzeria.checkLogin(user.toUpperCase(),psw)){
+				switch(pizzeria.checkLogin(user.toUpperCase(),psw.toUpperCase())){
 					case "OK":
 						MenuPage menuPage = new MenuPage();
-						Customer customer = new Customer(user.toUpperCase(), psw);
+						Customer customer = new Customer(user.toUpperCase(), psw.toUpperCase());
 						customer.setLoggedIn(true);     //TODO: da mettere anche in Textual
 						menuPage.display(window, pizzeria, customer);
 						break;

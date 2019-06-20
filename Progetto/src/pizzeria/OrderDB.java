@@ -6,13 +6,14 @@ public class OrderDB {
     public static PreparedStatement putOrder(Connection con, Order order, Timestamp date) {
         PreparedStatement preparedStatement = null;
         try {
-            String requestSql = "insert into sql7293749.Orders" + "(orderID, username, address, date, quantity) VALUES" + "(?,?,?,?,?)";
+            String requestSql = "insert into sql7293749.Orders" + "(orderID, username, address, citofono, quantity, date) VALUES" + "(?,?,?,?,?,?)";
             preparedStatement = con.prepareStatement(requestSql);
             preparedStatement.setString(1, order.getOrderCode());
-            preparedStatement.setString(2, order.getName());
+            preparedStatement.setString(2, order.getCustomer().getUsername());
             preparedStatement.setString(3, order.getAddress());
-            preparedStatement.setTimestamp(4, date);
-            preparedStatement.setInt(5, order.getNumPizze()); //colonna quantiy
+            preparedStatement.setString(4, order.getName());
+            preparedStatement.setInt(5, order.getNumPizze());
+            preparedStatement.setTimestamp(6, date);
 
         } catch (SQLException sqle) {
             Database.missingConnection();
@@ -34,11 +35,10 @@ public class OrderDB {
 
     public static ResultSet getOrders(Connection con) {
         ResultSet rs = null;
-        //Date date = new Date();
         try {
             Statement statement = con.createStatement();
-            rs = statement.executeQuery("select * from sql7293749.Orders");
-            // rs = statement.executeQuery("select * from sql7293749.Orders where date >= (\'"+ date +"\')");
+            rs = statement.executeQuery("SELECT * FROM sql7293749.Orders JOIN sql7293749.Users ON Orders.username = Users.User;");
+            // todo rs = statement.executeQuery("select * from sql7293749.Orders where date >= (\'"+ date +"\')");
         } catch (SQLException sqle) {
             Database.missingConnection();
         }

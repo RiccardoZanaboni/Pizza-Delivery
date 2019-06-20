@@ -265,11 +265,14 @@ public class Database {
 			String orderID = rs.getString(1);
 			String username = rs.getString(2);
 			String address = rs.getString(3);
-			Date date = rs.getTimestamp(4);
+			String citofono = rs.getString(4);
 			int quantity = rs.getInt(5);
+			Date date = rs.getTimestamp(6);
+			String psw = rs.getString(8);
 			Order order = new Order(i);
 			if(!orders.containsKey(orderID)){
-				order.setName(username);
+				order.setCustomer(new Customer(username,psw));
+				order.setName(citofono);
 				order.setAddress(address);
 				order.setTime(date);
 				order.setCompletedDb(pizzeria, quantity, date);
@@ -284,7 +287,7 @@ public class Database {
 							ingr.put(ingredienteAggiuntoString, ingredienteAggiuntoString);
 						} catch (Exception ignored) {}
 					}
-					Pizza p=new Pizza(rsPizza.getString(1),ingr,rsPizza.getDouble(3));
+					Pizza p = new Pizza(rsPizza.getString(1),ingr,rsPizza.getDouble(3));
 					//if(!order.getOrderedPizze().contains(p)){ // FIXME @zana DA VERIFICARE IL CONTAINS CHE HO MODIFICATO IN PIZZA --Pensavo servisse ma probabilmente no,lascio ancora per poco
 					order.getOrderedPizze().add(p);
 					//}
