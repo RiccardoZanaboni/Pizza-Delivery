@@ -470,8 +470,10 @@ public class TextInterface {
 	public void askAccess() throws SQLException {
 		String log = Services.colorSystemOut("L",Color.ORANGE,true,false);
 		String newAcc = Services.colorSystemOut("N",Color.ORANGE,true,false);
+		String recPsw = Services.colorSystemOut("R",Color.ORANGE,true,false);
 		System.out.println(Services.colorSystemOut("\t>> Digitare:\n",Color.YELLOW,false,false)
-				+ "\t\t'" + log + "' per eseguire il login,\n\t\t'" + newAcc + "' per creare un nuovo account.");
+				+ "\t\t'" + log + "' per eseguire il login,\n\t\t'" + newAcc + "' per creare un nuovo account,\n\t\t'"
+				+ recPsw + "' per recuperare i dati del tuo account.");
 		System.out.print(Services.colorSystemOut("\t>>\t",Color.YELLOW,false,false));
 		String answer = scan.nextLine().toUpperCase();
 		switch (answer) {
@@ -529,13 +531,27 @@ public class TextInterface {
 						askAccess();
 						break;
 					case "EXISTING":
-						System.out.println(Services.colorSystemOut("\nUtente già registrato: riprovare con un username differente.\nSe già registrato, effettuare il login.\n",Color.RED,false,false));
+						System.out.println(Services.colorSystemOut("\nDati già presenti nel Database: riprovare con indirizzo e-mail o username differente.\nSe già registrato, effettuare il login.\n",Color.RED,false,false));
 						askAccess();
 						break;
 					case "DIFFERENT":
 						System.out.println(Services.colorSystemOut("\nPassword non coincidente: riprovare.\n",Color.RED,false,false));
 						askAccess();
 						break;
+				}
+				break;
+			case "R":
+				String recoverMailQuestion = Services.colorSystemOut("\n\tInserisci l'indirizzo e-mail dell'account:\t", Color.YELLOW, false, false);
+				System.out.print(recoverMailQuestion);
+				String recMail = scan.nextLine().toUpperCase();
+				if(wolf.checkMail(recMail)) {
+					SendJavaMail newMail = new SendJavaMail();
+					newMail.recoverPassword(recMail);
+					System.out.println(Services.colorSystemOut("\nUna e-mail ti è stata inviata.\n", Color.YELLOW, false, false));
+					askAccess();
+				} else {
+					System.out.println(Services.colorSystemOut("\nSpiacenti: indirizzo e-mail non presente nel Database.\n", Color.RED, false, false));
+					askAccess();
 				}
 				break;
 			default:

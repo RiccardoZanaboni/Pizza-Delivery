@@ -76,7 +76,7 @@ public class SendJavaMail {
 	}
 
 	public void welcomeMail(String newUser, String newPsw) {
-		String dest = Database.getMailAddressCustomer(newUser);
+		String dest = Database.getInfoCustomer(newUser,3);
 		String subject = "Welcome to WolfPizza!";
 		StringBuilder txt = new StringBuilder();
 		txt.append("Carissimo/a ").append(newUser).append(",\n\n");
@@ -84,6 +84,18 @@ public class SendJavaMail {
 		txt.append("Hai creato con successo un nuovo account, tramite il quale avrai accesso a tutti i nostri servizi.\n");
 		txt.append("User: ").append(newUser).append("\n");
 		txt.append("Password: ").append(newPsw).append("\n\nAccedi ed ordina con noi!");
+		String messageBody = txt.toString();
+		sendMail(dest,subject,messageBody);
+	}
+
+	public void recoverPassword(String dest) {
+		String user = Database.getUserCustomer(dest);
+		String psw = Database.getInfoCustomer(user,2);
+		String subject = "Recupero Password";
+		StringBuilder txt = new StringBuilder();
+		txt.append("Carissimo/a utente,\n\nEcco i tuoi dati:\n");
+		txt.append("User: ").append(user).append("\n");
+		txt.append("Password: ").append(psw).append("\n\nAccedi ed ordina con noi!");
 		String messageBody = txt.toString();
 		sendMail(dest,subject,messageBody);
 	}

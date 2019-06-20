@@ -352,7 +352,7 @@ public class Pizzeria {
 		if(newPsw.equals(confPsw)){
 			if(newUser.length()>2 && newPsw.length()>2) {
 				/* se si registra correttamente, va bene */
-				if (!Database.putCustomer(newUser.toUpperCase(),newPsw,mailAddress))
+				if (!Database.putCustomer(newUser.toUpperCase(),newPsw,mailAddress) || checkMail(mailAddress))
 					return "EXISTING";
 				else
 					return "OK";
@@ -363,5 +363,9 @@ public class Pizzeria {
 			/* se la password non viene confermata correttamente */
 			return "DIFFERENT";
 		}
+	}
+
+	public boolean checkMail(String mail){
+		return Database.getUserCustomer(mail) != null;
 	}
 }

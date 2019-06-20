@@ -25,10 +25,20 @@ public class CustomerDB {
         return rs;
     }
 
-    public static PreparedStatement getMailAddress(Connection con, String username){
+    public static PreparedStatement getInfoCustomer(Connection con, String username){
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = con.prepareStatement("select * from sql7293749.Users where User = '" + username + "' && MailAddress is not null");
+            preparedStatement = con.prepareStatement("select * from sql7293749.Users where User = '" + username + "' ");
+        } catch(SQLException sqle){
+            Database.missingConnection();
+        }
+        return preparedStatement;
+    }
+
+    public static PreparedStatement getUserCustomer(Connection con, String mail){
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = con.prepareStatement("select * from sql7293749.Users where MailAddress = '" + mail + "' ");
         } catch(SQLException sqle){
             Database.missingConnection();
         }

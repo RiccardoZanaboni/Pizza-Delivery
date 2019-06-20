@@ -241,18 +241,32 @@ public class Database {
 		return hasRows;
 	}
 
-	public static String getMailAddressCustomer(String username){
+	public static String getInfoCustomer(String username, int column){
 		ResultSet rs;
-		String mail = null;
+		String info = null;
 		try {
-			rs = CustomerDB.getMailAddress(con, username).executeQuery();
+			rs = CustomerDB.getInfoCustomer(con, username).executeQuery();
 			while (rs.next()) {
-				mail = rs.getString(3);
+				info = rs.getString(column);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return mail;
+		return info;
+	}
+
+	public static String getUserCustomer(String mail){
+		ResultSet rs;
+		String user = null;
+		try {
+			rs = CustomerDB.getUserCustomer(con, mail).executeQuery();
+			while (rs.next()) {
+				user = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
 	}
 
 	public static boolean putOrder(Order order){
