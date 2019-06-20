@@ -52,7 +52,7 @@ public class OrderPage3 {
         titleBox.setMinSize(600, 50);
 
         VBox recapBox = new VBox(20);
-        Label userLabel = new Label("SIG.\t\t\t" + order.getCustomer().getUsername());
+        Label userLabel = new Label("SIG.\t\t\t" + order.getCustomer().getUsername().toLowerCase());
         Label interphoneNameLabel = new Label("CITOFONO:\t" + order.getName());
         Label yourAddressLabel = new Label("INDIRIZZO:\t" + order.getAddress());
         Label yourOrderTimeLabel = new Label ("ORARIO:\t\t" + order.getTime());

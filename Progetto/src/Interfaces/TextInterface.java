@@ -504,6 +504,9 @@ public class TextInterface {
 				String newUserQuestion = Services.colorSystemOut("\n\tNuovo username:\t\t", Color.YELLOW, false, false);
 				System.out.print(newUserQuestion);
 				String newUser = scan.nextLine().toUpperCase();
+				String mailQuestion = Services.colorSystemOut("\tIndirizzo e-mail:\t", Color.YELLOW, false, false);
+				System.out.print(mailQuestion);
+				String mail = scan.nextLine().toLowerCase();
 				String newPswQuestion = Services.colorSystemOut("\tNuova password:\t\t", Color.YELLOW, false, false);
 				System.out.print(newPswQuestion);
 				String newPsw = scan.nextLine().toUpperCase();
@@ -512,12 +515,13 @@ public class TextInterface {
 				String confPsw = scan.nextLine().toUpperCase();
 				String working2 = Services.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working2);
-				switch(wolf.createAccount(newUser,newPsw,confPsw)) {
+				switch(wolf.createAccount(mail,newUser,newPsw,confPsw)) {
 					case "OK":
-						//Customer c = wolf.getCustomer(user,psw);
-						Customer c = new Customer(newUser,newPsw);
+						SendJavaMail newMail = new SendJavaMail();
+						newMail.welcomeMail(newUser,newPsw);
 						System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
 						/* login automatico */
+						Customer c = new Customer(newUser,newPsw);
 						whatDoYouWant(c);
 						break;
 					case "SHORT":

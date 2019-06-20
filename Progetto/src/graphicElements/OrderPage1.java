@@ -75,7 +75,7 @@ public class OrderPage1 {
         backButton = createBackButton(pizzeria, window, customer);
 
         HBox hBoxIntestazione = new HBox();
-        Label labelOrdine = new Label("Totali pizze ordinate: ");
+        Label labelOrdine = new Label("Totale pizze ordinate: ");
         hBoxIntestazione.getChildren().addAll(labelOrdine, shoppingCartBox);
         hBoxIntestazione.setAlignment(Pos.CENTER);
         hBoxIntestazione.setId("hboxIntestazione");

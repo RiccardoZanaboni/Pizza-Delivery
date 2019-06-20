@@ -1,6 +1,8 @@
 package pizzeria.pizzeriaSendMail;
 
 import javafx.scene.paint.Color;
+import pizzeria.Customer;
+import pizzeria.Database;
 import pizzeria.Services;
 
 import javax.mail.*;
@@ -67,6 +69,22 @@ public class SendJavaMail {
 
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			//System.out.println(Services.colorSystemOut("\t>> Errore nell'invio del messaggio: indirizzo e-mail non valido.", Color.RED,true,false));
+			// TODO: questo è un errore critico? cioè, come procediamo se l'indirizzo e-mail è falso?
+			//  Dovremmo bloccare la creazione del nuovo account?
 		}
+	}
+
+	public void welcomeMail(String newUser, String newPsw) {
+		String dest = Database.getMailAddressCustomer(newUser);
+		String subject = "Welcome to WolfPizza!";
+		StringBuilder txt = new StringBuilder();
+		txt.append("Carissimo/a ").append(newUser).append(",\n\n");
+		txt.append("Abbiamo il piacere di darti il benvenuto nella famiglia WolfPizza!\n");
+		txt.append("Hai creato con successo un nuovo account, tramite il quale avrai accesso a tutti i nostri servizi.\n");
+		txt.append("User: ").append(newUser).append("\n");
+		txt.append("Password: ").append(newPsw).append("\n\nAccedi ed ordina con noi!");
+		String messageBody = txt.toString();
+		sendMail(dest,subject,messageBody);
 	}
 }

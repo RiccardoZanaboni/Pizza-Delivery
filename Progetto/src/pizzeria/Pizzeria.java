@@ -348,11 +348,11 @@ public class Pizzeria {
 		}
 	}
 
-	public String createAccount(String newUser, String newPsw, String confPsw) {
+	public String createAccount(String mailAddress, String newUser, String newPsw, String confPsw) {
 		if(newPsw.equals(confPsw)){
 			if(newUser.length()>2 && newPsw.length()>2) {
 				/* se si registra correttamente, va bene */
-				if (!Database.putCustomer(newUser.toUpperCase(),newPsw))
+				if (!Database.putCustomer(newUser.toUpperCase(),newPsw,mailAddress))
 					return "EXISTING";
 				else
 					return "OK";
@@ -363,13 +363,5 @@ public class Pizzeria {
 			/* se la password non viene confermata correttamente */
 			return "DIFFERENT";
 		}
-	}
-
-	public String getUserPizzeria() {
-		return this.userPizzeria;
-	}
-
-	public String getPswPizzeria() {
-		return this.pswPizzeria;
 	}
 }

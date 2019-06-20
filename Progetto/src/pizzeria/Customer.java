@@ -7,6 +7,7 @@ public class Customer {
     private String address;
     private String name;
     private String surname;
+    private String mailAddress;
 
     /**
      * Definisce il cliente attraverso il suo username univoco.
@@ -17,6 +18,7 @@ public class Customer {
         this.surname= "";
         this.loggedIn = false;
         this.address = "";
+        this.mailAddress = "";
     }
 
     public String getName() {
@@ -65,5 +67,13 @@ public class Customer {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getMailAddress() {
+        return mailAddress;
+    }
+
+    public void setMailAddress(String mailAddress) {
+        this.mailAddress = mailAddress;
     }
 }

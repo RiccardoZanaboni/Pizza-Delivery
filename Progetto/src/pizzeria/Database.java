@@ -219,17 +219,15 @@ public class Database {
 		return ingredienti;
 	}
 
-	public static boolean putCustomer(String username, String password) {
+	public static boolean putCustomer(String username, String password, String mailAddress) {
 		try {
-			CustomerDB.putCostumer(con, username, password).execute();
+			CustomerDB.putCostumer(con, username, password, mailAddress).execute();		// inserisce account nel DB
 			return true;
 		} catch (NumberFormatException nfe) {
 			String err = "\nErrore nell'inserimento dei dati utente. Riprovare:";
 			System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
 			return false;
 		} catch (SQLException sqle) {
-			//String err = "\nErrore nell'inserimento dell'utente nel database. Riprovare:";
-			//System.out.println(Services.colorSystemOut(err,Color.RED,false,false));
 			return false;
 		}
 	}
@@ -241,6 +239,20 @@ public class Database {
 			hasRows = true;
 		}
 		return hasRows;
+	}
+
+	public static String getMailAddressCustomer(String username){
+		ResultSet rs;
+		String mail = null;
+		try {
+			rs = CustomerDB.getMailAddress(con, username).executeQuery();
+			while (rs.next()) {
+				mail = rs.getString(3);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mail;
 	}
 
 	public static boolean putOrder(Order order){

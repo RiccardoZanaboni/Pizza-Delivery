@@ -77,7 +77,7 @@ public class LoginPage {
 					insertErrorLabel.setTextFill(Color.DARKRED);
 					insertErrorLabel.setText("Inserire utente e password");
 				} else if (!Database.getCustomers(nameInput.getText().toUpperCase(), passwordInput.getText())){
-					Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText());
+					Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), "");	//fixme @fetch: DA AGGIUNGERE INDIRIZZO MAIL
 					MenuPage menuPage = new MenuPage();
 					Customer customer = new Customer(nameInput.getText().toUpperCase(), passwordInput.getText());
 					customer.setLoggedIn(true);
