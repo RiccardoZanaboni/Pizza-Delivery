@@ -249,7 +249,7 @@ public class Database {
 		java.sql.Timestamp data = java.sql.Timestamp.valueOf(s);
 		try {
 			OrderDB.putOrder(con,order,data).execute();
-			OrderDB.putOrderedPizzas(con,order);
+			OrderDB.putOrderedPizzas(con,order).execute();
 			//todo: aggiornare anche la hashmap in Pizzeria
 			return true;
 		} catch (SQLException e) {

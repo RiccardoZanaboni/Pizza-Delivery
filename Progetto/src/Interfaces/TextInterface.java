@@ -432,7 +432,6 @@ public class TextInterface {
 				confirmedTime = Services.colorSystemOut(confirmedTime,Color.GREEN,true,false);
 				System.out.println("\t>> Consegna prevista: " + confirmedTime + ".");
 				System.out.println(Services.getLine());
-				wolf.addOrder(order);
 				whatDoYouWant(customer);
 				break;
 			case "N":
