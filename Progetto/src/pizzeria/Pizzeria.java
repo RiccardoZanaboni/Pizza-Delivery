@@ -348,7 +348,7 @@ public class Pizzeria {
 		}
 	}
 
-	public String createAccount(String mailAddress, String newUser, String newPsw, String confPsw) {
+	public String canCreateAccount(String mailAddress, String newUser, String newPsw, String confPsw) {
 		if(newPsw.equals(confPsw)){
 			if(newUser.length()>2 && newPsw.length()>2) {
 				/* se si registra correttamente, va bene */

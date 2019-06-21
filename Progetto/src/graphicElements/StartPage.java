@@ -159,7 +159,7 @@ public class StartPage {
 				} else if (!Database.getCustomers(nameInput.getText().toUpperCase(), passwordInput.getText())){		// se non presente nel db
 					Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), "");
 					//fixme @fetch: DA AGGIUNGERE INDIRIZZO MAIL
-					// todo: non controlla che l'utente sia già nel db: aggiungere Pizzeria.createAccount().
+					// todo: non controlla che l'utente sia già nel db: aggiungere Pizzeria.canCreateAccount().
 					MenuPage menuPage = new MenuPage();
 					Customer customer = new Customer(nameInput.getText().toUpperCase(), passwordInput.getText());
 					customer.setLoggedIn(true);

@@ -6,7 +6,6 @@ import javafx.scene.paint.Color;
 import pizzeria.*;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
 
-import java.io.Console;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -517,15 +516,20 @@ public class TextInterface {
 				String confPsw = scan.nextLine().toUpperCase();
 				String working2 = Services.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working2);
-				switch(wolf.createAccount(mail,newUser,newPsw,confPsw)) {
+				switch(wolf.canCreateAccount(mail,newUser,newPsw,confPsw)) {
 					case "OK":
-						Database.putCustomer(newUser,newPsw,mail);
 						SendJavaMail newMail = new SendJavaMail();
-						newMail.welcomeMail(newUser,newPsw);
-						System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
-						/* login automatico */
-						Customer c = new Customer(newUser,newPsw);
-						whatDoYouWant(c);
+						if(!newMail.welcomeMail(newUser,newPsw,mail)) {    // se indirizzo mail non valido
+							System.out.println(Services.colorSystemOut("Errore: indirizzo e-mail non valido. Riprovare.",Color.RED,false,false));
+							askAccess();
+						}
+						else {
+							Database.putCustomer(newUser,newPsw,mail);
+							System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
+							/* login automatico */
+							Customer c = new Customer(newUser, newPsw);
+							whatDoYouWant(c);
+						}
 						break;
 					case "SHORT":
 						System.out.println(Services.colorSystemOut("\nUsername o password troppo breve: riprovare.\n",Color.RED,false,false));

@@ -41,7 +41,7 @@ public class SendJavaMail {
 		return props;
 	}
 
-	public void sendMail(String dest, String subject, String txt) {
+	public boolean sendMail(String dest, String subject, String txt) {
 		try {
 			Session session = Session.getInstance(props,auth);
 			session.setDebug(true);
@@ -66,17 +66,14 @@ public class SendJavaMail {
 			Transport.send(message);
 
 			System.out.println(Services.colorSystemOut("\t>> Il messaggio è stato inviato!", Color.YELLOW,true,false));
+			return true;
 
 		} catch (MessagingException e) {
-			e.printStackTrace();
-			//System.out.println(Services.colorSystemOut("\t>> Errore nell'invio del messaggio: indirizzo e-mail non valido.", Color.RED,true,false));
-			// TODO: questo è un errore critico? cioè, come procediamo se l'indirizzo e-mail è falso?
-			//  Dovremmo bloccare la creazione del nuovo account?
+			return false;
 		}
 	}
 
-	public void welcomeMail(String newUser, String newPsw) {
-		String dest = Database.getInfoCustomer(newUser,3);
+	public boolean welcomeMail(String newUser, String newPsw, String dest) {
 		String subject = "Welcome to WolfPizza!";
 		StringBuilder txt = new StringBuilder();
 		txt.append("Carissimo/a ").append(newUser).append(",\n\n");
@@ -85,7 +82,7 @@ public class SendJavaMail {
 		txt.append("User: ").append(newUser).append("\n");
 		txt.append("Password: ").append(newPsw).append("\n\nAccedi ed ordina con noi!");
 		String messageBody = txt.toString();
-		sendMail(dest,subject,messageBody);
+		return sendMail(dest,subject,messageBody);
 	}
 
 	public void recoverPassword(String dest) {

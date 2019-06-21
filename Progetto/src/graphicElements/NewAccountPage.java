@@ -1,6 +1,5 @@
 package graphicElements;
 
-import graphicElements.PizzeriaPages.PizzeriaHomePage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,12 +14,7 @@ import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Database;
 import pizzeria.Pizzeria;
-import pizzeria.Services;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
-
-import java.sql.SQLException;
-
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
 
 public class NewAccountPage {
 	public void display(Stage window, Pizzeria pizzeria) {
@@ -63,15 +57,23 @@ public class NewAccountPage {
 		Button signUpButton = new Button("Registrati");
 		signUpButton.setMinSize(100, 50);
 		signUpButton.setOnAction(e->{
-			switch(pizzeria.createAccount(mailInput.getText(),nameInput.getText(),passwordInput.getText(),passwordInput2.getText())){
+			switch(pizzeria.canCreateAccount(mailInput.getText(),nameInput.getText(),passwordInput.getText(),passwordInput2.getText())){
 				case "OK":
-					Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), mailInput.getText());
 					SendJavaMail newMail = new SendJavaMail();
-					newMail.welcomeMail(nameInput.getText(),passwordInput.getText());
-					MenuPage menuPage = new MenuPage();
-					Customer customer = new Customer(nameInput.getText().toUpperCase(), passwordInput.getText());
-					customer.setLoggedIn(true);
-					menuPage.display(window, pizzeria, customer);
+					Boolean isCorrectAddress=false;
+					try{
+						isCorrectAddress = newMail.welcomeMail(nameInput.getText(),passwordInput.getText(),mailInput.getText());
+					} catch (Exception exc){ }
+					if(!isCorrectAddress){
+						insertErrorLabel.setTextFill(Color.DARKRED);
+						insertErrorLabel.setText("Indirizzo e-mail inesistente");
+					} else {
+						Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), mailInput.getText());
+						MenuPage menuPage = new MenuPage();
+						Customer customer = new Customer(nameInput.getText().toUpperCase(), passwordInput.getText());
+						customer.setLoggedIn(true);
+						menuPage.display(window, pizzeria, customer);
+					}
 					break;
 				case "SHORT":
 					insertErrorLabel.setTextFill(Color.DARKRED);
