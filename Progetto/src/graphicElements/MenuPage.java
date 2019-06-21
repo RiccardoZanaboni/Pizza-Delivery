@@ -1,7 +1,6 @@
 package graphicElements;
 
 import graphicAlerts.ClosedPizzeriaAlert;
-import graphicElements.PizzeriaPages.PizzeriaHomePage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -39,9 +38,9 @@ public class MenuPage {
         logoutButton.setGraphic(imageView1);
         //logoutButton.setMinSize(100, 50);
         logoutButton.setOnAction(e->{
-            LoginPage loginPage=new LoginPage();
+            StartPage startPage =new StartPage();
             customer.setLoggedIn(false);
-            loginPage.display(window, pizzeria);
+            startPage.display(window, pizzeria);
 
         });
         hBox.getChildren().addAll(label1, usernameLabel,logoutButton);
@@ -127,8 +126,8 @@ public class MenuPage {
         layout.setOnKeyPressed(ke -> {
             if(ke.getCode()== KeyCode.RIGHT) {
                 chiSiamoButton.fire();
-            }if(ke.getCode()==KeyCode.LEFT)
-            {   makeOrderButton.fire();
+            }if(ke.getCode()==KeyCode.LEFT) {
+            	makeOrderButton.fire();
             }
         });
 		Scene scene1 = new Scene(layout,800, 600);

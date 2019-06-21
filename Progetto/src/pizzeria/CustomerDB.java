@@ -18,7 +18,7 @@ public class CustomerDB {
         ResultSet rs = null;
         try {
             Statement statement = con.createStatement();
-            rs = statement.executeQuery("select * from sql7293749.Users where User = '" + username + "' and Pass = '" + password + "' ");
+            rs = statement.executeQuery("select * from sql7293749.Users where User = '" + username + "' && Pass = '" + password + "' ");
         }catch (SQLException sqle){
             Database.missingConnection();
         }

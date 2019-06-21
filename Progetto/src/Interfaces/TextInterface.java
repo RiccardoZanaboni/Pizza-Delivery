@@ -418,7 +418,7 @@ public class TextInterface {
 		String domanda = Services.colorSystemOut("Confermi l'ordine?",Color.YELLOW,false,false);
 		String s = Services.colorSystemOut("S",Color.ORANGE,true,false);
 		String n = Services.colorSystemOut("N",Color.ORANGE,true,false);
-		System.out.println(domanda + "  Premere '" + s + "' per confermare, '" + n + "' per annullare: ");
+		System.out.println(domanda + "  Digitare '" + s + "' per confermare, '" + n + "' per annullare: ");
 		String risp = scan.nextLine().toUpperCase();
 		switch (risp) {
 			case "S":
@@ -519,6 +519,7 @@ public class TextInterface {
 				System.out.print(working2);
 				switch(wolf.createAccount(mail,newUser,newPsw,confPsw)) {
 					case "OK":
+						Database.putCustomer(newUser,newPsw,mail);
 						SendJavaMail newMail = new SendJavaMail();
 						newMail.welcomeMail(newUser,newPsw);
 						System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
@@ -691,6 +692,11 @@ public class TextInterface {
 	public static void main(String[] args) {
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
+		try {
+			System.out.println(Database.getOrdersDB(textInterface.wolf.getOrders(),textInterface.wolf).size());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		try {
             textInterface.askAccess();
         } catch (SQLException e) {

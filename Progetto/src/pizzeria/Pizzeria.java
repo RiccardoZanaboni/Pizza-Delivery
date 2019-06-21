@@ -352,10 +352,14 @@ public class Pizzeria {
 		if(newPsw.equals(confPsw)){
 			if(newUser.length()>2 && newPsw.length()>2) {
 				/* se si registra correttamente, va bene */
-				if (!Database.putCustomer(newUser.toUpperCase(),newPsw,mailAddress) || checkMail(mailAddress))
-					return "EXISTING";
-				else
-					return "OK";
+				try {
+					if (Database.getCustomers(newUser.toUpperCase(),newPsw) || checkMail(mailAddress))
+						return "EXISTING";
+					else
+						return "OK";
+				} catch (SQLException e) {
+					return "OK";	// è sicuro ???????????????
+				}
 			} else
 				/* password troppo breve */
 				return "SHORT";

@@ -26,17 +26,107 @@ import java.sql.SQLException;
  *
  */
 
-public class LoginPage {
 
-   /* private boolean OpenPizzeria=true;
+public class StartPage {
 
-    public boolean isOpenPizzeria() {
-        return OpenPizzeria;
-    }
+	public void display(Stage window, Pizzeria pizzeria) {
 
-    public void setOpenPizzeria(boolean openPizzeria) {
-        OpenPizzeria = openPizzeria;
-    }*/
+		Button signUpButton = new Button("Registrati");
+		signUpButton.setMinSize(100, 50);
+		signUpButton.setOnAction(e-> {
+			NewAccountPage newAccountPage = new NewAccountPage();
+			newAccountPage.display(window,pizzeria);
+		});
+
+		Button loginButton = new Button("Login");
+		loginButton.setMinSize(100, 50);
+		loginButton.setOnAction(e-> {
+			LoginAccountPage loginAccountPage = new LoginAccountPage();
+			loginAccountPage.display(window, pizzeria);
+		});
+
+		Button recoverPswButton = new Button("Recupera Password");
+		recoverPswButton.setMinSize(100, 50);
+		recoverPswButton.setOnAction(e->
+			System.out.println("ciao")
+			//RecoverPswPage.display(window, pizzeria)
+		);
+
+		HBox buttonBox = new HBox(50);
+		buttonBox.getChildren().addAll(signUpButton, loginButton, recoverPswButton);
+		buttonBox.setAlignment(Pos.CENTER);
+
+		VBox layout = new VBox(20);
+		layout.setAlignment(Pos.CENTER);
+		layout.getChildren().addAll(buttonBox);
+
+		layout.getStyleClass().add("layout");
+
+		Scene scene = new Scene(layout, 880, 600);
+		window.setScene(scene);
+		scene.getStylesheets().addAll(this.getClass().getResource("cssStyle/loginPageStyle.css").toExternalForm());
+		window.show();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// VERSIONE ORIGINALE PRIMA CHE FETCH LO TOCCASSE
+
+
+/*
+public class StartPage {
 
 	public void display(Stage window, Pizzeria pizzeria) {
 
@@ -59,16 +149,6 @@ public class LoginPage {
 		Label insertErrorLabel = new Label("");
 		insertErrorLabel.setId("errorLabel");
 
-
-
-        /*Button pizzeriaButton = new Button("Apri pizzeria");  // Bottone aggiunto solo per comodità
-        pizzeriaButton.setOnAction(e->{
-            if(nameInput.getText().equals(pizzeria.getUserPizzeria()) && passwordInput.getText().equals(pizzeria.getPswPizzeria())) {
-                PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
-                pizzeriaHomePage.display(pizzeria);
-            }
-        });*/
-
 		Button signUpButton = new Button("Registrati");
 		signUpButton.setMinSize(100, 50);
 		signUpButton.setOnAction(e->{
@@ -76,19 +156,17 @@ public class LoginPage {
 				if(nameInput.getText().equals("") || passwordInput.getText().equals("")) {
 					insertErrorLabel.setTextFill(Color.DARKRED);
 					insertErrorLabel.setText("Inserire utente e password");
-				} else if (!Database.getCustomers(nameInput.getText().toUpperCase(), passwordInput.getText())){
-					Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), "");	//fixme @fetch: DA AGGIUNGERE INDIRIZZO MAIL
+				} else if (!Database.getCustomers(nameInput.getText().toUpperCase(), passwordInput.getText())){		// se non presente nel db
+					Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), "");
+					//fixme @fetch: DA AGGIUNGERE INDIRIZZO MAIL
+					// todo: non controlla che l'utente sia già nel db: aggiungere Pizzeria.createAccount().
 					MenuPage menuPage = new MenuPage();
 					Customer customer = new Customer(nameInput.getText().toUpperCase(), passwordInput.getText());
 					customer.setLoggedIn(true);
 					menuPage.display(window, pizzeria, customer);
-				} else if (nameInput.getText().equals("") || passwordInput.getText().equals("")){
-					insertErrorLabel.setTextFill(Color.DARKRED);
-					insertErrorLabel.setText("Riempire tutti i campi");
 				} else {
 					insertErrorLabel.setTextFill(Color.DARKRED);
 					insertErrorLabel.setText("Utente già registrato");
-					//System.out.println("Utente gia esistente");
 				}
 			} catch (SQLException e1) {
 				System.out.println("Problema");
@@ -119,22 +197,6 @@ public class LoginPage {
 						insertErrorLabel.setText("Username o password errati");
 						break;
 				}
-                /*if (nameInput.getText().equals(pizzeria.getUserPizzeria()) && passwordInput.getText().equals(pizzeria.getPswPizzeria())) {
-                    PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
-                    pizzeriaHomePage.display(pizzeria);
-                }
-                else if (nameInput.getText().equals("") && passwordInput.getText().equals("")){
-                    insertErrorLabel.setTextFill(Color.DARKRED);
-                    insertErrorLabel.setText("Username o password errati");
-                } else if (Database.getCustomers(nameInput.getText(), passwordInput.getText())){
-                    MenuPage menuPage = new MenuPage();
-                    Customer customer = new Customer(nameInput.getText(), passwordInput.getText());
-                    customer.setLoggedIn(true);
-                    menuPage.display(window, pizzeria, customer);
-                } else {
-                    insertErrorLabel.setTextFill(Color.DARKRED);
-                    insertErrorLabel.setText("Username o password errati");
-                }*/
 			} catch (SQLException ignored) {}
 		});
 
@@ -153,11 +215,6 @@ public class LoginPage {
 			if(ke.getCode()== KeyCode.ENTER) {
 				loginButton.fire();
 			}
-        /*
-            if(ke.getCode()== KeyCode.SHIFT) {
-                signUpButton.fire();
-            }
-            */
 		});
 
 		layout.getStyleClass().add("layout");
@@ -168,3 +225,4 @@ public class LoginPage {
 		window.show();
 	}
 }
+*/
