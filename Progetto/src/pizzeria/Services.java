@@ -106,7 +106,7 @@ public class Services {
 		String modMenu = Services.colorSystemOut("M",Color.ORANGE,true,false);
 		String modMenuS = "' puoi modificare voci del menu;\n";
 		String mail = Services.colorSystemOut("S",Color.ORANGE,true,false);
-		String mailS = "' puoi inviare una mail a tutti gli utenti registrati;\n";
+		String mailS = "' puoi inviare una mail ad un utente;\n";
 		String exit = Services.colorSystemOut("E",Color.ORANGE,true,false);
 		String exitS = "' puoi uscire dalla tua area privilegiata.\n";
 
@@ -116,7 +116,7 @@ public class Services {
 		s.append(con).append(pers).append(persS);
 		s.append(con).append(modMenu).append(modMenuS);
 		s.append(con).append(mail).append(mailS);
-		//s.append(con).append(info).append(infoS);
+		//fixme: questo con ogni probabilità va tolto.		s.append(con).append(info).append(infoS);
 		s.append(con).append(exit).append(exitS);
 
 		return s.toString();
@@ -155,7 +155,7 @@ public class Services {
 		while (ingred.endsWith(" "))		// elimina tutti gli spazi dopo la stringa
 			ingred = ingred.substring(0,ingred.length()-1);
 		ingred = ingred.replace("'"," ");
-		ingred = ingred.replace(" ","_");
+		//ingred = ingred.replace(" ","_");
 		ingred = ingred.toUpperCase();
 		return ingred;
 	}

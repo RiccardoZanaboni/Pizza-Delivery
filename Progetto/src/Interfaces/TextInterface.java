@@ -693,11 +693,6 @@ public class TextInterface {
 		TextInterface textInterface = new TextInterface();
 		System.out.println(textInterface.wolf.helloThere());
 		try {
-			System.out.println(Database.getOrdersDB(textInterface.wolf.getOrders(),textInterface.wolf).size());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		try {
             textInterface.askAccess();
         } catch (SQLException e) {
 			e.printStackTrace();

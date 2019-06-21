@@ -21,12 +21,10 @@ public class OrderDB {
         return preparedStatement;
     }
 
-    public static PreparedStatement putOrderedPizzas(Connection con, Order order) {
+    public static PreparedStatement putOrderedPizzas(Connection con, Order order, Pizza p) {
         PreparedStatement preparedStatement = null;
         try {
-            for (Pizza p : order.getOrderedPizze()) {
-                preparedStatement = con.prepareStatement("insert into sql7293749.OrderedPizza values ('" + order.getOrderCode() + "', '" + p.getName() + "', '" + p.getDescription() + "', '" + p.getPrice() + "');");
-            }
+            preparedStatement = con.prepareStatement("insert into sql7293749.OrderedPizza values ('" + order.getOrderCode() + "', '" + p.getName() + "', '" + p.getDescription() + "', '" + p.getPrice() + "'); ");
         } catch (SQLException sqle) {
             Database.missingConnection();
         }

@@ -148,6 +148,7 @@ public class Database {
 	 * che è salvato sul Database.
 	 */
 	public static void putPizza(Pizzeria pizzeria) {
+		HashMap<String,String> ingredMap = new HashMap<>();
 		try {
 			System.out.println(Services.colorSystemOut("Inserisci il nome della pizza da aggiungere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
@@ -158,8 +159,7 @@ public class Database {
 			System.out.println(TextInterface.possibleAddictions(pizzeria));
 			descriz = scan.nextLine().toUpperCase();
 
-			HashMap<String,String> ingredMap = new HashMap<>();
-			StringTokenizer st = new StringTokenizer(descriz);
+			StringTokenizer st = new StringTokenizer(descriz,",");
 			while (st.hasMoreTokens()) {
 				String ingr = Services.arrangeIngredientString(st);
 				if(pizzeria.getIngredientsPizzeria().containsKey(ingr) && !ingredMap.containsKey(ingr)) {
@@ -168,7 +168,7 @@ public class Database {
 				}
 			}
 			if(descrizCorretta.toString().length()>0)
-				descriz = descrizCorretta.toString().substring(0,descrizCorretta.toString().length()-1);
+				descriz = descrizCorretta.toString().substring(0,descrizCorretta.toString().length()-1);	// toglie l'ultima virgola
 			else
 				descriz = "";
 
@@ -176,7 +176,7 @@ public class Database {
 			double prezzo = Double.parseDouble(scan.nextLine());
 			if (putPizza(name, descriz, prezzo)) {
 				pizzeria.getMenu().put(name, new Pizza(name,ingredMap,prezzo));
-				String ok = name + " aggiunta correttamente.";
+				String ok = name + " (" + descriz.toLowerCase() + ") aggiunta correttamente.";
 				System.out.println(Services.colorSystemOut(ok,Color.YELLOW,false,false));
 			} else {
 				throw new SQLException();
@@ -275,8 +275,10 @@ public class Database {
 		java.sql.Timestamp data = java.sql.Timestamp.valueOf(s);
 		try {
 			OrderDB.putOrder(con,order,data).execute();
-			OrderDB.putOrderedPizzas(con,order).execute();
-			//todo: aggiornare anche la hashmap in Pizzeria
+			for(Pizza p: order.getOrderedPizze()){
+				OrderDB.putOrderedPizzas(con,order,p).execute();
+				//todo: aggiornare anche la hashmap in Pizzeria
+			}
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

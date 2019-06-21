@@ -1,5 +1,6 @@
 package graphicElements;
 
+import graphicAlerts.GenericAlert;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -44,10 +45,11 @@ public class WhoWeArePage {
         Button buttonVideo= new Button("Video Presentazione!!");
         buttonVideo.setId("confirmButton");
         buttonVideo.setOnAction(event ->  {
+            //TODO: non funziona!!!
             try {
                 Desktop.getDesktop().browse(new URI("https://drive.google.com/open?id=1IywtXGVTaywaYirjZSVLLV3KDOI1bBx-"));
-            } catch (IOException | URISyntaxException e) {
-                System.out.println(Services.colorSystemOut("Spiacenti: video di presentazione al momento non disponibile.", Color.RED, false, false));
+            } catch (Exception e) {
+                GenericAlert.display("Spiacenti: video di presentazione al momento non disponibile.");
             }
     });
         HBox hBox = new HBox(10);
