@@ -1,6 +1,7 @@
 package pizzeria;
 
 import Interfaces.TextInterface;
+import exceptions.TryAgainExc;
 import javafx.scene.paint.Color;
 import java.sql.*;
 import java.text.DateFormat;
@@ -167,13 +168,16 @@ public class Database {
 					descrizCorretta.append(ingr).append(",");
 				}
 			}
-			if(descrizCorretta.toString().length()>0)
-				descriz = descrizCorretta.toString().substring(0,descrizCorretta.toString().length()-1);	// toglie l'ultima virgola
-			else
-				descriz = "";
-
-			System.out.print(Services.colorSystemOut("Inserisci prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
+			if(descrizCorretta.toString().length()>0) {
+				descriz = descrizCorretta.toString().substring(0, descrizCorretta.toString().length() - 1);    // toglie l'ultima virgola
+			} else {
+				descriz = "ERR";
+			}
+			System.out.print(Services.colorSystemOut("Inserisci il prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
 			double prezzo = Double.parseDouble(scan.nextLine());
+			if(name.length() == 0 || pizzeria.getMenu().containsKey(name) || descriz.equals("ERR")){
+				throw new TryAgainExc();
+			}
 			if (putPizza(name, descriz, prezzo)) {
 				pizzeria.getMenu().put(name, new Pizza(name,ingredMap,prezzo));
 				String ok = name + " (" + descriz.toLowerCase() + ") aggiunta correttamente.";
@@ -181,7 +185,7 @@ public class Database {
 			} else {
 				throw new SQLException();
 			}
-		} catch (NumberFormatException nfe) {
+		} catch (TryAgainExc | NumberFormatException e) {
 			String err = "Errore nell'inserimento dei dati della pizza.";
 			System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
 		} catch (SQLException sqle) {
