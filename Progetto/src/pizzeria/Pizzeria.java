@@ -90,6 +90,7 @@ public class Pizzeria {
 	/** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. */
 	public void addOrder(Order order) {
 		Database.putOrder(order);
+		this.orders.put(order.getOrderCode(),order);
 	}
 
 	/** Aggiunge la pizza specificata al menu della pizzeria. */

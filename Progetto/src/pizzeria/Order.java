@@ -158,8 +158,6 @@ public class Order implements Comparable<Order> {
 		for(int i = 0; i< getNumPizze(); i++){
 			totale += this.orderedPizze.get(i).getPrice();
 		}
-
-		totale = Math.floor(totale);
 		return totale;
 	}
 

@@ -277,7 +277,6 @@ public class Database {
 			OrderDB.putOrder(con,order,data).execute();
 			for(Pizza p: order.getOrderedPizze()){
 				OrderDB.putOrderedPizzas(con,order,p).execute();
-				//todo: aggiornare anche la hashmap in Pizzeria
 			}
 			return true;
 		} catch (SQLException e) {
