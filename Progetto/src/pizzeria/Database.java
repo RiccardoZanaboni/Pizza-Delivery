@@ -66,14 +66,14 @@ public class Database {
 		try {
 			System.out.print(Services.colorSystemOut("Inserisci il nome del nuovo ingrediente:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
-			if (!putTopping(name))
-				throw new SQLException();
+			if (!putTopping(name) || name.length() == 0)
+				throw new Exception();
 			else{
 				pizzeria.getIngredientsPizzeria().put(name,name);
 				String ok = name + " aggiunto correttamente.";
 				System.out.println(Services.colorSystemOut(ok,Color.YELLOW,false,false));
 			}
-		} catch (SQLException sqle) {
+		} catch (Exception e) {
 			String err = "Errore nell'aggiunta dell'ingrediente al Database.";
 			System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
 		}

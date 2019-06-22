@@ -77,10 +77,10 @@ public class OrderPage2 {
 			order.setAddress(this.address);
 			order.setCustomer(customer);
 			order.setTime(this.time);
-			// FIXME: questo "if" va riaggiunto!!!	 if (checkInsert(this.name,this.password,this.address,this.time)) {
+			if (checkInsert(this.name,this.address,this.time)) {
 				OrderPage3 orderPage3 = new OrderPage3();
 				orderPage3.display(window, order, pizzeria, scene3, customer);
-			//}
+			}
 		});
 
 		Button backButton = new Button("← Torna indietro");
@@ -134,17 +134,13 @@ public class OrderPage2 {
         window.setScene(scene3);
 	}
 
-	private boolean checkInsert(String name, String password, String address, Date time) {
+	private boolean checkInsert(String name, String address, Date time) {
 		if(name.equals("")) {
 			GenericAlert.display("Attenzione: non è stato inserito il nome!");
 			return false;
 		}
-		else if(password.equals("")) {
-			GenericAlert.display("Attenzione: non è stato inserito l'indirizzo!");
-			return false;
-		}
 		else if(address.equals("")) {
-			GenericAlert.display("Attenzione: non è stata inserita la password!");
+			GenericAlert.display("Attenzione: non è stato inserito l'indirizzo!");
 			return false;
 		}
 		else if(time==null) {
@@ -171,7 +167,7 @@ public class OrderPage2 {
 		} catch (ParseException e) {
 			return null;
 		}
-		System.out.println(orario);
+		//System.out.println(orario);
 		return oraScelta;
 	}
 
