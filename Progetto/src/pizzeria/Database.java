@@ -151,11 +151,11 @@ public class Database {
 	public static void putPizza(Pizzeria pizzeria) {
 		HashMap<String,String> ingredMap = new HashMap<>();
 		try {
-			System.out.println(Services.colorSystemOut("Inserisci il nome della pizza da aggiungere:\t", Color.YELLOW, false, false));
+			System.out.println(Services.colorSystemOut("Inserire il nome della pizza da aggiungere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
 			String descriz;
 			StringBuilder descrizCorretta = new StringBuilder();
-			String adding = Services.colorSystemOut("Inserisci gli ingredienti da aggiungere, separati da virgola, poi invio:", Color.YELLOW, false, false);
+			String adding = Services.colorSystemOut("Inserire gli ingredienti da aggiungere, separati da virgola, poi invio:", Color.YELLOW, false, false);
 			System.out.println(adding);
 			System.out.println(TextInterface.possibleAddictions(pizzeria));
 			descriz = scan.nextLine().toUpperCase();
@@ -173,7 +173,7 @@ public class Database {
 			} else {
 				descriz = "ERR";
 			}
-			System.out.print(Services.colorSystemOut("Inserisci il prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
+			System.out.print(Services.colorSystemOut("Inserire il prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
 			double prezzo = Double.parseDouble(scan.nextLine());
 			if(name.length() == 0 || pizzeria.getMenu().containsKey(name) || descriz.equals("ERR")){
 				throw new TryAgainExc();
@@ -189,7 +189,7 @@ public class Database {
 			String err = "Errore nell'inserimento dei dati della pizza.";
 			System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
 		} catch (SQLException sqle) {
-			String err = "Errore nell'inserimento della pizza nel database.";
+			String err = "Errore nell'inserimento della pizza nel Database.";
 			System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
 		}
 	}
