@@ -35,7 +35,7 @@ class ButtonRmvPizza extends Button {
 		        pizza.setCount(false);
 		    }
 		    countPizza.setText("" + pizza.getCount());
-		    order.setNumTemporaryPizze(-1);
+		    order.setNumTemporaryPizze(false);
 		    shoppingCartButton.setText(order.getNumTemporaryPizze() + "");
 
 		    if (pizza.getCount()==0) {		// se eliminate tutte, vengono nascoste nel carrello

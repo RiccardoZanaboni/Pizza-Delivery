@@ -80,16 +80,17 @@ public class Pizzeria {
 
 	public HashMap<String,Order> getOrders() {
 		try {
-			orders = Database.getOrdersDB(orders,this); //FIXME @ZANA SENZA QUESTO UGUALE NON FUNZIONA NON CAPISCO
+			Database.getOrdersDB(this, this.orders); //FIXME @ZANA SENZA QUESTO UGUALE NON FUNZIONA NON CAPISCO
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return orders;
+		return this.orders;
 	}
 
 	/** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. */
-	public void addOrder(Order order) {
+	public void addInfoOrder(Order order) {
 		Database.putOrder(order);
+		this.orders.remove(order.getOrderCode());
 		this.orders.put(order.getOrderCode(),order);
 	}
 
@@ -167,12 +168,9 @@ public class Pizzeria {
 
 	/** Crea un nuovo ordine e aggiorna il numero di ordini giornalieri. */
 	public Order initializeNewOrder() {
-		Order order = null;
-		try {
-			order = new Order(Database.getOrdersDB(this.orders,this).size());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Order order;
+		order = new Order(Database.countOrdersDB());
+		Database.addNewVoidOrderToDB(order);
 		return order;
 	}
 
@@ -275,7 +273,7 @@ public class Pizzeria {
 
 	/** Controlla che la pizzeria possa garantire la consegna di "tot" pizze all'orario "d",
 	 * in base alla disponibilità di forno e fattorini. */
-	public void updateOvenAndDeliveryMan(Date d, int tot) {
+	public void updateOvenAndDeliveryMan(Date d, int tot, Order order) {
 		// PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
 		if(this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp()<tot){
 			int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp();
@@ -286,7 +284,7 @@ public class Pizzeria {
 		}
 		if(aFreeDeliveryMan(d.getHours(), d.getMinutes()) != null)
 			aFreeDeliveryMan(d.getHours(), d.getMinutes()).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
-		else System.out.println("porci...");    //TODO non ho fattorini disponibili!
+		else System.out.println("PROBLEMA IN PIZZERIA.UPDATEOVENANDDELIVERYMAN() per " + order.getOrderCode());    //TODO non ho fattorini disponibili!
 	}
 
 	public double getSUPPL_PRICE() {
@@ -322,10 +320,6 @@ public class Pizzeria {
 
 	public int getAvailablePlaces() {
 		return this.availablePlaces;
-	}
-
-	public int getNumDailyOrders() {
-		return this.numDailyOrders;
 	}
 
 	public int getOVEN_MINUTES() {
@@ -371,6 +365,6 @@ public class Pizzeria {
 	}
 
 	public boolean checkMail(String mail){
-		return Database.getUserCustomer(mail) != null;
+		return Database.getUsernameCustomer(mail) != null;
 	}
 }

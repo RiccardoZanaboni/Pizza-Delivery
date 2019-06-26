@@ -22,7 +22,7 @@ class ButtonAddPizza extends Button {
 				order.addPizza(pizza, 1);
 				pizza.setCount(true);
 				//countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
-				order.setNumTemporaryPizze(1);
+				order.setNumTemporaryPizze(true);
 				shoppingCartButton.setText(order.getNumTemporaryPizze()+"");
 			} else
 				GenericAlert.display("Attenzione: numero massimo di pizze raggiunto!");

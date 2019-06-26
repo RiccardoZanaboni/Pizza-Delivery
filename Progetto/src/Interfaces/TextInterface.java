@@ -424,7 +424,7 @@ public class TextInterface {
 				/* Controlla lo stato della connessione, nel caso segnala errore. */
 				Database.openDatabase();
 				/* Conferma l'ordine e lo aggiunge a quelli della pizzeria. */
-				wolf.addOrder(order);
+				wolf.addInfoOrder(order);
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
 				System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = Services.timeStamp(orario.getHours(),orario.getMinutes());
@@ -575,7 +575,7 @@ public class TextInterface {
 		switch (risposta){
 			case "V":
 				System.out.println(Services.colorSystemOut("Ecco gli ordini da evadere...\n", Color.YELLOW, false, false));
-				//TODO: OrderDB.deleteOrdersNotToday();
+				/* Visualizza solo gli ordini di oggi */
 				for(String code : wolf.getOrders().keySet()){
 					if(wolf.getOrders().get(code).getTime().getDate()==(new Date().getDate()))
 						System.out.println(wolf.getOrders().get(code).recapOrder());
@@ -630,7 +630,7 @@ public class TextInterface {
 			if (line.equals(""))
 				break;
 			else
-				txt.append(line+"\n");
+				txt.append(line).append("\n");
 		} while (true);
 		askConfirmSendMail(address, subject, txt.toString());
 	}

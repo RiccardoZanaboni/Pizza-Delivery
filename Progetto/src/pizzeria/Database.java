@@ -31,7 +31,9 @@ public class Database {
 		System.exit(1);
 	}
 
-	//TODO: fare in modo che ingredienti non esistenti diano errore!!! (controllare ogni ingrediente)
+	/** Tutto il controllo è fatto per verificare che la pizza non fosse già presente nel DB
+	 * (richiamando il getPizzeDB sia prima che dopo l'insierimento della nuova pizza, verifico
+	 * che il DB sia effettivamente stato modificato). */
 	public static boolean putPizza(String name, String ingred, double prezzo) {
 		try {
 			ResultSet rs1 = PizzaDB.getPizzeDB(con).executeQuery();
@@ -245,13 +247,13 @@ public class Database {
 		return hasRows;
 	}
 
-	public static String getInfoCustomer(String username, int column){
+	public static String getPasswordCustomer(String username){
 		ResultSet rs;
 		String info = null;
 		try {
 			rs = CustomerDB.getInfoCustomer(con, username).executeQuery();
 			while (rs.next()) {
-				info = rs.getString(column);
+				info = rs.getString(2);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -259,7 +261,7 @@ public class Database {
 		return info;
 	}
 
-	public static String getUserCustomer(String mail){
+	public static String getUsernameCustomer(String mail){
 		ResultSet rs;
 		String user = null;
 		try {
@@ -275,8 +277,8 @@ public class Database {
 
 	public static boolean putOrder(Order order){
 		DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String s = dateFormatYMD.format(order.getTime());
-		java.sql.Timestamp data = java.sql.Timestamp.valueOf(s);
+		String dataString = dateFormatYMD.format(order.getTime());
+		java.sql.Timestamp data = java.sql.Timestamp.valueOf(dataString);
 		try {
 			OrderDB.putOrder(con,order,data).execute();
 			for(Pizza p: order.getOrderedPizze()){
@@ -289,7 +291,41 @@ public class Database {
 		}
 	}
 
-	public static HashMap<String,Order> getOrdersDB(HashMap<String,Order> orders, Pizzeria pizzeria) throws SQLException {
+	public static void addNewVoidOrderToDB(Order order) {
+		try {
+			DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String dataString = dateFormatYMD.format(new Date());
+			java.sql.Timestamp data = java.sql.Timestamp.valueOf(dataString);
+			String requestSql = "insert into sql7293749.Orders (orderID, username, address, citofono, quantity, date) VALUES (?,?,?,?,?,?)";
+			PreparedStatement preparedStatement = con.prepareStatement(requestSql);
+			preparedStatement.setString(1, order.getOrderCode());
+			preparedStatement.setString(2, "");
+			preparedStatement.setString(3, "");
+			preparedStatement.setString(4, "");
+			preparedStatement.setInt(5, 0);
+			preparedStatement.setTimestamp(6, data);
+			preparedStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public static int countOrdersDB() {
+		String requestSql = "select count(*) from sql7293749.Orders";
+		int num = -1;
+		try {
+			PreparedStatement preparedStatement = con.prepareStatement(requestSql);
+			ResultSet rs = preparedStatement.executeQuery();
+			rs.next();
+			num = rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return num;
+	}
+
+	public static HashMap<String,Order> getOrdersDB(Pizzeria pizzeria, HashMap<String,Order> orders) throws SQLException {
 		ResultSet rs = OrderDB.getOrders(con);
 		int i = 0;
 		while (rs.next()) {
@@ -301,7 +337,7 @@ public class Database {
 			Date date = rs.getTimestamp(6);
 			String psw = rs.getString(8);
 			Order order = new Order(i);
-			if(!orders.containsKey(orderID)){
+			if(!orders.containsKey(orderID) && quantity > 0){
 				order.setCustomer(new Customer(username,psw));
 				order.setName(citofono);
 				order.setAddress(address);
@@ -327,28 +363,24 @@ public class Database {
 			}
 			i++;
 		}
+		/**/	// TODO: non funziona piu l'ordinamento... :( scusa @zana by @fetch
 		Set<Map.Entry<String, Order>> entries = orders.entrySet();
-		Comparator<Map.Entry<String, Order>> valueComparator=new Comparator<Map.Entry<String, Order>>() {
-			@Override
-			public int compare(Map.Entry<String, Order> o1, Map.Entry<String, Order> o2) {
-				Order v1 = o1.getValue();
-				Order v2 = o2.getValue();
-				return v1.compareTo(v2);
-			}
+		Comparator<Map.Entry<String, Order>> valueComparator = (o1, o2) -> {
+			Order v1 = o1.getValue();
+			Order v2 = o2.getValue();
+			return v1.compareTo(v2);
 		};
-		List<Map.Entry<String, Order>> listOfEntries = new ArrayList<Map.Entry<String, Order>>(entries); // Sort method needs a List, so let's first convert Set to List
+		List<Map.Entry<String, Order>> listOfEntries = new ArrayList<>(entries); // Sort method needs a List, so let's first convert Set to List
 		Collections.sort(listOfEntries, valueComparator);// sorting HashMap by values using comparator
 		// copying entries from List to Map
-		LinkedHashMap<String, Order> sortedByValue = new LinkedHashMap<String, Order>(listOfEntries.size());
+		LinkedHashMap<String, Order> sortedByValue = new LinkedHashMap<>(listOfEntries.size());
 		for(Map.Entry<String, Order> entry : listOfEntries){
 			sortedByValue.put(entry.getKey(), entry.getValue());
 		}
 		orders = sortedByValue;
+		/**/
 		return orders;
 	}
-
-
-
 
 	public static void main(String[] args) {
 		openDatabase();

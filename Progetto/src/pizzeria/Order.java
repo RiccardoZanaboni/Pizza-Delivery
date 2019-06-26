@@ -27,7 +27,7 @@ public class Order implements Comparable<Order> {
 
     public Order(int num) {
         this.customer = null;
-        num+=1000;
+        num += 1000;
         this.orderCode = "ORD-" + num;
         this.customerAddress = "";
         this.time = null;
@@ -42,9 +42,12 @@ public class Order implements Comparable<Order> {
     }
 
     /** aggiorna il numero temporaneo di pizze dell'ordine, in seguito ad una aggiunta o rimozione.
-	 * Due possibilità: i=+1 oppure i=-1. */
-    public void setNumTemporaryPizze(int i) {
-    	this.numTemporaryPizze += i;
+	 * Due possibilità: true = +1 oppure false = -1. */
+    public void setNumTemporaryPizze(boolean isToSum) {
+    	if (isToSum)
+    		this.numTemporaryPizze ++;
+    	else
+    		this.numTemporaryPizze --;
 	}
 
     /** aggiunge la pizza all'ordine. */
@@ -108,13 +111,12 @@ public class Order implements Comparable<Order> {
 	public GridPane graphRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
 		GridPane gridPane = new GridPane();
 		Label label = new Label();
-		label.setText(this.numTemporaryPizze+"");
+		label.setText(this.numTemporaryPizze + "");
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		int numTipo = 0;
 		for (int i = 0; i < getNumPizze(); i++) {
 			Pizza p = this.orderedPizze.get(i);
 			int num = 0;
-
 			boolean contains = false;
 			for (Pizza pizza : elencate) {
 				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
@@ -126,7 +128,7 @@ public class Order implements Comparable<Order> {
 				elencate.add(p);
 				for (int j = 0; j < getNumPizze(); j++) {
 					if (p.getName(false).equals(getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
-						// di quel "tipo di pizza" ce n'è una in più
+						/* di quel "tipo di pizza" ce n'è una in più */
 						num++;
 				}
 				nomiLabels.add(numTipo, new Label(this.orderedPizze.get(i).getName(true)));
@@ -191,10 +193,11 @@ public class Order implements Comparable<Order> {
     	return this.isCompleted;
     }
 
-    /** Setta l'ordine come completo. */
-	public void setCompletedDb(Pizzeria pizzeria, int tot , Date orario ) {
-		//Date orario = this.getTime();
-		pizzeria.updateOvenAndDeliveryMan(orario, tot);
+    /** Setta l'ordine come completo e aggiorna le disponibilità. */
+	public void setCompletedDb(Pizzeria pizzeria, int tot , Date orario) {
+		Date oggi = new Date();
+		if(oggi.getDate() == orario.getDate())
+			pizzeria.updateOvenAndDeliveryMan(orario, tot, this);
 		this.isCompleted = true;
 	}
 
@@ -253,29 +256,29 @@ public class Order implements Comparable<Order> {
 
 	@Override
 	public String toString() {
-    	String s="";
-    	for(Pizza p:this.getOrderedPizze()){
-    		s+="\n"+p.toString();
+    	String s = "";
+    	for(Pizza p : this.getOrderedPizze()){
+    		s += "\n" + p.toString();
 		}
-		return this.orderCode+" "+this.name+" "+this.customerAddress +" "+this.time +s;
+		return this.orderCode + " " + this.name + " " + this.customerAddress + " " + this.time + s;
 	}
 
 
 	@Override
 	public int compareTo(Order o) {
-		if(this.time.getHours()>o.time.getHours()){
-			return  1;
+		if(this.time.getHours() > o.time.getHours()){
+			return 1;
 		}
-		if(this.time.getHours()==o.time.getHours()){
-			if(this.time.getMinutes()>o.time.getMinutes()){
-				return  1;
-			}else if(this.time.getMinutes()<o.time.getMinutes()){
-				return  -1;
+		if(this.time.getHours() == o.time.getHours()){
+			if(this.time.getMinutes() > o.time.getMinutes()){
+				return 1;
+			} else if(this.time.getMinutes() < o.time.getMinutes()){
+				return -1;
 			}
 		}
-		if(this.time.getHours()<o.time.getHours()){
-			return  -1;
-		}else{
+		if(this.time.getHours() < o.time.getHours()){
+			return -1;
+		}else {
 			return 0;
 		}
 	}
