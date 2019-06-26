@@ -14,16 +14,17 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Pizzeria;
+import pizzeria.pizzeriaSendMail.SendJavaMail;
 
+import javax.swing.*;
 import java.sql.SQLException;
-
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
 
 public class LoginAccountPage {
 	public void display(Stage window, Pizzeria pizzeria) {
 
 		Label username = new Label(" Nome:\t  ");
 		TextField nameInput = new TextField();
+		nameInput.setMinWidth(250);
 		nameInput.setPromptText("Your Name");
 		username.setId("nomiLabel");
 		HBox usernameBox = new HBox(50);
@@ -32,6 +33,7 @@ public class LoginAccountPage {
 
 		Label password = new Label(" Password: ");
 		PasswordField passwordInput = new PasswordField();
+		passwordInput.setMinWidth(250);
 		passwordInput.setPromptText("Your Password");
 		password.setId("nomiLabel");
 		HBox passwordBox = new HBox(50);
@@ -43,7 +45,7 @@ public class LoginAccountPage {
 
 		Button loginButton = new Button("Login");
 		loginButton.setMinSize(100, 50);
-		loginButton.setOnAction(e->{
+		loginButton.setOnAction(e-> {
 			try {
 				String user = nameInput.getText();
 				String psw = passwordInput.getText();
@@ -67,11 +69,23 @@ public class LoginAccountPage {
 			} catch (SQLException ignored) {}
 		});
 
-		Button backButton = createBackButton(pizzeria, window);
+		Button signUpButton = new Button("Nuovo Account");
+		signUpButton.setMinSize(100, 50);
+		signUpButton.setOnAction(e-> {
+			NewAccountPage newAccountPage = new NewAccountPage();
+			newAccountPage.display(window,pizzeria);
+		});
+
+		Button recoverPswButton = new Button("Recupera Password");
+		recoverPswButton.setMinSize(100, 50);
+		recoverPswButton.setOnAction(e-> {
+			RecoverPswPage recoverPswPage = new RecoverPswPage();
+			recoverPswPage.display(window, pizzeria);
+		});
 
 		HBox buttonBox = new HBox(50);
 		VBox vBox = new VBox(20);
-		buttonBox.getChildren().addAll(backButton,loginButton);
+		buttonBox.getChildren().addAll(loginButton, signUpButton, recoverPswButton); //, backButton);
 		buttonBox.setAlignment(Pos.CENTER);
 		vBox.getChildren().addAll(insertErrorLabel, buttonBox);
 		vBox.setAlignment(Pos.CENTER);
@@ -92,15 +106,5 @@ public class LoginAccountPage {
 		window.setScene(scene);
 		scene.getStylesheets().addAll(this.getClass().getResource("cssStyle/loginPageStyle.css").toExternalForm());
 		window.show();
-	}
-
-	private Button createBackButton(Pizzeria pizzeria, Stage window) {
-		Button backButton = new Button("← Torna indietro");
-		backButton.setId("backButton");
-		backButton.setOnAction(e -> {
-			StartPage startPage = new StartPage();
-			startPage.display(window, pizzeria);
-		});
-		return backButton;
 	}
 }

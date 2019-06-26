@@ -1,6 +1,6 @@
 package Interfaces;
 
-import graphicElements.StartPage;
+import graphicElements.LoginAccountPage;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -96,8 +96,8 @@ public class GraphicInterface extends Application {
 
 		fadeIn.setOnFinished(e -> {
 			fadeOut.play();
-			StartPage startPage = new StartPage();
-			startPage.display(window, wolf);
+			LoginAccountPage loginAccountPage = new LoginAccountPage();
+			loginAccountPage.display(window, wolf);
 		});
 
 	}

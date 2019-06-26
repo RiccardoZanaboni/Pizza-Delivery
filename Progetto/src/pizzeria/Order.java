@@ -14,7 +14,7 @@ public class Order implements Comparable<Order> {
     private String customerAddress;
     private Date time;
     private ArrayList<Pizza> orderedPizze;
-    private boolean isCompleted;
+    //private boolean isCompleted;
     private int countModifiedPizze;
 	private int numTemporaryPizze;
 
@@ -32,7 +32,7 @@ public class Order implements Comparable<Order> {
         this.customerAddress = "";
         this.time = null;
         this.orderedPizze = new ArrayList<>();
-        this.isCompleted = false;
+        //this.isCompleted = false;
         this.countModifiedPizze = 0;
         this.numTemporaryPizze = 0;
     }
@@ -189,16 +189,16 @@ public class Order implements Comparable<Order> {
     }
 
     /** Il server-pizzeria inizia a preparare le pizze solo se isCompleted = true. */
-    public boolean isCompleted() {
+    /*public boolean isCompleted() {
     	return this.isCompleted;
-    }
+    }*/
 
     /** Setta l'ordine come completo e aggiorna le disponibilità. */
 	public void setCompletedDb(Pizzeria pizzeria, int tot , Date orario) {
 		Date oggi = new Date();
 		if(oggi.getDate() == orario.getDate())
 			pizzeria.updateOvenAndDeliveryMan(orario, tot, this);
-		this.isCompleted = true;
+		//this.isCompleted = true;
 	}
 
 

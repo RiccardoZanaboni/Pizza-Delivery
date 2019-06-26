@@ -374,7 +374,7 @@ public class Database {
 				order.setName(citofono);
 				order.setAddress(address);
 				order.setTime(date);
-				order.setCompletedDb(pizzeria, quantity, date);
+				//order.setCompletedDb(pizzeria, quantity, date);
 				ResultSet rsPizza = OrderDB.getOrderedPizzasById(con,orderID);
 				while (rsPizza.next()){
 					HashMap<String, String> ingr = new HashMap<>();

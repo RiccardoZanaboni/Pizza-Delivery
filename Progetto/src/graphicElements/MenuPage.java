@@ -38,9 +38,9 @@ public class MenuPage {
         logoutButton.setGraphic(imageView1);
         //logoutButton.setMinSize(100, 50);
         logoutButton.setOnAction(e->{
-            StartPage startPage =new StartPage();
+            LoginAccountPage loginAccountPage = new LoginAccountPage();
             customer.setLoggedIn(false);
-            startPage.display(window, pizzeria);
+            loginAccountPage.display(window, pizzeria);
 
         });
         hBox.getChildren().addAll(label1, usernameLabel,logoutButton);

@@ -21,6 +21,7 @@ public class NewAccountPage {
 
 		Label username = new Label(" Nome:\t  ");
 		TextField nameInput = new TextField();
+		nameInput.setMinWidth(250);
 		nameInput.setPromptText("Your Name");
 		username.setId("nomiLabel");
 		HBox usernameBox = new HBox(50);
@@ -29,6 +30,7 @@ public class NewAccountPage {
 
 		Label password = new Label(" Password: ");
 		PasswordField passwordInput = new PasswordField();
+		passwordInput.setMinWidth(250);
 		passwordInput.setPromptText("Your Password");
 		password.setId("nomiLabel");
 		HBox passwordBox = new HBox(50);
@@ -37,6 +39,7 @@ public class NewAccountPage {
 
 		Label password2 = new Label(" Conferma: ");
 		PasswordField passwordInput2 = new PasswordField();
+		passwordInput2.setMinWidth(250);
 		passwordInput2.setPromptText("Confirm Password");
 		password2.setId("nomiLabel");
 		HBox passwordBox2 = new HBox(50);
@@ -45,6 +48,7 @@ public class NewAccountPage {
 
 		Label mail = new Label(" E-mail:\t  ");
 		TextField mailInput = new TextField();
+		mailInput.setMinWidth(250);
 		mailInput.setPromptText("Your e-Mail Address");
 		mail.setId("nomiLabel");
 		HBox mailBox = new HBox(50);
@@ -60,7 +64,7 @@ public class NewAccountPage {
 			switch(pizzeria.canCreateAccount(mailInput.getText(),nameInput.getText(),passwordInput.getText(),passwordInput2.getText())){
 				case "OK":
 					SendJavaMail newMail = new SendJavaMail();
-					Boolean isCorrectAddress=false;
+					Boolean isCorrectAddress = false;
 					try{
 						isCorrectAddress = newMail.welcomeMail(nameInput.getText(),passwordInput.getText(),mailInput.getText());
 					} catch (Exception exc){ }
@@ -121,8 +125,8 @@ public class NewAccountPage {
 		Button backButton = new Button("← Torna indietro");
 		backButton.setId("backButton");
 		backButton.setOnAction(e -> {
-			StartPage startPage = new StartPage();
-			startPage.display(window, pizzeria);
+			LoginAccountPage loginAccountPage = new LoginAccountPage();
+			loginAccountPage.display(window, pizzeria);
 		});
 		return backButton;
 	}

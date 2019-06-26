@@ -83,7 +83,7 @@ public class Pizzeria {
 
 	public HashMap<String,Order> getOrders() {
 		try {
-			orders=Database.getOrdersDB(this, this.orders); //FIXME @ZANA SENZA QUESTO UGUALE NON FUNZIONA NON CAPISCO
+			this.orders = Database.getOrdersDB(this, this.orders); //FIXME @ZANA SENZA QUESTO UGUALE NON FUNZIONA
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -108,25 +108,22 @@ public class Pizzeria {
 
 	/** Aggiorna quotidianamente il menu e ripristina il vettore di infornate, ad ogni apertura della pizzeria */
 	public void updatePizzeriaToday() {
-		// FIXME: E' GIA PRONTO; SOLO DA INSERIRE.
+		// FIXME:	(RISOLTO: SI PUO TOGLIERE)
 		//  creare in db una tabella con alcuni dati della pizzeria (orari di apertura/chiusura? indirizzo?...):
 		//  in particolare una data di ultimo aggiornamento: ogni volta che la pizzeria vuole visualizzare gli ordini o
 		//  che un cliente vuole effettuare un nuovo ordine, si controlla se la data di ultimo aggiornamento corrisponde:
 		//  se non corrisponde, si aggiorna tutto (si richiama questo metodo update()) e si aggiorna la data nel DB.
 
-		Date today = new Date();
+		setIngredientsPizzeria();
+		createMenu();
 		Date last = Database.getLastUpdate();
-		if (today.getDate() != last.getDate()) {
-			setIngredientsPizzeria();
-			createMenu();
-			int closeMinutes = Services.getMinutes(getClosingToday());
-			int openMinutes = Services.getMinutes(getOpeningToday());
-			this.ovens = new Oven[(closeMinutes - openMinutes) / this.OVEN_MINUTES];    // minutiTotali/5
-			for (int i = 0; i < this.ovens.length; i++) {
-				this.ovens[i] = new Oven(this.availablePlaces);
-			}
-			setLastUpdate(last);
+		int closeMinutes = Services.getMinutes(getClosingToday());
+		int openMinutes = Services.getMinutes(getOpeningToday());
+		this.ovens = new Oven[(closeMinutes - openMinutes) / this.OVEN_MINUTES];    // minutiTotali/5
+		for (int i = 0; i < this.ovens.length; i++) {
+			this.ovens[i] = new Oven(this.availablePlaces);
 		}
+		setLastUpdate(last);
 	}
 
 	public Date getOpeningToday(){
@@ -213,7 +210,7 @@ public class Pizzeria {
 		for (String a : this.menu.keySet()) {
 			s.append("\n").append(this.menu.get(a).toString());
 		}
-		return s+"\n"+line;
+		return s.toString() + "\n" + line;
 	}
 
 	/** Controlla che la pizzeria sia aperta in un determinato orario, nella giornata odierna. */
@@ -287,7 +284,7 @@ public class Pizzeria {
 	 * in base alla disponibilità di forno e fattorini. */
 	public void updateOvenAndDeliveryMan(Date d, int tot, Order order) {
 		// PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
-		if(this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp()<tot){
+		if(this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp() < tot){
 			int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp();
 			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].inserisciInfornate(disp);
 			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())-1].inserisciInfornate(tot-disp);
