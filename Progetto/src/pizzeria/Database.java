@@ -341,6 +341,7 @@ public class Database {
 	}
 
 	public static void setLastUpdate(java.util.Date oldDate) {
+		openDatabase();
 		DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd");
 		String newDateString = dateFormatYMD.format(new Date());
 		String oldDateString = dateFormatYMD.format(oldDate);
@@ -350,7 +351,7 @@ public class Database {
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = con.prepareStatement(requestSql);
-			preparedStatement.executeQuery();
+			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -394,7 +395,6 @@ public class Database {
 			}
 			i++;
 		}
-		/**/	// TODO: non funziona piu l'ordinamento... :( scusa @zana by @fetch
 		Set<Map.Entry<String, Order>> entries = orders.entrySet();
 		Comparator<Map.Entry<String, Order>> valueComparator = (o1, o2) -> {
 			Order v1 = o1.getValue();
@@ -409,7 +409,6 @@ public class Database {
 			sortedByValue.put(entry.getKey(), entry.getValue());
 		}
 		orders = sortedByValue;
-		/**/
 		return orders;
 	}
 
@@ -484,12 +483,10 @@ public class Database {
 				s+=",16";
 				if(i==285){
 					s+=")";
-
 					con.prepareStatement(s).execute();
 				}
 			}
-
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

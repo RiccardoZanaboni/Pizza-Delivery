@@ -5,6 +5,9 @@ import javafx.scene.paint.Color;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.*;
+
+import static pizzeria.Database.setLastUpdate;
+
 @SuppressWarnings("deprecation")
 
 public class Pizzeria {
@@ -111,10 +114,9 @@ public class Pizzeria {
 		//  che un cliente vuole effettuare un nuovo ordine, si controlla se la data di ultimo aggiornamento corrisponde:
 		//  se non corrisponde, si aggiorna tutto (si richiama questo metodo update()) e si aggiorna la data nel DB.
 
-		/*Date today = new Date();
+		Date today = new Date();
 		Date last = Database.getLastUpdate();
-		// System.out.println(last);
-		*/ //if (today.getDate() != last.getDate()) {
+		if (today.getDate() != last.getDate()) {
 			setIngredientsPizzeria();
 			createMenu();
 			int closeMinutes = Services.getMinutes(getClosingToday());
@@ -123,8 +125,8 @@ public class Pizzeria {
 			for (int i = 0; i < this.ovens.length; i++) {
 				this.ovens[i] = new Oven(this.availablePlaces);
 			}
-			// setLastUpdate(last);
-		//}
+			setLastUpdate(last);
+		}
 	}
 
 	public Date getOpeningToday(){
