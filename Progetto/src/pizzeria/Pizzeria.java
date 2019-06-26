@@ -178,6 +178,7 @@ public class Pizzeria {
 	/** Crea un nuovo ordine e aggiorna il numero di ordini giornalieri. */
 	public Order initializeNewOrder() {
 		Order order;
+		getOrders();
 		order = new Order(Database.countOrdersDB());
 		Database.addNewVoidOrderToDB(order);
 		return order;
