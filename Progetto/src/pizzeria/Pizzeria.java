@@ -293,7 +293,7 @@ public class Pizzeria {
 		}
 		if(aFreeDeliveryMan(d.getHours(), d.getMinutes()) != null)
 			aFreeDeliveryMan(d.getHours(), d.getMinutes()).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
-		else System.out.println("PROBLEMA IN PIZZERIA.UPDATEOVENANDDELIVERYMAN() per " + order.getOrderCode());    //TODO non ho fattorini disponibili!
+		else System.out.println("PROBLEMA IN PIZZERIA.UPDATEOVENANDDELIVERYMAN() per " + order.getOrderCode());    //fixme: questo significa problema GRAVE
 	}
 
 	public double getSUPPL_PRICE() {

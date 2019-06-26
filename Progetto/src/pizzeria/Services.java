@@ -116,7 +116,7 @@ public class Services {
 		s.append(con).append(pers).append(persS);
 		s.append(con).append(modMenu).append(modMenuS);
 		s.append(con).append(mail).append(mailS);
-		//fixme: questo con ogni probabilità va tolto.		s.append(con).append(info).append(infoS);
+		//fixme: questo con ogni probabilità va tolto...		s.append(con).append(info).append(infoS);
 		s.append(con).append(exit).append(exitS);
 
 		return s.toString();
@@ -231,7 +231,7 @@ public class Services {
 		int closeMin = getMinutes(pizzeria.getClosingToday());
 		if(closeMin <= nowMin || openMin == closeMin)
 			return "CLOSED";
-		if(closeMin - nowMin >= 0)// FIXME: risistemare alla fine.	Ho settato a 0 per poter lavorare anche alle 23:50!!!
+		if(closeMin - nowMin >= 0)// FIXME: risistemare alla fine (mettere 20)!! Ho settato a 0 per poter lavorare anche alle 23:50!!!
 			return "OPEN";
 		else
 			return "CLOSING";

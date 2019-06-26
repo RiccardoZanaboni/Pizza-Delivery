@@ -22,16 +22,12 @@ import java.util.Date;
 public class PizzeriaOrdersPage {
 
 	public static void display(Pizzeria pizzeria, Stage window) {
-		//ArrayList<Label> orderNameLabels = new ArrayList<>();
 		ArrayList<Label> nameLabels = new ArrayList<>();
 		ArrayList<Label> toppingLabels = new ArrayList<>();
 		ArrayList<Label> priceLabels = new ArrayList<>();
 		ArrayList<Label> countPizzeLabels = new ArrayList<>();
-		//ArrayList<GridPane> gridPanes = new ArrayList<>();
 		VBox layout = new VBox();
-//FIXME se funziona get order col db
 
-		//TODO: OrderDB.deleteOrdersNotToday();     // elimino dal DB tutti gli ordini che non sono per oggi
 		for (String code:pizzeria.getOrders().keySet()) {
 			if (pizzeria.getOrders().get(code).getTime().getDate() == (new Date().getDate())) {
 				VBox vBox = addEverythingToGridPane(pizzeria.getOrders().get(code), nameLabels, countPizzeLabels, toppingLabels, priceLabels);
