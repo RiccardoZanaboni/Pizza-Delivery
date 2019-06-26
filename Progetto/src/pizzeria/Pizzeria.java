@@ -51,7 +51,7 @@ public class Pizzeria {
 		this.availablePlaces = 8;
 		/* Apre la connessione con il database */
 		Database.openDatabase();
-		openPizzeriaToday();
+		updatePizzeriaToday();
 		addDeliveryMan(new DeliveryMan("Musi", this));
 		//addDeliveryMan(new DeliveryMan("Zanzatroni", this));
 	}
@@ -103,19 +103,28 @@ public class Pizzeria {
 		this.deliveryMen.add(deliveryMan);
 	}
 
-	/** Crea o ripristina il vettore di infornate, ad ogni apertura della pizzeria */
-	public void openPizzeriaToday() {
+	/** Aggiorna quotidianamente il menu e ripristina il vettore di infornate, ad ogni apertura della pizzeria */
+	public void updatePizzeriaToday() {
+		// FIXME: E' GIA PRONTO; SOLO DA INSERIRE.
+		//  creare in db una tabella con alcuni dati della pizzeria (orari di apertura/chiusura? indirizzo?...):
+		//  in particolare una data di ultimo aggiornamento: ogni volta che la pizzeria vuole visualizzare gli ordini o
+		//  che un cliente vuole effettuare un nuovo ordine, si controlla se la data di ultimo aggiornamento corrisponde:
+		//  se non corrisponde, si aggiorna tutto (si richiama questo metodo update()) e si aggiorna la data nel DB.
 
-		setIngredientsPizzeria();       // FIXME: questi due andrebbero fatti una tantum con Database.
-		createMenu();
-
-		// inizializza il vettore di infornate di oggi, in base agli orari di apertura e chiusura di oggi.
-		int closeMinutes = Services.getMinutes(getClosingToday());
-		int openMinutes = Services.getMinutes(getOpeningToday());
-		this.ovens = new Oven[(closeMinutes - openMinutes)/ this.OVEN_MINUTES];    // minutiTotali/5
-		for(int i = 0; i< this.ovens.length; i++) {
-			this.ovens[i] = new Oven(this.availablePlaces);
-		}
+		/*Date today = new Date();
+		Date last = Database.getLastUpdate();
+		// System.out.println(last);
+		*/ //if (today.getDate() != last.getDate()) {
+			setIngredientsPizzeria();
+			createMenu();
+			int closeMinutes = Services.getMinutes(getClosingToday());
+			int openMinutes = Services.getMinutes(getOpeningToday());
+			this.ovens = new Oven[(closeMinutes - openMinutes) / this.OVEN_MINUTES];    // minutiTotali/5
+			for (int i = 0; i < this.ovens.length; i++) {
+				this.ovens[i] = new Oven(this.availablePlaces);
+			}
+			// setLastUpdate(last);
+		//}
 	}
 
 	public Date getOpeningToday(){

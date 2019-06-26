@@ -68,6 +68,7 @@ public class MenuPage {
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
         String checkOpen = Services.checkTimeOrder(pizzeria);
 		makeOrderButton.setOnAction(e -> {
+			pizzeria.updatePizzeriaToday();
 			switch (checkOpen) {
 				case "OPEN":        // pizzeria aperta
 					Order order = pizzeria.initializeNewOrder();

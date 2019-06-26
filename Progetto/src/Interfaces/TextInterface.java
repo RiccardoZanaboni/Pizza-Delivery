@@ -141,6 +141,7 @@ public class TextInterface {
 	 * Utilizzo ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio. */
 	private void makeOrderText(Customer customer) throws SQLException {
 		System.out.println(wolf.printMenu());
+		wolf.updatePizzeriaToday();
 		Order order = wolf.initializeNewOrder();
 		order.setCustomer(customer);
 		int num;
@@ -574,6 +575,7 @@ public class TextInterface {
 		risposta = scan.nextLine().toUpperCase();
 		switch (risposta){
 			case "V":
+				wolf.updatePizzeriaToday();
 				System.out.println(Services.colorSystemOut("Ecco gli ordini da evadere...\n", Color.YELLOW, false, false));
 				/* Visualizza solo gli ordini di oggi */
 				for(String code : wolf.getOrders().keySet()){

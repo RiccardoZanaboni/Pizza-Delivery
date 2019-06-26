@@ -310,7 +310,6 @@ public class Database {
 		}
 	}
 
-
 	public static int countOrdersDB() {
 		String requestSql = "select count(*) from sql7293749.Orders";
 		int num = -1;
@@ -323,6 +322,38 @@ public class Database {
 			e.printStackTrace();
 		}
 		return num;
+	}
+
+	public static Date getLastUpdate() {
+		Date last = null;
+		String requestSql = "select * from sql7293749.LastUpdate";
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = con.prepareStatement(requestSql);
+			ResultSet rs = preparedStatement.executeQuery();
+			rs.next();
+			last = rs.getDate(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return last;
+	}
+
+	public static void setLastUpdate(java.util.Date oldDate) {
+		DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd");
+		String newDateString = dateFormatYMD.format(new Date());
+		String oldDateString = dateFormatYMD.format(oldDate);
+		java.sql.Date newSQLData = java.sql.Date.valueOf(newDateString);
+		java.sql.Date oldSQLData = java.sql.Date.valueOf(oldDateString);
+		String requestSql = "update sql7293749.LastUpdate set Date = '" + newSQLData + "' where Date = '" + oldSQLData + "' ";
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement(requestSql);
+			preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static HashMap<String,Order> getOrdersDB(Pizzeria pizzeria, HashMap<String,Order> orders) throws SQLException {
