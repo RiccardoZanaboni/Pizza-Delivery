@@ -1,5 +1,7 @@
 package pizzeria;
 
+import java.util.HashMap;
+
 public class Customer {
     private String username;
     private String password;

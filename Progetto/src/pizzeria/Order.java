@@ -43,8 +43,8 @@ public class Order implements Comparable<Order> {
 
     /** aggiorna il numero temporaneo di pizze dell'ordine, in seguito ad una aggiunta o rimozione.
 	 * Due possibilità: true = +1 oppure false = -1. */
-    public void setNumTemporaryPizze(boolean isToSum) {
-    	if (isToSum)
+    public void setNumTemporaryPizze(boolean isPlus) {
+    	if (isPlus)
     		this.numTemporaryPizze ++;
     	else
     		this.numTemporaryPizze --;
@@ -58,7 +58,7 @@ public class Order implements Comparable<Order> {
     }
 
 	/** In Interfaces.TextInterface, stampa a video il riepilogo dell'ordine. */
-	public String recapOrder(){
+	public String recapOrder(){		// todo: va in testuale?
 		String line = Services.getLine();
 		StringBuilder recap = new StringBuilder();
 		recap.append(Services.colorSystemOut("ORDINE N. ", Color.RED,true,false));
@@ -78,13 +78,12 @@ public class Order implements Comparable<Order> {
 	}
 
 	/** Restituisce una stringa con i vari prodotti, per il riepilogo. */
-	private String textRecapProducts() {
+	private String textRecapProducts() {		// todo: va in testuale?
 		StringBuilder prodotti = new StringBuilder("\n");
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		for (int i = 0; i < getNumPizze(); i++) {
 			Pizza p = this.orderedPizze.get(i);
 			int num = 0;
-
 			boolean contains = false;
 			for (Pizza pizza : elencate) {
 				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
@@ -108,6 +107,7 @@ public class Order implements Comparable<Order> {
 	}
 
 	/** Costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
+																			// todo: va spostato altrove?
 	public GridPane graphRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
 		GridPane gridPane = new GridPane();
 		Label label = new Label();
@@ -194,6 +194,7 @@ public class Order implements Comparable<Order> {
     }*/
 
     /** Setta l'ordine come completo e aggiorna le disponibilità. */
+    // todo: probabilmente va sistemato/spostato
 	public void setCompletedDb(Pizzeria pizzeria, int tot, Date orario) {
 		Date oggi = new Date();
 		if(oggi.getDate() == orario.getDate())
@@ -201,9 +202,8 @@ public class Order implements Comparable<Order> {
 		//this.isCompleted = true;		// TODO: isCompleted da togliere
 	}
 
-
 	public void setTime(Date orario) {
-        this.time = orario;
+		this.time = orario;
     }
 
 	public void setCustomer(Customer c) {
@@ -256,13 +256,12 @@ public class Order implements Comparable<Order> {
 
 	@Override
 	public String toString() {
-    	String s = "";
+    	StringBuilder elenco = new StringBuilder();
     	for(Pizza p : this.getOrderedPizze()){
-    		s += "\n" + p.toString();
+    		elenco.append("\n").append(p.toString());
 		}
-		return this.orderCode + " " + this.name + " " + this.customerAddress + " " + this.time + s;
+		return this.orderCode + " " + this.name + " " + this.customerAddress + " " + this.time + elenco.toString();
 	}
-
 
 	@Override
 	public int compareTo(Order o) {
@@ -278,7 +277,7 @@ public class Order implements Comparable<Order> {
 		}
 		if(this.time.getHours() < o.time.getHours()){
 			return -1;
-		}else {
+		} else {
 			return 0;
 		}
 	}

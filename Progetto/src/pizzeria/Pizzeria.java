@@ -3,9 +3,13 @@ package pizzeria;
 import javafx.scene.paint.Color;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.*;
 
+import static pizzeria.Database.openDatabase;
 import static pizzeria.Database.setLastUpdate;
 
 @SuppressWarnings("deprecation")
@@ -53,7 +57,7 @@ public class Pizzeria {
 		this.SUPPL_PRICE = 0.5;
 		this.availablePlaces = 8;
 		/* Apre la connessione con il database */
-		Database.openDatabase();
+		openDatabase();
 		addDeliveryMan(new DeliveryMan("Musi", this));
 		updatePizzeriaToday();
 		//addDeliveryMan(new DeliveryMan("Zanzatroni", this));
@@ -92,7 +96,7 @@ public class Pizzeria {
 
 	/** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. Richiama i vari aggiornamenti. */
 	public void addInfoOrder(Order order) {
-		Database.putOrder(order);
+		Database.putCompletedOrder(order);
 		order.setCompletedDb(this,order.getNumPizze(),order.getTime());	// FIXME @fetch: vediamo così
 		/* Sostituisce l'ordine come era stato aggiunto inizialmente (vuoto) con quello definitivo. */
 		this.orders.remove(order.getOrderCode());
@@ -323,14 +327,11 @@ public class Pizzeria {
 		return possibiliIngr.toString();
 	}
 
-
-
 	/** Verifica che sia possibile cuocere le pizze nell'infornata richiesta e in quella appena precedente. */
 	public boolean checkTimeBoxOven(int ora, int minuti, int tot) {
-		if (this.ovens[findTimeBoxOven(ora, minuti)].getAvailablePlaces() + this.ovens[findTimeBoxOven(ora, minuti) - 1].getAvailablePlaces() < tot)
-			return false;
-		else
-			return true;
+		int postiDisponibiliQuestaInfornata = this.ovens[findTimeBoxOven(ora, minuti)].getAvailablePlaces();
+		int postiDisponibiliPrecedenteInfornata = this.ovens[findTimeBoxOven(ora, minuti) - 1].getAvailablePlaces();
+		return (postiDisponibiliQuestaInfornata + postiDisponibiliPrecedenteInfornata >= tot);
 	}
 
 	public int getAvailablePlaces() {
@@ -380,6 +381,26 @@ public class Pizzeria {
 	}
 
 	public boolean checkMail(String mail){
-		return Database.getUsernameCustomer(mail) != null;
+		return (Database.getUsernameCustomer(mail) != null);
+	}
+
+	public Order CustomerLastOrder(Customer customer) {
+		Order last = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date;
+		try {
+			date = sdf.parse("1970-01-01 00:00:00");
+			for (Order order : this.getOrders().values()) {
+				if (order.getCustomer().getUsername().equals(customer.getUsername())) {
+					if (order.getTime().getTime() > date.getTime()) {
+						last = order;
+						date = order.getTime();
+					}
+				}
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return last;
 	}
 }

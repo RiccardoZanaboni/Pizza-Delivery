@@ -26,6 +26,7 @@ public class Database {
 		}
 	}
 
+	/** Chiude il programma, se la connessione alla rete viene a mancare. */
 	public static void missingConnection(){
 		System.out.println(Services.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
 		System.exit(1);
@@ -68,7 +69,7 @@ public class Database {
 		try {
 			System.out.print(Services.colorSystemOut("Inserisci il nome del nuovo ingrediente:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
-			if (!putTopping(name) || name.length() == 0)
+			if (name.length() == 0 || !putTopping(name))
 				throw new Exception();
 			else{
 				pizzeria.getIngredientsPizzeria().put(name,name);
@@ -161,7 +162,6 @@ public class Database {
 			System.out.println(adding);
 			System.out.println(TextInterface.possibleAddictions(pizzeria));
 			descriz = scan.nextLine().toUpperCase();
-
 			StringTokenizer st = new StringTokenizer(descriz,",");
 			while (st.hasMoreTokens()) {
 				String ingr = Services.arrangeIngredientString(st);
@@ -177,6 +177,7 @@ public class Database {
 			}
 			System.out.print(Services.colorSystemOut("Inserire il prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
 			double prezzo = Double.parseDouble(scan.nextLine());
+
 			if(name.length() == 0 || pizzeria.getMenu().containsKey(name) || descriz.equals("ERR")){
 				throw new TryAgainExc();
 			}
@@ -207,7 +208,9 @@ public class Database {
 				try {
 					String ingredienteAggiuntoString = Services.arrangeIngredientString(stAgg);
 					ingr.put(ingredienteAggiuntoString, ingredienteAggiuntoString);
-				} catch (Exception ignored) {}
+				} catch (Exception ignored) {
+					/* continue */
+				}
 			}
 			double prezzo = rs.getDouble(3);
 			Pizza p = new Pizza(nomePizza, ingr, prezzo);
@@ -239,7 +242,7 @@ public class Database {
 	}
 
 	public static boolean getCustomers(String username, String password) throws SQLException {
-		ResultSet rs = CustomerDB.getCustomers(con, username, password);
+		ResultSet rs = CustomerDB.getCustomer(con, username, password);
 		boolean hasRows = false;
 		while (rs.next()) {
 			hasRows = true;
@@ -251,7 +254,7 @@ public class Database {
 		ResultSet rs;
 		String info = null;
 		try {
-			rs = CustomerDB.getInfoCustomer(con, username).executeQuery();
+			rs = CustomerDB.getCustomerFromUsername(con, username).executeQuery();
 			while (rs.next()) {
 				info = rs.getString(2);
 			}
@@ -265,7 +268,7 @@ public class Database {
 		ResultSet rs;
 		String user = null;
 		try {
-			rs = CustomerDB.getUserCustomer(con, mail).executeQuery();
+			rs = CustomerDB.getCustomerFromMailAddress(con, mail).executeQuery();
 			while (rs.next()) {
 				user = rs.getString(1);
 			}
@@ -275,7 +278,7 @@ public class Database {
 		return user;
 	}
 
-	public static boolean putOrder(Order order){
+	public static void putCompletedOrder(Order order){
 		DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String dataString = dateFormatYMD.format(order.getTime());
 		java.sql.Timestamp data = java.sql.Timestamp.valueOf(dataString);
@@ -284,10 +287,8 @@ public class Database {
 			for(Pizza p: order.getOrderedPizze()){
 				OrderDB.putOrderedPizzas(con,order,p).execute();
 			}
-			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
 	}
 
@@ -322,39 +323,6 @@ public class Database {
 			e.printStackTrace();
 		}
 		return num;
-	}
-
-	public static Date getLastUpdate() {
-		Date last = null;
-		String requestSql = "select * from sql7293749.LastUpdate";
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = con.prepareStatement(requestSql);
-			ResultSet rs = preparedStatement.executeQuery();
-			rs.next();
-			last = rs.getDate(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return last;
-	}
-
-	public static void setLastUpdate(java.util.Date oldDate) {
-		openDatabase();
-		DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd");
-		String newDateString = dateFormatYMD.format(new Date());
-		String oldDateString = dateFormatYMD.format(oldDate);
-		java.sql.Date newSQLData = java.sql.Date.valueOf(newDateString);
-		java.sql.Date oldSQLData = java.sql.Date.valueOf(oldDateString);
-		String requestSql = "update sql7293749.LastUpdate set Date = '" + newSQLData + "' where Date = '" + oldSQLData + "' ";
-		PreparedStatement preparedStatement;
-		try {
-			preparedStatement = con.prepareStatement(requestSql);
-			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	static HashMap<String,Order> getOrdersDB(Pizzeria pizzeria, HashMap<String,Order> orders) throws SQLException {
@@ -394,6 +362,38 @@ public class Database {
 			i++;
 		}
 		return Services.sortOrders(orders);
+	}
+
+	public static Date getLastUpdate() {
+		Date last = null;
+		String requestSql = "select * from sql7293749.LastUpdate";
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = con.prepareStatement(requestSql);
+			ResultSet rs = preparedStatement.executeQuery();
+			rs.next();
+			last = rs.getDate(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return last;
+	}
+
+	public static void setLastUpdate(java.util.Date oldDate) {
+		DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd");
+		String newDateString = dateFormatYMD.format(new Date());
+		String oldDateString = dateFormatYMD.format(oldDate);
+		java.sql.Date newSQLData = java.sql.Date.valueOf(newDateString);
+		java.sql.Date oldSQLData = java.sql.Date.valueOf(oldDateString);
+		String requestSql = "update sql7293749.LastUpdate set Date = '" + newSQLData + "' where Date = '" + oldSQLData + "' ";
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = con.prepareStatement(requestSql);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {

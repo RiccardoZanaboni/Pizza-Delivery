@@ -99,12 +99,16 @@ public class TextInterface {
 	private void whatDoYouWantAnswers(boolean isOpen, String risposta, Customer customer) throws SQLException {
 		switch (risposta){
 			case "L":
-				System.out.println(Services.colorSystemOut("Ora visualizzerai l'ultimo ordine effettuato...", Color.YELLOW, false, false));
-				whatDoYouWantAnswers(isOpen,risposta,customer);
+				Order last = wolf.CustomerLastOrder(customer);
+				if(last != null){
+				System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
+				System.out.println(last.recapOrder());
+				} else System.out.println(Services.colorSystemOut("\nNon hai ancora effettuato nessun ordine!\n",Color.RED,false,false));
+				whatDoYouWant(customer);
 				break;
 			case "O":
 				System.out.println(Services.colorSystemOut("Ora visualizzerai le tue offerte attive...", Color.YELLOW, false, false));
-				whatDoYouWantAnswers(isOpen,risposta,customer);
+				whatDoYouWant(customer);
 				break;
 			case "H":
 				System.out.println(Services.getHistory(false));
@@ -422,8 +426,6 @@ public class TextInterface {
 		String risp = scan.nextLine().toUpperCase();
 		switch (risp) {
 			case "S":
-				/* Controlla lo stato della connessione, nel caso segnala errore. */
-				Database.openDatabase();
 				/* Conferma l'ordine e lo aggiunge a quelli della pizzeria. */
 				wolf.addInfoOrder(order);
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";

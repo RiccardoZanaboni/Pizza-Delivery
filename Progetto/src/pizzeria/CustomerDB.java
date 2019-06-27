@@ -14,18 +14,18 @@ public class CustomerDB {
         return preparedStatement;
     }
 
-    public static ResultSet getCustomers(Connection con, String username, String password){
+    public static ResultSet getCustomer(Connection con, String username, String password){
         ResultSet rs = null;
         try {
             Statement statement = con.createStatement();
             rs = statement.executeQuery("select * from sql7293749.Users where User = '" + username + "' && Pass = '" + password + "' ");
-        }catch (SQLException sqle){
+        } catch (SQLException sqle){
             Database.missingConnection();
         }
         return rs;
     }
 
-    public static PreparedStatement getInfoCustomer(Connection con, String username){
+    public static PreparedStatement getCustomerFromUsername(Connection con, String username){
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = con.prepareStatement("select * from sql7293749.Users where User = '" + username + "' ");
@@ -35,7 +35,7 @@ public class CustomerDB {
         return preparedStatement;
     }
 
-    public static PreparedStatement getUserCustomer(Connection con, String mail){
+    public static PreparedStatement getCustomerFromMailAddress(Connection con, String mail){
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = con.prepareStatement("select * from sql7293749.Users where MailAddress = '" + mail + "' ");

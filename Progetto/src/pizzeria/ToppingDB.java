@@ -31,7 +31,6 @@ public class ToppingDB {
 		try {
 			preparedStatement = con.prepareStatement("select * from sql7293749.Toppings");
 		} catch (NullPointerException | SQLException e){
-			/* Chiude il programma, se non c'è connessione. */
 			Database.missingConnection();
 		}
 		return preparedStatement;

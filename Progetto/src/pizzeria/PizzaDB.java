@@ -1,5 +1,4 @@
 package pizzeria;
-import javafx.scene.paint.Color;
 
 import java.sql.*;
 
@@ -21,7 +20,6 @@ public class PizzaDB {
 			preparedStatement = con.prepareStatement("delete from sql7293749.Pizze where nome = '" + nome + "';");
 		} catch(SQLException sqle){
 			Database.missingConnection();
-			//System.out.println("Problema SQL rimozione pizza");
 		}
 		return preparedStatement;
 	}
@@ -31,7 +29,6 @@ public class PizzaDB {
 		try {
 			preparedStatement = con.prepareStatement("select * from sql7293749.Pizze");
 		} catch (NullPointerException | SQLException e){
-			/* Chiude il programma, se non c'è connessione. */
 			Database.missingConnection();
 		}
 		return preparedStatement;
