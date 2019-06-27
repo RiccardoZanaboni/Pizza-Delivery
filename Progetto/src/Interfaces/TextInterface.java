@@ -140,8 +140,8 @@ public class TextInterface {
 	 * Utilizzo la sigla-chiave "OK" una volta terminata la scelta delle pizze, per continuare.
 	 * Utilizzo ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio. */
 	private void makeOrderText(Customer customer) throws SQLException {
-		System.out.println(wolf.printMenu());
 		wolf.updatePizzeriaToday();
+		System.out.println(wolf.printMenu());
 		Order order = wolf.initializeNewOrder();
 		order.setCustomer(customer);
 		int num;
@@ -242,7 +242,7 @@ public class TextInterface {
 	private boolean checkNotTooLate(Date orarioScelto, int tot) {
 		int chosenTime = Services.getMinutes(orarioScelto);
 		int nowTime = Services.getNowMinutes();
-		if(tot < wolf.getOvens()[0].getPostiDisp())
+		if(tot < wolf.getOvens()[0].getAvailablePlaces())
 			nowTime += 14;       // tengo conto dei tempi minimi di una infornata e consegna.
 		else
 			nowTime += 19;       // tengo conto dei tempi minimi di due infornate e consegna.

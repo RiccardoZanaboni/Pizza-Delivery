@@ -12,11 +12,11 @@ public class Oven {
         this.availablePlaces = avail;
     }
 
-    public int getPostiDisp() {
+    public int getAvailablePlaces() {
         return this.availablePlaces;
     }
 
-    void inserisciInfornate(int pizze){
+    void insertPizzas(int pizze){
         this.availablePlaces -= pizze;
     }
 }

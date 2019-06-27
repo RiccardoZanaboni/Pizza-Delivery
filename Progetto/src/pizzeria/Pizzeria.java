@@ -54,8 +54,8 @@ public class Pizzeria {
 		this.availablePlaces = 8;
 		/* Apre la connessione con il database */
 		Database.openDatabase();
-		updatePizzeriaToday();
 		addDeliveryMan(new DeliveryMan("Musi", this));
+		updatePizzeriaToday();
 		//addDeliveryMan(new DeliveryMan("Zanzatroni", this));
 	}
 
@@ -93,7 +93,7 @@ public class Pizzeria {
 	/** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. Richiama i vari aggiornamenti. */
 	public void addInfoOrder(Order order) {
 		Database.putOrder(order);
-		order.setCompletedDb(this,order.getNumPizze(),order.getTime());		// FIXME @fetch: vediamo così
+		order.setCompletedDb(this,order.getNumPizze(),order.getTime());	// FIXME @fetch: vediamo così
 		/* Sostituisce l'ordine come era stato aggiunto inizialmente (vuoto) con quello definitivo. */
 		this.orders.remove(order.getOrderCode());
 		this.orders.put(order.getOrderCode(),order);
@@ -128,9 +128,8 @@ public class Pizzeria {
 		Date today = new Date();
 		if (last.getDate() != today.getDate()) {
 			setLastUpdate(last);
-		} else {
-			getOrders();
 		}
+		getOrders();
 	}
 
 	public Date getOpeningToday(){
@@ -245,9 +244,9 @@ public class Pizzeria {
 
 	/** restituisce il primo fattorino della pizzeria che sia disponibile all'orario indicato. */
 	public DeliveryMan aFreeDeliveryMan(int oraDesiderata, int minutiDesiderati){
-		for(DeliveryMan a : this.deliveryMen){
-			if(a.getDeliveryManTimes()[findTimeBoxDeliveryMan(oraDesiderata,minutiDesiderati)].isFree()){
-				return a;
+		for(DeliveryMan man : this.deliveryMen){
+			if(man.getDeliveryManTimes()[findTimeBoxDeliveryMan(oraDesiderata,minutiDesiderati)].isFree()){
+				return man;
 			}
 		}
 		return null;
@@ -263,7 +262,7 @@ public class Pizzeria {
 
 		for(int i = esclusiIniziali; i < restaAperta; i++) {    // considera i tempi minimi di preparazione e consegna
 			if(i % 5 == 0) {
-				if (this.ovens[i / 5].getPostiDisp() + this.ovens[(i / 5) - 1].getPostiDisp() >= tot) {
+				if (this.ovens[i / 5].getAvailablePlaces() + this.ovens[(i / 5) - 1].getAvailablePlaces() >= tot) {
 					for (DeliveryMan a : this.deliveryMen) {
 						if (a.getDeliveryManTimes()[i / 10].isFree()) {
 							int newMinutes = Services.getMinutes(getOpeningToday()) + i;   // NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
@@ -291,12 +290,12 @@ public class Pizzeria {
 	 * in base alla disponibilità di forno e fattorini. */
 	public void updateOvenAndDeliveryMan(Date d, int tot, Order order) {
 		// PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
-		if(this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp() < tot){
-			int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getPostiDisp();
-			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].inserisciInfornate(disp);
-			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())-1].inserisciInfornate(tot-disp);
+		int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getAvailablePlaces();
+		if(disp < tot){
+			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].insertPizzas(disp);
+			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())-1].insertPizzas(tot-disp);
 		} else {
-			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].inserisciInfornate(tot);
+			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].insertPizzas(tot);
 		}
 		if(aFreeDeliveryMan(d.getHours(), d.getMinutes()) != null)
 			aFreeDeliveryMan(d.getHours(), d.getMinutes()).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
@@ -328,7 +327,7 @@ public class Pizzeria {
 
 	/** Verifica che sia possibile cuocere le pizze nell'infornata richiesta e in quella appena precedente. */
 	public boolean checkTimeBoxOven(int ora, int minuti, int tot) {
-		if (this.ovens[findTimeBoxOven(ora, minuti)].getPostiDisp() + this.ovens[findTimeBoxOven(ora, minuti) - 1].getPostiDisp() < tot)
+		if (this.ovens[findTimeBoxOven(ora, minuti)].getAvailablePlaces() + this.ovens[findTimeBoxOven(ora, minuti) - 1].getAvailablePlaces() < tot)
 			return false;
 		else
 			return true;
