@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 /**
  * Fornisce molteplici servizi, grafici o funzionali, in grado di supportare
@@ -365,5 +366,23 @@ public class Services {
 		Browse browse = new Browse();
 		Thread t = new Thread(browse);
 		t.start();
+	}
+
+	public static HashMap<String, Order> sortOrders(HashMap<String, Order> orders) {
+		Set<Map.Entry<String, Order>> entries = orders.entrySet();
+		Comparator<Map.Entry<String, Order>> valueComparator = (o1, o2) -> {
+			Order v1 = o1.getValue();
+			Order v2 = o2.getValue();
+			return v1.compareTo(v2);
+		};
+		List<Map.Entry<String, Order>> listOfEntries = new ArrayList<>(entries); // Sort method needs a List, so let's first convert Set to List
+		Collections.sort(listOfEntries, valueComparator);// sorting HashMap by values using comparator
+		// copying entries from List to Map
+		LinkedHashMap<String, Order> sortedByValue = new LinkedHashMap<>(listOfEntries.size());
+		for(Map.Entry<String, Order> entry : listOfEntries){
+			sortedByValue.put(entry.getKey(), entry.getValue());
+		}
+		orders = sortedByValue;
+		return orders;
 	}
 }

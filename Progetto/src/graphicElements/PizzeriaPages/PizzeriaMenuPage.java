@@ -142,14 +142,13 @@ public class PizzeriaMenuPage {
             	pizzeria.getMenu().put(pizza.getName(false).toUpperCase(), pizza);
             	table.getItems().add(pizza);
             	Database.putPizza(nameInput.getText(), ingredienti, Double.parseDouble(priceInput.getText()));
+				nameInput.clear();
+				priceInput.clear();
         	} else {
 				GenericAlert.display("Attenzione: selezionare almeno un ingrediente.");
 			}
 		} catch (NumberFormatException nfe){
 			GenericAlert.display("Attenzione: inserito prezzo non valido.");
-		} finally {
-			nameInput.clear();
-			priceInput.clear();
 		}
     }
 
@@ -170,14 +169,16 @@ public class PizzeriaMenuPage {
 
 	private void addToppingButtonClicked(Pizzeria pizzeria, TextField newToppingInput, ListView toppingsList) {
 		String topping = newToppingInput.getText().toUpperCase();
-		if (topping.length() == 0 || pizzeria.getIngredientsPizzeria().containsKey(topping)) {
+		if (topping.length() == 0) {
+			GenericAlert.display("Attenzione: riempire il campo richiesto.");
+		} else if(pizzeria.getIngredientsPizzeria().containsKey(topping)){
 			GenericAlert.display("Attenzione: il nuovo ingrediente\nnon deve essere già presente nel Database.");
 		} else {
 			pizzeria.getIngredientsPizzeria().put(topping, topping);
 			toppingsList.getItems().add(topping);
 			Database.putTopping(topping);
+			newToppingInput.clear();
 		}
-		newToppingInput.clear();
 	}
 
 	private void deleteToppingButtonClicked(Pizzeria pizzeria, ListView table) {

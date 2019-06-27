@@ -357,7 +357,7 @@ public class Database {
 		}
 	}
 
-	public static HashMap<String,Order> getOrdersDB(Pizzeria pizzeria, HashMap<String,Order> orders) throws SQLException {
+	static HashMap<String,Order> getOrdersDB(Pizzeria pizzeria, HashMap<String,Order> orders) throws SQLException {
 		ResultSet rs = OrderDB.getOrders(con);
 		int i = 0;
 		while (rs.next()) {
@@ -374,7 +374,7 @@ public class Database {
 				order.setName(citofono);
 				order.setAddress(address);
 				order.setTime(date);
-				//order.setCompletedDb(pizzeria, quantity, date);
+				order.setCompletedDb(pizzeria, quantity, date);
 				ResultSet rsPizza = OrderDB.getOrderedPizzasById(con,orderID);
 				while (rsPizza.next()){
 					HashMap<String, String> ingr = new HashMap<>();
@@ -395,21 +395,7 @@ public class Database {
 			}
 			i++;
 		}
-		Set<Map.Entry<String, Order>> entries = orders.entrySet();
-		Comparator<Map.Entry<String, Order>> valueComparator = (o1, o2) -> {
-			Order v1 = o1.getValue();
-			Order v2 = o2.getValue();
-			return v1.compareTo(v2);
-		};
-		List<Map.Entry<String, Order>> listOfEntries = new ArrayList<>(entries); // Sort method needs a List, so let's first convert Set to List
-		Collections.sort(listOfEntries, valueComparator);// sorting HashMap by values using comparator
-		// copying entries from List to Map
-		LinkedHashMap<String, Order> sortedByValue = new LinkedHashMap<>(listOfEntries.size());
-		for(Map.Entry<String, Order> entry : listOfEntries){
-			sortedByValue.put(entry.getKey(), entry.getValue());
-		}
-		orders = sortedByValue;
-		return orders;
+		return Services.sortOrders(orders);
 	}
 
 	public static void main(String[] args) {

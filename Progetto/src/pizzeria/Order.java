@@ -194,11 +194,11 @@ public class Order implements Comparable<Order> {
     }*/
 
     /** Setta l'ordine come completo e aggiorna le disponibilità. */
-	public void setCompletedDb(Pizzeria pizzeria, int tot , Date orario) {
+	public void setCompletedDb(Pizzeria pizzeria, int tot, Date orario) {
 		Date oggi = new Date();
 		if(oggi.getDate() == orario.getDate())
 			pizzeria.updateOvenAndDeliveryMan(orario, tot, this);
-		//this.isCompleted = true;
+		//this.isCompleted = true;		// TODO: isCompleted da togliere
 	}
 
 

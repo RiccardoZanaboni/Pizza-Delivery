@@ -83,16 +83,18 @@ public class Pizzeria {
 
 	public HashMap<String,Order> getOrders() {
 		try {
-			this.orders = Database.getOrdersDB(this, this.orders); //FIXME @ZANA SENZA QUESTO UGUALE NON FUNZIONA
+			this.orders = Database.getOrdersDB(this, this.orders); //FIXME @ZANA SENZA QUESTO "UGUALE" NON FUNZIONA
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return this.orders;
 	}
 
-	/** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. */
+	/** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. Richiama i vari aggiornamenti. */
 	public void addInfoOrder(Order order) {
 		Database.putOrder(order);
+		order.setCompletedDb(this,order.getNumPizze(),order.getTime());		// FIXME @fetch: vediamo così
+		/* Sostituisce l'ordine come era stato aggiunto inizialmente (vuoto) con quello definitivo. */
 		this.orders.remove(order.getOrderCode());
 		this.orders.put(order.getOrderCode(),order);
 	}
@@ -116,22 +118,27 @@ public class Pizzeria {
 
 		setIngredientsPizzeria();
 		createMenu();
-		Date last = Database.getLastUpdate();
 		int closeMinutes = Services.getMinutes(getClosingToday());
 		int openMinutes = Services.getMinutes(getOpeningToday());
 		this.ovens = new Oven[(closeMinutes - openMinutes) / this.OVEN_MINUTES];    // minutiTotali/5
 		for (int i = 0; i < this.ovens.length; i++) {
 			this.ovens[i] = new Oven(this.availablePlaces);
 		}
-		setLastUpdate(last);
+		Date last = Database.getLastUpdate();
+		Date today = new Date();
+		if (last.getDate() != today.getDate()) {
+			setLastUpdate(last);
+		} else {
+			getOrders();
+		}
 	}
 
 	public Date getOpeningToday(){
 		Calendar cal = new GregorianCalendar();
-		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);  // oggi
+		int todayDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);  // oggi
 		Date op = new Date();
-		op.setHours(this.openings[dayOfWeek-1].getHour());
-		op.setMinutes(this.openings[dayOfWeek-1].getMinute());
+		op.setHours(this.openings[todayDayOfWeek-1].getHour());
+		op.setMinutes(this.openings[todayDayOfWeek-1].getMinute());
 		return op;
 	}
 

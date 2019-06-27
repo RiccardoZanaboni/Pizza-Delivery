@@ -80,7 +80,6 @@ public class MenuPage {
 					break;
 				default:
 					ClosedPizzeriaAlert.display(false);        // pizzeria già chiusa
-
 					break;
 			}
 		});
