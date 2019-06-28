@@ -42,17 +42,17 @@ public class OrderPage2 {
 
 		GridPane gridPane = new GridPane();
 
-		Label username = new Label(" Nome:\t  ");
+		Label username = new Label(" Cognome:  ");
 		TextField nameInput = new TextField();
-		nameInput.setPromptText("Your Name");
+		nameInput.setPromptText("Your Surname");
 		username.setId("nomiLabel");
-		if (customer.isLoggedIn())
-			nameInput.setText(customer.getUsername());
+		//if (customer.isLoggedIn())	//fixme: inutilizzato
+		//	nameInput.setText(customer.getUsername());
 		HBox usernameBox = new HBox(50);
 		usernameBox.getChildren().addAll(username, nameInput);
 
 
-		Label address = new Label(" Indirizzo:   ");
+		Label address = new Label(" Indirizzo:    ");
         TextField addressInput = new TextField();
         addressInput.setText(customer.getAddress());
 		addressInput.setPromptText("Your Address");
@@ -60,7 +60,7 @@ public class OrderPage2 {
 		HBox addressBox = new HBox(50);
 		addressBox.getChildren().addAll(address, addressInput);
 
-		Label choiceLabel = new Label(" Orario:\t  ");
+		Label choiceLabel = new Label(" Orario:\t   ");
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
 		choiceBox.getItems().addAll(getTime(pizzeria, order.getNumPizze()));
 		choiceLabel.setId("nomiLabel");
@@ -130,7 +130,7 @@ public class OrderPage2 {
         });
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
-        scene3.getStylesheets().addAll(this.getClass().getResource("cssStyle/orderPage2.css").toExternalForm());
+        scene3.getStylesheets().add(this.getClass().getResource("cssStyle/orderPage2.css").toExternalForm());
         window.setScene(scene3);
 	}
 

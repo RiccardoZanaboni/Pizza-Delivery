@@ -60,7 +60,7 @@ public class OrderPage1 {
             shoppingCart.display(order, shoppingCartButton);
         });
         shoppingCartButton.setText(order.getNumPizze() + "");
-        shoppingCartBox.getChildren().addAll(shoppingCartButton);
+        shoppingCartBox.getChildren().add(shoppingCartButton);
 
         /* metodi esterni per non appesantire */
         fillLabelsAndButtons(shoppingCartButton, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, addButtons, modButtons);
