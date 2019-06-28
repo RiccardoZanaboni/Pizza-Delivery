@@ -129,6 +129,10 @@ public class PizzeriaMenuPage {
 				return;
 			}
 			double price = Double.parseDouble(priceInput.getText());
+        	if(price <= 0){
+        		GenericAlert.display("Attenzione: inserito prezzo non valido.");
+        		return;
+			}
         	if(toppings.size() > 0) {
             	StringBuilder ingr = new StringBuilder();
             	HashMap<String, String> h = new HashMap <>();

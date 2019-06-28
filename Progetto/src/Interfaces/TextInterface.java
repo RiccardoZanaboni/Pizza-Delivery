@@ -103,7 +103,7 @@ public class TextInterface {
 				if(last != null){
 				System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
 				System.out.println(last.recapOrder());
-				} else System.out.println(Services.colorSystemOut("\nNon hai ancora effettuato nessun ordine!\n",Color.RED,false,false));
+				} else System.out.println(Services.colorSystemOut("\n" + customer.getUsername() + ", non hai ancora effettuato nessun ordine!\n",Color.RED,false,false));
 				whatDoYouWant(customer);
 				break;
 			case "O":
@@ -134,7 +134,7 @@ public class TextInterface {
 				if(isOpen && risposta.equals("N")){
 					makeOrderText(customer);
 				} else {
-					System.out.println(Services.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
+					System.out.println(Services.colorSystemOut("\nSpiacenti: inserito carattere non valido. Riprovare:", Color.RED, false, false));
 					whatDoYouWant(customer);
 				} break;
 		}

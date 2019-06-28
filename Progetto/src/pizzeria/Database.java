@@ -151,7 +151,7 @@ public class Database {
 	 * Consente alla pizzeria di aggiungere una pizza al Menu
 	 * che è salvato sul Database.
 	 */
-	public static void putPizza(Pizzeria pizzeria) {
+	public static void putPizza(Pizzeria pizzeria) {	// todo: va spostato nella testuale!
 		HashMap<String,String> ingredMap = new HashMap<>();
 		try {
 			System.out.println(Services.colorSystemOut("Inserire il nome della pizza da aggiungere:\t", Color.YELLOW, false, false));
@@ -178,7 +178,7 @@ public class Database {
 			System.out.print(Services.colorSystemOut("Inserire il prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
 			double prezzo = Double.parseDouble(scan.nextLine());
 
-			if(name.length() == 0 || pizzeria.getMenu().containsKey(name) || descriz.equals("ERR")){
+			if(name.length() == 0 || pizzeria.getMenu().containsKey(name) || descriz.equals("ERR") || prezzo <= 0){
 				throw new TryAgainExc();
 			}
 			if (putPizza(name, descriz, prezzo)) {

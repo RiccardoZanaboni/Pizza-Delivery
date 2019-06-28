@@ -1,5 +1,6 @@
 package pizzeria;
 
+import graphicAlerts.GenericAlert;
 import javafx.scene.paint.Color;
 
 import java.awt.*;
@@ -12,6 +13,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+
+import static javafx.scene.paint.Color.RED;
 
 /**
  * Fornisce molteplici servizi, grafici o funzionali, in grado di supportare
@@ -245,7 +248,7 @@ public class Services {
 		if(color == Color.BLACK) {
 			background = "\u001B[40m";
 		}
-		else if(color == Color.RED) {
+		else if(color == RED) {
 			background = "\u001B[41m";
 		}
 		else if(color == Color.GREEN) {
@@ -275,7 +278,7 @@ public class Services {
 		if(color == Color.WHITE) {
 			cString.append("30");
 		}
-		else if(color == Color.RED) {
+		else if(color == RED) {
 			cString.append("31");
 		}
 		else if(color == Color.GREEN) {
@@ -346,18 +349,18 @@ public class Services {
 			Scanner fileIn = new Scanner(new File("Progetto/src/pizzeria/history.txt"));
 			while (fileIn.hasNextLine()) {
 				String line = fileIn.nextLine();
-				if (!line.startsWith("*"))
-					history.append(line).append("\n");
-				else {
-					line = line.substring(1);
+				if (line.startsWith("*")) {
+					line = line.substring(1);	/* toglie l'asterisco dai titoletti */
 					if(isGraphicRequest)
 						history.append(line.toUpperCase()).append("\n");
 					else
 						history.append(colorSystemOut(line + "\n", Color.YELLOW, true, true));
-				}
+				} else history.append(line).append("\n");
 			}
 		} catch (FileNotFoundException fnfe){
-			System.out.println("ERROR");
+			String err = "Spiacenti: sezione History non disponibile.";
+			if(isGraphicRequest) GenericAlert.display(err);
+			else System.out.println(Services.colorSystemOut(err, Color.RED,false,false));
 		}
 		return history.toString();
 	}
