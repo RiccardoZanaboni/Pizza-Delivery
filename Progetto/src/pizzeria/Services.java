@@ -228,6 +228,13 @@ public class Services {
 		return orario;
 	}
 
+	public static String dateTimeStamp(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String dataStr = sdf.format(date);
+		dataStr += " " + timeStamp(date.getHours(),date.getMinutes());
+		return dataStr;
+	}
+
 	/** Controlla, prima di un nuovo ordine, se sei ancora in tempo prima che la pizzeria chiuda. */
 	public static String checkTimeOrder(Pizzeria pizzeria) {
 		int nowMin = getNowMinutes();

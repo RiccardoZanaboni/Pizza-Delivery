@@ -79,7 +79,7 @@ public class OrderPage2 {
 			order.setTime(this.time);
 			if (checkInsert(this.name,this.address,this.time)) {
 				OrderPage3 orderPage3 = new OrderPage3();
-				orderPage3.display(window, order, pizzeria, scene3, customer);
+				orderPage3.display(true, window, order, pizzeria, scene3, customer);
 			}
 		});
 

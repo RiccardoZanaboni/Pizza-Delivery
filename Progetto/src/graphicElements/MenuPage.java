@@ -23,6 +23,7 @@ import pizzeria.*;
  */
 
 public class MenuPage {
+	private Scene scene1;
 
 	public void display(Stage window, Pizzeria pizzeria, Customer customer) {
 		Label label1 = new Label("Benvenuto");
@@ -87,16 +88,21 @@ public class MenuPage {
 
 		Button chiSiamoButton = new Button("Chi siamo");
 		chiSiamoButton.setOnAction(event -> {
-		    WhoWeArePage whoWeArePage=new WhoWeArePage();
+		    WhoWeArePage whoWeArePage = new WhoWeArePage();
 		    whoWeArePage.display(window,pizzeria, customer);
         });
 		chiSiamoButton.prefWidthProperty().bind(window.widthProperty());
         chiSiamoButton.prefHeightProperty().bind(window.heightProperty());
         //chiSiamoButton.setShape(new Rectangle(10,10));
 
-        Button recapOrdiniButton = new Button("Riepilogo ordini");
+        Button recapOrdiniButton = new Button("Ultimo ordine");
         recapOrdiniButton.prefWidthProperty().bind(window.widthProperty());
         recapOrdiniButton.prefHeightProperty().bind(window.heightProperty());
+        recapOrdiniButton.setOnAction(event -> {
+			OrderPage3 last = new OrderPage3();
+			//TODO: bisogna fare in modo di passare questa scene1 al posto di "null"
+			last.display(false, window, pizzeria.CustomerLastOrder(customer), pizzeria, scene1, customer);
+		});
 
         Button altroButton = new Button("Il tuo profilo");
         altroButton.setOnAction(e->{
@@ -130,7 +136,8 @@ public class MenuPage {
             	makeOrderButton.fire();
             }
         });
-		Scene scene1 = new Scene(layout,800, 600);
+
+		scene1 = new Scene(layout,800, 600);
 		scene1.getStylesheets().addAll(this.getClass().getResource("cssStyle/menuStyle.css").toExternalForm());
 		//window.setResizable(false);
 		window.setScene(scene1);

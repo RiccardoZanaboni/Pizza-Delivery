@@ -430,7 +430,7 @@ public class TextInterface {
 				wolf.addInfoOrder(order);
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
 				System.out.println(Services.colorSystemOut(confirm, Color.GREEN,true,false));
-				String confirmedTime = Services.timeStamp(orario.getHours(),orario.getMinutes());
+				String confirmedTime = Services.dateTimeStamp(orario);
 				confirmedTime = Services.colorSystemOut(confirmedTime,Color.GREEN,true,false);
 				System.out.println("\t>> Consegna prevista: " + confirmedTime + ".");
 				System.out.println(Services.getLine());

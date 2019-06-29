@@ -70,7 +70,7 @@ public class Order implements Comparable<Order> {
 		recap.append(Services.colorSystemOut("\nINDIRIZZO:\t",Color.YELLOW,false,false));
 		recap.append(Services.colorSystemOut(this.customerAddress,Color.GREEN,true,false));
 		recap.append(Services.colorSystemOut("\nORARIO:\t\t",Color.YELLOW,false,false));
-		recap.append(Services.colorSystemOut(Services.timeStamp(time.getHours(),time.getMinutes()),Color.GREEN,true,false));
+		recap.append(Services.colorSystemOut(Services.dateTimeStamp(this.time),Color.GREEN,true,false));
 		recap.append(textRecapProducts());
 		recap.append(Services.colorSystemOut("TOTALE: € ",Color.YELLOW,true,false));
 		recap.append(Services.colorSystemOut(String.valueOf(getTotalPrice()),Color.RED,true,false));

@@ -41,17 +41,16 @@ class ButtonRmvPizza extends Button {
 			  può essere un bene (rende "ben visibile" l'effettuato aggiornamento o può dare fastidio.
 			  Comunque è un modo per risolvere l'aggiornamento del prezzo quando elimino una pizza!
 		    */
-		    window.hide();
+			window.close();
 		    ShoppingCart shoppingCart = new ShoppingCart();
 		    shoppingCart.display(order, shoppingCartButton);
-
 
 		    //countPizza.setText("" + pizza.getCount());
 		    //prezzoLabel.setText("" + (pizza.getPrice() * pizza.getCount()));	// fixme: altrimenti così, ma non funziona bene (non so perchè)
 		    order.setNumTemporaryPizze(false);
 		    shoppingCartButton.setText(order.getNumTemporaryPizze() + "");
 /*
-		    if (pizza.getCount()==0) {		// se eliminate tutte, vengono nascoste nel carrello
+		    if (pizza.getCount()==0) {		// se eliminate tutte, vengono tolte dal carrello
 		        nomeLabels.setText("");
 		        prezzoLabel.setText("");
 		        toppingLabel.setText("");
