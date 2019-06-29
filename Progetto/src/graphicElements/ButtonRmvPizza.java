@@ -12,7 +12,7 @@ import pizzeria.Pizza;
 
 class ButtonRmvPizza extends Button {
 
-	ButtonRmvPizza(Stage window, Label nomeLabels, Label prezzoLabel, Label toppingLabel, Button shoppingCartButton, Order order, Pizza pizza, Label countPizza) {
+	ButtonRmvPizza(Stage window, Label nomeLabels, Label toppingLabel, Label prezzoLabel, Button shoppingCartButton, Order order, Pizza pizza, Label countPizza) {
 		Image image1 = new Image("graphicElements/images/cestino.png");
 		ImageView imageView = new ImageView(image1);
 		imageView.setFitHeight(20);
@@ -36,20 +36,11 @@ class ButtonRmvPizza extends Button {
 		        pizza.setCount(false);
 		    }
 
-		    /* FIXME: con queste tre righe effettua il refresh del carrello ogni volta
-		      che si rimuove una pizza, però graficamente si vede che chiude e riapre...
-			  può essere un bene (rende "ben visibile" l'effettuato aggiornamento o può dare fastidio.
-			  Comunque è un modo per risolvere l'aggiornamento del prezzo quando elimino una pizza!
-		    */
-			window.close();
-		    ShoppingCart shoppingCart = new ShoppingCart();
-		    shoppingCart.display(order, shoppingCartButton);
-
-		    //countPizza.setText("" + pizza.getCount());
-		    //prezzoLabel.setText("" + (pizza.getPrice() * pizza.getCount()));	// fixme: altrimenti così, ma non funziona bene (non so perchè)
+		    countPizza.setText("" + pizza.getCount());
+		    prezzoLabel.setText("" + (pizza.getPrice() * pizza.getCount()));
 		    order.setNumTemporaryPizze(false);
 		    shoppingCartButton.setText(order.getNumTemporaryPizze() + "");
-/*
+
 		    if (pizza.getCount()==0) {		// se eliminate tutte, vengono tolte dal carrello
 		        nomeLabels.setText("");
 		        prezzoLabel.setText("");
@@ -57,9 +48,6 @@ class ButtonRmvPizza extends Button {
 		        countPizza.setText("");
 		        this.setVisible(false);
 		    }
-
-		    */
-
 			/*else if(pizza.getCount()<0) {		// fixme: questo tecnicamente è inutile, non può verificarsi
 		        MinPizzasAlert.display(pizza.getName(false));
 		    }*/
