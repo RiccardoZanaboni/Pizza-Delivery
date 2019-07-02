@@ -3,7 +3,6 @@ package pizzeria;
 import javafx.scene.paint.Color;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -361,7 +360,7 @@ public class Pizzeria {
 
 	public String canCreateAccount(String mailAddress, String newUser, String newPsw, String confPsw) {
 		if(newPsw.equals(confPsw)){
-			if(newUser.length()>2 && newPsw.length()>2) {
+			if(newUser.length() > 2 && newPsw.length() > 2) {
 				/* se si registra correttamente, va bene */
 				try {
 					if (Database.getCustomers(newUser.toUpperCase(),newPsw) || checkMail(mailAddress))
@@ -381,7 +380,7 @@ public class Pizzeria {
 	}
 
 	public boolean checkMail(String mail){
-		return (Database.getUsernameCustomer(mail) != null);
+		return (Database.getInfoCustomerFromMailAddress(mail,1) != null);
 	}
 
 	public Order CustomerLastOrder(Customer customer) {

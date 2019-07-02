@@ -31,7 +31,6 @@ public class OrderDB {
         try {
             Statement statement = con.createStatement();
             rs = statement.executeQuery("SELECT * FROM sql7293749.Orders left JOIN sql7293749.Users ON Orders.username = Users.User;");
-            // todo rs = statement.executeQuery("select * from sql7293749.Orders where date >= (\'"+ date +"\')");
         } catch (SQLException sqle) {
             Database.missingConnection();
         }

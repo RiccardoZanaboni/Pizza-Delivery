@@ -65,7 +65,7 @@ public class Database {
 		}
 	}
 
-	public static void putTopping(Pizzeria pizzeria) {
+	public static void putTopping(Pizzeria pizzeria) {		// todo: va in testuale
 		try {
 			System.out.print(Services.colorSystemOut("Inserisci il nome del nuovo ingrediente:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
@@ -107,13 +107,13 @@ public class Database {
 			ResultSet rs2 = ToppingDB.getToppingsDB(con).executeQuery();
 			rs2.last();
 			int dopo = rs2.getRow();
-			return prima != dopo;
+			return (prima != dopo);
 		} catch (SQLException sqle) {
 			return false;
 		}
 	}
 
-	public static void removePizza(Pizzeria pizzeria) {
+	public static void removePizza(Pizzeria pizzeria) {		// todo: va in testuale
 		try {
 			System.out.print(Services.colorSystemOut("Inserisci il nome della pizza da rimuovere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
@@ -130,7 +130,7 @@ public class Database {
 		}
 	}
 
-	public static void removeTopping(Pizzeria pizzeria) {
+	public static void removeTopping(Pizzeria pizzeria) {	// todo: va in testuale
 		try {
 			System.out.print(Services.colorSystemOut("Inserisci il nome dell'ingrediente da rimuovere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
@@ -151,7 +151,7 @@ public class Database {
 	 * Consente alla pizzeria di aggiungere una pizza al Menu
 	 * che è salvato sul Database.
 	 */
-	public static void putPizza(Pizzeria pizzeria) {	// todo: va spostato nella testuale!
+	public static void putPizza(Pizzeria pizzeria) {	// todo: va in testuale!
 		HashMap<String,String> ingredMap = new HashMap<>();
 		try {
 			System.out.println(Services.colorSystemOut("Inserire il nome della pizza da aggiungere:\t", Color.YELLOW, false, false));
@@ -228,7 +228,7 @@ public class Database {
 		return ingredienti;
 	}
 
-	public static boolean putCustomer(String username, String password, String mailAddress) {
+	public static boolean putCustomer(String username, String password, String mailAddress) {	// todo: testuale?
 		try {
 			CustomerDB.putCostumer(con, username, password, mailAddress).execute();		// inserisce account nel DB
 			return true;
@@ -237,6 +237,17 @@ public class Database {
 			System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
 			return false;
 		} catch (SQLException sqle) {
+			return false;
+		}
+	}
+
+	public static boolean addInfoCustomer(String username, String name, String surname, String address){
+		try {
+			CustomerDB.addInfoCostumer(con, username, name, surname, address).executeUpdate();	// aggiorna account nel DB
+			return true;
+		} catch (SQLException sqle) {
+			String err = "\nErrore nell'aggiornamento dei dati utente. Riprovare:";
+			System.out.println(Services.colorSystemOut(err, Color.RED, false, false));
 			return false;
 		}
 	}
@@ -250,13 +261,13 @@ public class Database {
 		return hasRows;
 	}
 
-	public static String getPasswordCustomer(String username){
+	public static String getInfoCustomerFromUsername(String username, int columnIndex){
 		ResultSet rs;
 		String info = null;
 		try {
 			rs = CustomerDB.getCustomerFromUsername(con, username).executeQuery();
 			while (rs.next()) {
-				info = rs.getString(2);
+				info = rs.getString(columnIndex);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -264,13 +275,13 @@ public class Database {
 		return info;
 	}
 
-	public static String getUsernameCustomer(String mail){
+	public static String getInfoCustomerFromMailAddress(String mail, int columnIndex){
 		ResultSet rs;
 		String user = null;
 		try {
 			rs = CustomerDB.getCustomerFromMailAddress(con, mail).executeQuery();
 			while (rs.next()) {
-				user = rs.getString(1);
+				user = rs.getString(columnIndex);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -304,7 +315,7 @@ public class Database {
 			preparedStatement.setString(3, "");
 			preparedStatement.setString(4, "");
 			preparedStatement.setInt(5, 0);
-			preparedStatement.setTimestamp(6, data);
+			preparedStatement.setTimestamp(6, data);		// mette il Time attuale, ma non è un problema
 			preparedStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -376,7 +387,6 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return last;
 	}
 

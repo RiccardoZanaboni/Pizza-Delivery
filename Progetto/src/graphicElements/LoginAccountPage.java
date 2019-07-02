@@ -14,9 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Pizzeria;
-import pizzeria.pizzeriaSendMail.SendJavaMail;
 
-import javax.swing.*;
 import java.sql.SQLException;
 
 public class LoginAccountPage {

@@ -6,6 +6,10 @@ import javafx.scene.paint.Color;
 import pizzeria.*;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -106,8 +110,8 @@ public class TextInterface {
 				} else System.out.println(Services.colorSystemOut("\n" + customer.getUsername() + ", non hai ancora effettuato nessun ordine!\n",Color.RED,false,false));
 				whatDoYouWant(customer);
 				break;
-			case "O":
-				System.out.println(Services.colorSystemOut("Ora visualizzerai le tue offerte attive...", Color.YELLOW, false, false));
+			case "M":
+				modifyAccount(customer);
 				whatDoYouWant(customer);
 				break;
 			case "H":
@@ -116,13 +120,12 @@ public class TextInterface {
 				break;
 			case "V":
 				//TODO: se si vuole metterlo, gestire l'errore... altrimenti lo togliamo
-				//String uri = "https://drive.google.com/open?id=1IywtXGVTaywaYirjZSVLLV3KDOI1bBx-";
-				Services.browse();
-				/*try {
+				String uri = "https://drive.google.com/open?id=1IywtXGVTaywaYirjZSVLLV3KDOI1bBx-";
+				try {
 					Desktop.getDesktop().browse(new URI(uri));
 				} catch (IOException | URISyntaxException e) {
 					e.printStackTrace();
-				}*/
+				}
 				whatDoYouWant(customer);
 				break;
 			case "E":
@@ -138,6 +141,19 @@ public class TextInterface {
 					whatDoYouWant(customer);
 				} break;
 		}
+	}
+
+	private void modifyAccount(Customer customer) {
+		String user = customer.getUsername();
+		System.out.print("\nInserisci il tuo nome: ");
+		String nome = scan.nextLine();
+		System.out.print("Inserisci il tuo cognome: ");
+		String cognome = scan.nextLine();
+		System.out.print("Inserisci il tuo indirizzo principale: ");
+		String indirizzo = scan.nextLine();
+		if(Database.addInfoCustomer(user,nome,cognome,indirizzo))
+			System.out.println(Services.colorSystemOut("\nGrazie! Dati aggiornati.",Color.YELLOW,false,false));
+		else System.out.println(Services.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
 	}
 
 	/** Effettua tutte le operazioni necessarie ad effettuare un nuovo ordine.

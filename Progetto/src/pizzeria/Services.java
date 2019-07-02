@@ -69,15 +69,15 @@ public class Services {
 	}
 
 	/** In Interfaces.TextInterface.whatDoYouWant(), chiede quali siano le intenzioni del cliente per procedere. */
-	public static String whatDoYouWantPossibilities(boolean isOpen){
+	public static String whatDoYouWantPossibilities(boolean isOpen){		//TODO: va in testuale!
 		String ecco = Services.colorSystemOut("\nEcco che cosa puoi fare:\n",Color.YELLOW,false,false);
 		String con = "\t- con '";
 		String newOrd = Services.colorSystemOut("N", Color.ORANGE,true,false);
 		String newOrdS = "' puoi effetturare un nuovo ordine;\n";
 		String last = Services.colorSystemOut("L",Color.ORANGE,true,false);
 		String lastS = "' puoi visualizzare il tuo ultimo ordine;\n";
-		String off = Services.colorSystemOut("O",Color.ORANGE,true,false);
-		String offS = "' puoi visualizzare le tue offerte attive;\n";
+		String off = Services.colorSystemOut("M",Color.ORANGE,true,false);
+		String offS = "' puoi modificare i tuoi dati;\n";
 		String hist = Services.colorSystemOut("H",Color.ORANGE,true,false);
 		String histS = "' puoi sapere di più sulla nostra attività;\n";
 		String video = Services.colorSystemOut("V",Color.ORANGE,true,false);
@@ -370,12 +370,6 @@ public class Services {
 			else System.out.println(Services.colorSystemOut(err, Color.RED,false,false));
 		}
 		return history.toString();
-	}
-
-	public static void browse(){
-		Browse browse = new Browse();
-		Thread t = new Thread(browse);
-		t.start();
 	}
 
 	public static HashMap<String, Order> sortOrders(HashMap<String, Order> orders) {

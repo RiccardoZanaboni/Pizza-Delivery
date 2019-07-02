@@ -27,7 +27,6 @@ public class ShoppingCart {
 		hBox.getChildren().add(label);
 		hBox.setAlignment(Pos.CENTER);
 
-		//GridPane gridPane = addEverythingToGridPane(pizzasInCart, order, pizzeria, nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
 		GridPane gridPane = createGridPane(window, shoppingCartButton, order);
 		gridPane.setPadding(new Insets(10, 10, 10, 10));
 		gridPane.setHgap(10);

@@ -1,6 +1,5 @@
 package graphicElements;
 
-import graphicAlerts.MinPizzasAlert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

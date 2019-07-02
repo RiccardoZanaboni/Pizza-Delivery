@@ -19,7 +19,7 @@ import pizzeria.pizzeriaSendMail.SendJavaMail;
 public class NewAccountPage {
 	public void display(Stage window, Pizzeria pizzeria) {
 
-		Label username = new Label(" Nome:\t  ");
+		Label username = new Label(" Username:");
 		TextField nameInput = new TextField();
 		nameInput.setMinWidth(250);
 		nameInput.setPromptText("Your Name");

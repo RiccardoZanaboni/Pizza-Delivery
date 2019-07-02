@@ -24,7 +24,6 @@ import java.util.Properties;
  * */
 
 public class SendJavaMail {
-	private String from = "pizzeria.wolf@gmail.com";
 	private Properties props = setProperties();
 	private Authenticator auth = new SMTPAuthenticator("pizzeria.wolf@gmail.com", "password.01");
 
@@ -46,6 +45,7 @@ public class SendJavaMail {
 			session.setDebug(true);
 
 			MimeMessage message = new MimeMessage(session);
+			String from = "pizzeria.wolf@gmail.com";
 			message.setFrom(new InternetAddress(from));
 
 			InternetAddress to = new InternetAddress(dest);
@@ -85,8 +85,8 @@ public class SendJavaMail {
 	}
 
 	public void recoverPassword(String dest) {
-		String user = Database.getUsernameCustomer(dest);
-		String psw = Database.getPasswordCustomer(user);
+		String user = Database.getInfoCustomerFromMailAddress(dest,1);
+		String psw = Database.getInfoCustomerFromUsername(user,2);
 		String subject = "Recupero Password";
 		StringBuilder txt = new StringBuilder();
 		txt.append("Carissimo/a utente,\n\nEcco i tuoi dati:\n");
