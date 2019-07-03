@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pizzeria.Customer;
+import pizzeria.Database;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
 
@@ -42,23 +43,26 @@ public class OrderPage2 {
 
 		GridPane gridPane = new GridPane();
 
-		Label username = new Label(" Cognome:  ");
-		TextField nameInput = new TextField();
-		nameInput.setPromptText("Your Surname");
-		username.setId("nomiLabel");
+		Label surnameLabel = new Label(" Cognome:  ");
+		TextField surnameInput = new TextField();
+		surnameInput.setPromptText("Your Surname");
+		surnameLabel.setId("nomiLabel");
 		//if (customer.isLoggedIn())	//fixme: inutilizzato
-		//	nameInput.setText(customer.getUsername());
+		String surname = Database.getInfoCustomerFromUsername(customer.getUsername(),5);
+		if(surname != null)
+			surnameInput.setText(surname);
 		HBox usernameBox = new HBox(50);
-		usernameBox.getChildren().addAll(username, nameInput);
+		usernameBox.getChildren().addAll(surnameLabel, surnameInput);
 
-
-		Label address = new Label(" Indirizzo:    ");
+		Label addressLabel = new Label(" Indirizzo:    ");
         TextField addressInput = new TextField();
-        addressInput.setText(customer.getAddress());
 		addressInput.setPromptText("Your Address");
-		address.setId("nomiLabel");
+		addressLabel.setId("nomiLabel");
+		String address = Database.getInfoCustomerFromUsername(customer.getUsername(),6);
+		if(address != null)
+			addressInput.setText(address);
 		HBox addressBox = new HBox(50);
-		addressBox.getChildren().addAll(address, addressInput);
+		addressBox.getChildren().addAll(addressLabel, addressInput);
 
 		Label choiceLabel = new Label(" Orario:\t   ");
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
@@ -70,7 +74,7 @@ public class OrderPage2 {
 		Button confirmButton = new Button("Prosegui →");
         confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e-> {
-			this.name = nameInput.getText();
+			this.name = surnameInput.getText();
 			this.address = getInfo(addressInput);
 			this.time = getChoice(choiceBox);
 			order.setName(this.name);
@@ -86,7 +90,7 @@ public class OrderPage2 {
 		Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
-			this.name = getInfo(nameInput);
+			this.name = getInfo(surnameInput);		// FIXME: ????
 			this.address = getInfo(addressInput);
 			OrderPage1 orderPage1 = new OrderPage1();
 			orderPage1.display(window, order, pizzeria, customer);
@@ -123,8 +127,7 @@ public class OrderPage2 {
             if(ke.getCode()== KeyCode.ENTER) {
                 confirmButton.fire();
             }
-            if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
-            {
+            if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE) {
                 backButton.fire();
             }
         });
@@ -167,7 +170,6 @@ public class OrderPage2 {
 		} catch (ParseException e) {
 			return null;
 		}
-		//System.out.println(orario);
 		return oraScelta;
 	}
 

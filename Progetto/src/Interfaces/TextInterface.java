@@ -151,9 +151,12 @@ public class TextInterface {
 		String cognome = scan.nextLine();
 		System.out.print("Inserisci il tuo indirizzo principale: ");
 		String indirizzo = scan.nextLine();
-		if(Database.addInfoCustomer(user,nome,cognome,indirizzo))
-			System.out.println(Services.colorSystemOut("\nGrazie! Dati aggiornati.",Color.YELLOW,false,false));
-		else System.out.println(Services.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
+		if(Database.addInfoCustomer(user,nome,cognome,indirizzo)) {
+			System.out.println(Services.colorSystemOut("\nGrazie! Dati aggiornati.", Color.YELLOW, false, false));
+			customer.setName(nome);
+			customer.setSurname(cognome);
+			customer.setAddress(indirizzo);
+		} else System.out.println(Services.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
 	}
 
 	/** Effettua tutte le operazioni necessarie ad effettuare un nuovo ordine.

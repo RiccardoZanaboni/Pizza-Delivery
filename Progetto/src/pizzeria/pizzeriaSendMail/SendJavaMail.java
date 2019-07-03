@@ -87,9 +87,15 @@ public class SendJavaMail {
 	public void recoverPassword(String dest) {
 		String user = Database.getInfoCustomerFromMailAddress(dest,1);
 		String psw = Database.getInfoCustomerFromUsername(user,2);
+		String nome = Database.getInfoCustomerFromUsername(user,4);
 		String subject = "Recupero Password";
 		StringBuilder txt = new StringBuilder();
-		txt.append("Carissimo/a utente,\n\nEcco i tuoi dati:\n");
+		txt.append("Carissimo/a ");
+		if(nome == null)
+			txt.append("utente");
+		else
+			txt.append(nome.toUpperCase());
+		txt.append(",\n\nEcco i tuoi dati:\n");
 		txt.append("User: ").append(user).append("\n");
 		txt.append("Password: ").append(psw).append("\n\nAccedi ed ordina con noi!");
 		String messageBody = txt.toString();
