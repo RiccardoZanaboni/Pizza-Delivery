@@ -1,6 +1,9 @@
 package pizzeria;
 
+import database.Database;
 import javafx.scene.paint.Color;
+import services.TextualPrintServices;
+import services.TimeServices;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -8,8 +11,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.*;
 
-import static pizzeria.Database.openDatabase;
-import static pizzeria.Database.setLastUpdate;
+import static database.Database.openDatabase;
+import static database.Database.setLastUpdate;
+import static services.TimeServices.getMinutes;
+import static services.TimeServices.getNowMinutes;
 
 @SuppressWarnings("deprecation")
 
@@ -121,8 +126,8 @@ public class Pizzeria {
 
 		setIngredientsPizzeria();
 		createMenu();
-		int closeMinutes = Services.getMinutes(getClosingToday());
-		int openMinutes = Services.getMinutes(getOpeningToday());
+		int closeMinutes = getMinutes(getClosingToday());
+		int openMinutes = getMinutes(getOpeningToday());
 		this.ovens = new Oven[(closeMinutes - openMinutes) / this.OVEN_MINUTES];    // minutiTotali/5
 		for (int i = 0; i < this.ovens.length; i++) {
 			this.ovens[i] = new Oven(this.availablePlaces);
@@ -192,29 +197,29 @@ public class Pizzeria {
 		return order;
 	}
 
-	/** Su Interfaces.TextInterface dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria. */
+	/** Su interfaces.TextInterface dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria. */
 	public String helloThere(){
-		String opTime = Services.timeStamp(getOpeningToday().getHours(), getOpeningToday().getMinutes());
-		String clTime = Services.timeStamp(getClosingToday().getHours(), getClosingToday().getMinutes());
+		String opTime = TimeServices.timeStamp(getOpeningToday().getHours(), getOpeningToday().getMinutes());
+		String clTime = TimeServices.timeStamp(getClosingToday().getHours(), getClosingToday().getMinutes());
 		StringBuilder hello = new StringBuilder("\n");
-		hello.append(Services.colorSystemOut("\nBenvenuto!\n", Color.GREEN,true,true));
-		hello.append(Services.colorSystemOut("\nPIZZERIA ", Color.ORANGE,false,false));
-		hello.append(Services.colorSystemOut("\"" + this.name + "\"\n\t",Color.RED,true,false));
-		hello.append(Services.colorSystemOut(this.address,Color.ORANGE,false,false));
+		hello.append(TextualPrintServices.colorSystemOut("\nBenvenuto!\n", Color.GREEN,true,true));
+		hello.append(TextualPrintServices.colorSystemOut("\nPIZZERIA ", Color.ORANGE,false,false));
+		hello.append(TextualPrintServices.colorSystemOut("\"" + this.name + "\"\n\t",Color.RED,true,false));
+		hello.append(TextualPrintServices.colorSystemOut(this.address,Color.ORANGE,false,false));
 		if(getOpeningToday().equals(getClosingToday()))
-			hello.append(Services.colorSystemOut("\n\tOGGI CHIUSO", Color.RED, true, false));
+			hello.append(TextualPrintServices.colorSystemOut("\n\tOGGI CHIUSO", Color.RED, true, false));
 		else {
-			hello.append(Services.colorSystemOut("\n\tApertura oggi: ", Color.ORANGE, false, false));
-			hello.append(Services.colorSystemOut(opTime + " - " + clTime, Color.RED, true, false));
+			hello.append(TextualPrintServices.colorSystemOut("\n\tApertura oggi: ", Color.ORANGE, false, false));
+			hello.append(TextualPrintServices.colorSystemOut(opTime + " - " + clTime, Color.RED, true, false));
 		}
-		hello.append("\n").append(Services.getLine());
+		hello.append("\n").append(TextualPrintServices.getLine());
 		return hello.toString();
 	}
 
-	/** Da Interfaces.TextInterface, permette di stampare a video il menu completo. */
+	/** Da interfaces.TextInterface, permette di stampare a video il menu completo. */
 	public String printMenu() {
-		String line = Services.getLine();
-		Services.paintMenuString();
+		String line = TextualPrintServices.getLine();
+		TextualPrintServices.paintMenuString();
 		StringBuilder s = new StringBuilder();
 		for (String a : this.menu.keySet()) {
 			s.append("\n").append(this.menu.get(a).toString());
@@ -224,24 +229,24 @@ public class Pizzeria {
 
 	/** Controlla che la pizzeria sia aperta in un determinato orario, nella giornata odierna. */
 	public boolean isOpen(Date d){
-		int openTime = Services.getMinutes(getOpeningToday());
-		int closeTime = Services.getMinutes(getClosingToday());
-		int requestTime = Services.getMinutes(d);
+		int openTime = getMinutes(getOpeningToday());
+		int closeTime = getMinutes(getClosingToday());
+		int requestTime = getMinutes(d);
 
 		return (requestTime >= openTime && requestTime < closeTime);
 	}
 
 	/** ritorna l'indice della casella temporale (forno) desiderata. */
 	public int findTimeBoxOven(int oraDesiderata, int minutiDesiderati){
-		int openMinutes = Services.getMinutes(getOpeningToday());
-		int desiredMinutes = Services.getMinutes(oraDesiderata,minutiDesiderati);
+		int openMinutes = getMinutes(getOpeningToday());
+		int desiredMinutes = getMinutes(oraDesiderata,minutiDesiderati);
 		return (desiredMinutes - openMinutes)/this.OVEN_MINUTES;
 	}
 
 	/** ritorna l'indice della casella temporale (fattorino) desiderata. */
 	public int findTimeBoxDeliveryMan(int oraDesiderata, int minutiDesiderati){
-		int openMinutes = Services.getMinutes(getOpeningToday());
-		int desiredMinutes = Services.getMinutes(oraDesiderata,minutiDesiderati);
+		int openMinutes = getMinutes(getOpeningToday());
+		int desiredMinutes = getMinutes(oraDesiderata,minutiDesiderati);
 		return (desiredMinutes - openMinutes)/this.DELIVERYMAN_MINUTES;
 	}
 
@@ -259,19 +264,19 @@ public class Pizzeria {
 	 * la var "scarto" risponde all'eventualità che la pizzeria sia già aperta al momento attuale. */
 	public ArrayList<String> availableTimes(int tot){
 		ArrayList<String> availables = new ArrayList<>();
-		int now = Services.getNowMinutes();
-		int restaAperta = Services.calculateOpeningMinutesPizzeria(this);
-		int esclusiIniziali = Services.calculateStartIndex(this, now, tot);     // primo orario da visualizzare (in minuti)
+		int now = getNowMinutes();
+		int restaAperta = TimeServices.calculateOpeningMinutesPizzeria(this);
+		int esclusiIniziali = TimeServices.calculateStartIndex(this, now, tot);     // primo orario da visualizzare (in minuti)
 
 		for(int i = esclusiIniziali; i < restaAperta; i++) {    // considera i tempi minimi di preparazione e consegna
 			if(i % 5 == 0) {
 				if (this.ovens[i / 5].getAvailablePlaces() + this.ovens[(i / 5) - 1].getAvailablePlaces() >= tot) {
 					for (DeliveryMan a : this.deliveryMen) {
 						if (a.getDeliveryManTimes()[i / 10].isFree()) {
-							int newMinutes = Services.getMinutes(getOpeningToday()) + i;   // NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
+							int newMinutes = getMinutes(getOpeningToday()) + i;   // NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
 							int ora = newMinutes / 60;
 							int min = newMinutes % 60;
-							String nuovoOrario = Services.timeStamp(ora,min);
+							String nuovoOrario = TimeServices.timeStamp(ora,min);
 							availables.add(nuovoOrario + "  ");
 							break;
 						}
@@ -284,7 +289,7 @@ public class Pizzeria {
 		} else {
 			/* se l'ordine inizia in un orario ancora valido, ma impiega troppo tempo e diventa troppo tardi: */
 			String spiacenti = "\nSpiacenti: si è fatto tardi, la pizzeria è ormai in chiusura. Torna a trovarci!\n";
-			System.out.println(Services.colorSystemOut(spiacenti,Color.RED,false,false));
+			System.out.println(TextualPrintServices.colorSystemOut(spiacenti,Color.RED,false,false));
 			return null;
 		}
 	}
@@ -313,7 +318,7 @@ public class Pizzeria {
 		return this.ovens;
 	}
 
-	/** In Interfaces.TextInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
+	/** In interfaces.TextInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
 	public String possibleAddictions() {
 		StringBuilder possibiliIngr = new StringBuilder();
 		int i = 0;
@@ -356,6 +361,19 @@ public class Pizzeria {
 			/* se la combinazione utente-password è errata */
 			return "NO";
 		}
+	}
+
+	/** Controlla, prima di un nuovo ordine, se sei ancora in tempo prima che la pizzeria chiuda. */
+	public String checkTimeOrder() {
+		int nowMin = getNowMinutes();
+		int openMin = getMinutes(getOpeningToday());
+		int closeMin = getMinutes(getClosingToday());
+		if(closeMin <= nowMin || openMin == closeMin)
+			return "CLOSED";
+		if(closeMin - nowMin >= 0)// TODO: risistemare alla fine (mettere 20)!! Ho settato a 0 per poter lavorare anche alle 23:50!!!
+			return "OPEN";
+		else
+			return "CLOSING";
 	}
 
 	public String canCreateAccount(String mailAddress, String newUser, String newPsw, String confPsw) {

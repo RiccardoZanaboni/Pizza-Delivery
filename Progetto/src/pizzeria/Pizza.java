@@ -1,6 +1,9 @@
 package pizzeria;
 
 import javafx.scene.paint.Color;
+import services.SettleStringsServices;
+import services.TextualPrintServices;
+
 import java.util.HashMap;
 
 public class Pizza {
@@ -24,16 +27,16 @@ public class Pizza {
     @Override
     public String toString() {
         String descrizione = this.getDescription();
-        String nome = Services.colorSystemOut(this.name, Color.YELLOW, false, true);
-        String prezzo = Services.colorSystemOut("\n\t\tPrezzo: ",Color.ORANGE,false,false);
-        String ingr = Services.colorSystemOut("\n\t\tIngredienti: ",Color.ORANGE,false,false);
+        String nome = TextualPrintServices.colorSystemOut(this.name, Color.YELLOW, false, true);
+        String prezzo = TextualPrintServices.colorSystemOut("\n\t\tPrezzo: ",Color.ORANGE,false,false);
+        String ingr = TextualPrintServices.colorSystemOut("\n\t\tIngredienti: ",Color.ORANGE,false,false);
         return "- " + nome + prezzo + this.price + " €" + ingr + descrizione;
     }
 
     /** Restituisce il nome (così come è salvato, se non è da visualizzare) */
     public String getName(boolean isToVisualize) {
         if(isToVisualize)
-            return Services.getSettledName(this.name);
+            return SettleStringsServices.getSettledName(this.name);
         else
             return this.name;
     }

@@ -1,5 +1,7 @@
 package pizzeria;
 
+import services.TimeServices;
+
 @SuppressWarnings("deprecation")
 public class DeliveryMan {
     private String name;
@@ -12,8 +14,8 @@ public class DeliveryMan {
 
     public DeliveryMan(String name, Pizzeria pizzeria) {
         this.name = name;
-        int startMinutes = Services.getMinutes(pizzeria.getOpeningToday());
-        int endMinutes = Services.getMinutes(pizzeria.getClosingToday());
+        int startMinutes = TimeServices.getMinutes(pizzeria.getOpeningToday());
+        int endMinutes = TimeServices.getMinutes(pizzeria.getClosingToday());
         int length = (endMinutes-startMinutes)/pizzeria.getDELIVERYMAN_MINUTES();     // (..-..)/5
         this.deliveryManTimes = new TimeBoxDeliveryMan[length];
         for(int i = 0; i < length; i++){
