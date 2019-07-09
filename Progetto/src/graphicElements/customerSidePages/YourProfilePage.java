@@ -1,7 +1,7 @@
 package graphicElements.customerSidePages;
 
 import graphicAlerts.GenericAlert;
-import graphicElements.customerSidePages.newOrder.MenuPage;
+import graphicElements.customerSidePages.newOrder.HomePage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -61,8 +61,8 @@ public class YourProfilePage {
         Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
-           MenuPage menuPage = new MenuPage();
-           menuPage.display(window, pizzeria, customer);
+           HomePage homePage = new HomePage();
+           homePage.display(window, pizzeria, customer);
         });
 
         Button confirmButton = new Button(" Conferma modifiche");
@@ -73,8 +73,8 @@ public class YourProfilePage {
             customer.setAddress(addressInput.getText());
             //customer.setPassword(passwordInput.getText());
             if(Database.addInfoCustomer(customer.getUsername(),customer.getName(),customer.getSurname(),customer.getAddress())) {
-                MenuPage menuPage = new MenuPage();
-                menuPage.display(window, pizzeria, customer);
+                HomePage homePage = new HomePage();
+                homePage.display(window, pizzeria, customer);
             } else GenericAlert.display("Modifica dei dati non riuscita.");
         });
 

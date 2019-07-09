@@ -1,6 +1,6 @@
 package pizzeria;
 
-class TimeBoxDeliveryMan {
+public class TimeBoxDeliveryMan {
     private boolean isFree;
     private int orders;
     private final int maxDeliveries = 2;    // un fattorino non può consegnare più di 2 orders per volta
@@ -21,7 +21,7 @@ class TimeBoxDeliveryMan {
             this.isFree = false;
     }
 
-    boolean isFree() {
+    public boolean isFree() {
         return isFree;
     }
 }

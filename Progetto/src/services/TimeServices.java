@@ -1,5 +1,7 @@
 package services;
 
+import javafx.scene.paint.Color;
+import pizzeria.DeliveryMan;
 import pizzeria.Pizzeria;
 
 import java.text.ParseException;
@@ -7,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TimeServices {
-
 
 	/** Restituisce i minuti passati dalla mezzanotte all'orario richiesto. */
 	public static int getMinutes(int ora, int minuto){
@@ -29,6 +30,40 @@ public class TimeServices {
 		return getMinutes(nowHour, nowMinute);
 	}
 
+	/** Restituisce tutti gli orari in cui la pizzeria potrebbe garantire la consegna di "tot" pizze.
+	 * la var "scarto" risponde all'eventualità che la pizzeria sia già aperta al momento attuale. */
+	public static ArrayList<String> availableTimes(Pizzeria pizzeria, int tot){
+		ArrayList<String> availables = new ArrayList<>();
+		int now = getNowMinutes();
+		int restaAperta = calculateOpeningMinutesPizzeria(pizzeria);
+		int esclusiIniziali = calculateStartIndex(pizzeria, now, tot);     // primo orario da visualizzare (in minuti)
+
+		for(int i = esclusiIniziali; i < restaAperta; i++) {    // considera i tempi minimi di preparazione e consegna
+			if(i % 5 == 0) {
+				if (pizzeria.getOvens()[i / 5].getAvailablePlaces() + pizzeria.getOvens()[(i / 5) - 1].getAvailablePlaces() >= tot) {
+					for (DeliveryMan a : pizzeria.getDeliveryMen()) {
+						if (a.getDeliveryManTimes()[i / 10].isFree()) {
+							int newMinutes = getMinutes(pizzeria.getOpeningToday()) + i;   // NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
+							int ora = newMinutes / 60;
+							int min = newMinutes % 60;
+							String nuovoOrario = timeStamp(ora,min);
+							availables.add(nuovoOrario + "  ");
+							break;
+						}
+					}
+				}
+			}
+		}
+		if(availables.size() > 0) {
+			return availables;
+		} else {
+			/* se l'ordine inizia in un orario ancora valido, ma impiega troppo tempo e diventa troppo tardi: */
+			String spiacenti = "\nSpiacenti: si è fatto tardi, la pizzeria è ormai in chiusura. Torna a trovarci!\n";
+			System.out.println(TextualColorServices.colorSystemOut(spiacenti, Color.RED,false,false));
+			return null;
+		}
+	}
+
 	/** Calcola i minuti totali in cui la pizzeria rimane aperta oggi. */
 	public static int calculateOpeningMinutesPizzeria(Pizzeria pizzeria){
 		int openMinutes = getMinutes(pizzeria.getOpeningToday());
@@ -39,7 +74,7 @@ public class TimeServices {
 	/** esegue i controlli necessari per determinare il primo orario disponibile da restituire. */
 	public static int calculateStartIndex(Pizzeria pizzeria, int now, int tot) {
 		int esclusiIniziali = 0;
-		int giaPassati;     // minuti attualmente già passati dall'apertura
+		int giaPassati;      // minuti attualmente già passati dall'apertura
 		int tempiFissi;      // tempi da considerare per la cottura e la consegna
 		if(tot <= pizzeria.getAvailablePlaces())
 			tempiFissi = 15;      // 1 infornata: 5 minuti per la cottura e 10 minuti per la consegna

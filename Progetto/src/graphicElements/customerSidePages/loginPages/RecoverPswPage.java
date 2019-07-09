@@ -1,6 +1,6 @@
 package graphicElements.customerSidePages.loginPages;
 
-import graphicElements.customerSidePages.loginPages.LoginAccountPage;
+import database.Database;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -35,7 +35,7 @@ public class RecoverPswPage {
 			insertErrorLabel.setText("");		// fixme: non funziona (dovrebbe togliere la scritta "indirizzo non corretto", mentre sta inviando la mail).
 			String mailAddress =  mailInput.getText();
 			SendJavaMail newMail = new SendJavaMail();
-			if(pizzeria.checkMail(mailAddress)) {
+			if(Database.checkMail(mailAddress)) {
 				insertErrorLabel.setTextFill(Color.DARKRED);
 				insertErrorLabel.setText("E-mail di recupero inviata");
 				newMail.recoverPassword(mailAddress);

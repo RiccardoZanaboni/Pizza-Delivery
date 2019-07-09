@@ -1,7 +1,7 @@
 package graphicElements.customerSidePages;
 
 import graphicAlerts.GenericAlert;
-import graphicElements.customerSidePages.newOrder.MenuPage;
+import graphicElements.customerSidePages.newOrder.HomePage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,8 +36,8 @@ public class WhoWeArePage {
         Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
-            MenuPage menuPage = new MenuPage();
-            menuPage.display(window, pizzeria, customer);
+            HomePage homePage = new HomePage();
+            homePage.display(window, pizzeria, customer);
         });
 
         Button buttonVideo= new Button("Video Presentazione!!");

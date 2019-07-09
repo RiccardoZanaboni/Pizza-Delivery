@@ -28,7 +28,7 @@ public class DeliveryMan {
         this.deliveryManTimes[i].insertOrder();
     }
 
-    TimeBoxDeliveryMan[] getDeliveryManTimes() {
+    public TimeBoxDeliveryMan[] getDeliveryManTimes() {
         return deliveryManTimes;
     }
 }

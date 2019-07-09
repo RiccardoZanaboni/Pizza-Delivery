@@ -1,7 +1,5 @@
 package pizzeria;
 
-import java.util.HashMap;
-
 public class Customer {
     private String username;
     private String password;
@@ -78,4 +76,5 @@ public class Customer {
     public void setMailAddress(String mailAddress) {
         this.mailAddress = mailAddress;
     }
+
 }

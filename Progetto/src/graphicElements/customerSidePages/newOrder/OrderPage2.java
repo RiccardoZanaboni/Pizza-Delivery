@@ -17,6 +17,7 @@ import pizzeria.Customer;
 import database.Database;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
+import services.TimeServices;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -182,7 +183,7 @@ public class OrderPage2 {
 	/** aggiunge tutti gli orari disponibili alla ObservableList */
 	private ObservableList<String> getTime(Pizzeria pizzeria, int tot) {
 		ObservableList<String> orari = FXCollections.observableArrayList();
-		orari.addAll(pizzeria.availableTimes(tot));
+		orari.addAll(TimeServices.availableTimes(pizzeria, tot));
 		return orari;
 	}
 }

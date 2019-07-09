@@ -68,33 +68,33 @@ public class TextualInterface {
 	/** Al lancio di interfaces.TextualInterface, inizia un nuovo ordine solo se richiesto. */
 	private void whatDoYouWant(Customer customer) throws SQLException {
 		String risposta;
-		String isOpen = wolf.checkTimeOrder();
+		OpeningPossibilities isOpen = wolf.checkTimeOrder();
 		switch (isOpen) {
 
 			/* se la pizzeria è aperta */
-			case "OPEN":
-				System.out.println(TextualWhatToDo.whatDoYouWantPossibilities(true));
-				System.out.print(TextualPrintServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
+			case OPEN:
+				System.out.println(TextualPossibilitiesServices.whatDoYouWantPossibilities(true));
+				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				whatDoYouWantAnswers(true,risposta,customer);
 				break;
 
 			/* se la pizzeria è ancora aperta, ma non ci sono i tempi per eseguire un nuovo ordine */
-			case "CLOSING":
+			case CLOSING:
 				String chiusura = "\nAttenzione: la pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
-				System.out.println(TextualPrintServices.colorSystemOut(chiusura, Color.RED, false, false));
-				System.out.println(TextualWhatToDo.whatDoYouWantPossibilities(false));
-				System.out.print(TextualPrintServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(chiusura, Color.RED, false, false));
+				System.out.println(TextualPossibilitiesServices.whatDoYouWantPossibilities(false));
+				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				whatDoYouWantAnswers(false,risposta,customer);
 				break;
 
 			/* se la pizzeria per oggi ha terminato il turno lavorativo, quindi è chiusa */
-			case "CLOSED":
+			case CLOSE:
 				String chiusa = "\nAttenzione: la pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
-				System.out.println(TextualPrintServices.colorSystemOut(chiusa, Color.RED, false, false));
-				System.out.println(TextualWhatToDo.whatDoYouWantPossibilities(false));
-				System.out.print(TextualPrintServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(chiusa, Color.RED, false, false));
+				System.out.println(TextualPossibilitiesServices.whatDoYouWantPossibilities(false));
+				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				whatDoYouWantAnswers(false,risposta,customer);
 				break;
@@ -105,11 +105,11 @@ public class TextualInterface {
 	private void whatDoYouWantAnswers(boolean isOpen, String risposta, Customer customer) throws SQLException {
 		switch (risposta){
 			case "L":
-				Order last = wolf.CustomerLastOrder(customer);
+				Order last = PizzeriaServices.CustomerLastOrder(customer,wolf);
 				if(last != null){
 				System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
 				System.out.println(last.recapOrder());
-				} else System.out.println(TextualPrintServices.colorSystemOut("\n" + customer.getUsername() + ", non hai ancora effettuato nessun ordine!\n",Color.RED,false,false));
+				} else System.out.println(TextualColorServices.colorSystemOut("\n" + customer.getUsername() + ", non hai ancora effettuato nessun ordine!\n",Color.RED,false,false));
 				whatDoYouWant(customer);
 				break;
 			case "M":
@@ -131,7 +131,7 @@ public class TextualInterface {
 				whatDoYouWant(customer);
 				break;
 			case "E":
-				System.out.println(TextualPrintServices.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
+				System.out.println(TextualColorServices.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
 				/* logout */
 				askAccess();
 				break;
@@ -139,7 +139,7 @@ public class TextualInterface {
 				if(isOpen && risposta.equals("N")){
 					makeOrderText(customer);
 				} else {
-					System.out.println(TextualPrintServices.colorSystemOut("\nSpiacenti: inserito carattere non valido. Riprovare:", Color.RED, false, false));
+					System.out.println(TextualColorServices.colorSystemOut("\nSpiacenti: inserito carattere non valido. Riprovare:", Color.RED, false, false));
 					whatDoYouWant(customer);
 				} break;
 		}
@@ -154,11 +154,11 @@ public class TextualInterface {
 		System.out.print("Inserisci il tuo indirizzo principale: ");
 		String indirizzo = scan.nextLine();
 		if(Database.addInfoCustomer(user,nome,cognome,indirizzo)) {
-			System.out.println(TextualPrintServices.colorSystemOut("\nGrazie! Dati aggiornati.", Color.YELLOW, false, false));
+			System.out.println(TextualColorServices.colorSystemOut("\nGrazie! Dati aggiornati.", Color.YELLOW, false, false));
 			customer.setName(nome);
 			customer.setSurname(cognome);
 			customer.setAddress(indirizzo);
-		} else System.out.println(TextualPrintServices.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
+		} else System.out.println(TextualColorServices.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
 	}
 
 	/** Effettua tutte le operazioni necessarie ad effettuare un nuovo ordine.
@@ -166,7 +166,7 @@ public class TextualInterface {
 	 * Utilizzo ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio. */
 	private void makeOrderText(Customer customer) throws SQLException {
 		wolf.updatePizzeriaToday();
-		System.out.println(wolf.printMenu());
+		System.out.println(TextualServices.printMenu(wolf));
 		Order order = wolf.initializeNewOrder();
 		order.setCustomer(customer);
 		int num;
@@ -196,9 +196,9 @@ public class TextualInterface {
 				askConfirm(order, orario);
 			}
 		} catch (RestartOrderExc e) {
-			String annullato = TextualPrintServices.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
+			String annullato = TextualColorServices.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
 			System.out.println("\t>> " + annullato);
-			System.out.println(TextualPrintServices.getLine());
+			System.out.println(TextualColorServices.getLine());
 			whatDoYouWant(customer);
 		}
 	}
@@ -231,11 +231,11 @@ public class TextualInterface {
 			}
 		} catch (ArrayIndexOutOfBoundsException obe) {
 			String spiacenti = "Spiacenti: la pizzeria è chiusa nell'orario inserito. Riprovare: ";
-			System.out.println(TextualPrintServices.colorSystemOut(spiacenti,Color.RED,false,false));
+			System.out.println(TextualColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
 			d = orderTime(order, tot);
 		} catch (TryAgainExc re) {
 			String spiacenti = "Spiacenti: inserito orario non valido. Riprovare: ";
-			System.out.println(TextualPrintServices.colorSystemOut(spiacenti,Color.RED,false,false));
+			System.out.println(TextualColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
 			d = orderTime(order, tot);
 		}
 		return d;
@@ -244,13 +244,13 @@ public class TextualInterface {
 	/** Stampa a video tutti gli orari disponibili per la consegna
 	 * e ritorna la stringa inserita dall'utente. */
 	private String insertTime (int tot) throws RestartOrderExc {
-		String domanda = TextualPrintServices.colorSystemOut("A che ora vuoi ricevere la consegna? [formato HH:mm]",Color.YELLOW,false,false);
+		String domanda = TextualColorServices.colorSystemOut("A che ora vuoi ricevere la consegna? [formato HH:mm]",Color.YELLOW,false,false);
 		System.out.println(domanda + " \t\t(Inserisci 'F' per annullare.)");
-		System.out.println(TextualPrintServices.colorSystemOut("\tEcco gli orari disponibili:",Color.YELLOW,false,false));
+		System.out.println(TextualColorServices.colorSystemOut("\tEcco gli orari disponibili:",Color.YELLOW,false,false));
 		int c = 0;
 		System.out.print("\t");
 		try {
-			for (String s : wolf.availableTimes(tot)) {
+			for (String s : TimeServices.availableTimes(wolf, tot)) {
 				System.out.print(s);
 				c++;
 				if (c % 18 == 0) System.out.print("\n\t");      // stampa 18 orari su ogni riga
@@ -281,7 +281,7 @@ public class TextualInterface {
 		String nomePizza;
 		boolean ok = false;
 		do {
-			System.out.print(TextualPrintServices.colorSystemOut("Quale pizza desideri?",Color.YELLOW,false,false));
+			System.out.print(TextualColorServices.colorSystemOut("Quale pizza desideri?",Color.YELLOW,false,false));
 			if(isPrimaRichiesta)
 				System.out.print("\t\t(Inserisci 'F' per annullare)\n");
 			else
@@ -295,7 +295,7 @@ public class TextualInterface {
 				String err;
 				if (nomePizza.equals("OK") && isPrimaRichiesta) {
 					err = "Numero di pizze non valido. Riprovare:";
-					System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+					System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 				} else if (nomePizza.equals("OK"))
 					ok = true;
 				else if (!(wolf.getMenu().containsKey(nomePizza)))
@@ -304,7 +304,7 @@ public class TextualInterface {
 					ok = true;
 			} catch (TryAgainExc tae) {
 				String spiacenti = "Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:";
-				System.out.println(TextualPrintServices.colorSystemOut(spiacenti,Color.RED,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
 			}
 		} while (!ok);
 		return nomePizza;
@@ -318,7 +318,7 @@ public class TextualInterface {
 		int num = 0;
 		int totOrdinate = order.getNumPizze();
 		do {
-			String domanda = TextualPrintServices.colorSystemOut("Quante " + nomePizza + " vuoi?",Color.YELLOW,false,false);
+			String domanda = TextualColorServices.colorSystemOut("Quante " + nomePizza + " vuoi?",Color.YELLOW,false,false);
 			System.out.println(domanda + "\t[1.." + (2*(wolf.getAvailablePlaces())-totOrdinate) + "]");
 			String line = scan.nextLine();
 			try {
@@ -333,10 +333,10 @@ public class TextualInterface {
 				}
 			} catch (NumberFormatException e) {
 				String spiacenti = "Spiacenti: inserito numero non valido. Riprovare:";
-				System.out.println(TextualPrintServices.colorSystemOut(spiacenti,Color.RED,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
 			} catch (TryAgainExc e) {
 				String spiacenti = "Spiacenti: massimo numero di pizze superato. Riprovare:";
-				System.out.println(TextualPrintServices.colorSystemOut(spiacenti,Color.RED,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
 			}
 		} while (!ok);
 		return num;
@@ -345,35 +345,35 @@ public class TextualInterface {
 	/** Gestisce la possibilità che la pizza desiderata necessiti di aggiunte o rimozioni
 	 * di ingredienti, rispetto ad una specifica presente sul menu. */
 	private void askModifyPizza(Order order, String nomePizza, int num) {
-		String domanda = TextualPrintServices.colorSystemOut("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?",Color.YELLOW,false,false);
+		String domanda = TextualColorServices.colorSystemOut("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?",Color.YELLOW,false,false);
 		System.out.println(domanda + "\t[S/N]: ");
 		String answer = scan.nextLine().toUpperCase();
 		switch (answer) {
 			case "S":
 				System.out.println(possibleAddictions(wolf));
-				String advise = TextualPrintServices.colorSystemOut("(Attenzione: è prevista una maggiorazione di 0.50 € per ogni ingrediente aggiunto)",Color.YELLOW,false,false);
+				String advise = TextualColorServices.colorSystemOut("(Attenzione: è prevista una maggiorazione di 0.50 € per ogni ingrediente aggiunto)",Color.YELLOW,false,false);
 				System.out.println(advise);
-				String adding = TextualPrintServices.colorSystemOut("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
+				String adding = TextualColorServices.colorSystemOut("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
 				System.out.println(adding);
 				String aggiunte = scan.nextLine().toUpperCase();
-				String rmving = TextualPrintServices.colorSystemOut("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
+				String rmving = TextualColorServices.colorSystemOut("Inserisci gli ingredienti da RIMUOVERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
 				System.out.println(rmving);
 				String rimozioni = scan.nextLine().toUpperCase();
 				Pizza modPizza = addAndRmvToppingsText(wolf.getMenu().get(nomePizza), aggiunte, rimozioni, wolf.getSUPPL_PRICE());
 				for (int i = 0; i < num; i++) {
 					order.getOrderedPizze().add(modPizza);
 				}
-				String conf1 = TextualPrintServices.colorSystemOut("Aggiunte " + num + " pizze " + modPizza.getName(true).toUpperCase(),Color.YELLOW,false,false);
+				String conf1 = TextualColorServices.colorSystemOut("Aggiunte " + num + " pizze " + modPizza.getName(true).toUpperCase(),Color.YELLOW,false,false);
 				System.out.println("\t> " + conf1 + " (" + modPizza.getDescription() + ").");
 				break;
 			case "N":
 				order.addPizza(wolf.getMenu().get(nomePizza), num);
-				String conf2 = TextualPrintServices.colorSystemOut("Aggiunte " + num + " pizze " + nomePizza.toUpperCase(),Color.YELLOW,false,false);
+				String conf2 = TextualColorServices.colorSystemOut("Aggiunte " + num + " pizze " + nomePizza.toUpperCase(),Color.YELLOW,false,false);
 				System.out.println("\t> " + conf2);
 				break;
 			default:
 				String spiacenti = "Spiacenti: inserito carattere non corretto. Riprovare: ";
-				System.out.println(TextualPrintServices.colorSystemOut(spiacenti,Color.RED,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
 				askModifyPizza(order, nomePizza, num);
 				break;
 		}
@@ -381,22 +381,14 @@ public class TextualInterface {
 
 	/** Gestisce l'inserimento del nome del cliente e dell'indirizzo di spedizione. */
 	private boolean insertNameAndAddress(Order order) throws RestartOrderExc {
-		String qst = TextualPrintServices.colorSystemOut("Nome sul citofono:",Color.YELLOW,false,false);
+		String qst = TextualColorServices.colorSystemOut("Nome sul citofono:",Color.YELLOW,false,false);
 		System.out.println(qst + "\t\t(Inserisci 'F' per annullare l'ordine)");
 		String nome = scan.nextLine();
 		if (nome.toUpperCase().equals("F")) {
 			throw new RestartOrderExc();
 		}
 		order.setName(nome);
-		/*String domanda2 = PizzeriaServices.colorSystemOut("Password?",Color.YELLOW,false,false);
-		System.out.println(domanda2 + "\t\t(Inserisci 'F' per annullare l'ordine)");
-		String password = scan.nextLine();
-		if (nome.toUpperCase().equals("F")) {
-			throw new RestartOrderExc();
-		}
-		Customer c = new Customer(nome,password);
-		order.setCustomer(c);*/
-		String addr = TextualPrintServices.colorSystemOut("Indirizzo di consegna:",Color.YELLOW,false,false);
+		String addr = TextualColorServices.colorSystemOut("Indirizzo di consegna:",Color.YELLOW,false,false);
 		System.out.println(addr + "\t\t(Inserisci 'F' per annullare l'ordine)");
 		String indirizzo = scan.nextLine();
 		if (indirizzo.toUpperCase().equals("F")) {
@@ -440,21 +432,21 @@ public class TextualInterface {
 	 * (pronti all'evasione), aggiornando il vettore orario del forno e del fattorino. */
 	private void askConfirm(Order order, Date orario) throws SQLException {
 		Customer customer = order.getCustomer();
-		String domanda = TextualPrintServices.colorSystemOut("Confermi l'ordine?",Color.YELLOW,false,false);
-		String s = TextualPrintServices.colorSystemOut("S",Color.ORANGE,true,false);
-		String n = TextualPrintServices.colorSystemOut("N",Color.ORANGE,true,false);
+		String domanda = TextualColorServices.colorSystemOut("Confermi l'ordine?",Color.YELLOW,false,false);
+		String s = TextualColorServices.colorSystemOut("S",Color.ORANGE,true,false);
+		String n = TextualColorServices.colorSystemOut("N",Color.ORANGE,true,false);
 		System.out.println(domanda + "  Digitare '" + s + "' per confermare, '" + n + "' per annullare: ");
 		String risp = scan.nextLine().toUpperCase();
 		switch (risp) {
 			case "S":
 				/* Conferma l'ordine e lo aggiunge a quelli della pizzeria. */
-				wolf.addInfoOrder(order);
+				wolf.completeOrder(order);
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
-				System.out.println(TextualPrintServices.colorSystemOut(confirm, Color.GREEN,true,false));
+				System.out.println(TextualColorServices.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = TimeServices.dateTimeStamp(orario);
-				confirmedTime = TextualPrintServices.colorSystemOut(confirmedTime,Color.GREEN,true,false);
+				confirmedTime = TextualColorServices.colorSystemOut(confirmedTime,Color.GREEN,true,false);
 				System.out.println("\t>> Consegna prevista: " + confirmedTime + ".");
-				System.out.println(TextualPrintServices.getLine());
+				System.out.println(TextualColorServices.getLine());
 				whatDoYouWant(customer);
 				break;
 			case "N":
@@ -462,9 +454,9 @@ public class TextualInterface {
 				try {
 					throw new RestartOrderExc();
 				} catch (RestartOrderExc roe) {
-					String annullato = TextualPrintServices.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
+					String annullato = TextualColorServices.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
 					System.out.println("\t>> " + annullato);
-					System.out.println(TextualPrintServices.getLine());
+					System.out.println(TextualColorServices.getLine());
 					whatDoYouWant(customer);
 				}
 				break;
@@ -474,7 +466,7 @@ public class TextualInterface {
 					throw new TryAgainExc();
 				} catch (TryAgainExc re) {
 					String spiacenti = "Spiacenti: carattere inserito non valido. Riprovare: ";
-					System.out.println(TextualPrintServices.colorSystemOut(spiacenti,Color.RED,false,false));
+					System.out.println(TextualColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
 					askConfirm(order, orario);
 				}
 				break;
@@ -484,67 +476,67 @@ public class TextualInterface {
 	/** Elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
 	public static String possibleAddictions(Pizzeria pizzeria) {
 		StringBuilder possibiliIngr = new StringBuilder();
-		possibiliIngr.append(TextualPrintServices.colorSystemOut("\tPossibili aggiunte: ",Color.ORANGE,false,false));
-		possibiliIngr.append(pizzeria.possibleAddictions());
+		possibiliIngr.append(TextualColorServices.colorSystemOut("\tPossibili aggiunte: ",Color.ORANGE,false,false));
+		possibiliIngr.append(TextualServices.possibleAddictions(pizzeria));
 		return possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")); // elimina ultima virgola
 	}
 
 	/** Chiede se si vuole procedere con il login o con la creazione di un nuovo account. */
 	public void askAccess() throws SQLException {
-		String log = TextualPrintServices.colorSystemOut("L",Color.ORANGE,true,false);
-		String newAcc = TextualPrintServices.colorSystemOut("N",Color.ORANGE,true,false);
-		String recPsw = TextualPrintServices.colorSystemOut("R",Color.ORANGE,true,false);
-		System.out.println(TextualPrintServices.colorSystemOut("\t>> Digitare:\n",Color.YELLOW,false,false)
+		String log = TextualColorServices.colorSystemOut("L",Color.ORANGE,true,false);
+		String newAcc = TextualColorServices.colorSystemOut("N",Color.ORANGE,true,false);
+		String recPsw = TextualColorServices.colorSystemOut("R",Color.ORANGE,true,false);
+		System.out.println(TextualColorServices.colorSystemOut("\t>> Digitare:\n",Color.YELLOW,false,false)
 				+ "\t\t'" + log + "' per eseguire il login,\n\t\t'" + newAcc + "' per creare un nuovo account,\n\t\t'"
 				+ recPsw + "' per recuperare i dati del tuo account.");
-		System.out.print(TextualPrintServices.colorSystemOut("\t>>\t",Color.YELLOW,false,false));
+		System.out.print(TextualColorServices.colorSystemOut("\t>>\t",Color.YELLOW,false,false));
 		String answer = scan.nextLine().toUpperCase();
 		switch (answer) {
 			case "L":
-				String userQuestion = TextualPrintServices.colorSystemOut("\n\tUsername:\t", Color.YELLOW, false, false);
+				String userQuestion = TextualColorServices.colorSystemOut("\n\tUsername:\t", Color.YELLOW, false, false);
 				System.out.print(userQuestion);
 				String user = scan.nextLine().toUpperCase();
-				String pswQuestion = TextualPrintServices.colorSystemOut("\tPassword:\t", Color.YELLOW, false, false);
+				String pswQuestion = TextualColorServices.colorSystemOut("\tPassword:\t", Color.YELLOW, false, false);
 				System.out.print(pswQuestion);
 				String psw = scan.nextLine().toUpperCase();
-				String working1 = TextualPrintServices.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
+				String working1 = TextualColorServices.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working1);
 				switch(wolf.checkLogin(user,psw)){
-					case "OK":
+					case OK:
 						Customer c = new Customer(user,psw);
 						System.out.println("\nBenvenuto: " + user);
 						whatDoYouWant(c);
 						break;
-					case "P":
+					case PIZZERIA:
 						System.out.println("\nBenvenuto: " + user + " (utente privilegiato)");
 						whatDoesPizzeriaWant();
 						break;
-					case "NO":
-						System.out.println(TextualPrintServices.colorSystemOut("\nUsername o password errati: riprovare.\n",Color.RED,false,false));
+					case NO:
+						System.out.println(TextualColorServices.colorSystemOut("\nUsername o password errati: riprovare.\n",Color.RED,false,false));
 						askAccess();
 						break;
 				}
 				break;
 			case "N":
-				String newUserQuestion = TextualPrintServices.colorSystemOut("\n\tNuovo username:\t\t", Color.YELLOW, false, false);
+				String newUserQuestion = TextualColorServices.colorSystemOut("\n\tNuovo username:\t\t", Color.YELLOW, false, false);
 				System.out.print(newUserQuestion);
 				String newUser = scan.nextLine().toUpperCase();
-				String mailQuestion = TextualPrintServices.colorSystemOut("\tIndirizzo e-mail:\t", Color.YELLOW, false, false);
+				String mailQuestion = TextualColorServices.colorSystemOut("\tIndirizzo e-mail:\t", Color.YELLOW, false, false);
 				System.out.print(mailQuestion);
 				String mail = scan.nextLine().toLowerCase();
-				String newPswQuestion = TextualPrintServices.colorSystemOut("\tNuova password:\t\t", Color.YELLOW, false, false);
+				String newPswQuestion = TextualColorServices.colorSystemOut("\tNuova password:\t\t", Color.YELLOW, false, false);
 				System.out.print(newPswQuestion);
 				String newPsw = scan.nextLine().toUpperCase();
-				String confPswQuestion = TextualPrintServices.colorSystemOut("\tConferma psw:\t\t", Color.YELLOW, false, false);
+				String confPswQuestion = TextualColorServices.colorSystemOut("\tConferma psw:\t\t", Color.YELLOW, false, false);
 				System.out.print(confPswQuestion);
 				String confPsw = scan.nextLine().toUpperCase();
-				String working2 = TextualPrintServices.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
+				String working2 = TextualColorServices.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working2);
 				switch(wolf.canCreateAccount(mail,newUser,newPsw,confPsw)) {
-					case "OK":
+					case OK:
 						SendJavaMail newMail = new SendJavaMail();
 						if(!newMail.welcomeMail(newUser,newPsw,mail)) {    // se indirizzo mail non valido
-							System.out.println(TextualPrintServices.colorSystemOut("Errore: indirizzo e-mail non valido. Riprovare.",Color.RED,false,false));
+							System.out.println(TextualColorServices.colorSystemOut("Errore: indirizzo e-mail non valido. Riprovare.",Color.RED,false,false));
 							askAccess();
 						}
 						else {
@@ -555,37 +547,37 @@ public class TextualInterface {
 							whatDoYouWant(c);
 						}
 						break;
-					case "SHORT":
-						System.out.println(TextualPrintServices.colorSystemOut("\nUsername o password troppo breve: riprovare.\n",Color.RED,false,false));
+					case SHORT:
+						System.out.println(TextualColorServices.colorSystemOut("\nUsername o password troppo breve: riprovare.\n",Color.RED,false,false));
 						askAccess();
 						break;
-					case "EXISTING":
-						System.out.println(TextualPrintServices.colorSystemOut("\nDati già presenti nel Database: riprovare con indirizzo e-mail o username differente.\nSe già registrato, effettuare il login.\n",Color.RED,false,false));
+					case EXISTING:
+						System.out.println(TextualColorServices.colorSystemOut("\nDati già presenti nel Database: riprovare con indirizzo e-mail o username differente.\nSe già registrato, effettuare il login.\n",Color.RED,false,false));
 						askAccess();
 						break;
-					case "DIFFERENT":
-						System.out.println(TextualPrintServices.colorSystemOut("\nPassword non coincidente: riprovare.\n",Color.RED,false,false));
+					case DIFFERENT:
+						System.out.println(TextualColorServices.colorSystemOut("\nPassword non coincidente: riprovare.\n",Color.RED,false,false));
 						askAccess();
 						break;
 				}
 				break;
 			case "R":
-				String recoverMailQuestion = TextualPrintServices.colorSystemOut("\n\tInserisci l'indirizzo e-mail dell'account:\t", Color.YELLOW, false, false);
+				String recoverMailQuestion = TextualColorServices.colorSystemOut("\n\tInserisci l'indirizzo e-mail dell'account:\t", Color.YELLOW, false, false);
 				System.out.print(recoverMailQuestion);
 				String recMail = scan.nextLine().toUpperCase();
-				if(wolf.checkMail(recMail)) {
+				if(Database.checkMail(recMail)) {
 					SendJavaMail newMail = new SendJavaMail();
 					newMail.recoverPassword(recMail);
-					System.out.println(TextualPrintServices.colorSystemOut("\nUna e-mail ti è stata inviata.\n", Color.YELLOW, false, false));
+					System.out.println(TextualColorServices.colorSystemOut("\nUna e-mail ti è stata inviata.\n", Color.YELLOW, false, false));
 					askAccess();
 				} else {
-					System.out.println(TextualPrintServices.colorSystemOut("\nSpiacenti: indirizzo e-mail non presente nel Database.\n", Color.RED, false, false));
+					System.out.println(TextualColorServices.colorSystemOut("\nSpiacenti: indirizzo e-mail non presente nel Database.\n", Color.RED, false, false));
 					askAccess();
 				}
 				break;
 			default:
 				String spiacenti = "\nSpiacenti: carattere inserito non valido. Riprovare:\n";
-				System.out.println(TextualPrintServices.colorSystemOut(spiacenti,Color.RED,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
 				askAccess();
 				break;
 		}
@@ -593,13 +585,13 @@ public class TextualInterface {
 
 	private void whatDoesPizzeriaWant() throws SQLException {
 		String risposta;
-		System.out.println(TextualWhatToDo.whatDoesPizzeriaWantPossibilities());
-		System.out.print(TextualPrintServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
+		System.out.println(TextualPossibilitiesServices.whatDoesPizzeriaWantPossibilities());
+		System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 		risposta = scan.nextLine().toUpperCase();
 		switch (risposta){
 			case "V":
 				wolf.updatePizzeriaToday();
-				System.out.println(TextualPrintServices.colorSystemOut("Ecco gli ordini da evadere...\n", Color.YELLOW, false, false));
+				System.out.println(TextualColorServices.colorSystemOut("Ecco gli ordini da evadere...\n", Color.YELLOW, false, false));
 				/* Visualizza solo gli ordini di oggi */
 				for(String code : wolf.getOrders().keySet()){
 					if(wolf.getOrders().get(code).getTime().getDate()==(new Date().getDate()))
@@ -607,14 +599,9 @@ public class TextualInterface {
 				}
 				whatDoesPizzeriaWant();
 				break;
-			case "P":
-				System.out.println(TextualPrintServices.colorSystemOut("Ora potrai gestire il personale...", Color.YELLOW, false, false));
-				//TODO: gestire personale
-				whatDoesPizzeriaWant();
-				break;
 			case "M":
-				System.out.println(TextualWhatToDo.textModifyMenuPossibilities());
-				System.out.print(TextualPrintServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
+				System.out.println(TextualPossibilitiesServices.textModifyMenuPossibilities());
+				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				howModifyMenuAnswer(risposta);
 				whatDoesPizzeriaWant();
@@ -624,12 +611,12 @@ public class TextualInterface {
 				whatDoesPizzeriaWant();
 				break;
 			case "E":
-				System.out.println(TextualPrintServices.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
+				System.out.println(TextualColorServices.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
 				/* logout */
 				askAccess();
 				break;
 			default:
-				System.out.println(TextualPrintServices.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
+				System.out.println(TextualColorServices.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
 				whatDoesPizzeriaWant();
 				break;
 		}
@@ -641,13 +628,13 @@ public class TextualInterface {
 	 * - ...
 	 * */
 	private void sendTextualMail() {
-		String newAddQuestion = TextualPrintServices.colorSystemOut("Inserire indirizzo e-mail:\t\t\t", Color.YELLOW, false, false);
+		String newAddQuestion = TextualColorServices.colorSystemOut("Inserire indirizzo e-mail:\t\t\t", Color.YELLOW, false, false);
 		System.out.print(newAddQuestion);
 		String address = scan.nextLine().toLowerCase();
-		String newSubjQuestion = TextualPrintServices.colorSystemOut("Inserire l'oggetto della mail:\t\t", Color.YELLOW, false, false);
+		String newSubjQuestion = TextualColorServices.colorSystemOut("Inserire l'oggetto della mail:\t\t", Color.YELLOW, false, false);
 		System.out.print(newSubjQuestion);
 		String subject = scan.nextLine();
-		String newTxtQuestion = TextualPrintServices.colorSystemOut("Inserire testo della mail (inserire linea vuota per concludere):\n", Color.YELLOW, false, false);
+		String newTxtQuestion = TextualColorServices.colorSystemOut("Inserire testo della mail (inserire linea vuota per concludere):\n", Color.YELLOW, false, false);
 		System.out.print(newTxtQuestion);
 		StringBuilder txt = new StringBuilder();
 		do {
@@ -661,19 +648,19 @@ public class TextualInterface {
 	}
 
 	private void askConfirmSendMail(String address, String subject, String txt){
-		String confAddrQuestion = TextualPrintServices.colorSystemOut("Confermi l'invio a:\t\t", Color.YELLOW, false, false);
+		String confAddrQuestion = TextualColorServices.colorSystemOut("Confermi l'invio a:\t\t", Color.YELLOW, false, false);
 		System.out.print(confAddrQuestion);
-		String confAddr = TextualPrintServices.colorSystemOut(address,Color.WHITE,false,false);
+		String confAddr = TextualColorServices.colorSystemOut(address,Color.WHITE,false,false);
 		System.out.print(confAddr);
-		String confSubjQuestion = TextualPrintServices.colorSystemOut("\ndell'email con oggetto:\t", Color.YELLOW, false, false);
+		String confSubjQuestion = TextualColorServices.colorSystemOut("\ndell'email con oggetto:\t", Color.YELLOW, false, false);
 		System.out.print(confSubjQuestion);
-		String confSubj = TextualPrintServices.colorSystemOut(subject,Color.WHITE,false,false);
+		String confSubj = TextualColorServices.colorSystemOut(subject,Color.WHITE,false,false);
 		System.out.print(confSubj);
-		String confTxtQuestion = TextualPrintServices.colorSystemOut("\ncon testo:\n", Color.YELLOW,false,false);
+		String confTxtQuestion = TextualColorServices.colorSystemOut("\ncon testo:\n", Color.YELLOW,false,false);
 		System.out.print(confTxtQuestion);
-		String confTxt = TextualPrintServices.colorSystemOut(txt, Color.WHITE,false,false);
+		String confTxt = TextualColorServices.colorSystemOut(txt, Color.WHITE,false,false);
 		System.out.print(confTxt);
-		String confQuestion = TextualPrintServices.colorSystemOut("\n\t?\t(S/N):\t", Color.YELLOW,false,false);
+		String confQuestion = TextualColorServices.colorSystemOut("\n\t?\t(S/N):\t", Color.YELLOW,false,false);
 		System.out.print(confQuestion);
 		switch(scan.nextLine().toUpperCase()){
 			case "S":
@@ -682,11 +669,11 @@ public class TextualInterface {
 				break;
 			case "N":
 				String err = "\tMessaggio eliminato.";
-				System.out.println(TextualPrintServices.colorSystemOut(err,Color.YELLOW,true,false));
+				System.out.println(TextualColorServices.colorSystemOut(err,Color.YELLOW,true,false));
 				break;
 			default:
 				String notValid = "Spiacenti: inserito carattere non valido. Riprovare:";
-				System.out.println(TextualPrintServices.colorSystemOut(notValid,Color.RED,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(notValid,Color.RED,false,false));
 				askConfirmSendMail(address,subject,txt);
 				break;
 		}
@@ -707,12 +694,12 @@ public class TextualInterface {
 				Database.removeToppingText(wolf);
 				break;
 			case "B":
-				System.out.println(TextualPrintServices.colorSystemOut("Nessuna modifica effettuata al menu.\n", Color.YELLOW, false, false));
+				System.out.println(TextualColorServices.colorSystemOut("Nessuna modifica effettuata al menu.\n", Color.YELLOW, false, false));
 				// logout
 				whatDoesPizzeriaWant();
 				break;
 			default:
-				System.out.println(TextualPrintServices.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
+				System.out.println(TextualColorServices.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
 				/*  torna a "ecco cosa puoi fare" */
 				break;
 		}
@@ -720,7 +707,7 @@ public class TextualInterface {
 
 	public static void main(String[] args) {
 		TextualInterface textInterface = new TextualInterface();
-		System.out.println(textInterface.wolf.helloThere());
+		System.out.println(TextualServices.helloThere(textInterface.wolf));
 		try {
             textInterface.askAccess();
         } catch (SQLException e) {

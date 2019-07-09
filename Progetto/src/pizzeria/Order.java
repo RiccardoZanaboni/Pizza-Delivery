@@ -3,7 +3,7 @@ package pizzeria;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import services.TextualPrintServices;
+import services.TextualColorServices;
 import services.TimeServices;
 
 import java.util.ArrayList;
@@ -62,21 +62,21 @@ public class Order implements Comparable<Order> {
 
 	/** In interfaces.TextualInterface, stampa a video il riepilogo dell'ordine. */
 	public String recapOrder(){		// todo: va in testuale?
-		String line = TextualPrintServices.getLine();
+		String line = TextualColorServices.getLine();
 		StringBuilder recap = new StringBuilder();
-		recap.append(TextualPrintServices.colorSystemOut("ORDINE N. ", Color.RED,true,false));
-		recap.append(TextualPrintServices.colorSystemOut(this.orderCode,Color.RED,true,false));
-		recap.append(TextualPrintServices.colorSystemOut("\nSIG.\t\t",Color.YELLOW,false,false));
-		recap.append(TextualPrintServices.colorSystemOut(this.customer.getUsername().toLowerCase(),Color.GREEN,true,false));
-		recap.append(TextualPrintServices.colorSystemOut("\nCITOFONO:\t",Color.YELLOW,false,false));
-		recap.append(TextualPrintServices.colorSystemOut(this.name,Color.GREEN,true,false));
-		recap.append(TextualPrintServices.colorSystemOut("\nINDIRIZZO:\t",Color.YELLOW,false,false));
-		recap.append(TextualPrintServices.colorSystemOut(this.customerAddress,Color.GREEN,true,false));
-		recap.append(TextualPrintServices.colorSystemOut("\nORARIO:\t\t",Color.YELLOW,false,false));
-		recap.append(TextualPrintServices.colorSystemOut(TimeServices.dateTimeStamp(this.time),Color.GREEN,true,false));
+		recap.append(TextualColorServices.colorSystemOut("ORDINE N. ", Color.RED,true,false));
+		recap.append(TextualColorServices.colorSystemOut(this.orderCode,Color.RED,true,false));
+		recap.append(TextualColorServices.colorSystemOut("\nSIG.\t\t",Color.YELLOW,false,false));
+		recap.append(TextualColorServices.colorSystemOut(this.customer.getUsername().toLowerCase(),Color.GREEN,true,false));
+		recap.append(TextualColorServices.colorSystemOut("\nCITOFONO:\t",Color.YELLOW,false,false));
+		recap.append(TextualColorServices.colorSystemOut(this.name,Color.GREEN,true,false));
+		recap.append(TextualColorServices.colorSystemOut("\nINDIRIZZO:\t",Color.YELLOW,false,false));
+		recap.append(TextualColorServices.colorSystemOut(this.customerAddress,Color.GREEN,true,false));
+		recap.append(TextualColorServices.colorSystemOut("\nORARIO:\t\t",Color.YELLOW,false,false));
+		recap.append(TextualColorServices.colorSystemOut(TimeServices.dateTimeStamp(this.time),Color.GREEN,true,false));
 		recap.append(textRecapProducts());
-		recap.append(TextualPrintServices.colorSystemOut("TOTALE: € ",Color.YELLOW,true,false));
-		recap.append(TextualPrintServices.colorSystemOut(String.valueOf(getTotalPrice()),Color.RED,true,false));
+		recap.append(TextualColorServices.colorSystemOut("TOTALE: € ",Color.YELLOW,true,false));
+		recap.append(TextualColorServices.colorSystemOut(String.valueOf(getTotalPrice()),Color.RED,true,false));
 		return line + recap + line;
 	}
 
@@ -101,8 +101,8 @@ public class Order implements Comparable<Order> {
 						num++;
 				}
 				prodotti.append("\t€ ").append(p.getPrice()).append("  x  ");
-				prodotti.append(TextualPrintServices.colorSystemOut(String.valueOf(num),Color.WHITE,true,false));
-				prodotti.append("  ").append(TextualPrintServices.colorSystemOut(p.getName(true).toUpperCase(),Color.WHITE,true,false));
+				prodotti.append(TextualColorServices.colorSystemOut(String.valueOf(num),Color.WHITE,true,false));
+				prodotti.append("  ").append(TextualColorServices.colorSystemOut(p.getName(true).toUpperCase(),Color.WHITE,true,false));
 				prodotti.append("\t\t").append(p.getDescription()).append("\n");
 			}
 		}
@@ -200,7 +200,7 @@ public class Order implements Comparable<Order> {
     // todo: probabilmente va sistemato/spostato
 	public void setCompletedDb(Pizzeria pizzeria, int tot, Date orario) {
 		Date oggi = new Date();
-		if(oggi.getDate() == orario.getDate())
+		if(oggi.getDate() == orario.getDate())		// controllo nel caso sia scattata la mezzanotte
 			pizzeria.updateOvenAndDeliveryMan(orario, tot, this);
 		//this.isCompleted = true;		// TODO: isCompleted da togliere
 	}

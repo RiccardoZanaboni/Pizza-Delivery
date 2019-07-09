@@ -2,10 +2,14 @@ package services;
 
 import graphicAlerts.GenericAlert;
 import javafx.scene.paint.Color;
+import pizzeria.Customer;
 import pizzeria.Order;
+import pizzeria.Pizzeria;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -28,13 +32,13 @@ public class PizzeriaServices {
 					if(isGraphicRequest)
 						history.append(line.toUpperCase()).append("\n");
 					else
-						history.append(TextualPrintServices.colorSystemOut(line + "\n", Color.YELLOW, true, true));
+						history.append(TextualColorServices.colorSystemOut(line + "\n", Color.YELLOW, true, true));
 				} else history.append(line).append("\n");
 			}
 		} catch (FileNotFoundException fnfe){
 			String err = "Spiacenti: sezione History non disponibile.";
 			if(isGraphicRequest) GenericAlert.display(err);
-			else System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED,false,false));
+			else System.out.println(TextualColorServices.colorSystemOut(err, Color.RED,false,false));
 		}
 		return history.toString();
 	}
@@ -55,5 +59,26 @@ public class PizzeriaServices {
 		}
 		orders = sortedByValue;
 		return orders;
+	}
+
+
+	public static Order CustomerLastOrder(Customer customer, Pizzeria pizzeria) {
+		Order last = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date;
+		try {
+			date = sdf.parse("1970-01-01 00:00:00");
+			for (Order order : pizzeria.getOrders().values()) {
+				if (order.getCustomer().getUsername().equals(customer.getUsername())) {
+					if (order.getTime().getTime() > date.getTime()) {
+						last = order;
+						date = order.getTime();
+					}
+				}
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return last;
 	}
 }

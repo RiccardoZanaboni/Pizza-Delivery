@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import pizzeria.*;
 import services.PizzeriaServices;
 import services.SettleStringsServices;
-import services.TextualPrintServices;
+import services.TextualColorServices;
 
 import java.sql.*;
 import java.text.DateFormat;
@@ -31,7 +31,7 @@ public class Database {
 
 	/** Chiude il programma, se la connessione alla rete viene a mancare. */
 	public static void missingConnection(){
-		System.out.println(TextualPrintServices.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
+		System.out.println(TextualColorServices.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
 		System.exit(1);
 	}
 
@@ -70,18 +70,18 @@ public class Database {
 
 	public static void putTopping(Pizzeria pizzeria) {		// todo: va in testuale
 		try {
-			System.out.print(TextualPrintServices.colorSystemOut("Inserisci il nome del nuovo ingrediente:\t", Color.YELLOW, false, false));
+			System.out.print(TextualColorServices.colorSystemOut("Inserisci il nome del nuovo ingrediente:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
 			if (name.length() == 0 || !putTopping(name))
 				throw new Exception();
 			else{
 				pizzeria.getIngredientsPizzeria().put(name,name);
 				String ok = name + " aggiunto correttamente.";
-				System.out.println(TextualPrintServices.colorSystemOut(ok,Color.YELLOW,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(ok,Color.YELLOW,false,false));
 			}
 		} catch (Exception e) {
 			String err = "Errore nell'aggiunta dell'ingrediente al Database.";
-			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+			System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 		}
 	}
 
@@ -118,35 +118,35 @@ public class Database {
 
 	public static void removePizzaText(Pizzeria pizzeria) {		// todo: va in testuale
 		try {
-			System.out.print(TextualPrintServices.colorSystemOut("Inserisci il nome della pizza da rimuovere:\t", Color.YELLOW, false, false));
+			System.out.print(TextualColorServices.colorSystemOut("Inserisci il nome della pizza da rimuovere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
 			if (!removePizza(name))
 				throw new SQLException();
 			else{
 				pizzeria.getMenu().remove(name);
 				String ok = name + " rimossa correttamente.";
-				System.out.println(TextualPrintServices.colorSystemOut(ok,Color.YELLOW,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(ok,Color.YELLOW,false,false));
 			}
 		} catch (SQLException sqle) {
 			String err = "Errore nella rimozione della pizza dal Database.";
-			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+			System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 		}
 	}
 
 	public static void removeToppingText(Pizzeria pizzeria) {	// todo: va in testuale
 		try {
-			System.out.print(TextualPrintServices.colorSystemOut("Inserisci il nome dell'ingrediente da rimuovere:\t", Color.YELLOW, false, false));
+			System.out.print(TextualColorServices.colorSystemOut("Inserisci il nome dell'ingrediente da rimuovere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
 			if (!removeTopping(name))
 				throw new SQLException();
 			else{
 				pizzeria.getMenu().remove(name);
 				String ok = name + " rimosso correttamente.";
-				System.out.println(TextualPrintServices.colorSystemOut(ok,Color.YELLOW,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(ok,Color.YELLOW,false,false));
 			}
 		} catch (SQLException sqle) {
 			String err = "Errore nella rimozione dell'ingrediente dal Database.";
-			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+			System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 		}
 	}
 
@@ -157,11 +157,11 @@ public class Database {
 	public static void putPizza(Pizzeria pizzeria) {	// todo: va in testuale!
 		HashMap<String,String> ingredMap = new HashMap<>();
 		try {
-			System.out.println(TextualPrintServices.colorSystemOut("Inserire il nome della pizza da aggiungere:\t", Color.YELLOW, false, false));
+			System.out.println(TextualColorServices.colorSystemOut("Inserire il nome della pizza da aggiungere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
 			String descriz;
 			StringBuilder descrizCorretta = new StringBuilder();
-			String adding = TextualPrintServices.colorSystemOut("Inserire gli ingredienti da aggiungere, separati da virgola, poi invio:", Color.YELLOW, false, false);
+			String adding = TextualColorServices.colorSystemOut("Inserire gli ingredienti da aggiungere, separati da virgola, poi invio:", Color.YELLOW, false, false);
 			System.out.println(adding);
 			System.out.println(TextualInterface.possibleAddictions(pizzeria));
 			descriz = scan.nextLine().toUpperCase();
@@ -178,7 +178,7 @@ public class Database {
 			} else {
 				descriz = "ERR";
 			}
-			System.out.print(TextualPrintServices.colorSystemOut("Inserire il prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
+			System.out.print(TextualColorServices.colorSystemOut("Inserire il prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
 			double prezzo = Double.parseDouble(scan.nextLine());
 
 			if(name.length() == 0 || pizzeria.getMenu().containsKey(name) || descriz.equals("ERR") || prezzo <= 0){
@@ -187,16 +187,16 @@ public class Database {
 			if (putPizza(name, descriz, prezzo)) {
 				pizzeria.getMenu().put(name, new Pizza(name,ingredMap,prezzo));
 				String ok = name + " (" + descriz.toLowerCase() + ") aggiunta correttamente.";
-				System.out.println(TextualPrintServices.colorSystemOut(ok,Color.YELLOW,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(ok,Color.YELLOW,false,false));
 			} else {
 				throw new SQLException();
 			}
 		} catch (TryAgainExc | NumberFormatException e) {
 			String err = "Errore nell'inserimento dei dati della pizza.";
-			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+			System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 		} catch (SQLException sqle) {
 			String err = "Errore nell'inserimento della pizza nel Database.";
-			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+			System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 		}
 	}
 
@@ -237,7 +237,7 @@ public class Database {
 			return true;
 		} catch (NumberFormatException nfe) {
 			String err = "\nErrore nell'inserimento dei dati utente. Riprovare:";
-			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+			System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 			return false;
 		} catch (SQLException sqle) {
 			return false;
@@ -250,7 +250,7 @@ public class Database {
 			return true;
 		} catch (SQLException sqle) {
 			String err = "\nErrore nell'aggiornamento dei dati utente. Riprovare:";
-			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+			System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 			return false;
 		}
 	}
@@ -407,5 +407,9 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static boolean checkMail(String mail){
+		return (getInfoCustomerFromMailAddress(mail,1) != null);
 	}
 }

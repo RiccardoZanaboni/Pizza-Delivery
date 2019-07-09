@@ -1,7 +1,5 @@
 package graphicElements.customerSidePages.newOrder;
 
-import graphicElements.customerSidePages.newOrder.MenuPage;
-import graphicElements.customerSidePages.newOrder.OrderPage1;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
  * Vi si accede tramite il bottone "Avanti" in OrderPage2.
  * Cliccando "Indietro", si torna a OrderPage2.
  * Cliccando "Conferma e torna alla Home", l'ordine viene inviato alla pizzeria
- * e si torna alla pagina MenuPage.
+ * e si torna alla pagina HomePage.
  * Cliccando "Conferma ed esci", l'ordine viene inviato alla pizzeria
  * e l'applicazione viene chiusa.
  */
@@ -66,10 +64,10 @@ public class OrderPage3 {
 		if(isNewOrder) {
 			confirmButton.setId("confirmButton");
 			confirmButton.setOnAction(e -> {
-				pizzeria.addInfoOrder(order);
-				MenuPage menuPage = new MenuPage();
+				pizzeria.completeOrder(order);
+				HomePage homePage = new HomePage();
 				OrderPage1.getBackButton().fire();
-				menuPage.display(window, pizzeria, customer);
+				homePage.display(window, pizzeria, customer);
 			});
 
 			closeButton.setId("closeButton");

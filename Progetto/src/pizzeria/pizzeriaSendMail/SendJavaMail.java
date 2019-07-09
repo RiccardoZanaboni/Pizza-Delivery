@@ -2,7 +2,7 @@ package pizzeria.pizzeriaSendMail;
 
 import javafx.scene.paint.Color;
 import database.Database;
-import services.TextualPrintServices;
+import services.TextualColorServices;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -64,7 +64,7 @@ public class SendJavaMail {
 			message.setContent(multipart);
 			Transport.send(message);
 
-			System.out.println(TextualPrintServices.colorSystemOut("\t>> Il messaggio è stato inviato!", Color.YELLOW,true,false));
+			System.out.println(TextualColorServices.colorSystemOut("\t>> Il messaggio è stato inviato!", Color.YELLOW,true,false));
 			return true;
 
 		} catch (MessagingException e) {
