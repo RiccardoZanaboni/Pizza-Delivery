@@ -698,13 +698,13 @@ public class TextualInterface {
 				Database.putPizza(wolf);
 				break;
 			case "R":
-				Database.removePizza(wolf);
+				Database.removePizzaText(wolf);
 				break;
 			case "AI":
 				Database.putTopping(wolf);
 				break;
 			case "RI":
-				Database.removeTopping(wolf);
+				Database.removeToppingText(wolf);
 				break;
 			case "B":
 				System.out.println(TextualPrintServices.colorSystemOut("Nessuna modifica effettuata al menu.\n", Color.YELLOW, false, false));
