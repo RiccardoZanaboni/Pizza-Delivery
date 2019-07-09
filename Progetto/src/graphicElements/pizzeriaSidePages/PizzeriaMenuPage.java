@@ -25,17 +25,17 @@ public class PizzeriaMenuPage {
         /* Name column */
         TableColumn<Pizza, String> nameColumn = new TableColumn<>("PIZZAS");
         nameColumn.setMinWidth(150);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));		/* richiama Pizza.getName() */
 
         /* Topping column */
-        TableColumn<Pizza, HashMap <String, String>> toppingColumn = new TableColumn<>("TOPPINGS");
+        TableColumn<Pizza, String> toppingColumn = new TableColumn<>("TOPPINGS");
         toppingColumn.setMinWidth(580);
-        toppingColumn.setCellValueFactory(new PropertyValueFactory<>("ingredients"));
+        toppingColumn.setCellValueFactory(new PropertyValueFactory<>("description"));	/* richiama Pizza.getDescription() */
 
         /* Price column */
         TableColumn<Pizza, Double> priceColumn = new TableColumn<>("PRICE");
         priceColumn.setMinWidth(70);
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));	/* richiama Pizza.getPrice() */
 
         TextField nameInput = new TextField();
         nameInput.setPromptText("New Pizza Name");

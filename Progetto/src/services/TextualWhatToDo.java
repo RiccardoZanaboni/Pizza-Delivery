@@ -6,7 +6,7 @@ public class TextualWhatToDo {
 
 	/** In interfaces.TextualInterface.whatDoYouWant(), chiede quali siano le intenzioni del cliente per procedere. */
 	public static String whatDoYouWantPossibilities(boolean isOpen){		//TODO: va in testuale!
-		String ecco = TextualPrintServices.colorSystemOut("\nEcco che cosa puoi fare:\n", Color.YELLOW,false,false);
+		String intro = TextualPrintServices.colorSystemOut("\nEcco che cosa puoi fare:\n", Color.YELLOW,false,false);
 		String con = "\t- con '";
 		String newOrd = TextualPrintServices.colorSystemOut("N", Color.ORANGE,true,false);
 		String newOrdS = "' puoi effetturare un nuovo ordine;\n";
@@ -22,7 +22,7 @@ public class TextualWhatToDo {
 		String exitS = "' puoi uscire dalla tua area riservata.\n";
 
 		StringBuilder string = new StringBuilder(TextualPrintServices.getLine());
-		string.append(ecco);
+		string.append(intro);
 		if(isOpen) {
 			string.append(con).append(newOrd).append(newOrdS);
 		}

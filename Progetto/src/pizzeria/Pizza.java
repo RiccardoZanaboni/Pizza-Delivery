@@ -102,10 +102,6 @@ public class Pizza {
         return name;
     }       // non cancellatelo
 
-    public HashMap<String, String> getIngredients() {
-        return ingredients;
-    }// non cancellatelo
-
     /** Override del metodo che viene usato da contains in modo da non confrontare il puntatore ma gli attributi dell'oggetto*/
 
     @Override
