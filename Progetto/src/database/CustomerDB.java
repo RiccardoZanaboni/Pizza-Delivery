@@ -1,7 +1,7 @@
 package database;
 
 import javafx.scene.paint.Color;
-import textualElements.TextColorServices;
+import pizzeria.services.TextColorServices;
 
 import java.sql.*;
 

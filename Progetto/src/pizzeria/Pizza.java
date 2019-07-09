@@ -2,7 +2,7 @@ package pizzeria;
 
 import javafx.scene.paint.Color;
 import pizzeria.services.SettleStringsServices;
-import textualElements.TextColorServices;
+import pizzeria.services.TextColorServices;
 
 import java.util.HashMap;
 

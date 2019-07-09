@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import pizzeria.*;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
 import pizzeria.services.*;
-import textualElements.TextColorServices;
+import pizzeria.services.TextColorServices;
 import textualElements.TextCustomerSide;
 import textualElements.TextNewOrder;
 import textualElements.TextPizzeriaSide;

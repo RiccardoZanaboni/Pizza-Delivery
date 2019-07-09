@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
 import pizzeria.services.SettleStringsServices;
-import textualElements.TextColorServices;
+import pizzeria.services.TextColorServices;
 import textualElements.TextCustomerSide;
 
 import java.sql.*;

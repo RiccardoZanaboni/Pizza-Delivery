@@ -2,7 +2,7 @@ package pizzeria.pizzeriaSendMail;
 
 import database.CustomerDB;
 import javafx.scene.paint.Color;
-import textualElements.TextColorServices;
+import pizzeria.services.TextColorServices;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
