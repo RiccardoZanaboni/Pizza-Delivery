@@ -1,7 +1,6 @@
 package pizzeria;
 
 import database.Database;
-import enums.LoginPossibilities;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -276,4 +275,5 @@ public class Pizzeria {
 		date.setMinutes(vector[dayOfWeek-1].getMinute());
 		return date;
 	}
+
 }

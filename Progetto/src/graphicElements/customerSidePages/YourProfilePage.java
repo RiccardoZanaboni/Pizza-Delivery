@@ -17,18 +17,13 @@ import pizzeria.Pizzeria;
 public class YourProfilePage {
 
     public void display(Stage window, Pizzeria pizzeria, Customer customer) {
-
-        /*Label usernameLabel = new Label(" Username:");
-        TextField usernameInput = new TextField();
-        usernameInput.setText(customer.getUsername());
-        HBox usernameBox = new HBox(50);
-        usernameBox.getChildren().addAll(usernameLabel, usernameInput);
-        usernameBox.setAlignment(Pos.CENTER);*/
+        String name = Database.getInfoCustomerFromUsername(customer.getUsername(), 4);
+        String surname = Database.getInfoCustomerFromUsername(customer.getUsername(), 5);
+        String address = Database.getInfoCustomerFromUsername(customer.getUsername(), 6);
 
         Label nameLabel = new Label("Nome:\t ");
         TextField nameInput = new TextField();
         nameInput.setPromptText("Il tuo nome");
-        String name = Database.getInfoCustomerFromUsername(customer.getUsername(), 4);
         nameInput.setText(name);
         HBox nameBox = new HBox(50);
         nameBox.getChildren().addAll(nameLabel, nameInput);
@@ -37,7 +32,6 @@ public class YourProfilePage {
         Label surnameLabel = new Label("Cognome: ");
         TextField surnameInput = new TextField();
         surnameInput.setPromptText("Il tuo cognome");
-        String surname = Database.getInfoCustomerFromUsername(customer.getUsername(), 5);
         surnameInput.setText(surname);
         HBox surnameBox = new HBox(50);
         surnameBox.getChildren().addAll(surnameLabel, surnameInput);
@@ -46,17 +40,10 @@ public class YourProfilePage {
         Label addressLabel = new Label("Indirizzo: ");
         TextField addressInput = new TextField();
         addressInput.setPromptText("Il tuo indirizzo");
-        String address = Database.getInfoCustomerFromUsername(customer.getUsername(), 6);
         addressInput.setText(address);
         HBox addressBox = new HBox(50);
         addressBox.getChildren().addAll(addressLabel, addressInput);
         addressBox.setAlignment(Pos.CENTER);
-
-        /*Label passwordLabel = new Label("Password: ");
-        TextField passwordInput = new TextField();
-        HBox passwordBox = new HBox(50);
-        passwordBox.getChildren().addAll(passwordLabel, passwordInput);
-        passwordBox.setAlignment(Pos.CENTER);*/
 
         Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
@@ -67,12 +54,13 @@ public class YourProfilePage {
 
         Button confirmButton = new Button(" Conferma modifiche");
         confirmButton.setOnAction(e-> {
-            //customer.setUsername(usernameInput.getText());
-            customer.setName(nameInput.getText());
-            customer.setSurname(surnameInput.getText());
-            customer.setAddress(addressInput.getText());
-            //customer.setPassword(passwordInput.getText());
-            if(Database.addInfoCustomer(customer.getUsername(),customer.getName(),customer.getSurname(),customer.getAddress())) {
+            String newName = nameInput.getText();
+            String newSurname = surnameInput.getText();
+            String newAddress = addressInput.getText();
+            customer.setName(newName);
+            customer.setSurname(newSurname);
+            customer.setAddress(newAddress);
+            if(Database.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress)) {
                 HomePage homePage = new HomePage();
                 homePage.display(window, pizzeria, customer);
             } else GenericAlert.display("Modifica dei dati non riuscita.");
@@ -83,7 +71,7 @@ public class YourProfilePage {
         buttonBox.setAlignment(Pos.CENTER);
 
         VBox layout = new VBox(30);
-        layout.getChildren().addAll(/*usernameBox,*/ nameBox, surnameBox, addressBox, buttonBox);
+        layout.getChildren().addAll(nameBox, surnameBox, addressBox, buttonBox);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout, 800, 600);
         window.setScene(scene);

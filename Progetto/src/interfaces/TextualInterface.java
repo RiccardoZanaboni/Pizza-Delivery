@@ -9,17 +9,12 @@ import pizzeria.*;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
 import services.*;
 
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-import static enums.OpeningPossibilities.CLOSE;
-import static enums.OpeningPossibilities.CLOSING;
+import static enums.OpeningPossibilities.*;
 
 /**
  * * @authors: Javengers, 2019
@@ -49,7 +44,7 @@ public class TextualInterface {
 	 *
 	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
 	 * */
-	public Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
+	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
 			/* orari di apertura, da domenica a sabato */
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
@@ -70,7 +65,7 @@ public class TextualInterface {
 	private Scanner scan = new Scanner(System.in);
 
 	/** Al lancio di interfaces.TextualInterface, inizia un nuovo ordine solo se richiesto. */
-	private void whatDoYouWant(Customer customer) throws SQLException {
+	public void whatDoYouWant(Customer customer) throws SQLException {
 		String risposta;
 		OpeningPossibilities isOpen = TimeServices.checkTimeOrder(wolf);
 		/* se la pizzeria è aperta */
@@ -95,7 +90,7 @@ public class TextualInterface {
 	}
 
 	/** In whatDoYouWant(), gestisce le possibili risposte alla domanda. */
-	private void whatDoYouWantAnswers(boolean isOpen, String risposta, Customer customer) throws SQLException {
+	public void whatDoYouWantAnswers(boolean isOpen, String risposta, Customer customer) throws SQLException {
 		switch (risposta){
 			case "L":
 				Order last = PizzeriaServices.CustomerLastOrder(customer,wolf);
@@ -120,7 +115,8 @@ public class TextualInterface {
 				break;
 			default:
 				if(isOpen && risposta.equals("N")){
-					makeOrderText(customer);
+					TextNewOrder newOrder = new TextNewOrder();
+					newOrder.makeOrderText(customer, wolf, this);
 				} else {
 					System.out.println(TextualColorServices.colorSystemOut("\nSpiacenti: inserito carattere non valido. Riprovare:", Color.RED, false, false));
 					whatDoYouWant(customer);
@@ -128,7 +124,7 @@ public class TextualInterface {
 		}
 	}
 
-	private void modifyAccount(Customer customer) {
+	public void modifyAccount(Customer customer) {
 		String user = customer.getUsername();
 		System.out.print("\nInserisci il tuo nome: ");
 		String nome = scan.nextLine();
@@ -144,51 +140,9 @@ public class TextualInterface {
 		} else System.out.println(TextualColorServices.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
 	}
 
-	/** Effettua tutte le operazioni necessarie ad effettuare un nuovo ordine.
-	 * Utilizzo la sigla-chiave "OK" una volta terminata la scelta delle pizze, per continuare.
-	 * Utilizzo ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio. */
-	private void makeOrderText(Customer customer) throws SQLException {
-		wolf.updatePizzeriaToday();
-		System.out.println(TextualServices.printMenu(wolf));
-		Order order = wolf.initializeNewOrder();
-		order.setCustomer(customer);
-		int num;
-		String nomePizza;
-		int tot = 0;
-		boolean isPrimaRichiesta = true;
-		try {
-			do {
-				nomePizza = whichPizza(isPrimaRichiesta);
-				if (nomePizza.equals("OK")) {
-					break;      // smette di chiedere pizze
-				}
-				isPrimaRichiesta = false;
-				num = howManySpecificPizza(order, nomePizza);
-				if (order.getNumPizze() == 16) {
-					tot += num;
-					break;      // hai chiesto esattamente 16 pizze in totale: smette di chiedere pizze
-				}
-				tot += num;
-			} while (true);
-
-			Date orario;
-			orario = orderTime(order, tot);
-			System.out.println(orario);
-			if (insertNameAndAddress(order)) {
-				System.out.println(TextualServices.recapOrder(order));
-				askConfirm(order, orario);
-			}
-		} catch (RestartOrderExc e) {
-			String annullato = TextualColorServices.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
-			System.out.println("\t>> " + annullato);
-			System.out.println(TextualColorServices.getLine());
-			whatDoYouWant(customer);
-		}
-	}
-
 	/** Esegue i controlli dovuti sulla stringa relativa all'orario e,
 	 * in caso di successo, restituisce il Date "orarioScelto". */
-	private Date orderTime(Order order, int tot) throws RestartOrderExc {
+	public Date orderTime(Order order, int tot) throws RestartOrderExc {
 		String orarioScelto = insertTime(tot);
 		Date d;
 		try {
@@ -226,7 +180,7 @@ public class TextualInterface {
 
 	/** Stampa a video tutti gli orari disponibili per la consegna
 	 * e ritorna la stringa inserita dall'utente. */
-	private String insertTime (int tot) throws RestartOrderExc {
+	public String insertTime (int tot) throws RestartOrderExc {
 		String domanda = TextualColorServices.colorSystemOut("A che ora vuoi ricevere la consegna? [formato HH:mm]",Color.YELLOW,false,false);
 		System.out.println(domanda + " \t\t(Inserisci 'F' per annullare.)");
 		System.out.println(TextualColorServices.colorSystemOut("\tEcco gli orari disponibili:",Color.YELLOW,false,false));
@@ -247,7 +201,7 @@ public class TextualInterface {
 
 	/** Assicura che all'orario attuale della richiesta
 	 * sia effettivamente possibile portare a termine un ordine */
-	private boolean checkNotTooLate(Date orarioScelto, int tot) {
+	public boolean checkNotTooLate(Date orarioScelto, int tot) {
 		int chosenTime = TimeServices.getMinutes(orarioScelto);
 		int nowTime = TimeServices.getNowMinutes();
 		if(tot < wolf.getOvens()[0].getAvailablePlaces())
@@ -260,7 +214,7 @@ public class TextualInterface {
 	/** Restituisce il nome della pizza desiderata, dopo avere effettuato i dovuti controlli:
 	 * - che non sia stato inserito "OK" oppure "F";
 	 * - che la stringa inserita corrisponda ad una pizza valida. */
-	private String whichPizza(boolean isPrimaRichiesta) throws RestartOrderExc {
+	public String whichPizza(boolean isPrimaRichiesta) throws RestartOrderExc {
 		String nomePizza;
 		boolean ok = false;
 		do {
@@ -296,7 +250,7 @@ public class TextualInterface {
 	/** Ritorna il numero desiderato della pizza specifica richiesta.
 	 * Il numero di pizze complessivamente ordinate non deve superare
 	 * il valore massimo consentito. */
-	private int howManySpecificPizza(Order order, String nomePizza) {
+	public int howManySpecificPizza(Order order, String nomePizza) {
 		boolean ok = false;
 		int num = 0;
 		int totOrdinate = order.getNumPizze();
@@ -327,7 +281,7 @@ public class TextualInterface {
 
 	/** Gestisce la possibilità che la pizza desiderata necessiti di aggiunte o rimozioni
 	 * di ingredienti, rispetto ad una specifica presente sul menu. */
-	private void askModifyPizza(Order order, String nomePizza, int num) {
+	public void askModifyPizza(Order order, String nomePizza, int num) {
 		String domanda = TextualColorServices.colorSystemOut("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?",Color.YELLOW,false,false);
 		System.out.println(domanda + "\t[S/N]: ");
 		String answer = scan.nextLine().toUpperCase();
@@ -363,7 +317,7 @@ public class TextualInterface {
 	}
 
 	/** Gestisce l'inserimento del nome del cliente e dell'indirizzo di spedizione. */
-	private boolean insertNameAndAddress(Order order) throws RestartOrderExc {
+	public boolean insertNameAndAddress(Order order) throws RestartOrderExc {
 		String qst = TextualColorServices.colorSystemOut("Nome sul citofono:",Color.YELLOW,false,false);
 		System.out.println(qst + "\t\t(Inserisci 'F' per annullare l'ordine)");
 		String nome = scan.nextLine();
@@ -383,7 +337,7 @@ public class TextualInterface {
 
 	/** Aggiunge la pizza all'Order, nella quantità inserita.
 	 * Effettua, nel caso, tutte le modifiche richieste, aggiornando il prezzo. */
-	private Pizza addAndRmvToppingsText(Pizza pizza, String aggiunte, String rimozioni, double prezzoSuppl) {
+	public Pizza addAndRmvToppingsText(Pizza pizza, String aggiunte, String rimozioni, double prezzoSuppl) {
 		HashMap<String, String> ingr = new HashMap<>(pizza.getToppings());
 		Pizza p = new Pizza(pizza.getName(false), ingr, pizza.getPrice());
 		int suppl = 0;
@@ -413,7 +367,7 @@ public class TextualInterface {
 
 	/** Chiede conferma dell'ordine e lo salva tra quelli completati
 	 * (pronti all'evasione), aggiornando il vettore orario del forno e del fattorino. */
-	private void askConfirm(Order order, Date orario) throws SQLException {
+	public void askConfirm(Order order, Date orario) throws SQLException {
 		Customer customer = order.getCustomer();
 		String domanda = TextualColorServices.colorSystemOut("Confermi l'ordine?",Color.YELLOW,false,false);
 		String s = TextualColorServices.colorSystemOut("S",Color.ORANGE,true,false);
@@ -487,7 +441,7 @@ public class TextualInterface {
 				System.out.print(working1);
 				switch(PizzeriaServices.checkLogin(wolf, user,psw)){
 					case OK:
-						Customer c = new Customer(user,psw);
+						Customer c = new Customer(user);
 						System.out.println("\nBenvenuto: " + user);
 						whatDoYouWant(c);
 						break;
@@ -527,7 +481,7 @@ public class TextualInterface {
 							Database.putCustomer(newUser,newPsw,mail);
 							System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
 							/* login automatico */
-							Customer c = new Customer(newUser, newPsw);
+							Customer c = new Customer(newUser);
 							whatDoYouWant(c);
 						}
 						break;
@@ -567,7 +521,7 @@ public class TextualInterface {
 		}
 	}
 
-	private void whatDoesPizzeriaWant() throws SQLException {
+	public void whatDoesPizzeriaWant() throws SQLException {
 		String risposta;
 		System.out.println(TextualServices.whatDoesPizzeriaWantPossibilities());
 		System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
@@ -611,7 +565,7 @@ public class TextualInterface {
 	 * - inviare mensilmente newsletter con aggiornamento account, pizza del mese, ecc
 	 * - ...
 	 * */
-	private void sendTextualMail() {
+	public void sendTextualMail() {
 		String newAddQuestion = TextualColorServices.colorSystemOut("Inserire indirizzo e-mail:\t\t\t", Color.YELLOW, false, false);
 		System.out.print(newAddQuestion);
 		String address = scan.nextLine().toLowerCase();
@@ -631,7 +585,7 @@ public class TextualInterface {
 		askConfirmSendMail(address, subject, txt.toString());
 	}
 
-	private void askConfirmSendMail(String address, String subject, String txt){
+	public void askConfirmSendMail(String address, String subject, String txt){
 		String confAddrQuestion = TextualColorServices.colorSystemOut("Confermi l'invio a:\t\t", Color.YELLOW, false, false);
 		System.out.print(confAddrQuestion);
 		String confAddr = TextualColorServices.colorSystemOut(address,Color.WHITE,false,false);
@@ -663,7 +617,7 @@ public class TextualInterface {
 		}
 	}
 
-	private void howModifyMenuAnswer(String risposta) throws SQLException {
+	public void howModifyMenuAnswer(String risposta) throws SQLException {
 		switch (risposta){
 			case "A":
 				Database.putPizza(wolf);

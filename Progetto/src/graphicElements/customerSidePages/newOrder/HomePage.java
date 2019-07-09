@@ -33,8 +33,7 @@ public class HomePage {
 	public void display(Stage window, Pizzeria pizzeria, Customer customer) {
 		Label label1 = new Label("Benvenuto");
 		Label usernameLabel = new Label("");
-		if (customer.isLoggedIn())
-		    usernameLabel.setText(customer.getUsername());
+		usernameLabel.setText(customer.getUsername());
         HBox hBox = new HBox(20);
         Button logoutButton = new Button();
         Image image = new Image("graphicElements/images/logout-128.png");
@@ -45,7 +44,6 @@ public class HomePage {
         //logoutButton.setMinSize(100, 50);
         logoutButton.setOnAction(e->{
             LoginAccountPage loginAccountPage = new LoginAccountPage();
-            customer.setLoggedIn(false);
             loginAccountPage.display(window, pizzeria);
 
         });

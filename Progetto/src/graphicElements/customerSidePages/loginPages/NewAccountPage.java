@@ -66,18 +66,14 @@ public class NewAccountPage {
 			switch(PizzeriaServices.canCreateAccount(mailInput.getText(),nameInput.getText(),passwordInput.getText(),passwordInput2.getText())){
 				case OK:
 					SendJavaMail newMail = new SendJavaMail();
-					Boolean isCorrectAddress = false;
-					try{
-						isCorrectAddress = newMail.welcomeMail(nameInput.getText(),passwordInput.getText(),mailInput.getText());
-					} catch (Exception exc){ }
+					boolean isCorrectAddress = newMail.welcomeMail(nameInput.getText(),passwordInput.getText(),mailInput.getText());
 					if(!isCorrectAddress){
 						insertErrorLabel.setTextFill(Color.DARKRED);
 						insertErrorLabel.setText("Indirizzo e-mail inesistente");
 					} else {
 						Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), mailInput.getText());
 						HomePage homePage = new HomePage();
-						Customer customer = new Customer(nameInput.getText().toUpperCase(), passwordInput.getText());
-						customer.setLoggedIn(true);
+						Customer customer = new Customer(nameInput.getText().toUpperCase());
 						homePage.display(window, pizzeria, customer);
 					}
 					break;

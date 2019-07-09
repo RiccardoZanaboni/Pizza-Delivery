@@ -352,7 +352,7 @@ public class Database {
 			String psw = rs.getString(8);
 			Order order = new Order(i);
 			if(!orders.containsKey(orderID) && quantity > 0){
-				order.setCustomer(new Customer(username,psw));
+				order.setCustomer(new Customer(username));
 				order.setName(citofono);
 				order.setAddress(address);
 				order.setTime(date);

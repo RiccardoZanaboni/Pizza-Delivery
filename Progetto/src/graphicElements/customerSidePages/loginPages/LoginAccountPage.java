@@ -52,8 +52,7 @@ public class LoginAccountPage {
 				switch(PizzeriaServices.checkLogin(pizzeria, user.toUpperCase(),psw.toUpperCase())){
 					case OK:
 						HomePage homePage = new HomePage();
-						Customer customer = new Customer(user.toUpperCase(), psw.toUpperCase());
-						customer.setLoggedIn(true);     //TODO: da mettere anche in Textual
+						Customer customer = new Customer(user.toUpperCase());
 						homePage.display(window, pizzeria, customer);
 						break;
 					case PIZZERIA:
