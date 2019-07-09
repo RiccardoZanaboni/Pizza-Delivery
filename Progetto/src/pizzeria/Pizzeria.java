@@ -1,7 +1,9 @@
 package pizzeria;
 
 import database.Database;
-import services.*;
+import enums.AccountPossibilities;
+import enums.LoginPossibilities;
+import enums.OpeningPossibilities;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -25,7 +27,6 @@ public class Pizzeria {
 	private HashMap<String, String> pizzeriaIngredients;
 	private HashMap<String,Order> orders;
 	private int availablePlaces;
-	private int numDailyOrders;
 	private final int OVEN_MINUTES = 5;      // ogni 5 minuti
 	private final int DELIVERYMAN_MINUTES = 10;   // ogni 10 minuti
 	private final double SUPPL_PRICE;
@@ -49,7 +50,6 @@ public class Pizzeria {
 		this.menu = new HashMap<>();
 		this.pizzeriaIngredients = new HashMap<>();
 		this.name = name;
-		this.numDailyOrders = 0;
 		this.orders = new LinkedHashMap<>();
 		this.address = address;
 		setDayOfTheWeek(op1,op2,op3,op4,op5,op6,op7,cl1,cl2,cl3,cl4,cl5,cl6,cl7);  // 1 = domenica, 2 = lunedi, ... 7 = sabato.

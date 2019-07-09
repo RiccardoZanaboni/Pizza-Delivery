@@ -1,6 +1,7 @@
 package interfaces;
 
 import database.Database;
+import enums.OpeningPossibilities;
 import exceptions.RestartOrderExc;
 import exceptions.TryAgainExc;
 import javafx.scene.paint.Color;

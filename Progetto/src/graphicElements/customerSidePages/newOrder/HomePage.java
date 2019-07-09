@@ -17,7 +17,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.*;
-import services.OpeningPossibilities;
+import enums.OpeningPossibilities;
 import services.PizzeriaServices;
 
 
