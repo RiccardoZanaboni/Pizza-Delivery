@@ -18,6 +18,9 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+import static enums.OpeningPossibilities.CLOSE;
+import static enums.OpeningPossibilities.CLOSING;
+
 /**
  * * @authors: Javengers, 2019
  *
@@ -70,35 +73,24 @@ public class TextualInterface {
 	private void whatDoYouWant(Customer customer) throws SQLException {
 		String risposta;
 		OpeningPossibilities isOpen = TimeServices.checkTimeOrder(wolf);
-		switch (isOpen) {
-
-			/* se la pizzeria è aperta */
-			case OPEN:
-				System.out.println(TextualServices.whatDoYouWantPossibilities(true));
-				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
-				risposta = scan.nextLine().toUpperCase();
-				whatDoYouWantAnswers(true,risposta,customer);
-				break;
-
-			/* se la pizzeria è ancora aperta, ma non ci sono i tempi per eseguire un nuovo ordine */
-			case CLOSING:
-				String chiusura = "\nAttenzione: la pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
-				System.out.println(TextualColorServices.colorSystemOut(chiusura, Color.RED, false, false));
-				System.out.println(TextualServices.whatDoYouWantPossibilities(false));
-				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
-				risposta = scan.nextLine().toUpperCase();
-				whatDoYouWantAnswers(false,risposta,customer);
-				break;
-
-			/* se la pizzeria per oggi ha terminato il turno lavorativo, quindi è chiusa */
-			case CLOSE:
-				String chiusa = "\nAttenzione: la pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
-				System.out.println(TextualColorServices.colorSystemOut(chiusa, Color.RED, false, false));
-				System.out.println(TextualServices.whatDoYouWantPossibilities(false));
-				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
-				risposta = scan.nextLine().toUpperCase();
-				whatDoYouWantAnswers(false,risposta,customer);
-				break;
+		/* se la pizzeria è aperta */
+		if (isOpen == OpeningPossibilities.OPEN) {
+			System.out.println(TextualServices.whatDoYouWantPossibilities(true));
+			System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW, false, false));
+			risposta = scan.nextLine().toUpperCase();
+			whatDoYouWantAnswers(true, risposta, customer);
+			/* se la pizzeria è chiusa o in chiusura */
+		} else {
+			String chiusura;
+			if (isOpen == CLOSING)
+				chiusura = "\nAttenzione: la pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
+			else
+				chiusura = "\nAttenzione: la pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
+			System.out.println(TextualColorServices.colorSystemOut(chiusura, Color.RED, false, false));
+			System.out.println(TextualServices.whatDoYouWantPossibilities(false));
+			System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW, false, false));
+			risposta = scan.nextLine().toUpperCase();
+			whatDoYouWantAnswers(false, risposta, customer);
 		}
 	}
 
@@ -109,7 +101,7 @@ public class TextualInterface {
 				Order last = PizzeriaServices.CustomerLastOrder(customer,wolf);
 				if(last != null){
 				System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
-				System.out.println(last.recapOrder());
+				System.out.println(TextualServices.recapOrder(last));
 				} else System.out.println(TextualColorServices.colorSystemOut("\n" + customer.getUsername() + ", non hai ancora effettuato nessun ordine!\n",Color.RED,false,false));
 				whatDoYouWant(customer);
 				break;
@@ -119,16 +111,6 @@ public class TextualInterface {
 				break;
 			case "H":
 				System.out.println(PizzeriaServices.getHistory(false));
-				whatDoYouWant(customer);
-				break;
-			case "V":
-				//TODO: se si vuole metterlo, gestire l'errore... altrimenti lo togliamo
-				String uri = "https://drive.google.com/open?id=1IywtXGVTaywaYirjZSVLLV3KDOI1bBx-";
-				try {
-					Desktop.getDesktop().browse(new URI(uri));
-				} catch (IOException | URISyntaxException e) {
-					e.printStackTrace();
-				}
 				whatDoYouWant(customer);
 				break;
 			case "E":
@@ -193,7 +175,7 @@ public class TextualInterface {
 			orario = orderTime(order, tot);
 			System.out.println(orario);
 			if (insertNameAndAddress(order)) {
-				System.out.println(order.recapOrder());
+				System.out.println(TextualServices.recapOrder(order));
 				askConfirm(order, orario);
 			}
 		} catch (RestartOrderExc e) {
@@ -441,7 +423,8 @@ public class TextualInterface {
 		switch (risp) {
 			case "S":
 				/* Conferma l'ordine e lo aggiunge a quelli della pizzeria. */
-				wolf.completeOrder(order);
+				Database.putCompletedOrder(order);
+				order.setCompletedDb(wolf,order.getNumPizze(),order.getTime());
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
 				System.out.println(TextualColorServices.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = TimeServices.dateTimeStamp(orario);
@@ -596,7 +579,7 @@ public class TextualInterface {
 				/* Visualizza solo gli ordini di oggi */
 				for(String code : wolf.getOrders().keySet()){
 					if(wolf.getOrders().get(code).getTime().getDate()==(new Date().getDate()))
-						System.out.println(wolf.getOrders().get(code).recapOrder());
+						System.out.println(TextualServices.recapOrder(wolf.getOrders().get(code)));
 				}
 				whatDoesPizzeriaWant();
 				break;

@@ -64,7 +64,7 @@ public class PizzeriaOrdersPage {
 		//hBox.setAlignment(Pos.CENTER);
 
 		GridPane gridPane;
-		gridPane = order.graphRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
+		gridPane = order.graphicRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
 		gridPane.getColumnConstraints().add(new ColumnConstraints(80));
 		gridPane.getColumnConstraints().add(new ColumnConstraints(100));
 		gridPane.getColumnConstraints().add(new ColumnConstraints(500));

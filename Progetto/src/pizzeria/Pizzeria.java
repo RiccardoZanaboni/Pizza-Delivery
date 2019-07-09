@@ -90,13 +90,6 @@ public class Pizzeria {
 		return this.orders;
 	}
 
-	/** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. Richiama i vari aggiornamenti. */
-	public void completeOrder(Order order) {
-		Database.putCompletedOrder(order);
-		order.setCompletedDb(this,order.getNumPizze(),order.getTime());	// FIXME @fetch: vediamo così
-		/* Sostituisce l'ordine come era stato aggiunto inizialmente (vuoto) con quello definitivo. */
-	}
-
 	/** Aggiunge la pizza specificata al menu della pizzeria. */
 	private void addPizza(Pizza pizza){
 		this.menu.put(pizza.getName(false),pizza);
@@ -128,15 +121,6 @@ public class Pizzeria {
 			setLastUpdate(last);
 		}
 		getOrders();
-	}
-
-	private Date getToday(LocalTime[] vector){
-		Calendar cal = new GregorianCalendar();
-		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);  // oggi
-		Date date = new Date();
-		date.setHours(vector[dayOfWeek-1].getHour());
-		date.setMinutes(vector[dayOfWeek-1].getMinute());
-		return date;
 	}
 
 	/** Una tantum: vengono aggiunti a "pizzeriaIngredients" tutti gli ingredienti utilizzabili. */
@@ -282,5 +266,14 @@ public class Pizzeria {
 
 	public Date getClosingToday(){
 		return getToday(this.closings);
+	}
+
+	private Date getToday(LocalTime[] vector){
+		Calendar cal = new GregorianCalendar();
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);  // oggi
+		Date date = new Date();
+		date.setHours(vector[dayOfWeek-1].getHour());
+		date.setMinutes(vector[dayOfWeek-1].getMinute());
+		return date;
 	}
 }

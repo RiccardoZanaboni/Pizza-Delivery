@@ -1,7 +1,11 @@
 package services;
 
 import javafx.scene.paint.Color;
+import pizzeria.Order;
+import pizzeria.Pizza;
 import pizzeria.Pizzeria;
+
+import java.util.ArrayList;
 
 public class TextualServices {
 
@@ -63,8 +67,6 @@ public class TextualServices {
 		String offS = "' puoi modificare i tuoi dati;\n";
 		String hist = TextualColorServices.colorSystemOut("H",Color.ORANGE,true,false);
 		String histS = "' puoi sapere di più sulla nostra attività;\n";
-		String video = TextualColorServices.colorSystemOut("V",Color.ORANGE,true,false);
-		String videoS = "' puoi visualizzare il video di presentazione del progetto;\n";
 		String exit = TextualColorServices.colorSystemOut("E",Color.ORANGE,true,false);
 		String exitS = "' puoi uscire dalla tua area riservata.\n";
 
@@ -76,7 +78,6 @@ public class TextualServices {
 		string.append(con).append(last).append(lastS);
 		string.append(con).append(off).append(offS);
 		string.append(con).append(hist).append(histS);
-		string.append(con).append(video).append(videoS);
 		string.append(con).append(exit).append(exitS);
 
 		return string.toString();
@@ -115,5 +116,54 @@ public class TextualServices {
 
 		return (intro + con + add + addS + con + rmv + rmvS + con + addIng + addIngS + con + rmvIng + rmvIngS
 				+ con + ret + retS);
+	}
+
+	/** In interfaces.TextualInterface, stampa a video il riepilogo dell'ordine. */
+	public static String recapOrder(Order order){
+		String line = TextualColorServices.getLine();
+		StringBuilder recap = new StringBuilder();
+		recap.append(TextualColorServices.colorSystemOut("ORDINE N. ", Color.RED,true,false));
+		recap.append(TextualColorServices.colorSystemOut(order.getOrderCode(),Color.RED,true,false));
+		recap.append(TextualColorServices.colorSystemOut("\nSIG.\t\t",Color.YELLOW,false,false));
+		recap.append(TextualColorServices.colorSystemOut(order.getCustomer().getUsername().toLowerCase(),Color.GREEN,true,false));
+		recap.append(TextualColorServices.colorSystemOut("\nCITOFONO:\t",Color.YELLOW,false,false));
+		recap.append(TextualColorServices.colorSystemOut(order.getName(),Color.GREEN,true,false));
+		recap.append(TextualColorServices.colorSystemOut("\nINDIRIZZO:\t",Color.YELLOW,false,false));
+		recap.append(TextualColorServices.colorSystemOut(order.getCustomerAddress(),Color.GREEN,true,false));
+		recap.append(TextualColorServices.colorSystemOut("\nORARIO:\t\t",Color.YELLOW,false,false));
+		recap.append(TextualColorServices.colorSystemOut(TimeServices.dateTimeStamp(order.getTime()),Color.GREEN,true,false));
+		recap.append(textRecapProducts(order));
+		recap.append(TextualColorServices.colorSystemOut("TOTALE: € ",Color.YELLOW,true,false));
+		recap.append(TextualColorServices.colorSystemOut(String.valueOf(order.getTotalPrice()),Color.RED,true,false));
+		return line + recap + line;
+	}
+
+	/** Restituisce una stringa con i vari prodotti, per il riepilogo. */
+	public static String textRecapProducts(Order order) {		// todo: va in testuale?
+		StringBuilder prodotti = new StringBuilder("\n");
+		ArrayList<Pizza> elencate = new ArrayList<>();
+		for (int i = 0; i < order.getNumPizze(); i++) {
+			Pizza p = order.getOrderedPizze().get(i);
+			int num = 0;
+			boolean contains = false;
+			for (Pizza pizza : elencate) {
+				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
+					contains = true;
+					break;
+				}
+			}
+			if (!contains) {
+				elencate.add(p);
+				for (int j = 0; j < order.getNumPizze(); j++) {
+					if (p.getName(false).equals(order.getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(order.getOrderedPizze().get(j).getToppings()))
+						num++;
+				}
+				prodotti.append("\t€ ").append(p.getPrice()).append("  x  ");
+				prodotti.append(TextualColorServices.colorSystemOut(String.valueOf(num),Color.WHITE,true,false));
+				prodotti.append("  ").append(TextualColorServices.colorSystemOut(p.getName(true).toUpperCase(),Color.WHITE,true,false));
+				prodotti.append("\t\t").append(p.getDescription()).append("\n");
+			}
+		}
+		return prodotti.toString();
 	}
 }

@@ -1,5 +1,6 @@
 package graphicElements.customerSidePages.newOrder;
 
+import database.Database;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -64,7 +65,8 @@ public class OrderPage3 {
 		if(isNewOrder) {
 			confirmButton.setId("confirmButton");
 			confirmButton.setOnAction(e -> {
-				pizzeria.completeOrder(order);
+				Database.putCompletedOrder(order);
+				order.setCompletedDb(pizzeria,order.getNumPizze(),order.getTime());
 				HomePage homePage = new HomePage();
 				OrderPage1.getBackButton().fire();
 				homePage.display(window, pizzeria, customer);
@@ -119,9 +121,59 @@ public class OrderPage3 {
 		totalBox.setAlignment(Pos.CENTER);
 
 		GridPane gridPane;
-		gridPane = order.graphRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
+		gridPane = graphicRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels, order);
 		gridPane.getChildren().add(totalBox);
 		GridPane.setConstraints(totalBox, 1, nomiLabels.size()+2);
 		return gridPane;
 	}
+
+
+	/** Costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
+	// todo: va spostato altrove?
+	private static GridPane graphicRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, Order order) {
+		GridPane gridPane = new GridPane();
+		Label label = new Label();
+		label.setText(order.getNumTemporaryPizze() + "");
+		ArrayList<Pizza> elencate = new ArrayList<>();
+		int numTipo = 0;
+		for (int i = 0; i < order.getNumPizze(); i++) {
+			Pizza p = order.getOrderedPizze().get(i);
+			int num = 0;
+			boolean contains = false;
+			for (Pizza pizza : elencate) {
+				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
+					contains = true;
+					break;
+				}
+			}
+			if (!contains) {
+				elencate.add(p);
+				for (int j = 0; j < order.getNumPizze(); j++) {
+					if (p.getName(false).equals(order.getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(order.getOrderedPizze().get(j).getToppings()))
+						/* di quel "tipo di pizza" ce n'è una in più */
+						num++;
+				}
+				nomiLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getName(true)));
+				//nomiLabels.get(numTipo).setStyle("-fx-font-color: yellow");
+				ingrLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getDescription()));
+				prezziLabels.add(numTipo, new Label((order.getOrderedPizze().get(i).getPrice()*num + " €")));
+				countPizzeLabels.add(numTipo, new Label());
+				countPizzeLabels.get(numTipo).setText("" + num);
+
+				gridPane.getChildren().add(nomiLabels.get(numTipo));
+				gridPane.getChildren().add(ingrLabels.get(numTipo));
+				gridPane.getChildren().add(countPizzeLabels.get(numTipo));
+				gridPane.getChildren().add(prezziLabels.get(numTipo));
+
+				GridPane.setConstraints(countPizzeLabels.get(numTipo), 0, numTipo + 1);
+				GridPane.setConstraints(nomiLabels.get(numTipo), 1, numTipo + 1);
+				GridPane.setConstraints(ingrLabels.get(numTipo), 2, numTipo + 1);
+				GridPane.setConstraints(prezziLabels.get(numTipo), 3, numTipo + 1);
+
+				numTipo++;		// ho un "tipo di pizza" in piu
+			}
+		}
+		return gridPane;
+	}
+
 }

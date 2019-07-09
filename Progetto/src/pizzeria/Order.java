@@ -17,7 +17,6 @@ public class Order implements Comparable<Order> {
     private String customerAddress;
     private Date time;
     private ArrayList<Pizza> orderedPizze;
-    //private boolean isCompleted;
     private int countModifiedPizze;
 	private int numTemporaryPizze;
 
@@ -35,7 +34,6 @@ public class Order implements Comparable<Order> {
         this.customerAddress = "";
         this.time = null;
         this.orderedPizze = new ArrayList<>();
-        //this.isCompleted = false;
         this.countModifiedPizze = 0;
         this.numTemporaryPizze = 0;
     }
@@ -58,103 +56,6 @@ public class Order implements Comparable<Order> {
         for (int i = 0; i < num; i++) {
             this.orderedPizze.add(pizza);
         }
-    }
-
-	/** In interfaces.TextualInterface, stampa a video il riepilogo dell'ordine. */
-	public String recapOrder(){		// todo: va in testuale?
-		String line = TextualColorServices.getLine();
-		StringBuilder recap = new StringBuilder();
-		recap.append(TextualColorServices.colorSystemOut("ORDINE N. ", Color.RED,true,false));
-		recap.append(TextualColorServices.colorSystemOut(this.orderCode,Color.RED,true,false));
-		recap.append(TextualColorServices.colorSystemOut("\nSIG.\t\t",Color.YELLOW,false,false));
-		recap.append(TextualColorServices.colorSystemOut(this.customer.getUsername().toLowerCase(),Color.GREEN,true,false));
-		recap.append(TextualColorServices.colorSystemOut("\nCITOFONO:\t",Color.YELLOW,false,false));
-		recap.append(TextualColorServices.colorSystemOut(this.name,Color.GREEN,true,false));
-		recap.append(TextualColorServices.colorSystemOut("\nINDIRIZZO:\t",Color.YELLOW,false,false));
-		recap.append(TextualColorServices.colorSystemOut(this.customerAddress,Color.GREEN,true,false));
-		recap.append(TextualColorServices.colorSystemOut("\nORARIO:\t\t",Color.YELLOW,false,false));
-		recap.append(TextualColorServices.colorSystemOut(TimeServices.dateTimeStamp(this.time),Color.GREEN,true,false));
-		recap.append(textRecapProducts());
-		recap.append(TextualColorServices.colorSystemOut("TOTALE: € ",Color.YELLOW,true,false));
-		recap.append(TextualColorServices.colorSystemOut(String.valueOf(getTotalPrice()),Color.RED,true,false));
-		return line + recap + line;
-	}
-
-	/** Restituisce una stringa con i vari prodotti, per il riepilogo. */
-	private String textRecapProducts() {		// todo: va in testuale?
-		StringBuilder prodotti = new StringBuilder("\n");
-		ArrayList<Pizza> elencate = new ArrayList<>();
-		for (int i = 0; i < getNumPizze(); i++) {
-			Pizza p = this.orderedPizze.get(i);
-			int num = 0;
-			boolean contains = false;
-			for (Pizza pizza : elencate) {
-				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
-					contains = true;
-					break;
-				}
-			}
-			if (!contains) {
-				elencate.add(p);
-				for (int j = 0; j < getNumPizze(); j++) {
-					if (p.getName(false).equals(getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
-						num++;
-				}
-				prodotti.append("\t€ ").append(p.getPrice()).append("  x  ");
-				prodotti.append(TextualColorServices.colorSystemOut(String.valueOf(num),Color.WHITE,true,false));
-				prodotti.append("  ").append(TextualColorServices.colorSystemOut(p.getName(true).toUpperCase(),Color.WHITE,true,false));
-				prodotti.append("\t\t").append(p.getDescription()).append("\n");
-			}
-		}
-		return prodotti.toString();
-	}
-
-	/** Costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
-																			// todo: va spostato altrove?
-	public GridPane graphRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
-		GridPane gridPane = new GridPane();
-		Label label = new Label();
-		label.setText(this.numTemporaryPizze + "");
-		ArrayList<Pizza> elencate = new ArrayList<>();
-		int numTipo = 0;
-		for (int i = 0; i < getNumPizze(); i++) {
-			Pizza p = this.orderedPizze.get(i);
-			int num = 0;
-			boolean contains = false;
-			for (Pizza pizza : elencate) {
-				if (p.getName(false).equals(pizza.getName(false)) && p.getToppings().equals(pizza.getToppings())) {
-					contains = true;
-					break;
-				}
-			}
-			if (!contains) {
-				elencate.add(p);
-				for (int j = 0; j < getNumPizze(); j++) {
-					if (p.getName(false).equals(getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(getOrderedPizze().get(j).getToppings()))
-						/* di quel "tipo di pizza" ce n'è una in più */
-						num++;
-				}
-				nomiLabels.add(numTipo, new Label(this.orderedPizze.get(i).getName(true)));
-				//nomiLabels.get(numTipo).setStyle("-fx-font-color: yellow");
-				ingrLabels.add(numTipo, new Label(this.orderedPizze.get(i).getDescription()));
-				prezziLabels.add(numTipo, new Label((this.orderedPizze.get(i).getPrice()*num + " €")));
-				countPizzeLabels.add(numTipo, new Label());
-				countPizzeLabels.get(numTipo).setText("" + num);
-
-				gridPane.getChildren().add(nomiLabels.get(numTipo));
-				gridPane.getChildren().add(ingrLabels.get(numTipo));
-				gridPane.getChildren().add(countPizzeLabels.get(numTipo));
-				gridPane.getChildren().add(prezziLabels.get(numTipo));
-
-				GridPane.setConstraints(countPizzeLabels.get(numTipo), 0, numTipo + 1);
-				GridPane.setConstraints(nomiLabels.get(numTipo), 1, numTipo + 1);
-				GridPane.setConstraints(ingrLabels.get(numTipo), 2, numTipo + 1);
-				GridPane.setConstraints(prezziLabels.get(numTipo), 3, numTipo + 1);
-
-				numTipo++;		// ho un "tipo di pizza" in piu
-			}
-		}
-		return gridPane;
     }
 
     /** Calcola e restituisce la spesa totale. */
@@ -247,6 +148,10 @@ public class Order implements Comparable<Order> {
 
 	public void increaseCountModifiedPizze() {
 		this.countModifiedPizze++;
+	}
+
+	public String getCustomerAddress(){
+		return this.customerAddress;
 	}
 
 	public String getName() {
