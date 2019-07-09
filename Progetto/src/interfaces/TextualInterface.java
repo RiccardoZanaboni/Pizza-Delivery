@@ -233,7 +233,7 @@ public class TextualInterface {
 		int c = 0;
 		System.out.print("\t");
 		try {
-			for (String s : TimeServices.availableTimes(wolf, tot)) {
+			for (String s : Objects.requireNonNull(TimeServices.availableTimes(wolf, tot))) {
 				System.out.print(s);
 				c++;
 				if (c % 18 == 0) System.out.print("\n\t");      // stampa 18 orari su ogni riga

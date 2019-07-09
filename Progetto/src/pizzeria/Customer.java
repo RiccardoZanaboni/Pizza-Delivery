@@ -68,13 +68,4 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
-
-    public String getMailAddress() {
-        return mailAddress;
-    }
-
-    public void setMailAddress(String mailAddress) {
-        this.mailAddress = mailAddress;
-    }
-
 }

@@ -129,8 +129,7 @@ public class OrderPage3 {
 
 
 	/** Costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
-	// todo: va spostato altrove?
-	private static GridPane graphicRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, Order order) {
+	public static GridPane graphicRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, Order order) {
 		GridPane gridPane = new GridPane();
 		Label label = new Label();
 		label.setText(order.getNumTemporaryPizze() + "");
