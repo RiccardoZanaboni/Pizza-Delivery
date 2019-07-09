@@ -27,7 +27,7 @@ public class ToppingDB {
 		}
 	}
 
-	public static void putTopping(Pizzeria pizzeria) {		// todo: va in testuale
+	public static void putTopping(Pizzeria pizzeria) {
 		try {
 			System.out.print(TextColorServices.colorSystemOut("Inserisci il nome del nuovo ingrediente:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
@@ -59,7 +59,7 @@ public class ToppingDB {
 		}
 	}
 
-	public static void removeToppingText(Pizzeria pizzeria) {	// todo: va in testuale
+	public static void removeToppingText(Pizzeria pizzeria) {
 		try {
 			System.out.print(TextColorServices.colorSystemOut("Inserisci il nome dell'ingrediente da rimuovere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();

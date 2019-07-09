@@ -57,9 +57,9 @@ public class YourProfilePage {
             String newName = nameInput.getText();
             String newSurname = surnameInput.getText();
             String newAddress = addressInput.getText();
-            customer.setName(newName);
-            customer.setSurname(newSurname);
-            customer.setAddress(newAddress);
+            //customer.setName(newName);
+            //customer.setSurname(newSurname);
+            //customer.setAddress(newAddress);
             if(CustomerDB.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress)) {
                 HomePage homePage = new HomePage();
                 homePage.display(window, pizzeria, customer);

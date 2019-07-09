@@ -7,14 +7,12 @@ import pizzeria.services.TextColorServices;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.Date;
 
 import static database.CustomerDB.getInfoCustomerFromMailAddress;
 
 public class Database {
 	private static Connection con;
-	private static Scanner scan = new Scanner(System.in);
 
 	public static void openDatabase() {
 		try {
@@ -34,7 +32,7 @@ public class Database {
 	}
 
 	public static void insertStatement(String query){
-		PreparedStatement preparedStatement=null;
+		PreparedStatement preparedStatement;
 		try {
 			preparedStatement= con.prepareStatement(query);
 			preparedStatement.execute();

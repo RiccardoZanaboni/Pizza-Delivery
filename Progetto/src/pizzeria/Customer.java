@@ -3,24 +3,33 @@ package pizzeria;
 public class Customer {
     private String username;
     private String password;
-    private boolean loggedIn;
+    /*private boolean loggedIn;
     private String address;
     private String name;
     private String surname;
     private String mailAddress;
+    */
 
     /**
      * Definisce il cliente attraverso il suo username univoco.
      */
     public Customer(String username) {
         this.username = username;
-        this.name = "";
+        /*this.name = "";
         this.surname = "";
         this.loggedIn = false;
         this.address = "";
         this.mailAddress = "";
+        */
+        //TODO: controllare se è il caso di tenerli (in YourProfilePage e in TextCustomerSide)
+        // oppure togliere tutto
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    /*
     public String getName() {
         return name;
     }
@@ -35,11 +44,6 @@ public class Customer {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-
-    public String getUsername() {
-        return username;
     }
 
     public void setUsername(String username) {
@@ -69,4 +73,5 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
+    */
 }

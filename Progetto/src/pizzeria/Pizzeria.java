@@ -4,9 +4,11 @@ import database.Database;
 import database.OrderDB;
 import database.PizzaDB;
 import database.ToppingDB;
+import pizzeria.services.TimeServices;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static database.Database.openDatabase;
@@ -41,9 +43,9 @@ public class Pizzeria {
 	 * una ArrayList di fattorini e una di ordini del giorno.
 	 */
 
-	public Pizzeria(String name, String address,
+	public Pizzeria(String name, String address/*,
 					LocalTime op1, LocalTime op2, LocalTime op3, LocalTime op4, LocalTime op5, LocalTime op6, LocalTime op7,
-					LocalTime cl1, LocalTime cl2, LocalTime cl3, LocalTime cl4, LocalTime cl5, LocalTime cl6, LocalTime cl7) {
+					LocalTime cl1, LocalTime cl2, LocalTime cl3, LocalTime cl4, LocalTime cl5, LocalTime cl6, LocalTime cl7*/) {
 		this.userPizzeria = "pizzeria".toUpperCase();
 		this.pswPizzeria = "password".toUpperCase();
 		this.menu = new HashMap<>();
@@ -51,7 +53,7 @@ public class Pizzeria {
 		this.name = name;
 		this.orders = new LinkedHashMap<>();
 		this.address = address;
-		setDayOfTheWeek(op1,op2,op3,op4,op5,op6,op7,cl1,cl2,cl3,cl4,cl5,cl6,cl7);  // 1 = domenica, 2 = lunedi, ... 7 = sabato.
+		setDayOfTheWeek(/*op1,op2,op3,op4,op5,op6,op7,cl1,cl2,cl3,cl4,cl5,cl6,cl7*/);  // 1 = domenica, 2 = lunedi, ... 7 = sabato.
 		this.deliveryMen = new ArrayList<>();
 		this.SUPPL_PRICE = 0.5;
 		this.availablePlaces = 8;
@@ -66,21 +68,23 @@ public class Pizzeria {
 	 * di apertura e di chiusura per ogni giorno della settimana.
 	 * Utilizzato nel costruttore della pizzeria, ma riutilizzabile in caso di cambiamenti.
 	 * */
-	private void setDayOfTheWeek(LocalTime op1, LocalTime op2, LocalTime op3, LocalTime op4, LocalTime op5, LocalTime op6, LocalTime op7, LocalTime cl1, LocalTime cl2, LocalTime cl3, LocalTime cl4, LocalTime cl5, LocalTime cl6, LocalTime cl7) {
-		this.openings[0] = op1;
-		this.openings[1] = op2;
-		this.openings[2] = op3;
-		this.openings[3] = op4;
-		this.openings[4] = op5;
-		this.openings[5] = op6;
-		this.openings[6] = op7;
-		this.closings[0] = cl1;
-		this.closings[1] = cl2;
-		this.closings[2] = cl3;
-		this.closings[3] = cl4;
-		this.closings[4] = cl5;
-		this.closings[5] = cl6;
-		this.closings[6] = cl7;
+	private void setDayOfTheWeek() {
+		/* orari di apertura, da domenica a sabato */
+		this.openings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[5] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		/* orari di apertura, da domenica a sabato */
+		this.closings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
+		this.closings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
+		this.closings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
+		this.closings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
+		this.closings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
+		this.closings[5] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
+		this.closings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 	}
 
 	public HashMap<String,Order> getOrders() {

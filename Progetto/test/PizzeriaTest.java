@@ -12,9 +12,9 @@ import java.time.temporal.ChronoUnit;
 
 import static org.junit.Assert.assertEquals;
 
-public class Pizzeria_test {
-    Pizzeria pizzeria = new Pizzeria("Wolf of Pizza","Via Bolzano 12",
-            LocalTime.MIN.plus(TimeServices.getMinutes(14,0), ChronoUnit.MINUTES),
+public class PizzeriaTest {
+    private Pizzeria pizzeria = new Pizzeria("Wolf of Pizza","Via Bolzano 10"   //,
+            /*LocalTime.MIN.plus(TimeServices.getMinutes(14,0), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(TimeServices.getMinutes(14,0), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(TimeServices.getMinutes(14,0), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(TimeServices.getMinutes(14,0), ChronoUnit.MINUTES),
@@ -27,40 +27,41 @@ public class Pizzeria_test {
             LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
             LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-            LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES));
+            LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES) */
+    );
 
-    //Attraverso questo test verifico che in un orario prestabillito i Time box relativi
-    //al forno in quell'orario e quelli relativi al Delivery man siano corretti l'uno deve inoltre
-    //essere il doppio dell'altro affinche' il ragionamento utilizzato sia corretto
+    //Attraverso questo test verifico che, in un orario prestabillito, i TimeBox relativi
+    //al forno in quell'orario e quelli relativi al DeliveryMan siano corretti. L'uno deve inoltre
+    //essere il doppio dell'altro, affinché il ragionamento utilizzato sia corretto.
     @Test
     public void testFindTimeBoxOven_and_FindTimeBoxDeliveryman(){
         assertEquals(12,pizzeria.findTimeBoxOven(15,0));
         assertEquals(6, pizzeria.findTimeBoxDeliveryMan(15, 0));
 
    }
-    //Con questo test verifico che il delivery man aggiunto alla pizzeria sia effettivamente reperibile
+    //Con questo test verifico che il DeliveryMan aggiunto alla pizzeria sia effettivamente reperibile
     //per la consegna
    @Test
    public void testAFreeDeliveryMan(){
        DeliveryMan fetch = new DeliveryMan("fetch",pizzeria);
        pizzeria.addDeliveryMan(fetch);
-       //primo controllo del fattorino
-       assertEquals("Musi",pizzeria.aFreeDeliveryMan(19,00).getName());
-       pizzeria.aFreeDeliveryMan(19,00).assignDelivery(pizzeria.findTimeBoxDeliveryMan(19,00));
-       //dopo aver assegnato un ordine a "musi" esso e' ancora libero perche puo' portare due ordini
-       assertEquals("Musi",pizzeria.aFreeDeliveryMan(19,00).getName());
-       pizzeria.aFreeDeliveryMan(19,00).assignDelivery(pizzeria.findTimeBoxDeliveryMan(19,00));
-       //dopo aver assegnato due ordini a musi quello libero e' "fetch" ora
-       assertEquals(fetch.getName(),pizzeria.aFreeDeliveryMan(19,00).getName());
+       /* primo controllo del fattorino */
+       assertEquals("Musi",pizzeria.aFreeDeliveryMan(19,0).getName());
+       pizzeria.aFreeDeliveryMan(19,0).assignDelivery(pizzeria.findTimeBoxDeliveryMan(19,00));
+       /* dopo aver assegnato un ordine a "musi" questo è ancora libero, perché può portare due ordini */
+       assertEquals("Musi",pizzeria.aFreeDeliveryMan(19,0).getName());
+       pizzeria.aFreeDeliveryMan(19,0).assignDelivery(pizzeria.findTimeBoxDeliveryMan(19,00));
+       /* dopo aver assegnato due ordini a musi, quello libero e' "fetch" ora */
+       assertEquals(fetch.getName(),pizzeria.aFreeDeliveryMan(19,0).getName());
 
    }
 
    @Test
     public void testCheckTimeBoxEven(){
-        assertEquals(true,pizzeria.checkTimeBoxOven(19,00,3));
-        assertEquals(true,pizzeria.checkTimeBoxOven(20,00,16));
-        assertEquals(false,pizzeria.checkTimeBoxOven(20,00,23));
-        assertEquals(true,pizzeria.checkTimeBoxOven(20,00,0));
+        assertEquals(true,pizzeria.checkTimeBoxOven(19,0,3));
+        assertEquals(true,pizzeria.checkTimeBoxOven(20,0,16));
+        assertEquals(false,pizzeria.checkTimeBoxOven(20,0,23));
+        assertEquals(true,pizzeria.checkTimeBoxOven(20,0,0));
    }
 
    @Test
@@ -75,13 +76,13 @@ public class Pizzeria_test {
         }
    }
 
-    // questo test controlla l apertura in base alla data di apertura e chiusura e si basa sulla creazione della pizzeria
+    // TODO: CONTROLLARE. questo test controlla l'apertura in base alla data di apertura e chiusura e si basa sulla creazione della pizzeria
+   /*
    @Test
     public void testCheckTimeOrder(){
         assertEquals(OpeningPossibilities.OPEN, TimeServices.checkTimeOrder(pizzeria));
         //assertEquals("CLOSED",pizzeria.checkTimeOrder());
-
-   }
+   }*/
 
    @Test
     public void testCanCreateAccount(){
@@ -93,9 +94,4 @@ public class Pizzeria_test {
         assertEquals(AccountPossibilities.SHORT,PizzeriaServices.canCreateAccount("macchina33@unipv.it","m","333","333"));
         assertEquals(AccountPossibilities.EXISTING,PizzeriaServices.canCreateAccount("pizzeria@gmail.com","Pizzeria","PASSWORD","PASSWORD"));
    }
-
-
-
-
-
 }

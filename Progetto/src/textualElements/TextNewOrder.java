@@ -109,13 +109,16 @@ public class TextNewOrder {
 		int c = 0;
 		System.out.print("\t");
 		try {
-			for (String s : Objects.requireNonNull(TimeServices.availableTimes(pizzeria, tot))) {
+			for (String s : TimeServices.availableTimes(pizzeria,tot)) {
 				System.out.print(s);
 				c++;
 				if (c % 18 == 0) System.out.print("\n\t");      // stampa 18 orari su ogni riga
 			}
 			System.out.print("\n");
 		} catch (NullPointerException npe) {
+			/* se l'ordine inizia in un orario ancora valido, ma impiega troppo tempo e diventa troppo tardi: */
+			String spiacenti = "\nSpiacenti: si è fatto tardi, la pizzeria è ormai in chiusura. Torna a trovarci!\n";
+			System.out.println(TextColorServices.colorSystemOut(spiacenti, Color.RED, false, false));
 			throw new RestartOrderExc();
 		}
 		return scan.nextLine();

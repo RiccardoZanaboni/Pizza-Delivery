@@ -1,6 +1,5 @@
 package graphicElements.pizzeriaSidePages;
 
-import database.Database;
 import database.PizzaDB;
 import database.ToppingDB;
 import graphicAlerts.GenericAlert;
@@ -19,7 +18,7 @@ import pizzeria.*;
 
 import java.util.HashMap;
 
-public class PizzeriaMenuPage {
+public class PizzeriaModifyMenuPage {
 
     public void display(Pizzeria pizzeria, Stage window) {
         TableView<Pizza> table = new TableView<>();
@@ -54,6 +53,9 @@ public class PizzeriaMenuPage {
         toppingsList.getItems().addAll(pizzeria.getIngredientsPizzeria().values());
         toppingsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+        Label infoNewPizzaLabel = new Label();
+        infoNewPizzaLabel.setText("Selezionare gli ingredienti usando CTRL.");
+
         Button addPizzaButton = new Button("Add Pizza");
         addPizzaButton.setOnAction(e ->
                 addPizzaButtonClicked(pizzeria, nameInput, toppingsList, priceInput, table)
@@ -82,7 +84,7 @@ public class PizzeriaMenuPage {
 
         VBox newPizzaVBox = new VBox(15);
         newPizzaVBox.setPadding(new Insets(10,80,10,10));
-        newPizzaVBox.getChildren().addAll(nameInput, priceInput, addPizzaButton, deletePizzaButton);
+        newPizzaVBox.getChildren().addAll(nameInput, priceInput, infoNewPizzaLabel, addPizzaButton, deletePizzaButton);
         newPizzaVBox.setAlignment(Pos.BASELINE_LEFT);
 
 		VBox newToppingHBox = new VBox(15);

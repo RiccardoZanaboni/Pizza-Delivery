@@ -58,9 +58,6 @@ public class TimeServices {
 		if(availables.size() > 0) {
 			return availables;
 		} else {
-			/* se l'ordine inizia in un orario ancora valido, ma impiega troppo tempo e diventa troppo tardi: */
-			String spiacenti = "\nSpiacenti: si è fatto tardi, la pizzeria è ormai in chiusura. Torna a trovarci!\n";
-			System.out.println(TextColorServices.colorSystemOut(spiacenti, Color.RED,false,false));
 			return null;
 		}
 	}

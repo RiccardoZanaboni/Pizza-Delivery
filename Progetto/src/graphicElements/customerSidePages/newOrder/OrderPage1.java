@@ -113,8 +113,6 @@ public class OrderPage1 {
         layout.setOnKeyPressed(ke -> {
             if(ke.getCode()== KeyCode.ENTER)
                 confirmButton.fire();
-            if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
-               backButton.fire();
             if(ke.getCode()==KeyCode.SHIFT)
                 shoppingCartButton.fire();
         });

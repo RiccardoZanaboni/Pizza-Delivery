@@ -35,6 +35,7 @@ import static enums.OpeningPossibilities.*;
 public class TextualInterface {
 
 	/**
+	 * TODO: questa spiegazione va in pizzeria.
 	 * 16 parametri: nome, indirizzo, 7 orari di apertura (da domenica a sabato),
 	 * 7 orari di chiusura (da domenica a sabato).
 	 *
@@ -46,24 +47,7 @@ public class TextualInterface {
 	 *
 	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
 	 * */
-	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
-			/* orari di apertura, da domenica a sabato */
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			/* orari di chiusura, da domenica a sabato */
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES)
-	);
+	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia");
 	private Scanner scan = new Scanner(System.in);
 
 	/** Al lancio di interfaces.TextualInterface, inizia un nuovo ordine solo se richiesto. */

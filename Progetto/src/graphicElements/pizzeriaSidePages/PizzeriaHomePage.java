@@ -35,9 +35,9 @@ public class PizzeriaHomePage {
 
         Button visualizeOrdersButton = new Button("Visualizza Ordini");
         visualizeOrdersButton.setOnAction(e-> {
-            //PizzeriaOrdersPage pizzeriaOrderPage = new PizzeriaOrdersPage();
+            //PizzeriaVisualizeOrdersPage pizzeriaOrderPage = new PizzeriaVisualizeOrdersPage();
             pizzeria.updatePizzeriaToday();
-            PizzeriaOrdersPage.display(pizzeria, window);
+            PizzeriaVisualizeOrdersPage.display(pizzeria, window);
         });
         visualizeOrdersButton.prefWidthProperty().bind(window.widthProperty());
         visualizeOrdersButton.prefHeightProperty().bind(window.heightProperty());
@@ -46,7 +46,7 @@ public class PizzeriaHomePage {
         manageMenuButton.prefWidthProperty().bind(window.widthProperty());
         manageMenuButton.prefHeightProperty().bind(window.heightProperty());
         manageMenuButton.setOnAction(e-> {
-            PizzeriaMenuPage pizzeriaMenuPage = new PizzeriaMenuPage();
+            PizzeriaModifyMenuPage pizzeriaMenuPage = new PizzeriaModifyMenuPage();
             pizzeriaMenuPage.display(pizzeria, window);
         });
 

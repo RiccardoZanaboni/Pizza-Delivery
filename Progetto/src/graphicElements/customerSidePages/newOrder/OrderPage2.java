@@ -41,14 +41,12 @@ public class OrderPage2 {
 	private Date time;
 
 	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot, Customer customer) {
-
 		GridPane gridPane = new GridPane();
 
 		Label surnameLabel = new Label(" Cognome:  ");
 		TextField surnameInput = new TextField();
 		surnameInput.setPromptText("Your Surname");
 		surnameLabel.setId("nomiLabel");
-		//if (customer.isLoggedIn())	//fixme: inutilizzato
 		String surname = CustomerDB.getCustomerFromUsername(customer.getUsername(),5);
 		if(surname != null)
 			surnameInput.setText(surname);
@@ -67,7 +65,7 @@ public class OrderPage2 {
 
 		Label choiceLabel = new Label(" Orario:\t   ");
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
-		choiceBox.getItems().addAll(getTime(pizzeria, order.getNumPizze()));
+		choiceBox.getItems().addAll(getTime(pizzeria, order.getNumPizze(), customer, window));
 		choiceLabel.setId("nomiLabel");
 		HBox choiceHBox = new HBox(50);
 		choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
@@ -91,7 +89,7 @@ public class OrderPage2 {
 		Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
-			this.name = getInfo(surnameInput);		// FIXME: perchè????
+			this.name = getInfo(surnameInput);
 			this.address = getInfo(addressInput);
 			OrderPage1 orderPage1 = new OrderPage1();
 			orderPage1.display(window, order, pizzeria, customer);
@@ -179,11 +177,18 @@ public class OrderPage2 {
     	return nInput.getText();
 	}
 
-
 	/** aggiunge tutti gli orari disponibili alla ObservableList */
-	private ObservableList<String> getTime(Pizzeria pizzeria, int tot) {
+	private ObservableList<String> getTime(Pizzeria pizzeria, int tot, Customer customer, Stage window) {
 		ObservableList<String> orari = FXCollections.observableArrayList();
-		orari.addAll(TimeServices.availableTimes(pizzeria, tot));
+		try{
+			orari.addAll(TimeServices.availableTimes(pizzeria, tot));
+		} catch (NullPointerException npe){
+			/* se l'ordine inizia in un orario ancora valido, ma impiega troppo tempo e diventa troppo tardi: */
+			HomePage home = new HomePage();
+			home.display(new Stage(),pizzeria,customer);
+			GenericAlert.display("Spiacenti: si è fatto tardi,\nla pizzeria è ormai in chiusura.");
+			window.close();
+		}
 		return orari;
 	}
 }

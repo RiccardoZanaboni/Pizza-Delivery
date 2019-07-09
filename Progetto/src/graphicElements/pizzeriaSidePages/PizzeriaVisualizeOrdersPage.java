@@ -19,7 +19,7 @@ import pizzeria.Pizzeria;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PizzeriaOrdersPage {
+public class PizzeriaVisualizeOrdersPage {
 
 	public static void display(Pizzeria pizzeria, Stage window) {
 		ArrayList<Label> nameLabels = new ArrayList<>();

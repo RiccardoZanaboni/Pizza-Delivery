@@ -61,10 +61,6 @@ public class Pizza {
             this.ingredients.put(ing,ing);
     }
 
-    public void setIngredients(String ingredients) {
-        this.ingredients.put(ingredients, ingredients);
-    }
-
     /** Se presente, rimuove l'ingrediente selezionato dalla pizza. */
     public void rmvIngredients(String ing){
         if(this.ingredients.containsKey(ing))

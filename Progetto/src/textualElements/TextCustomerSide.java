@@ -107,9 +107,9 @@ public class TextCustomerSide {
 		String indirizzo = scan.nextLine();
 		if(CustomerDB.addInfoCustomer(user,nome,cognome,indirizzo)) {
 			System.out.println(TextColorServices.colorSystemOut("\nGrazie! Dati aggiornati.", Color.YELLOW, false, false));
-			customer.setName(nome);
-			customer.setSurname(cognome);
-			customer.setAddress(indirizzo);
+			//customer.setName(nome);
+			//customer.setSurname(cognome);
+			//customer.setAddress(indirizzo);
 		} else System.out.println(TextColorServices.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
 	}
 

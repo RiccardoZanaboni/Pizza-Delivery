@@ -36,7 +36,7 @@ public class HomePage {
 		usernameLabel.setText(customer.getUsername());
         HBox hBox = new HBox(20);
         Button logoutButton = new Button();
-        Image image = new Image("graphicElements/images/logout-128.png");
+        Image image = new Image("/graphicElements/images/logout-128.png");
         ImageView imageView1 = new ImageView(image);
         imageView1.setFitHeight(20);
         imageView1.setFitWidth(20);
@@ -54,7 +54,7 @@ public class HomePage {
 		stackPane.getChildren().addAll(hBox);
 		stackPane.getStyleClass().add("stackpane");
 
-		Image image1 = new Image("graphicElements/images/banner_pizza.jpg");
+		Image image1 = new Image("/graphicElements/images/banner_pizza.jpg");
 		ImageView imageView = new ImageView(image1);
 		imageView.setFitHeight(150);
 		imageView.setFitWidth(880);
@@ -103,7 +103,6 @@ public class HomePage {
         recapOrdiniButton.prefHeightProperty().bind(window.heightProperty());
         recapOrdiniButton.setOnAction(event -> {
 			OrderPage3 last = new OrderPage3();
-			//TODO: bisogna fare in modo di passare questa scene1 al posto di "null"
 			last.display(false, window, PizzeriaServices.CustomerLastOrder(customer,pizzeria), pizzeria, scene1, customer);
 		});
 

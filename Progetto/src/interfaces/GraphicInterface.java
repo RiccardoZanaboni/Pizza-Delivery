@@ -41,24 +41,7 @@ public class GraphicInterface extends Application {
 	 *
 	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
 	 * */
-	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
-			/* orari di apertura, da domenica a sabato */
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			/* orari di chiusura, da domenica a sabato */
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES)
-	);
+	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia");
 	private Stage window;
 
 	public static void main(String[] args) {
@@ -70,7 +53,7 @@ public class GraphicInterface extends Application {
 
 		window = primaryStage;
 
-		Image image = new Image("graphicElements/images/wolf_pizza.png");
+		Image image = new Image("/graphicElements/images/wolf_pizza.png");
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(600);
 		imageView.setFitWidth(800);
@@ -79,7 +62,7 @@ public class GraphicInterface extends Application {
 		stackPane.getChildren().addAll(imageView);
 
 		Scene scene0 = new Scene(stackPane, 880, 600);
-		window.getIcons().add(new Image("graphicElements/images/wolf_pizza.png"));
+		window.getIcons().add(new Image("/graphicElements/images/wolf_pizza.png"));
 		window.setScene(scene0);
 		window.show();
 		FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), stackPane);

@@ -43,7 +43,6 @@ public class OrderDB {
             String citofono = rs.getString(4);
             int quantity = rs.getInt(5);
             Date date = rs.getTimestamp(6);
-            //String psw = rs.getString(8);
             Order order = new Order(i);
             if (!orders.containsKey(orderID) && quantity > 0) {
                 order.setCustomer(new Customer(username));
