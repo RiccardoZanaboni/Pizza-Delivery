@@ -1,36 +1,87 @@
 package database;
 
+import javafx.scene.paint.Color;
+import pizzeria.Pizzeria;
+import services.TextualPrintServices;
+
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class ToppingDB {
 
-	public static PreparedStatement putTopping(Connection con, String nome){
-		PreparedStatement preparedStatement = null;
+	private static Scanner scan = new Scanner(System.in);
+
+	public static boolean putTopping( String nome){
 		try {
-			preparedStatement = con.prepareStatement("insert into sql7293749.Toppings values ('" + nome + "');");
-		} catch(SQLException sqle){
-			Database.missingConnection();
+			ResultSet rs1 = Database.getStatement("select * from sql7293749.Toppings");
+			rs1.last();
+			int prima = rs1.getRow();
+			Database.insertStatement("insert into sql7293749.Toppings values ('" + nome + "');");
+			ResultSet rs2 =  Database.getStatement("select * from sql7293749.Toppings");
+			rs2.last();
+			int dopo = rs2.getRow();
+			return prima != dopo;
+		} catch (SQLException sqle) {
+			return false;
 		}
-		return preparedStatement;
 	}
 
-	public static PreparedStatement removeTopping(Connection con, String nome){
-		PreparedStatement preparedStatement = null;
+	public static void putTopping(Pizzeria pizzeria) {		// todo: va in testuale
 		try {
-			preparedStatement = con.prepareStatement("delete from sql7293749.Toppings where Topping = '" + nome + "';");
-		} catch(SQLException sqle){
-			Database.missingConnection();
+			System.out.print(TextualPrintServices.colorSystemOut("Inserisci il nome del nuovo ingrediente:\t", Color.YELLOW, false, false));
+			String name = scan.nextLine().toUpperCase();
+			if (name.length() == 0 || !putTopping(name))
+				throw new Exception();
+			else{
+				pizzeria.getIngredientsPizzeria().put(name,name);
+				String ok = name + " aggiunto correttamente.";
+				System.out.println(TextualPrintServices.colorSystemOut(ok,Color.YELLOW,false,false));
+			}
+		} catch (Exception e) {
+			String err = "Errore nell'aggiunta dell'ingrediente al Database.";
+			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
 		}
-		return preparedStatement;
 	}
 
-	public static PreparedStatement getToppingsDB(Connection con){
-		PreparedStatement preparedStatement = null;
+	public static boolean removeTopping(String nome){
 		try {
-			preparedStatement = con.prepareStatement("select * from sql7293749.Toppings");
-		} catch (NullPointerException | SQLException e){
-			Database.missingConnection();
+			ResultSet rs1 = Database.getStatement("select * from sql7293749.Toppings");
+			rs1.last();
+			int prima = rs1.getRow();
+			Database.insertStatement("delete from sql7293749.Toppings where Topping = '" + nome + "';");
+			ResultSet rs2 =  Database.getStatement("select * from sql7293749.Toppings");
+			rs2.last();
+			int dopo = rs2.getRow();
+			return (prima != dopo);
+		} catch (SQLException sqle) {
+			return false;
 		}
-		return preparedStatement;
+	}
+
+	public static void removeToppingText(Pizzeria pizzeria) {	// todo: va in testuale
+		try {
+			System.out.print(TextualPrintServices.colorSystemOut("Inserisci il nome dell'ingrediente da rimuovere:\t", Color.YELLOW, false, false));
+			String name = scan.nextLine().toUpperCase();
+			if (!removeTopping(name))
+				throw new SQLException();
+			else{
+				pizzeria.getMenu().remove(name);
+				String ok = name + " rimosso correttamente.";
+				System.out.println(TextualPrintServices.colorSystemOut(ok,Color.YELLOW,false,false));
+			}
+		} catch (SQLException sqle) {
+			String err = "Errore nella rimozione dell'ingrediente dal Database.";
+			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+		}
+	}
+
+	public static HashMap<String, String> getToppings(HashMap<String, String> ingredienti)  throws SQLException{
+		ResultSet rs = Database.getStatement("select * from sql7293749.Toppings");
+		while (rs.next()) {
+			String ingrediente = rs.getString(1);
+			ingredienti.put(ingrediente,ingrediente);
+		}
+		return ingredienti;
 	}
 }

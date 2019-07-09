@@ -1,5 +1,6 @@
 package graphicElements.customerSidePages;
 
+import database.CustomerDB;
 import graphicAlerts.GenericAlert;
 import graphicElements.customerSidePages.newOrder.MenuPage;
 import javafx.geometry.Pos;
@@ -28,7 +29,7 @@ public class YourProfilePage {
         Label nameLabel = new Label("Nome:\t ");
         TextField nameInput = new TextField();
         nameInput.setPromptText("Il tuo nome");
-        String name = Database.getInfoCustomerFromUsername(customer.getUsername(), 4);
+        String name = CustomerDB.getCustomerFromUsername(customer.getUsername(), 4);
         nameInput.setText(name);
         HBox nameBox = new HBox(50);
         nameBox.getChildren().addAll(nameLabel, nameInput);
@@ -37,7 +38,7 @@ public class YourProfilePage {
         Label surnameLabel = new Label("Cognome: ");
         TextField surnameInput = new TextField();
         surnameInput.setPromptText("Il tuo cognome");
-        String surname = Database.getInfoCustomerFromUsername(customer.getUsername(), 5);
+        String surname = CustomerDB.getCustomerFromUsername(customer.getUsername(), 5);
         surnameInput.setText(surname);
         HBox surnameBox = new HBox(50);
         surnameBox.getChildren().addAll(surnameLabel, surnameInput);
@@ -46,7 +47,7 @@ public class YourProfilePage {
         Label addressLabel = new Label("Indirizzo: ");
         TextField addressInput = new TextField();
         addressInput.setPromptText("Il tuo indirizzo");
-        String address = Database.getInfoCustomerFromUsername(customer.getUsername(), 6);
+        String address = CustomerDB.getCustomerFromUsername(customer.getUsername(), 6);
         addressInput.setText(address);
         HBox addressBox = new HBox(50);
         addressBox.getChildren().addAll(addressLabel, addressInput);
@@ -72,7 +73,7 @@ public class YourProfilePage {
             customer.setSurname(surnameInput.getText());
             customer.setAddress(addressInput.getText());
             //customer.setPassword(passwordInput.getText());
-            if(Database.addInfoCustomer(customer.getUsername(),customer.getName(),customer.getSurname(),customer.getAddress())) {
+            if(CustomerDB.addInfoCustomer(customer.getUsername(),customer.getName(),customer.getSurname(),customer.getAddress())) {
                 MenuPage menuPage = new MenuPage();
                 menuPage.display(window, pizzeria, customer);
             } else GenericAlert.display("Modifica dei dati non riuscita.");

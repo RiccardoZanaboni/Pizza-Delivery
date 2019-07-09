@@ -1,5 +1,6 @@
 package graphicElements.customerSidePages.loginPages;
 
+import database.CustomerDB;
 import graphicElements.customerSidePages.loginPages.LoginAccountPage;
 import graphicElements.customerSidePages.newOrder.MenuPage;
 import javafx.geometry.Pos;
@@ -74,7 +75,7 @@ public class NewAccountPage {
 						insertErrorLabel.setTextFill(Color.DARKRED);
 						insertErrorLabel.setText("Indirizzo e-mail inesistente");
 					} else {
-						Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), mailInput.getText());
+						CustomerDB.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), mailInput.getText());
 						MenuPage menuPage = new MenuPage();
 						Customer customer = new Customer(nameInput.getText().toUpperCase(), passwordInput.getText());
 						customer.setLoggedIn(true);

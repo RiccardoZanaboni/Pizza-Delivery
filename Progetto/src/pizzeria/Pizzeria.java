@@ -1,6 +1,6 @@
 package pizzeria;
 
-import database.Database;
+import database.*;
 import javafx.scene.paint.Color;
 import services.TextualPrintServices;
 import services.TimeServices;
@@ -91,7 +91,7 @@ public class Pizzeria {
 
 	public HashMap<String,Order> getOrders() {
 		try {
-			this.orders = Database.getOrdersDB(this, this.orders); //FIXME @ZANA SENZA QUESTO "UGUALE" NON FUNZIONA
+			this.orders = OrderDB.getOrders(this, this.orders); //FIXME @ZANA SENZA QUESTO "UGUALE" NON FUNZIONA
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -100,7 +100,7 @@ public class Pizzeria {
 
 	/** Aggiunge l'ordine, completato, a quelli che la pizzeria deve evadere. Richiama i vari aggiornamenti. */
 	public void addInfoOrder(Order order) {
-		Database.putCompletedOrder(order);
+		OrderDB.putOrder(order);
 		order.setCompletedDb(this,order.getNumPizze(),order.getTime());	// FIXME @fetch: vediamo così
 		/* Sostituisce l'ordine come era stato aggiunto inizialmente (vuoto) con quello definitivo. */
 		this.orders.remove(order.getOrderCode());
@@ -161,7 +161,7 @@ public class Pizzeria {
 	/** Una tantum: vengono aggiunti a "pizzeriaIngredients" tutti gli ingredienti utilizzabili. */
 	private void setIngredientsPizzeria(){
 		try {
-			for(String s : Database.getToppings(this.pizzeriaIngredients).keySet()){
+			for(String s : ToppingDB.getToppings(this.pizzeriaIngredients).keySet()){
 				this.pizzeriaIngredients.put(s,s);
 			}
 		} catch (SQLException e) {
@@ -172,7 +172,7 @@ public class Pizzeria {
 	/** Una tantum: viene creato il menu della pizzeria; ad ogni pizza vengono aggiunti i rispettivi toppings. */
 	private void createMenu() {
 		try {
-			for(String s : Database.getPizze(menu).keySet()){
+			for(String s : PizzaDB.getPizzeDB(menu).keySet()){
 				addPizza(menu.get(s));
 			}
 		} catch (SQLException e) {
@@ -354,7 +354,7 @@ public class Pizzeria {
 		if(user.equals(this.userPizzeria) && psw.equals(this.pswPizzeria)){
 			/* se è la pizzeria, allora accede come tale */
 			return "P";
-		} else if (Database.getCustomers(user,psw)){
+		} else if (CustomerDB.getCustomer(user,psw)){
 			/* se è un utente identificato, accede come tale */
 			return "OK";
 		} else {
@@ -381,7 +381,7 @@ public class Pizzeria {
 			if(newUser.length() > 2 && newPsw.length() > 2) {
 				/* se si registra correttamente, va bene */
 				try {
-					if (Database.getCustomers(newUser.toUpperCase(),newPsw) || checkMail(mailAddress))
+					if (CustomerDB.getCustomer(newUser.toUpperCase(),newPsw) || checkMail(mailAddress))
 						return "EXISTING";
 					else
 						return "OK";
@@ -398,7 +398,7 @@ public class Pizzeria {
 	}
 
 	public boolean checkMail(String mail){
-		return (Database.getInfoCustomerFromMailAddress(mail,1) != null);
+		return (CustomerDB.getInfoCustomerFromMailAddress(mail,1) != null);
 	}
 
 	public Order CustomerLastOrder(Customer customer) {

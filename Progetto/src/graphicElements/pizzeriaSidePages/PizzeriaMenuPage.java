@@ -1,6 +1,8 @@
 package graphicElements.pizzeriaSidePages;
 
 import database.Database;
+import database.PizzaDB;
+import database.ToppingDB;
 import graphicAlerts.GenericAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -143,7 +145,7 @@ public class PizzeriaMenuPage {
             	Pizza pizza = new Pizza(nameInput.getText().toUpperCase(), h, price);
             	pizzeria.getMenu().put(pizza.getName(false).toUpperCase(), pizza);
             	table.getItems().add(pizza);
-            	Database.putPizza(nameInput.getText(), ingredienti, Double.parseDouble(priceInput.getText()));
+            	PizzaDB.putPizza(nameInput.getText(), ingredienti, Double.parseDouble(priceInput.getText()));
 				nameInput.clear();
 				priceInput.clear();
         	} else {
@@ -161,7 +163,7 @@ public class PizzeriaMenuPage {
         if(pizzaSelected.size() > 0) {
 			for (Pizza pizza : pizzaSelected) {
 				pizzeria.getMenu().remove(pizza.getName(false).toUpperCase());
-				Database.removePizza(pizza.getName(false).toUpperCase());
+				PizzaDB.removePizza(pizza.getName(false).toUpperCase());
 				allPizzas.remove(pizza);
 			}
 		} else {
@@ -178,7 +180,7 @@ public class PizzeriaMenuPage {
 		} else {
 			pizzeria.getIngredientsPizzeria().put(topping, topping);
 			toppingsList.getItems().add(topping);
-			Database.putTopping(topping);
+			ToppingDB.putTopping(topping);
 			newToppingInput.clear();
 		}
 	}
@@ -194,7 +196,7 @@ public class PizzeriaMenuPage {
 		if (toppingsSelected.size() > 0) {
 			for (String topping : toppingsSelected) {
 				pizzeria.getIngredientsPizzeria().remove(topping);
-				Database.removeTopping(topping);
+				ToppingDB.removeTopping(topping);
 				allToppings.remove(topping);
 			}
 		} else {

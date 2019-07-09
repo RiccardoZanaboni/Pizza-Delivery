@@ -1,6 +1,9 @@
 package interfaces;
 
+import database.CustomerDB;
 import database.Database;
+import database.PizzaDB;
+import database.ToppingDB;
 import exceptions.RestartOrderExc;
 import exceptions.TryAgainExc;
 import javafx.scene.paint.Color;
@@ -153,7 +156,7 @@ public class TextualInterface {
 		String cognome = scan.nextLine();
 		System.out.print("Inserisci il tuo indirizzo principale: ");
 		String indirizzo = scan.nextLine();
-		if(Database.addInfoCustomer(user,nome,cognome,indirizzo)) {
+		if(CustomerDB.addInfoCustomer(user,nome,cognome,indirizzo)) {
 			System.out.println(TextualPrintServices.colorSystemOut("\nGrazie! Dati aggiornati.", Color.YELLOW, false, false));
 			customer.setName(nome);
 			customer.setSurname(cognome);
@@ -548,7 +551,7 @@ public class TextualInterface {
 							askAccess();
 						}
 						else {
-							Database.putCustomer(newUser,newPsw,mail);
+							CustomerDB.putCustomer(newUser,newPsw,mail);
 							System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
 							/* login automatico */
 							Customer c = new Customer(newUser, newPsw);
@@ -695,16 +698,16 @@ public class TextualInterface {
 	private void howModifyMenuAnswer(String risposta) throws SQLException {
 		switch (risposta){
 			case "A":
-				Database.putPizza(wolf);
+				PizzaDB.PutPizza(wolf);
 				break;
 			case "R":
-				Database.removePizzaText(wolf);
+				PizzaDB.removePizzaText(wolf);
 				break;
 			case "AI":
-				Database.putTopping(wolf);
+				ToppingDB.putTopping(wolf);
 				break;
 			case "RI":
-				Database.removeToppingText(wolf);
+				ToppingDB.removeToppingText(wolf);
 				break;
 			case "B":
 				System.out.println(TextualPrintServices.colorSystemOut("Nessuna modifica effettuata al menu.\n", Color.YELLOW, false, false));

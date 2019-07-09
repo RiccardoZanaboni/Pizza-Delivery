@@ -1,5 +1,6 @@
 package pizzeria.pizzeriaSendMail;
 
+import database.CustomerDB;
 import javafx.scene.paint.Color;
 import database.Database;
 import services.TextualPrintServices;
@@ -85,9 +86,9 @@ public class SendJavaMail {
 	}
 
 	public void recoverPassword(String dest) {
-		String user = Database.getInfoCustomerFromMailAddress(dest,1);
-		String psw = Database.getInfoCustomerFromUsername(user,2);
-		String nome = Database.getInfoCustomerFromUsername(user,4);
+		String user = CustomerDB.getInfoCustomerFromMailAddress(dest,1);
+		String psw = CustomerDB.getCustomerFromUsername(user,2);
+		String nome = CustomerDB.getCustomerFromUsername(user,4);
 		String subject = "Recupero Password";
 		StringBuilder txt = new StringBuilder();
 		txt.append("Carissimo/a ");
