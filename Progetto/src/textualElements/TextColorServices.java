@@ -1,10 +1,10 @@
-package services;
+package textualElements;
 
 import javafx.scene.paint.Color;
 
 import static javafx.scene.paint.Color.RED;
 
-public class TextualColorServices {
+public class TextColorServices {
 
 	/** Stringa-key a cui aggiungere il testo della stringa:
 	 * consente di cambiare colore al background del testo. */

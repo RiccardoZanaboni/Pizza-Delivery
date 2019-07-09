@@ -1,13 +1,10 @@
 import enums.AccountPossibilities;
 import enums.LoginPossibilities;
 import enums.OpeningPossibilities;
-import org.junit.*;
-import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Test;
 import pizzeria.DeliveryMan;
 import pizzeria.Pizzeria;
-import services.*;
+import pizzeria.services.*;
 
 import java.sql.SQLException;
 import java.time.LocalTime;

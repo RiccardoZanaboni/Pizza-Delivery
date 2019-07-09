@@ -1,5 +1,6 @@
-package services;
+package pizzeria.services;
 
+import database.CustomerDB;
 import database.Database;
 import enums.AccountPossibilities;
 import enums.LoginPossibilities;
@@ -8,6 +9,7 @@ import javafx.scene.paint.Color;
 import pizzeria.Customer;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
+import textualElements.TextColorServices;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,13 +38,13 @@ public class PizzeriaServices {
 					if(isGraphicRequest)
 						history.append(line.toUpperCase()).append("\n");
 					else
-						history.append(TextualColorServices.colorSystemOut(line + "\n", Color.YELLOW, true, true));
+						history.append(TextColorServices.colorSystemOut(line + "\n", Color.YELLOW, true, true));
 				} else history.append(line).append("\n");
 			}
 		} catch (FileNotFoundException fnfe){
 			String err = "Spiacenti: sezione History non disponibile.";
 			if(isGraphicRequest) GenericAlert.display(err);
-			else System.out.println(TextualColorServices.colorSystemOut(err, Color.RED,false,false));
+			else System.out.println(TextColorServices.colorSystemOut(err, Color.RED,false,false));
 		}
 		return history.toString();
 	}
@@ -90,7 +92,7 @@ public class PizzeriaServices {
 			if(newUser.length() > 2 && newPsw.length() > 2) {
 				/* se si registra correttamente, va bene */
 				try {
-					if (Database.getCustomers(newUser.toUpperCase(),newPsw) || Database.checkMail(mailAddress))
+					if (CustomerDB.getCustomer(newUser.toUpperCase(),newPsw) || Database.checkMail(mailAddress))
 						return AccountPossibilities.EXISTING;
 					else
 						return AccountPossibilities.OK;
@@ -110,7 +112,7 @@ public class PizzeriaServices {
 		if(user.equals(pizzeria.getUserPizzeria()) && psw.equals(pizzeria.getPswPizzeria())){
 			/* se è la pizzeria, allora accede come tale */
 			return LoginPossibilities.PIZZERIA;
-		} else if (Database.getCustomers(user,psw)){
+		} else if (CustomerDB.getCustomer(user,psw)){
 			/* se è un utente identificato, accede come tale */
 			return LoginPossibilities.OK;
 		} else {

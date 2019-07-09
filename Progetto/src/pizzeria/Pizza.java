@@ -1,8 +1,8 @@
 package pizzeria;
 
 import javafx.scene.paint.Color;
-import services.SettleStringsServices;
-import services.TextualColorServices;
+import pizzeria.services.SettleStringsServices;
+import textualElements.TextColorServices;
 
 import java.util.HashMap;
 
@@ -27,9 +27,9 @@ public class Pizza {
     @Override
     public String toString() {
         String descrizione = this.getDescription();
-        String nome = TextualColorServices.colorSystemOut(this.name, Color.YELLOW, false, true);
-        String prezzo = TextualColorServices.colorSystemOut("\n\t\tPrezzo: ",Color.ORANGE,false,false);
-        String ingr = TextualColorServices.colorSystemOut("\n\t\tIngredienti: ",Color.ORANGE,false,false);
+        String nome = TextColorServices.colorSystemOut(this.name, Color.YELLOW, false, true);
+        String prezzo = TextColorServices.colorSystemOut("\n\t\tPrezzo: ",Color.ORANGE,false,false);
+        String ingr = TextColorServices.colorSystemOut("\n\t\tIngredienti: ",Color.ORANGE,false,false);
         return "- " + nome + prezzo + this.price + " €" + ingr + descrizione;
     }
 

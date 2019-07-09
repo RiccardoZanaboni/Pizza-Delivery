@@ -1,57 +1,63 @@
 package database;
 
+import javafx.scene.paint.Color;
+import textualElements.TextColorServices;
+
 import java.sql.*;
 
 public class CustomerDB {
 
-    public static PreparedStatement putCostumer(Connection con, String nome, String password, String mailAddress){
-        PreparedStatement preparedStatement = null;
+    public static boolean putCustomer(String nome, String password, String mailAddress){
         try {
-            preparedStatement = con.prepareStatement("insert into sql7293749.Users values ('" + nome + "', '" + password +  "', '" + mailAddress + "', '', '', '') ");
-        } catch(SQLException sqle){
-            Database.missingConnection();
+            Database.insertStatement("insert into sql7293749.Users values ('" + nome + "', '" + password +  "', '" + mailAddress + "', '', '', '') ");	// inserisce account nel DB
+            return true;
+        } catch (NumberFormatException nfe) {
+            String err = "\nErrore nell'inserimento dei dati utente. Riprovare:";
+            System.out.println(TextColorServices.colorSystemOut(err, Color.RED, false, false));
+            return false;
         }
-        return preparedStatement;
     }
 
-    public static ResultSet getCustomer(Connection con, String username, String password){
-        ResultSet rs = null;
-        try {
-            Statement statement = con.createStatement();
-            rs = statement.executeQuery("select * from sql7293749.Users where User = '" + username + "' && Pass = '" + password + "' ");
-        } catch (SQLException sqle){
-            Database.missingConnection();
+    public static boolean getCustomer( String username, String password)throws SQLException{
+        ResultSet rs = Database.getStatement("select * from sql7293749.Users where User = '" + username + "' && Pass = '" + password + "' ");
+        boolean hasRows = false;
+        while (rs.next()) {
+            hasRows = true;
         }
-        return rs;
+        return hasRows;
     }
 
-    public static PreparedStatement getCustomerFromUsername(Connection con, String username){
-        PreparedStatement preparedStatement = null;
+    public static String  getCustomerFromUsername(String username, int columnIndex){
+        ResultSet rs;
+        String info = null;
         try {
-            preparedStatement = con.prepareStatement("select * from sql7293749.Users where User = '" + username + "' ");
-        } catch(SQLException sqle){
-            Database.missingConnection();
+            rs = Database.getStatement("select * from sql7293749.Users where User = '" + username + "' ");
+            while (rs.next()) {
+                info = rs.getString(columnIndex);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return preparedStatement;
+        return info;
     }
 
-    public static PreparedStatement getCustomerFromMailAddress(Connection con, String mail){
-        PreparedStatement preparedStatement = null;
+    public static String getInfoCustomerFromMailAddress(String mail, int columnIndex){
+        ResultSet rs;
+        String user = null;
         try {
-            preparedStatement = con.prepareStatement("select * from sql7293749.Users where MailAddress = '" + mail + "' ");
-        } catch(SQLException sqle){
-            Database.missingConnection();
+            rs = Database.getStatement("select * from sql7293749.Users where MailAddress = '" + mail + "' ");
+            while (rs.next()) {
+                user = rs.getString(columnIndex);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return preparedStatement;
+        return user;
     }
 
-    public static PreparedStatement addInfoCostumer(Connection con, String username, String name, String surname, String address) {
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = con.prepareStatement("update sql7293749.Users set Name = '" + name + "', Surname = '" + surname +  "', Address = '" + address + "' where User = '" + username + "' ");
-        } catch(SQLException sqle){
-            Database.missingConnection();
-        }
-        return preparedStatement;
+    public static boolean addInfoCustomer( String username, String name, String surname, String address) {
+            Database.insertStatement("update sql7293749.Users set Name = '" + name + "', Surname = '" + surname +  "', Address = '" + address + "' where User = '" + username + "' ");	// aggiorna account nel DB
+            return true;
+
     }
 }

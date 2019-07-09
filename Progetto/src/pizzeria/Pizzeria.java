@@ -1,6 +1,9 @@
 package pizzeria;
 
 import database.Database;
+import database.OrderDB;
+import database.PizzaDB;
+import database.ToppingDB;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -8,7 +11,7 @@ import java.util.*;
 
 import static database.Database.openDatabase;
 import static database.Database.setLastUpdate;
-import static services.TimeServices.getMinutes;
+import static pizzeria.services.TimeServices.getMinutes;
 
 @SuppressWarnings("deprecation")
 
@@ -82,7 +85,7 @@ public class Pizzeria {
 
 	public HashMap<String,Order> getOrders() {
 		try {
-			this.orders = Database.getOrdersDB(this, this.orders);
+			this.orders = OrderDB.getOrders(this, this.orders);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -125,7 +128,7 @@ public class Pizzeria {
 	/** Una tantum: vengono aggiunti a "pizzeriaIngredients" tutti gli ingredienti utilizzabili. */
 	private void setIngredientsPizzeria(){
 		try {
-			for(String s : Database.getToppings(this.pizzeriaIngredients).keySet()){
+			for(String s : ToppingDB.getToppings(this.pizzeriaIngredients).keySet()){
 				this.pizzeriaIngredients.put(s,s);
 			}
 		} catch (SQLException e) {
@@ -136,7 +139,7 @@ public class Pizzeria {
 	/** Una tantum: viene creato il menu della pizzeria; ad ogni pizza vengono aggiunti i rispettivi toppings. */
 	private void createMenu() {
 		try {
-			for(String s : Database.getPizze(menu).keySet()){
+			for(String s : PizzaDB.getPizzeDB(menu).keySet()){
 				addPizza(menu.get(s));
 			}
 		} catch (SQLException e) {
@@ -275,5 +278,4 @@ public class Pizzeria {
 		date.setMinutes(vector[dayOfWeek-1].getMinute());
 		return date;
 	}
-
 }

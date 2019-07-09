@@ -18,8 +18,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.*;
 import enums.OpeningPossibilities;
-import services.PizzeriaServices;
-import services.TimeServices;
+import pizzeria.services.PizzeriaServices;
+import pizzeria.services.TimeServices;
 
 
 /**

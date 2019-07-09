@@ -1,6 +1,6 @@
 package graphicElements.customerSidePages.newOrder;
 
-import database.Database;
+import database.OrderDB;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,7 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pizzeria.*;
-import services.TimeServices;
+import pizzeria.services.TimeServices;
 
 import java.util.ArrayList;
 
@@ -65,7 +65,7 @@ public class OrderPage3 {
 		if(isNewOrder) {
 			confirmButton.setId("confirmButton");
 			confirmButton.setOnAction(e -> {
-				Database.putCompletedOrder(order);
+				OrderDB.putOrder(order);
 				order.setCompletedDb(pizzeria,order.getNumPizze(),order.getTime());
 				HomePage homePage = new HomePage();
 				OrderPage1.getBackButton().fire();

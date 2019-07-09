@@ -1,9 +1,10 @@
-package services;
+package pizzeria.services;
 
 import enums.OpeningPossibilities;
 import javafx.scene.paint.Color;
 import pizzeria.DeliveryMan;
 import pizzeria.Pizzeria;
+import textualElements.TextColorServices;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,7 +61,7 @@ public class TimeServices {
 		} else {
 			/* se l'ordine inizia in un orario ancora valido, ma impiega troppo tempo e diventa troppo tardi: */
 			String spiacenti = "\nSpiacenti: si è fatto tardi, la pizzeria è ormai in chiusura. Torna a trovarci!\n";
-			System.out.println(TextualColorServices.colorSystemOut(spiacenti, Color.RED,false,false));
+			System.out.println(TextColorServices.colorSystemOut(spiacenti, Color.RED,false,false));
 			return null;
 		}
 	}
@@ -148,8 +149,7 @@ public class TimeServices {
 		return dataStr;
 	}
 
-	/** Controlla, prima di un nuovo ordine, se sei ancora in tempo prima che la pizzeria chiuda.
-	 * @param pizzeria*/
+	/** Controlla, prima di un nuovo ordine, se sei ancora in tempo prima che la pizzeria chiuda. */
 	public static OpeningPossibilities checkTimeOrder(Pizzeria pizzeria) {
 		int nowMin = getNowMinutes();
 		int openMin = getMinutes(pizzeria.getOpeningToday());

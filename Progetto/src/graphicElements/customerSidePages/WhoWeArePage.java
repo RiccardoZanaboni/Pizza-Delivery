@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Pizzeria;
-import services.PizzeriaServices;
+import pizzeria.services.PizzeriaServices;
 
 import java.awt.*;
 import java.net.URI;

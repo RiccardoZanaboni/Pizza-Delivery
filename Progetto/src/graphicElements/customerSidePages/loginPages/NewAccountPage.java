@@ -1,5 +1,6 @@
 package graphicElements.customerSidePages.loginPages;
 
+import database.CustomerDB;
 import graphicElements.customerSidePages.newOrder.HomePage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,10 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pizzeria.Customer;
-import database.Database;
 import pizzeria.Pizzeria;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
-import services.PizzeriaServices;
+import pizzeria.services.PizzeriaServices;
 
 public class NewAccountPage {
 	public void display(Stage window, Pizzeria pizzeria) {
@@ -71,7 +71,7 @@ public class NewAccountPage {
 						insertErrorLabel.setTextFill(Color.DARKRED);
 						insertErrorLabel.setText("Indirizzo e-mail inesistente");
 					} else {
-						Database.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), mailInput.getText());
+						CustomerDB.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), mailInput.getText());
 						HomePage homePage = new HomePage();
 						Customer customer = new Customer(nameInput.getText().toUpperCase());
 						homePage.display(window, pizzeria, customer);

@@ -1,6 +1,6 @@
 package pizzeria;
 
-import services.TimeServices;
+import pizzeria.services.TimeServices;
 
 @SuppressWarnings("deprecation")
 public class DeliveryMan {

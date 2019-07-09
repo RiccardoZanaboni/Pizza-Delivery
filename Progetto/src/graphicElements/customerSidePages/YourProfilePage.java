@@ -1,5 +1,6 @@
 package graphicElements.customerSidePages;
 
+import database.CustomerDB;
 import graphicAlerts.GenericAlert;
 import graphicElements.customerSidePages.newOrder.HomePage;
 import javafx.geometry.Pos;
@@ -11,19 +12,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.Customer;
-import database.Database;
 import pizzeria.Pizzeria;
 
 public class YourProfilePage {
 
     public void display(Stage window, Pizzeria pizzeria, Customer customer) {
-        String name = Database.getInfoCustomerFromUsername(customer.getUsername(), 4);
-        String surname = Database.getInfoCustomerFromUsername(customer.getUsername(), 5);
-        String address = Database.getInfoCustomerFromUsername(customer.getUsername(), 6);
 
         Label nameLabel = new Label("Nome:\t ");
         TextField nameInput = new TextField();
         nameInput.setPromptText("Il tuo nome");
+        String name = CustomerDB.getCustomerFromUsername(customer.getUsername(), 4);
         nameInput.setText(name);
         HBox nameBox = new HBox(50);
         nameBox.getChildren().addAll(nameLabel, nameInput);
@@ -32,6 +30,7 @@ public class YourProfilePage {
         Label surnameLabel = new Label("Cognome: ");
         TextField surnameInput = new TextField();
         surnameInput.setPromptText("Il tuo cognome");
+        String surname = CustomerDB.getCustomerFromUsername(customer.getUsername(), 5);
         surnameInput.setText(surname);
         HBox surnameBox = new HBox(50);
         surnameBox.getChildren().addAll(surnameLabel, surnameInput);
@@ -40,6 +39,7 @@ public class YourProfilePage {
         Label addressLabel = new Label("Indirizzo: ");
         TextField addressInput = new TextField();
         addressInput.setPromptText("Il tuo indirizzo");
+        String address = CustomerDB.getCustomerFromUsername(customer.getUsername(), 6);
         addressInput.setText(address);
         HBox addressBox = new HBox(50);
         addressBox.getChildren().addAll(addressLabel, addressInput);
@@ -60,7 +60,7 @@ public class YourProfilePage {
             customer.setName(newName);
             customer.setSurname(newSurname);
             customer.setAddress(newAddress);
-            if(Database.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress)) {
+            if(CustomerDB.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress)) {
                 HomePage homePage = new HomePage();
                 homePage.display(window, pizzeria, customer);
             } else GenericAlert.display("Modifica dei dati non riuscita.");

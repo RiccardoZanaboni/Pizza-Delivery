@@ -1,8 +1,8 @@
 package pizzeria.pizzeriaSendMail;
 
+import database.CustomerDB;
 import javafx.scene.paint.Color;
-import database.Database;
-import services.TextualColorServices;
+import textualElements.TextColorServices;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -64,7 +64,7 @@ public class SendJavaMail {
 			message.setContent(multipart);
 			Transport.send(message);
 
-			System.out.println(TextualColorServices.colorSystemOut("\t>> Il messaggio è stato inviato!", Color.YELLOW,true,false));
+			System.out.println(TextColorServices.colorSystemOut("\t>> Il messaggio è stato inviato!", Color.YELLOW,true,false));
 			return true;
 
 		} catch (MessagingException e) {
@@ -85,9 +85,9 @@ public class SendJavaMail {
 	}
 
 	public void recoverPassword(String dest) {
-		String user = Database.getInfoCustomerFromMailAddress(dest,1);
-		String psw = Database.getInfoCustomerFromUsername(user,2);
-		String nome = Database.getInfoCustomerFromUsername(user,4);
+		String user = CustomerDB.getInfoCustomerFromMailAddress(dest,1);
+		String psw = CustomerDB.getCustomerFromUsername(user,2);
+		String nome = CustomerDB.getCustomerFromUsername(user,4);
 		String subject = "Recupero Password";
 		StringBuilder txt = new StringBuilder();
 		txt.append("Carissimo/a ");
