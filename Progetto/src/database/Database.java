@@ -116,7 +116,7 @@ public class Database {
 		}
 	}
 
-	public static void removePizza(Pizzeria pizzeria) {		// todo: va in testuale
+	public static void removePizzaText(Pizzeria pizzeria) {		// todo: va in testuale
 		try {
 			System.out.print(TextualPrintServices.colorSystemOut("Inserisci il nome della pizza da rimuovere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
@@ -133,7 +133,7 @@ public class Database {
 		}
 	}
 
-	public static void removeTopping(Pizzeria pizzeria) {	// todo: va in testuale
+	public static void removeToppingText(Pizzeria pizzeria) {	// todo: va in testuale
 		try {
 			System.out.print(TextualPrintServices.colorSystemOut("Inserisci il nome dell'ingrediente da rimuovere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
