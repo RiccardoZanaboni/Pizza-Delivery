@@ -1,7 +1,7 @@
 package database;
 
 import javafx.scene.paint.Color;
-import services.TextualPrintServices;
+import services.TextualColorServices;
 
 import java.sql.*;
 
@@ -13,7 +13,7 @@ public class CustomerDB {
             return true;
         } catch (NumberFormatException nfe) {
             String err = "\nErrore nell'inserimento dei dati utente. Riprovare:";
-            System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+            System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
             return false;
         }
     }

@@ -25,8 +25,8 @@ import java.util.ArrayList;
  * OrderPage1 è la pagina di ordinazione che consente di visualizzare il menu,
  * selezionando numero e tipo delle pizze desiderate, oltre ad eventuali modifiche.
  *
- * Vi si accede tramite il bottone "Nuovo Ordine" in MenuPage oppure "Indietro" in OrderPage2.
- * Cliccando "Indietro", l'ordine viene annullato e si torna a MenuPage.
+ * Vi si accede tramite il bottone "Nuovo Ordine" in HomePage oppure "Indietro" in OrderPage2.
+ * Cliccando "Indietro", l'ordine viene annullato e si torna a HomePage.
  * Cliccando "Avanti", si salvano i dati e si accede alla pagina OrderPage2.
  */
 
@@ -206,8 +206,8 @@ public class OrderPage1 {
         backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
-            MenuPage menuPage = new MenuPage();
-            menuPage.display(window, pizzeria, customer);
+            HomePage homePage = new HomePage();
+            homePage.display(window, pizzeria, customer);
         });
         return backButton;
     }

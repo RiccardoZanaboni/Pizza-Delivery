@@ -1,8 +1,7 @@
 package graphicElements.customerSidePages.loginPages;
 
 import database.CustomerDB;
-import graphicElements.customerSidePages.loginPages.LoginAccountPage;
-import graphicElements.customerSidePages.newOrder.MenuPage;
+import graphicElements.customerSidePages.newOrder.HomePage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,6 +17,7 @@ import pizzeria.Customer;
 import database.Database;
 import pizzeria.Pizzeria;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
+import services.PizzeriaServices;
 
 public class NewAccountPage {
 	public void display(Stage window, Pizzeria pizzeria) {
@@ -64,8 +64,8 @@ public class NewAccountPage {
 		Button signUpButton = new Button("Registrati");
 		signUpButton.setMinSize(100, 50);
 		signUpButton.setOnAction(e->{
-			switch(pizzeria.canCreateAccount(mailInput.getText(),nameInput.getText(),passwordInput.getText(),passwordInput2.getText())){
-				case "OK":
+			switch(PizzeriaServices.canCreateAccount(mailInput.getText(),nameInput.getText(),passwordInput.getText(),passwordInput2.getText())){
+				case OK:
 					SendJavaMail newMail = new SendJavaMail();
 					Boolean isCorrectAddress = false;
 					try{
@@ -76,21 +76,21 @@ public class NewAccountPage {
 						insertErrorLabel.setText("Indirizzo e-mail inesistente");
 					} else {
 						CustomerDB.putCustomer(nameInput.getText().toUpperCase(), passwordInput.getText(), mailInput.getText());
-						MenuPage menuPage = new MenuPage();
+						HomePage homePage = new HomePage();
 						Customer customer = new Customer(nameInput.getText().toUpperCase(), passwordInput.getText());
 						customer.setLoggedIn(true);
-						menuPage.display(window, pizzeria, customer);
+						homePage.display(window, pizzeria, customer);
 					}
 					break;
-				case "SHORT":
+				case SHORT:
 					insertErrorLabel.setTextFill(Color.DARKRED);
 					insertErrorLabel.setText("Username o password troppo brevi");
 					break;
-				case "EXISTING":
+				case EXISTING:
 					insertErrorLabel.setTextFill(Color.DARKRED);
 					insertErrorLabel.setText("Utente già registrato");
 					break;
-				case "DIFFERENT":
+				case DIFFERENT:
 					insertErrorLabel.setTextFill(Color.DARKRED);
 					insertErrorLabel.setText("Password non coincidente");
 					break;
@@ -120,7 +120,7 @@ public class NewAccountPage {
 
 		Scene scene = new Scene(layout, 880, 600);
 		window.setScene(scene);
-		scene.getStylesheets().addAll(this.getClass().getResource("cssStyle/loginPageStyle.css").toExternalForm());
+		scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/loginPageStyle.css").toExternalForm());
 		window.show();
 	}
 

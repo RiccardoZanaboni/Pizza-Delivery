@@ -1,5 +1,6 @@
 package graphicElements.pizzeriaSidePages;
 
+import graphicElements.customerSidePages.newOrder.OrderPage3;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -64,7 +65,7 @@ public class PizzeriaOrdersPage {
 		//hBox.setAlignment(Pos.CENTER);
 
 		GridPane gridPane;
-		gridPane = order.graphRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels);
+		gridPane = OrderPage3.graphicRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels,order);
 		gridPane.getColumnConstraints().add(new ColumnConstraints(80));
 		gridPane.getColumnConstraints().add(new ColumnConstraints(100));
 		gridPane.getColumnConstraints().add(new ColumnConstraints(500));

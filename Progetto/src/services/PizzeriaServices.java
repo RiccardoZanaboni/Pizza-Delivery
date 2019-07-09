@@ -1,11 +1,20 @@
 package services;
 
+import database.CustomerDB;
+import database.Database;
+import enums.AccountPossibilities;
+import enums.LoginPossibilities;
 import graphicAlerts.GenericAlert;
 import javafx.scene.paint.Color;
+import pizzeria.Customer;
 import pizzeria.Order;
+import pizzeria.Pizzeria;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -28,13 +37,13 @@ public class PizzeriaServices {
 					if(isGraphicRequest)
 						history.append(line.toUpperCase()).append("\n");
 					else
-						history.append(TextualPrintServices.colorSystemOut(line + "\n", Color.YELLOW, true, true));
+						history.append(TextualColorServices.colorSystemOut(line + "\n", Color.YELLOW, true, true));
 				} else history.append(line).append("\n");
 			}
 		} catch (FileNotFoundException fnfe){
 			String err = "Spiacenti: sezione History non disponibile.";
 			if(isGraphicRequest) GenericAlert.display(err);
-			else System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED,false,false));
+			else System.out.println(TextualColorServices.colorSystemOut(err, Color.RED,false,false));
 		}
 		return history.toString();
 	}
@@ -55,5 +64,59 @@ public class PizzeriaServices {
 		}
 		orders = sortedByValue;
 		return orders;
+	}
+
+	public static Order CustomerLastOrder(Customer customer, Pizzeria pizzeria) {
+		Order last = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date;
+		try {
+			date = sdf.parse("1970-01-01 00:00:00");
+			for (Order order : pizzeria.getOrders().values()) {
+				if (order.getCustomer().getUsername().equals(customer.getUsername())) {
+					if (order.getTime().getTime() > date.getTime()) {
+						last = order;
+						date = order.getTime();
+					}
+				}
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return last;
+	}
+
+	public static AccountPossibilities canCreateAccount(String mailAddress, String newUser, String newPsw, String confPsw) {
+		if(newPsw.equals(confPsw)){
+			if(newUser.length() > 2 && newPsw.length() > 2) {
+				/* se si registra correttamente, va bene */
+				try {
+					if (CustomerDB.getCustomer(newUser.toUpperCase(),newPsw) || Database.checkMail(mailAddress))
+						return AccountPossibilities.EXISTING;
+					else
+						return AccountPossibilities.OK;
+				} catch (SQLException e) {
+					return AccountPossibilities.OK;	// è sicuro ???????????????
+				}
+			} else
+				/* password troppo breve */
+				return AccountPossibilities.SHORT;
+		} else {
+			/* se la password non viene confermata correttamente */
+			return AccountPossibilities.DIFFERENT;
+		}
+	}
+
+	public static LoginPossibilities checkLogin(Pizzeria pizzeria, String user, String psw) throws SQLException {
+		if(user.equals(pizzeria.getUserPizzeria()) && psw.equals(pizzeria.getPswPizzeria())){
+			/* se è la pizzeria, allora accede come tale */
+			return LoginPossibilities.PIZZERIA;
+		} else if (CustomerDB.getCustomer(user,psw)){
+			/* se è un utente identificato, accede come tale */
+			return LoginPossibilities.OK;
+		} else {
+			/* se la combinazione utente-password è errata */
+			return LoginPossibilities.NO;
+		}
 	}
 }

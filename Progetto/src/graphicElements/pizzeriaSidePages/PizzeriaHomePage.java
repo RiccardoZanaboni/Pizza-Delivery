@@ -1,5 +1,6 @@
 package graphicElements.pizzeriaSidePages;
 
+import graphicElements.customerSidePages.loginPages.LoginAccountPage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,7 +26,8 @@ public class PizzeriaHomePage {
         logoutButton.setGraphic(imageView1);
         //logoutButton.setMinSize(100, 50);
         logoutButton.setOnAction(e->{
-            window.close();
+            LoginAccountPage loginAccountPage = new LoginAccountPage();
+            loginAccountPage.display(window,pizzeria);
         });
         HBox hBox=new HBox(10);
         hBox.getChildren().addAll(label,logoutButton);
@@ -48,20 +50,10 @@ public class PizzeriaHomePage {
             pizzeriaMenuPage.display(pizzeria, window);
         });
 
-        Button manageDeployeesButton = new Button("Gestisci personale");
-        manageDeployeesButton.prefWidthProperty().bind(window.widthProperty());
-        manageDeployeesButton.prefHeightProperty().bind(window.heightProperty());
-
-        Button altroButton = new Button("Altro");
-        altroButton.prefWidthProperty().bind(window.widthProperty());
-        altroButton.prefHeightProperty().bind(window.heightProperty());
-
         GridPane gridPane = new GridPane();
-        gridPane.getChildren().addAll(visualizeOrdersButton, manageDeployeesButton, manageMenuButton, altroButton);
+        gridPane.getChildren().addAll(visualizeOrdersButton, manageMenuButton);
         GridPane.setConstraints(visualizeOrdersButton, 0, 0);
-        GridPane.setConstraints(manageDeployeesButton, 1, 0);
-        GridPane.setConstraints(manageMenuButton, 0, 1);
-        GridPane.setConstraints(altroButton, 1, 1);
+        GridPane.setConstraints(manageMenuButton, 1, 0);
 
         VBox layout = new VBox(20);
         layout.getChildren().addAll(hBox, gridPane);

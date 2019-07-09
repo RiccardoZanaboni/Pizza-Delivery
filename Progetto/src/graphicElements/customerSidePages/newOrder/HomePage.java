@@ -17,6 +17,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.*;
+import enums.OpeningPossibilities;
+import services.PizzeriaServices;
+import services.TimeServices;
 
 
 /**
@@ -24,7 +27,7 @@ import pizzeria.*;
  * di utilizzo del programma. Si attiva al "run" di GraphicInterface.
  */
 
-public class MenuPage {
+public class HomePage {
 	private Scene scene1;
 
 	public void display(Stage window, Pizzeria pizzeria, Customer customer) {
@@ -69,16 +72,16 @@ public class MenuPage {
 		Button makeOrderButton = new Button("Nuovo Ordine");
         makeOrderButton.prefWidthProperty().bind(window.widthProperty());
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
-        String checkOpen = pizzeria.checkTimeOrder();
+        OpeningPossibilities checkOpen = TimeServices.checkTimeOrder(pizzeria);
 		makeOrderButton.setOnAction(e -> {
 			pizzeria.updatePizzeriaToday();
 			switch (checkOpen) {
-				case "OPEN":        // pizzeria aperta
+				case OPEN:        // pizzeria aperta
 					Order order = pizzeria.initializeNewOrder();
 					OrderPage1 orderPage1 = new OrderPage1();
 					orderPage1.display(window, order, pizzeria, customer);
 					break;
-				case "CLOSING":
+				case CLOSING:
 					ClosedPizzeriaAlert.display(true);        // pizzeria in chiusura
 					break;
 				default:
@@ -103,7 +106,7 @@ public class MenuPage {
         recapOrdiniButton.setOnAction(event -> {
 			OrderPage3 last = new OrderPage3();
 			//TODO: bisogna fare in modo di passare questa scene1 al posto di "null"
-			last.display(false, window, pizzeria.CustomerLastOrder(customer), pizzeria, scene1, customer);
+			last.display(false, window, PizzeriaServices.CustomerLastOrder(customer,pizzeria), pizzeria, scene1, customer);
 		});
 
         Button altroButton = new Button("Il tuo profilo");

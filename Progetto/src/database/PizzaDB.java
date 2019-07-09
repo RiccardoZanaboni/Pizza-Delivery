@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
 import services.SettleStringsServices;
-import services.TextualPrintServices;
+import services.TextualColorServices;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -74,14 +74,14 @@ public class PizzaDB {
 	 * Consente alla pizzeria di aggiungere una pizza al Menu
 	 * che è salvato sul Database.
 	 */
-	public static void PutPizza(Pizzeria pizzeria){
+	public static void putPizza(Pizzeria pizzeria){
 		HashMap<String,String> ingredMap = new HashMap<>();
 		try {
-			System.out.println(TextualPrintServices.colorSystemOut("Inserire il nome della pizza da aggiungere:\t", Color.YELLOW, false, false));
+			System.out.println(TextualColorServices.colorSystemOut("Inserire il nome della pizza da aggiungere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
 			String descriz;
 			StringBuilder descrizCorretta = new StringBuilder();
-			String adding = TextualPrintServices.colorSystemOut("Inserire gli ingredienti da aggiungere, separati da virgola, poi invio:", Color.YELLOW, false, false);
+			String adding = TextualColorServices.colorSystemOut("Inserire gli ingredienti da aggiungere, separati da virgola, poi invio:", Color.YELLOW, false, false);
 			System.out.println(adding);
 			System.out.println(TextualInterface.possibleAddictions(pizzeria));
 			descriz = scan.nextLine().toUpperCase();
@@ -98,7 +98,7 @@ public class PizzaDB {
 			} else {
 				descriz = "ERR";
 			}
-			System.out.print(TextualPrintServices.colorSystemOut("Inserire il prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
+			System.out.print(TextualColorServices.colorSystemOut("Inserire il prezzo della nuova pizza (usa il punto per i decimali):\t", Color.YELLOW, false, false));
 			double prezzo = Double.parseDouble(scan.nextLine());
 
 			if(name.length() == 0 || pizzeria.getMenu().containsKey(name) || descriz.equals("ERR") || prezzo <= 0){
@@ -107,33 +107,33 @@ public class PizzaDB {
 			if (putPizza(name, descriz, prezzo)) {
 				pizzeria.getMenu().put(name, new Pizza(name,ingredMap,prezzo));
 				String ok = name + " (" + descriz.toLowerCase() + ") aggiunta correttamente.";
-				System.out.println(TextualPrintServices.colorSystemOut(ok,Color.YELLOW,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(ok,Color.YELLOW,false,false));
 			} else {
 				throw new SQLException();
 			}
 		} catch (TryAgainExc | NumberFormatException e) {
 			String err = "Errore nell'inserimento dei dati della pizza.";
-			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+			System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 		} catch (SQLException sqle) {
 			String err = "Errore nell'inserimento della pizza nel Database.";
-			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+			System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 		}
 	}
 
 	public static void removePizzaText(Pizzeria pizzeria) {
 		try {
-			System.out.print(TextualPrintServices.colorSystemOut("Inserisci il nome della pizza da rimuovere:\t", Color.YELLOW, false, false));
+			System.out.print(TextualColorServices.colorSystemOut("Inserisci il nome della pizza da rimuovere:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();
 			if (!removePizza(name))
 				throw new SQLException();
 			else{
 				pizzeria.getMenu().remove(name);
 				String ok = name + " rimossa correttamente.";
-				System.out.println(TextualPrintServices.colorSystemOut(ok,Color.YELLOW,false,false));
+				System.out.println(TextualColorServices.colorSystemOut(ok,Color.YELLOW,false,false));
 			}
 		} catch (SQLException sqle) {
 			String err = "Errore nella rimozione della pizza dal Database.";
-			System.out.println(TextualPrintServices.colorSystemOut(err, Color.RED, false, false));
+			System.out.println(TextualColorServices.colorSystemOut(err, Color.RED, false, false));
 		}
 	}
 

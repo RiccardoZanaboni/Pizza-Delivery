@@ -24,11 +24,15 @@ public class DeliveryMan {
     }
 
     /** assegna una consegna al fattorino in un certo orario. */
-    void assignDelivery(int i) {
+    public  void assignDelivery(int i) {
         this.deliveryManTimes[i].insertOrder();
     }
 
-    TimeBoxDeliveryMan[] getDeliveryManTimes() {
+    public TimeBoxDeliveryMan[] getDeliveryManTimes() {
         return deliveryManTimes;
+    }
+
+    public String getName() {
+        return name;
     }
 }

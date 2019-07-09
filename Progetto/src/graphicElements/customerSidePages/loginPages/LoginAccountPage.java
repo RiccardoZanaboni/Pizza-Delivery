@@ -1,6 +1,6 @@
 package graphicElements.customerSidePages.loginPages;
 
-import graphicElements.customerSidePages.newOrder.MenuPage;
+import graphicElements.customerSidePages.newOrder.HomePage;
 import graphicElements.pizzeriaSidePages.PizzeriaHomePage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Pizzeria;
+import services.PizzeriaServices;
 
 import java.sql.SQLException;
 
@@ -48,17 +49,16 @@ public class LoginAccountPage {
 			try {
 				String user = nameInput.getText();
 				String psw = passwordInput.getText();
-				switch(pizzeria.checkLogin(user.toUpperCase(),psw.toUpperCase())){
-					case "OK":
-						MenuPage menuPage = new MenuPage();
+				switch(PizzeriaServices.checkLogin(pizzeria, user.toUpperCase(),psw.toUpperCase())){
+					case OK:
+						HomePage homePage = new HomePage();
 						Customer customer = new Customer(user.toUpperCase(), psw.toUpperCase());
 						customer.setLoggedIn(true);     //TODO: da mettere anche in Textual
-						menuPage.display(window, pizzeria, customer);
+						homePage.display(window, pizzeria, customer);
 						break;
-					case "P":
+					case PIZZERIA:
 						PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
-						Stage window1 = new Stage();
-						pizzeriaHomePage.display(pizzeria, window1);
+						pizzeriaHomePage.display(pizzeria, window);
 						break;
 					default:
 						insertErrorLabel.setTextFill(Color.DARKRED);

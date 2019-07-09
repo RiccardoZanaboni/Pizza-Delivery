@@ -6,13 +6,15 @@ import javafx.scene.paint.Color;
 import pizzeria.*;
 import services.PizzeriaServices;
 import services.SettleStringsServices;
-import services.TextualPrintServices;
+import services.TextualColorServices;
 
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
+
+import static database.CustomerDB.getInfoCustomerFromMailAddress;
 
 public class Database {
 	private static Connection con;
@@ -31,7 +33,7 @@ public class Database {
 
 	/** Chiude il programma, se la connessione alla rete viene a mancare. */
 	public static void missingConnection(){
-		System.out.println(TextualPrintServices.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
+		System.out.println(TextualColorServices.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
 		System.exit(1);
 	}
 
@@ -119,5 +121,9 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static boolean checkMail(String mail){
+		return (getInfoCustomerFromMailAddress(mail,1) != null);
 	}
 }
