@@ -197,7 +197,7 @@ public class Pizzeria {
 		return order;
 	}
 
-	/** Su interfaces.TextInterface dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria. */
+	/** Su interfaces.TextualInterface dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria. */
 	public String helloThere(){
 		String opTime = TimeServices.timeStamp(getOpeningToday().getHours(), getOpeningToday().getMinutes());
 		String clTime = TimeServices.timeStamp(getClosingToday().getHours(), getClosingToday().getMinutes());
@@ -216,7 +216,7 @@ public class Pizzeria {
 		return hello.toString();
 	}
 
-	/** Da interfaces.TextInterface, permette di stampare a video il menu completo. */
+	/** Da interfaces.TextualInterface, permette di stampare a video il menu completo. */
 	public String printMenu() {
 		String line = TextualPrintServices.getLine();
 		TextualPrintServices.paintMenuString();
@@ -318,7 +318,7 @@ public class Pizzeria {
 		return this.ovens;
 	}
 
-	/** In interfaces.TextInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
+	/** In interfaces.TextualInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
 	public String possibleAddictions() {
 		StringBuilder possibiliIngr = new StringBuilder();
 		int i = 0;

@@ -109,7 +109,7 @@ public class OrderPage3 {
 		});
 		Scene scene4;
 		scene4 = new Scene(layout, 600, 800);
-		scene4.getStylesheets().addAll(this.getClass().getResource("cssStyle/orderPage2.css").toExternalForm());	//TODO: ???
+		scene4.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage2.css").toExternalForm());	//TODO: ???
 		window.setScene(scene4);
 	}
 

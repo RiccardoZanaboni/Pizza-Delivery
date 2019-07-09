@@ -1,19 +1,16 @@
 package database;
 
-import interfaces.TextInterface;
+import interfaces.TextualInterface;
 import exceptions.TryAgainExc;
 import javafx.scene.paint.Color;
 import pizzeria.*;
 import services.PizzeriaServices;
 import services.SettleStringsServices;
 import services.TextualPrintServices;
-import services.TimeServices;
 
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.Date;
 
@@ -166,7 +163,7 @@ public class Database {
 			StringBuilder descrizCorretta = new StringBuilder();
 			String adding = TextualPrintServices.colorSystemOut("Inserire gli ingredienti da aggiungere, separati da virgola, poi invio:", Color.YELLOW, false, false);
 			System.out.println(adding);
-			System.out.println(TextInterface.possibleAddictions(pizzeria));
+			System.out.println(TextualInterface.possibleAddictions(pizzeria));
 			descriz = scan.nextLine().toUpperCase();
 			StringTokenizer st = new StringTokenizer(descriz,",");
 			while (st.hasMoreTokens()) {
@@ -407,85 +404,6 @@ public class Database {
 		try {
 			preparedStatement = con.prepareStatement(requestSql);
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void main(String[] args) {
-		openDatabase();
-		Pizzeria wolf = new Pizzeria("wolf","via bolzano 10", LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES),
-				// orari di chiusura, da domenica a sabato
-				LocalTime.MIN.plus(TimeServices.getMinutes(23,30), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(23,30), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(23,30), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(23,30), ChronoUnit.MINUTES),
-				LocalTime.MIN.plus(TimeServices.getMinutes(23,30), ChronoUnit.MINUTES)
-		);
-		int i = 0;
-		int j = 0;
-		int k=0;
-		PreparedStatement preparedStatement = null;
-        /*try {
-            for (i = 15; i < 120; i += 5) {
-                if(j>9){
-                    preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `" + j + ":" + i + "` INT NOT NULL DEFAULT 16  AFTER `" + j + ":" + (i-5));
-                    preparedStatement.execute();
-                    if (i==55){
-                        k+=1;
-                        if(k==24){
-                            break;
-                        }
-                        i=10;
-                        j+=1;
-                        preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `" + j + ":00` INT NOT NULL DEFAULT 16 AFTER `" + (j - 1) + ":55");
-                        preparedStatement.execute();
-                        preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `" + j + ":05` INT NOT NULL DEFAULT 16  AFTER `" + j + ":00");
-                        preparedStatement.execute();
-                        preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `" + j + ":10` INT NOT NULL DEFAULT 16 AFTER `" + j + ":05");
-                        preparedStatement.execute();
-                    }
-                }else {
-                    preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `0" + j + ":" + i + "` INT NOT NULL DEFAULT 16 AFTER `0" + j + ":" + (i - 5));
-                    preparedStatement.execute();
-                    if (i == 55) {
-                        k+=1;
-                        i = 10;
-                        j += 1;
-                        if(j==10) {
-                            preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `" + j + ":00` INT NOT NULL DEFAULT 16 AFTER `0" + (j - 1) + ":55");
-                            preparedStatement.execute();
-                            preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `" + j + ":05` INT NOT NULL DEFAULT 16 AFTER `" + j + ":00");
-                            preparedStatement.execute();
-                            preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `" + j + ":10` INT NOT NULL DEFAULT 16 AFTER `" + j + ":05");
-                            preparedStatement.execute();
-                        }else {
-                            preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `0" + j + ":00` INT NOT NULL DEFAULT 16 AFTER `0" + (j - 1) + ":55");
-                            preparedStatement.execute();
-                            preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `0" + j + ":05` INT NOT NULL DEFAULT 16 AFTER `0" + j + ":00");
-                            preparedStatement.execute();
-                            preparedStatement = con.prepareStatement("ALTER TABLE `sql7293749`.`Oven` ADD COLUMN `0" + j + ":10` INT NOT NULL DEFAULT 16 AFTER `0" + j + ":05");
-                            preparedStatement.execute();
-                        }
-                    }
-                }
-            }*/try{
-			String s = "insert into sql7293749.Oven  values (16";
-			for(i=0;i<286;i++) {
-				s+=",16";
-				if(i==285){
-					s+=")";
-					con.prepareStatement(s).execute();
-				}
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

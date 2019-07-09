@@ -103,7 +103,7 @@ public class LoginAccountPage {
 
 		Scene scene = new Scene(layout, 880, 600);
 		window.setScene(scene);
-		scene.getStylesheets().addAll(this.getClass().getResource("cssStyle/loginPageStyle.css").toExternalForm());
+		scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/loginPageStyle.css").toExternalForm());
 		window.show();
 	}
 }

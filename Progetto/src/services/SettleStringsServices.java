@@ -4,7 +4,7 @@ import java.util.StringTokenizer;
 
 public class SettleStringsServices {
 
-	/** In interfaces.TextInterface, gestisce eventuali errori di inserimento da tastiera (spazi/virgole) degli ingredienti. */
+	/** In interfaces.TextualInterface, gestisce eventuali errori di inserimento da tastiera (spazi/virgole) degli ingredienti. */
 	public static String arrangeIngredientString(StringTokenizer st){
 		String ingred = st.nextToken(",");
 		while (ingred.startsWith(" "))		// elimina tutti gli spazi prima della stringa

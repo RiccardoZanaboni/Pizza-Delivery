@@ -140,7 +140,7 @@ public class MenuPage {
         });
 
 		scene1 = new Scene(layout,800, 600);
-		scene1.getStylesheets().addAll(this.getClass().getResource("cssStyle/menuStyle.css").toExternalForm());
+		scene1.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/menuStyle.css").toExternalForm());
 		//window.setResizable(false);
 		window.setScene(scene1);
 		window.setTitle("Wolf of Pizza");

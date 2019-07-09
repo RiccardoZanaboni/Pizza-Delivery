@@ -67,7 +67,7 @@ public class WhoWeArePage {
         Scene scene5 = new Scene(layout);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
-        scene5.getStylesheets().addAll(this.getClass().getResource("cssStyle/orderPage2.css").toExternalForm());
+        scene5.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage2.css").toExternalForm());
         //window.setResizable(false);
         window.setScene(scene5);
         window.setTitle("Wolf of Pizza");

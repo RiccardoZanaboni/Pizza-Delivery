@@ -31,7 +31,7 @@ import java.util.*;
 
 @SuppressWarnings("deprecation")
 
-public class TextInterface {
+public class TextualInterface {
 
 	/**
 	 * 16 parametri: nome, indirizzo, 7 orari di apertura (da domenica a sabato),
@@ -46,7 +46,7 @@ public class TextInterface {
 	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
 	 * */
 	public Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
-			// orari di apertura, da domenica a sabato
+			/* orari di apertura, da domenica a sabato */
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
@@ -54,7 +54,7 @@ public class TextInterface {
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			// orari di chiusura, da domenica a sabato
+			/* orari di chiusura, da domenica a sabato */
 			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
@@ -65,7 +65,7 @@ public class TextInterface {
 	);
 	private Scanner scan = new Scanner(System.in);
 
-	/** Al lancio di interfaces.TextInterface, inizia un nuovo ordine solo se richiesto. */
+	/** Al lancio di interfaces.TextualInterface, inizia un nuovo ordine solo se richiesto. */
 	private void whatDoYouWant(Customer customer) throws SQLException {
 		String risposta;
 		String isOpen = wolf.checkTimeOrder();
@@ -81,7 +81,7 @@ public class TextInterface {
 
 			/* se la pizzeria è ancora aperta, ma non ci sono i tempi per eseguire un nuovo ordine */
 			case "CLOSING":
-				String chiusura = "\nLa pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
+				String chiusura = "\nAttenzione: la pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
 				System.out.println(TextualPrintServices.colorSystemOut(chiusura, Color.RED, false, false));
 				System.out.println(TextualWhatToDo.whatDoYouWantPossibilities(false));
 				System.out.print(TextualPrintServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
@@ -91,7 +91,7 @@ public class TextInterface {
 
 			/* se la pizzeria per oggi ha terminato il turno lavorativo, quindi è chiusa */
 			case "CLOSED":
-				String chiusa = "\nLa pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
+				String chiusa = "\nAttenzione: la pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
 				System.out.println(TextualPrintServices.colorSystemOut(chiusa, Color.RED, false, false));
 				System.out.println(TextualWhatToDo.whatDoYouWantPossibilities(false));
 				System.out.print(TextualPrintServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
@@ -214,7 +214,7 @@ public class TextInterface {
 			}
 			if (TimeServices.checkValidTime(orarioScelto)) {
 				d = TimeServices.stringToDate(orarioScelto);
-				assert d != null : "Error"; // se condizione non è verificata, il programma viene terminato
+				assert d != null : "Error"; // se la condizione non è verificata, il programma viene terminato
 				int ora = d.getHours();
 				int minuti = d.getMinutes();
 				if (!wolf.isOpen(d)) {
@@ -719,7 +719,7 @@ public class TextInterface {
 	}
 
 	public static void main(String[] args) {
-		TextInterface textInterface = new TextInterface();
+		TextualInterface textInterface = new TextualInterface();
 		System.out.println(textInterface.wolf.helloThere());
 		try {
             textInterface.askAccess();

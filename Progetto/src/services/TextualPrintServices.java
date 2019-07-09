@@ -77,7 +77,7 @@ public class TextualPrintServices {
 		return cString.toString();
 	}
 
-	/** Consente di disegnare, in interfaces.TextInterface, l'intestazione del menu. */
+	/** Consente di disegnare, in interfaces.TextualInterface, l'intestazione del menu. */
 	public static void paintMenuString() {
 		String l1 = "__________________________________________";
 		l1 = colorSystemOut(l1,Color.WHITE,true,false);
@@ -103,7 +103,7 @@ public class TextualPrintServices {
 				"\n"+tab+v+colorTab+c+colorTab+v+"\n"+tab+v+colorTab+d+colorTab+v+"\n"+tab+v+colorTab+e+colorTab+v+"\n"+tab+l2);
 	}
 
-	/** Restituisce una linea, utile per la stampa in interfaces.TextInterface. */
+	/** Restituisce una linea, utile per la stampa in interfaces.TextualInterface. */
 	public static String getLine(){
 		return "\n---------------------------------------------------------------------------------------------------\n";
 	}

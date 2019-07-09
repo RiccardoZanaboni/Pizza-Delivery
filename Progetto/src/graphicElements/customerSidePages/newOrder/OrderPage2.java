@@ -133,7 +133,7 @@ public class OrderPage2 {
         });
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
-        scene3.getStylesheets().add(this.getClass().getResource("cssStyle/orderPage2.css").toExternalForm());
+        scene3.getStylesheets().add(this.getClass().getResource("/graphicElements/cssStyle/orderPage2.css").toExternalForm());
         window.setScene(scene3);
 	}
 

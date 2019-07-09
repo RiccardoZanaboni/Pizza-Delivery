@@ -48,7 +48,7 @@ public class OrderPage1 {
         ArrayList<VBox> vBoxNomeDescr = new ArrayList<>();
         ArrayList<HBox> hBoxPrezzoBottoni = new ArrayList<>();
 
-        Image image = new Image("graphicElements/images/shopping_cart.png");
+        Image image = new Image("/graphicElements/images/shopping_cart.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);
@@ -121,7 +121,7 @@ public class OrderPage1 {
 
 
         scene2 = new Scene(layout, 800, 600);
-        scene2.getStylesheets().addAll(this.getClass().getResource("cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
+        scene2.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
         window.setScene(scene2);
         window.show();
     }

@@ -42,7 +42,7 @@ public class GraphicInterface extends Application {
 	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
 	 * */
 	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia",
-			// orari di apertura, da domenica a sabato   //
+			/* orari di apertura, da domenica a sabato */
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
@@ -50,7 +50,7 @@ public class GraphicInterface extends Application {
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES),
-			// orari di chiusura, da domenica a sabato
+			/* orari di chiusura, da domenica a sabato */
 			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
 			LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES),
@@ -99,6 +99,5 @@ public class GraphicInterface extends Application {
 			LoginAccountPage loginAccountPage = new LoginAccountPage();
 			loginAccountPage.display(window, wolf);
 		});
-
 	}
 }

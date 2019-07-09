@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 public class TextualWhatToDo {
 
-	/** In interfaces.TextInterface.whatDoYouWant(), chiede quali siano le intenzioni del cliente per procedere. */
+	/** In interfaces.TextualInterface.whatDoYouWant(), chiede quali siano le intenzioni del cliente per procedere. */
 	public static String whatDoYouWantPossibilities(boolean isOpen){		//TODO: va in testuale!
 		String ecco = TextualPrintServices.colorSystemOut("\nEcco che cosa puoi fare:\n", Color.YELLOW,false,false);
 		String con = "\t- con '";
@@ -35,7 +35,7 @@ public class TextualWhatToDo {
 		return string.toString();
 	}
 
-	/** In interfaces.TextInterface.whatDoYouWant(), chiede quali siano le intenzioni della pizzeria, per procedere. */
+	/** In interfaces.TextualInterface.whatDoYouWant(), chiede quali siano le intenzioni della pizzeria, per procedere. */
 	public static String whatDoesPizzeriaWantPossibilities(){
 		String intro = TextualPrintServices.colorSystemOut("\nPizzeria, ecco che cosa puoi fare:\n",Color.YELLOW,false,false);
 		String con = "\t- con '";

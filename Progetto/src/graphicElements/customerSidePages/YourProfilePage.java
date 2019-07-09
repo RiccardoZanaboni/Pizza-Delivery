@@ -89,4 +89,6 @@ public class YourProfilePage {
         window.setScene(scene);
         window.show();
     }
+
+    //TODO: manca CSS
 }

@@ -60,7 +60,7 @@ public class Order implements Comparable<Order> {
         }
     }
 
-	/** In interfaces.TextInterface, stampa a video il riepilogo dell'ordine. */
+	/** In interfaces.TextualInterface, stampa a video il riepilogo dell'ordine. */
 	public String recapOrder(){		// todo: va in testuale?
 		String line = TextualPrintServices.getLine();
 		StringBuilder recap = new StringBuilder();
