@@ -1,5 +1,8 @@
 package services;
 
+import database.Database;
+import enums.AccountPossibilities;
+import enums.LoginPossibilities;
 import graphicAlerts.GenericAlert;
 import javafx.scene.paint.Color;
 import pizzeria.Customer;
@@ -8,6 +11,7 @@ import pizzeria.Pizzeria;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -61,7 +65,6 @@ public class PizzeriaServices {
 		return orders;
 	}
 
-
 	public static Order CustomerLastOrder(Customer customer, Pizzeria pizzeria) {
 		Order last = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -80,5 +83,39 @@ public class PizzeriaServices {
 			e.printStackTrace();
 		}
 		return last;
+	}
+
+	public static AccountPossibilities canCreateAccount(String mailAddress, String newUser, String newPsw, String confPsw) {
+		if(newPsw.equals(confPsw)){
+			if(newUser.length() > 2 && newPsw.length() > 2) {
+				/* se si registra correttamente, va bene */
+				try {
+					if (Database.getCustomers(newUser.toUpperCase(),newPsw) || Database.checkMail(mailAddress))
+						return AccountPossibilities.EXISTING;
+					else
+						return AccountPossibilities.OK;
+				} catch (SQLException e) {
+					return AccountPossibilities.OK;	// è sicuro ???????????????
+				}
+			} else
+				/* password troppo breve */
+				return AccountPossibilities.SHORT;
+		} else {
+			/* se la password non viene confermata correttamente */
+			return AccountPossibilities.DIFFERENT;
+		}
+	}
+
+	public static LoginPossibilities checkLogin(Pizzeria pizzeria, String user, String psw) throws SQLException {
+		if(user.equals(pizzeria.getUserPizzeria()) && psw.equals(pizzeria.getPswPizzeria())){
+			/* se è la pizzeria, allora accede come tale */
+			return LoginPossibilities.PIZZERIA;
+		} else if (Database.getCustomers(user,psw)){
+			/* se è un utente identificato, accede come tale */
+			return LoginPossibilities.OK;
+		} else {
+			/* se la combinazione utente-password è errata */
+			return LoginPossibilities.NO;
+		}
 	}
 }

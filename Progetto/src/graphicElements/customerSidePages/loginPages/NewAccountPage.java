@@ -16,6 +16,7 @@ import pizzeria.Customer;
 import database.Database;
 import pizzeria.Pizzeria;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
+import services.PizzeriaServices;
 
 public class NewAccountPage {
 	public void display(Stage window, Pizzeria pizzeria) {
@@ -62,7 +63,7 @@ public class NewAccountPage {
 		Button signUpButton = new Button("Registrati");
 		signUpButton.setMinSize(100, 50);
 		signUpButton.setOnAction(e->{
-			switch(pizzeria.canCreateAccount(mailInput.getText(),nameInput.getText(),passwordInput.getText(),passwordInput2.getText())){
+			switch(PizzeriaServices.canCreateAccount(mailInput.getText(),nameInput.getText(),passwordInput.getText(),passwordInput2.getText())){
 				case OK:
 					SendJavaMail newMail = new SendJavaMail();
 					Boolean isCorrectAddress = false;

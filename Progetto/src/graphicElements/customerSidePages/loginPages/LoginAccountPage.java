@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Pizzeria;
+import services.PizzeriaServices;
 
 import java.sql.SQLException;
 
@@ -48,7 +49,7 @@ public class LoginAccountPage {
 			try {
 				String user = nameInput.getText();
 				String psw = passwordInput.getText();
-				switch(pizzeria.checkLogin(user.toUpperCase(),psw.toUpperCase())){
+				switch(PizzeriaServices.checkLogin(pizzeria, user.toUpperCase(),psw.toUpperCase())){
 					case OK:
 						HomePage homePage = new HomePage();
 						Customer customer = new Customer(user.toUpperCase(), psw.toUpperCase());

@@ -69,12 +69,12 @@ public class TextualInterface {
 	/** Al lancio di interfaces.TextualInterface, inizia un nuovo ordine solo se richiesto. */
 	private void whatDoYouWant(Customer customer) throws SQLException {
 		String risposta;
-		OpeningPossibilities isOpen = wolf.checkTimeOrder();
+		OpeningPossibilities isOpen = TimeServices.checkTimeOrder(wolf);
 		switch (isOpen) {
 
 			/* se la pizzeria è aperta */
 			case OPEN:
-				System.out.println(TextualPossibilitiesServices.whatDoYouWantPossibilities(true));
+				System.out.println(TextualServices.whatDoYouWantPossibilities(true));
 				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				whatDoYouWantAnswers(true,risposta,customer);
@@ -84,7 +84,7 @@ public class TextualInterface {
 			case CLOSING:
 				String chiusura = "\nAttenzione: la pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
 				System.out.println(TextualColorServices.colorSystemOut(chiusura, Color.RED, false, false));
-				System.out.println(TextualPossibilitiesServices.whatDoYouWantPossibilities(false));
+				System.out.println(TextualServices.whatDoYouWantPossibilities(false));
 				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				whatDoYouWantAnswers(false,risposta,customer);
@@ -94,7 +94,7 @@ public class TextualInterface {
 			case CLOSE:
 				String chiusa = "\nAttenzione: la pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
 				System.out.println(TextualColorServices.colorSystemOut(chiusa, Color.RED, false, false));
-				System.out.println(TextualPossibilitiesServices.whatDoYouWantPossibilities(false));
+				System.out.println(TextualServices.whatDoYouWantPossibilities(false));
 				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				whatDoYouWantAnswers(false,risposta,customer);
@@ -502,7 +502,7 @@ public class TextualInterface {
 				String psw = scan.nextLine().toUpperCase();
 				String working1 = TextualColorServices.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working1);
-				switch(wolf.checkLogin(user,psw)){
+				switch(PizzeriaServices.checkLogin(wolf, user,psw)){
 					case OK:
 						Customer c = new Customer(user,psw);
 						System.out.println("\nBenvenuto: " + user);
@@ -533,7 +533,7 @@ public class TextualInterface {
 				String confPsw = scan.nextLine().toUpperCase();
 				String working2 = TextualColorServices.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working2);
-				switch(wolf.canCreateAccount(mail,newUser,newPsw,confPsw)) {
+				switch(PizzeriaServices.canCreateAccount(mail,newUser,newPsw,confPsw)) {
 					case OK:
 						SendJavaMail newMail = new SendJavaMail();
 						if(!newMail.welcomeMail(newUser,newPsw,mail)) {    // se indirizzo mail non valido
@@ -586,7 +586,7 @@ public class TextualInterface {
 
 	private void whatDoesPizzeriaWant() throws SQLException {
 		String risposta;
-		System.out.println(TextualPossibilitiesServices.whatDoesPizzeriaWantPossibilities());
+		System.out.println(TextualServices.whatDoesPizzeriaWantPossibilities());
 		System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 		risposta = scan.nextLine().toUpperCase();
 		switch (risposta){
@@ -601,7 +601,7 @@ public class TextualInterface {
 				whatDoesPizzeriaWant();
 				break;
 			case "M":
-				System.out.println(TextualPossibilitiesServices.textModifyMenuPossibilities());
+				System.out.println(TextualServices.textModifyMenuPossibilities());
 				System.out.print(TextualColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				howModifyMenuAnswer(risposta);

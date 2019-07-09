@@ -1,9 +1,7 @@
 package pizzeria;
 
 import database.Database;
-import enums.AccountPossibilities;
 import enums.LoginPossibilities;
-import enums.OpeningPossibilities;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -12,7 +10,6 @@ import java.util.*;
 import static database.Database.openDatabase;
 import static database.Database.setLastUpdate;
 import static services.TimeServices.getMinutes;
-import static services.TimeServices.getNowMinutes;
 
 @SuppressWarnings("deprecation")
 
@@ -211,7 +208,7 @@ public class Pizzeria {
 	/** Controlla che la pizzeria possa garantire la consegna di "tot" pizze all'orario "d",
 	 * in base alla disponibilità di forno e fattorini. */
 	public void updateOvenAndDeliveryMan(Date d, int tot, Order order) {
-		// PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI
+		/* PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI */
 		int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getAvailablePlaces();
 		if(disp < tot){
 			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].insertPizzas(disp);
@@ -231,53 +228,6 @@ public class Pizzeria {
 		return (postiDisponibiliQuestaInfornata + postiDisponibiliPrecedenteInfornata >= tot);
 	}
 
-	public LoginPossibilities checkLogin(String user, String psw) throws SQLException {
-		if(user.equals(this.userPizzeria) && psw.equals(this.pswPizzeria)){
-			/* se è la pizzeria, allora accede come tale */
-			return LoginPossibilities.PIZZERIA;
-		} else if (Database.getCustomers(user,psw)){
-			/* se è un utente identificato, accede come tale */
-			return LoginPossibilities.OK;
-		} else {
-			/* se la combinazione utente-password è errata */
-			return LoginPossibilities.NO;
-		}
-	}
-
-	/** Controlla, prima di un nuovo ordine, se sei ancora in tempo prima che la pizzeria chiuda. */
-	public OpeningPossibilities checkTimeOrder() {
-		int nowMin = getNowMinutes();
-		int openMin = getMinutes(getOpeningToday());
-		int closeMin = getMinutes(getClosingToday());
-		if(closeMin <= nowMin || openMin == closeMin)
-			return OpeningPossibilities.CLOSE;
-		if(closeMin - nowMin >= 0)// TODO: risistemare alla fine (mettere 20)!! Ho settato a 0 per poter lavorare anche alle 23:50!!!
-			return OpeningPossibilities.OPEN;
-		else
-			return OpeningPossibilities.CLOSING;
-	}
-
-	public AccountPossibilities canCreateAccount(String mailAddress, String newUser, String newPsw, String confPsw) {
-		if(newPsw.equals(confPsw)){
-			if(newUser.length() > 2 && newPsw.length() > 2) {
-				/* se si registra correttamente, va bene */
-				try {
-					if (Database.getCustomers(newUser.toUpperCase(),newPsw) || Database.checkMail(mailAddress))
-						return AccountPossibilities.EXISTING;
-					else
-						return AccountPossibilities.OK;
-				} catch (SQLException e) {
-					return AccountPossibilities.OK;	// è sicuro ???????????????
-				}
-			} else
-				/* password troppo breve */
-				return AccountPossibilities.SHORT;
-		} else {
-			/* se la password non viene confermata correttamente */
-			return AccountPossibilities.DIFFERENT;
-		}
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -290,12 +240,20 @@ public class Pizzeria {
 		return this.SUPPL_PRICE;
 	}
 
+	public String getUserPizzeria() {
+		return userPizzeria;
+	}
+
+	public String getPswPizzeria() {
+		return pswPizzeria;
+	}
+
 	public Oven[] getOvens() {
 		return this.ovens;
 	}
 
-	public DeliveryMan[] getDeliveryMen() {
-		return this.getDeliveryMen();
+	public ArrayList<DeliveryMan> getDeliveryMen() {
+		return this.deliveryMen;
 	}
 
 	public int getAvailablePlaces() {

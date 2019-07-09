@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import pizzeria.*;
 import enums.OpeningPossibilities;
 import services.PizzeriaServices;
+import services.TimeServices;
 
 
 /**
@@ -71,7 +72,7 @@ public class HomePage {
 		Button makeOrderButton = new Button("Nuovo Ordine");
         makeOrderButton.prefWidthProperty().bind(window.widthProperty());
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
-        OpeningPossibilities checkOpen = pizzeria.checkTimeOrder();
+        OpeningPossibilities checkOpen = TimeServices.checkTimeOrder(pizzeria);
 		makeOrderButton.setOnAction(e -> {
 			pizzeria.updatePizzeriaToday();
 			switch (checkOpen) {

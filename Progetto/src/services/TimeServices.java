@@ -1,5 +1,6 @@
 package services;
 
+import enums.OpeningPossibilities;
 import javafx.scene.paint.Color;
 import pizzeria.DeliveryMan;
 import pizzeria.Pizzeria;
@@ -145,5 +146,19 @@ public class TimeServices {
 		String dataStr = sdf.format(date);
 		dataStr += " " + timeStamp(date.getHours(),date.getMinutes());
 		return dataStr;
+	}
+
+	/** Controlla, prima di un nuovo ordine, se sei ancora in tempo prima che la pizzeria chiuda.
+	 * @param pizzeria*/
+	public static OpeningPossibilities checkTimeOrder(Pizzeria pizzeria) {
+		int nowMin = getNowMinutes();
+		int openMin = getMinutes(pizzeria.getOpeningToday());
+		int closeMin = getMinutes(pizzeria.getClosingToday());
+		if(closeMin <= nowMin || openMin == closeMin)
+			return OpeningPossibilities.CLOSE;
+		if(closeMin - nowMin >= 0)// TODO: risistemare alla fine (mettere 20)!! Ho settato a 0 per poter lavorare anche alle 23:50!!!
+			return OpeningPossibilities.OPEN;
+		else
+			return OpeningPossibilities.CLOSING;
 	}
 }
