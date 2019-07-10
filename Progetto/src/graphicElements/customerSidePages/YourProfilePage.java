@@ -74,6 +74,8 @@ public class YourProfilePage {
         layout.getChildren().addAll(nameBox, surnameBox, addressBox, buttonBox);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout, 800, 600);
+        layout.getStyleClass().add("layout");
+        scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/loginPageStyle.css").toExternalForm());
         window.setScene(scene);
         window.show();
     }

@@ -31,8 +31,6 @@ public class OrderPage3 {
 
 		//TODO MIGLIORARE LA PAGINA @ MUSI
 
-		VBox layout = new VBox();
-
 		ArrayList<Label> nomiLabels = new ArrayList<>();
 		ArrayList<Label> ingrLabels = new ArrayList<>();
 		ArrayList<Label> prezziLabels = new ArrayList<>();
@@ -43,14 +41,13 @@ public class OrderPage3 {
 		gridPane.setHgap(10);
 		gridPane.setVgap(30);
 
-		Label yourOrder;
-
 		VBox recapBox = new VBox(20);
 		Label userLabel = new Label("USERNAME:\t" + order.getCustomer().getUsername().toLowerCase());
 		Label interphoneNameLabel = new Label("COGNOME:\t" + order.getName());
 		Label yourAddressLabel = new Label("INDIRIZZO:\t" + order.getAddress());
 		Label yourOrderTimeLabel = new Label ("ORARIO:\t\t" + TimeServices.dateTimeStamp(order.getTime()));
 		recapBox.getChildren().addAll(userLabel, interphoneNameLabel, yourAddressLabel, yourOrderTimeLabel);
+		recapBox.setId("recapBox");
 
 		Button backButton = new Button("← Torna indietro");
 		backButton.setId("backButton");
@@ -61,6 +58,10 @@ public class OrderPage3 {
 		HBox buttonBox = new HBox(10);
 		Button confirmButton = new Button("Conferma e torna alla Home ✔");
 		Button closeButton = new Button("Esci senza confermare ☓");
+		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.setMinSize(600, 30);
+
+		Label yourOrder;
 
 		if(isNewOrder) {
 			confirmButton.setId("confirmButton");
@@ -87,16 +88,15 @@ public class OrderPage3 {
 
 		HBox titleBox = new HBox();
 		titleBox.getChildren().add(yourOrder);
-		titleBox.setStyle("-fx-border-color:black;");
+		titleBox.setId("yourOrderBox");
 		titleBox.setAlignment(Pos.CENTER);
 		titleBox.setMinSize(600, 50);
-
-		buttonBox.setAlignment(Pos.CENTER);
-		buttonBox.setMinSize(600, 30);
 
 		ScrollPane scrollPane = new ScrollPane(gridPane);
 		scrollPane.setMinSize(600, 400);
 		buttonBox.setMinSize(600, 100);
+
+		VBox layout = new VBox();
 		layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
 
 		layout.setOnKeyPressed(ke -> {
@@ -107,9 +107,13 @@ public class OrderPage3 {
 			if(ke.getCode()== KeyCode.ESCAPE)
 				closeButton.fire();
 		});
+
 		Scene scene4;
-		scene4 = new Scene(layout, 600, 800);
-		scene4.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage2.css").toExternalForm());	//TODO: ???
+		scene4 = new Scene(layout);
+		layout.setId("layout");
+		layout.prefWidthProperty().bind(window.widthProperty());
+		layout.prefHeightProperty().bind(window.heightProperty());
+		scene4.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage3.css").toExternalForm());	//TODO: ???
 		window.setScene(scene4);
 	}
 
@@ -153,7 +157,6 @@ public class OrderPage3 {
 						num++;
 				}
 				nomiLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getName(true)));
-				//nomiLabels.get(numTipo).setStyle("-fx-font-color: yellow");
 				ingrLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getDescription()));
 				prezziLabels.add(numTipo, new Label((order.getOrderedPizze().get(i).getPrice()*num + " €")));
 				countPizzeLabels.add(numTipo, new Label());

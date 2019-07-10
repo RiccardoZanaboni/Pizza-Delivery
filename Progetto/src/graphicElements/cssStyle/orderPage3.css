@@ -1,0 +1,39 @@
+.button {
+  -fx-background-color: #eda615;
+  -fx-color: black;
+  -fx-padding: 16px 32px;
+  -fx-text-align: center;
+  -fx-display: inline-block;
+  -fx-font-family: Helvetica, Arial, sans-serif;
+  -fx-text-fill: black;
+  -fx-font-size: 12px;
+  -fx-transition-duration: 0.4s;
+  -fx-cursor: pointer;
+}
+
+.button:hover {
+ /* -fx-background-color: #f44336;*/
+  -fx-background-color: linear-gradient(#a61022,  #f39f18);
+  -fx-border-color: black;
+}
+
+#layout {
+  -fx-background-color: linear-gradient(#a61022,  #f39f18);
+}
+
+#yourOrderBox {
+  -fx-background-color: #a61022;
+  -fx-font-family: Helvetica, Arial, sans-serif;
+  -fx-text-fill: black;
+  -fx-font-weight: bold;
+  -fx-font-size: 20px;
+}
+
+#recapBox {
+  -fx-background-color: linear-gradient(#a61022,  #f39f18);
+  -fx-text-fill: black;
+  -fx-font-weight: bold;
+  -fx-font-size: 18px;
+}
+
+}

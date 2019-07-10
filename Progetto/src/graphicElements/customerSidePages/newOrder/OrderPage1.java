@@ -37,7 +37,9 @@ public class OrderPage1 {
     private static Button backButton;
 
     public void display(Stage window, Order order, Pizzeria pizzeria, Customer customer) {
+
         order.setCustomer(customer);
+        int tot = 0;
 
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -52,8 +54,6 @@ public class OrderPage1 {
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);
-        HBox shoppingCartBox = new HBox(order.getNumTemporaryPizze());
-        shoppingCartBox.setId("shoppingCart");
 
         Button shoppingCartButton = new Button();
         shoppingCartButton.setGraphic(imageView);
@@ -62,19 +62,10 @@ public class OrderPage1 {
             shoppingCart.display(order, shoppingCartButton);
         });
         shoppingCartButton.setText(order.getNumPizze() + "");
+
+        HBox shoppingCartBox = new HBox(order.getNumTemporaryPizze());
+        shoppingCartBox.setId("shoppingCart");
         shoppingCartBox.getChildren().add(shoppingCartButton);
-
-        /* metodi esterni per non appesantire */
-        fillLabelsAndButtons(shoppingCartButton, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, addButtons, modButtons);
-        fillVBoxesNomeAndIngr(pizzeria, vBoxNomeDescr, nomiLabels, ingrLabels);
-        fillVBoxesButtons(pizzeria, vBoxBottoni, addButtons, modButtons);
-        fillHBoxesPrezzoAndBottoni(pizzeria, hBoxPrezzoBottoni, prezziLabels, vBoxBottoni);
-
-        OrderPage2 orderPage2 = new OrderPage2();
-
-        int tot = 0;
-        confirmButton = createConfirmButton(customer, window, orderPage2, scene2, order, pizzeria, tot);
-        backButton = createBackButton(pizzeria, window, customer);
 
         HBox hBoxIntestazione = new HBox();
         Label labelOrdine = new Label("Totale pizze ordinate: ");
@@ -82,9 +73,19 @@ public class OrderPage1 {
         hBoxIntestazione.setAlignment(Pos.CENTER);
         hBoxIntestazione.setId("hboxIntestazione");
 
-        HBox hBoxAvantiIndietro = new HBox(10);
-        hBoxAvantiIndietro.getChildren().addAll(backButton, confirmButton);
-        hBoxAvantiIndietro.setAlignment(Pos.CENTER);
+        confirmButton = createConfirmButton(customer, window, order, pizzeria);
+        backButton = createBackButton(pizzeria, window, customer);
+
+        HBox hBoxButton = new HBox(10);
+        hBoxButton.getChildren().addAll(backButton, confirmButton);
+        hBoxButton.setAlignment(Pos.CENTER);
+        hBoxButton.setId("buttonBox");
+
+        /* metodi esterni per non appesantire */
+        fillLabelsAndButtons(shoppingCartButton, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, addButtons, modButtons);
+        fillVBoxesNomeAndIngr(pizzeria, vBoxNomeDescr, nomiLabels, ingrLabels);
+        fillVBoxesButtons(pizzeria, vBoxBottoni, addButtons, modButtons);
+        fillHBoxesPrezzoAndBottoni(pizzeria, hBoxPrezzoBottoni, prezziLabels, vBoxBottoni);
 
         GridPane gridPane;
         gridPane = setGridPaneContraints(pizzeria, vBoxNomeDescr, hBoxPrezzoBottoni);
@@ -99,14 +100,15 @@ public class OrderPage1 {
         scroll.setFitToWidth(true);
         scroll.prefWidthProperty().bind(window.widthProperty());
         scroll.prefHeightProperty().bind(window.heightProperty());
-        HBox hBox = new HBox();
         scroll.setPadding(new Insets(10, 1, 5, 10));
+
+        HBox hBox = new HBox();
         hBox.getChildren().add(scroll);
         hBox.setAlignment(Pos.CENTER);
 
         VBox layout = new VBox();
         layout.setId("layout");
-        layout.getChildren().addAll(hBoxIntestazione, hBox, hBoxAvantiIndietro);
+        layout.getChildren().addAll(hBoxIntestazione, hBox, hBoxButton);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
 
@@ -119,7 +121,7 @@ public class OrderPage1 {
 
 
         scene2 = new Scene(layout, 800, 600);
-        scene2.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
+        scene2.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage1.css").toExternalForm());
         window.setScene(scene2);
         window.show();
     }
@@ -213,12 +215,13 @@ public class OrderPage1 {
     /**
      * Costruisce il bottone di conferma, che consente il passaggio ad OrderPage2
      */
-    private Button createConfirmButton(Customer customer, Stage window, OrderPage2 orderPage2, Scene scene2, Order order, Pizzeria pizzeria, int tot) {
+    private Button createConfirmButton(Customer customer, Stage window, Order order, Pizzeria pizzeria) {
+        OrderPage2 orderPage2 = new OrderPage2();
         confirmButton = new Button("Prosegui  →");
         confirmButton.setId("confirmButton");
         confirmButton.setOnAction(e -> {
             if(order.getNumTemporaryPizze()>0)
-                orderPage2.display(window, scene2, order, pizzeria, tot, customer);
+                orderPage2.display(window, order, pizzeria, customer);
             else
                 GenericAlert.display("Attenzione: aggiungere almeno una pizza all'ordine!");
         });
