@@ -18,7 +18,7 @@ public class ButtonRmvPizza extends Button {
 		imageView.setFitWidth(20);
 		this.setGraphic(imageView);
 		setId("rmvpizza");
-        getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/buttonsAndLabelsAndBackgroundStyle.css").toExternalForm());
+        getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage1.css").toExternalForm());
 		this.setShape(new Circle(100000));
 		this.setOnAction(e-> {
 		    if(pizza.getName(false).endsWith("*")) {

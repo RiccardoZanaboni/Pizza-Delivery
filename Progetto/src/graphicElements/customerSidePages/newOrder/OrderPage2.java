@@ -40,33 +40,39 @@ public class OrderPage2 {
 	private String name;
 	private Date time;
 
-	public void display (Stage window, Scene scene2, Order order, Pizzeria pizzeria, int tot, Customer customer) {
-		GridPane gridPane = new GridPane();
+	public void display (Stage window, Order order, Pizzeria pizzeria, Customer customer) {
+		HBox hBoxIntestazione = new HBox();
+		Label label = new Label("Inserisci i tuoi dati");
+		hBoxIntestazione.getChildren().add(label);
+		hBoxIntestazione.setAlignment(Pos.CENTER);
 
 		Label surnameLabel = new Label(" Cognome:  ");
+		surnameLabel.setId("nomiLabel");
 		TextField surnameInput = new TextField();
 		surnameInput.setPromptText("Your Surname");
-		surnameLabel.setId("nomiLabel");
 		String surname = CustomerDB.getCustomerFromUsername(customer.getUsername(),5);
 		if(surname != null)
 			surnameInput.setText(surname);
+
 		HBox usernameBox = new HBox(50);
 		usernameBox.getChildren().addAll(surnameLabel, surnameInput);
 
 		Label addressLabel = new Label(" Indirizzo:    ");
+		addressLabel.setId("nomiLabel");
         TextField addressInput = new TextField();
 		addressInput.setPromptText("Your Address");
-		addressLabel.setId("nomiLabel");
 		String address = CustomerDB.getCustomerFromUsername(customer.getUsername(),6);
 		if(address != null)
 			addressInput.setText(address);
+
 		HBox addressBox = new HBox(50);
 		addressBox.getChildren().addAll(addressLabel, addressInput);
 
 		Label choiceLabel = new Label(" Orario:\t   ");
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-		choiceBox.getItems().addAll(getTime(pizzeria, order.getNumPizze(), customer, window));
 		choiceLabel.setId("nomiLabel");
+		ChoiceBox<String> choiceBox = new ChoiceBox<>();
+		choiceBox.getItems().addAll(getTime(pizzeria, order.getNumPizze(), customer, window));
+
 		HBox choiceHBox = new HBox(50);
 		choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
 
@@ -99,10 +105,7 @@ public class OrderPage2 {
 		buttonBox.getChildren().addAll(backButton, confirmButton);
 		buttonBox.setAlignment(Pos.CENTER);
 
-		HBox hBoxIntestazione = new HBox();
-		Label label = new Label("Inserisci i tuoi dati");
-		hBoxIntestazione.getChildren().add(label);
-		hBoxIntestazione.setAlignment(Pos.CENTER);
+		GridPane gridPane = new GridPane();
 
 		GridPane.setConstraints(usernameBox,0,0);
 		GridPane.setConstraints(addressBox, 0, 1);
