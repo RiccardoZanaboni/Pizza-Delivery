@@ -2,7 +2,6 @@ package graphicElements.customerSidePages;
 
 import database.CustomerDB;
 import graphicAlerts.GenericAlert;
-import graphicElements.customerSidePages.newOrder.HomePage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

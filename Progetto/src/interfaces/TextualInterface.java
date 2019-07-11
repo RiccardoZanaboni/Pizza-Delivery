@@ -81,8 +81,8 @@ public class TextualInterface {
 			case "L":
 				Order last = PizzeriaServices.CustomerLastOrder(customer,wolf);
 				if(last != null){
-				System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
-				System.out.println(TextCustomerSide.recapOrder(last));
+					System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
+					System.out.println(TextCustomerSide.recapOrder(last));
 				} else System.out.println(TextColorServices.colorSystemOut("\n" + customer.getUsername() + ", non hai ancora effettuato nessun ordine!\n",Color.RED,false,false));
 				whatDoYouWant(customer);
 				break;

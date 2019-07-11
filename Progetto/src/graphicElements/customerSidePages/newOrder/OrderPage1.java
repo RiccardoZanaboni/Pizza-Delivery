@@ -1,6 +1,7 @@
 package graphicElements.customerSidePages.newOrder;
 
 import graphicAlerts.GenericAlert;
+import graphicElements.customerSidePages.HomePage;
 import graphicElements.elements.ButtonAddPizza;
 import graphicElements.elements.ButtonModPizza;
 import javafx.geometry.Pos;

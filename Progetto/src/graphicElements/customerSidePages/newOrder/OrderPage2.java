@@ -2,6 +2,7 @@ package graphicElements.customerSidePages.newOrder;
 
 import database.CustomerDB;
 import graphicAlerts.GenericAlert;
+import graphicElements.customerSidePages.HomePage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

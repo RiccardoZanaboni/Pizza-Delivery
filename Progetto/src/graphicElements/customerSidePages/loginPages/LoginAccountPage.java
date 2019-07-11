@@ -1,6 +1,6 @@
 package graphicElements.customerSidePages.loginPages;
 
-import graphicElements.customerSidePages.newOrder.HomePage;
+import graphicElements.customerSidePages.HomePage;
 import graphicElements.pizzeriaSidePages.PizzeriaHomePage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

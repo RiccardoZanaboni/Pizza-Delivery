@@ -1,7 +1,7 @@
 package graphicElements.customerSidePages.loginPages;
 
 import database.CustomerDB;
-import graphicElements.customerSidePages.newOrder.HomePage;
+import graphicElements.customerSidePages.HomePage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

@@ -1,7 +1,6 @@
 package graphicElements.customerSidePages;
 
 import graphicAlerts.GenericAlert;
-import graphicElements.customerSidePages.newOrder.HomePage;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -40,7 +39,7 @@ public class WhoWeArePage {
             homePage.display(window, pizzeria, customer);
         });
 
-        Button buttonVideo= new Button("Video Presentazione!!");
+        /*Button buttonVideo= new Button("Video Presentazione!!");
         buttonVideo.setId("confirmButton");
         buttonVideo.setOnAction(event ->  {
             //TODO: non funziona!!!
@@ -49,9 +48,10 @@ public class WhoWeArePage {
             } catch (Exception e) {
                 GenericAlert.display("Spiacenti: video di presentazione al momento non disponibile.");
             }
-    });
+        });
+        */
         HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(backButton,buttonVideo);
+        hBox.getChildren().addAll(backButton/*,buttonVideo*/);
         hBox.setAlignment(Pos.CENTER);
 
         VBox layout=new VBox();

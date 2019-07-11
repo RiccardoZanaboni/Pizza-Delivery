@@ -1,8 +1,11 @@
-package graphicElements.customerSidePages.newOrder;
+package graphicElements.customerSidePages;
 
 import graphicAlerts.ClosedPizzeriaAlert;
+import graphicAlerts.GenericAlert;
 import graphicElements.customerSidePages.*;
 import graphicElements.customerSidePages.loginPages.LoginAccountPage;
+import graphicElements.customerSidePages.newOrder.OrderPage1;
+import graphicElements.customerSidePages.newOrder.OrderPage3;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -88,7 +91,6 @@ public class HomePage {
 			}
 		});
 
-
 		Button chiSiamoButton = new Button("Chi siamo");
 		chiSiamoButton.setOnAction(event -> {
 		    WhoWeArePage whoWeArePage = new WhoWeArePage();
@@ -102,8 +104,11 @@ public class HomePage {
         recapOrdiniButton.prefWidthProperty().bind(window.widthProperty());
         recapOrdiniButton.prefHeightProperty().bind(window.heightProperty());
         recapOrdiniButton.setOnAction(event -> {
-			OrderPage3 last = new OrderPage3();
-			last.display(false, window, PizzeriaServices.CustomerLastOrder(customer,pizzeria), pizzeria, scene1, customer);
+        	Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
+        	if(last != null) {
+				OrderPage3 page3 = new OrderPage3();
+				page3.display(false, window, PizzeriaServices.CustomerLastOrder(customer, pizzeria), pizzeria, scene1, customer);
+			} else GenericAlert.display(customer.getUsername() + ", non hai ancora effettuato nessun ordine!");
 		});
 
         Button altroButton = new Button("Il tuo profilo");
