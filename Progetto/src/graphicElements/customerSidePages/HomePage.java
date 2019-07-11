@@ -106,8 +106,8 @@ public class HomePage {
         recapOrdiniButton.setOnAction(event -> {
         	Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
         	if(last != null) {
-				OrderPage3 page3 = new OrderPage3();
-				page3.display(false, window, PizzeriaServices.CustomerLastOrder(customer, pizzeria), pizzeria, scene1, customer);
+				LastOrderPage lastOrderPage = new LastOrderPage();
+				lastOrderPage.display(window, PizzeriaServices.CustomerLastOrder(customer, pizzeria), pizzeria, customer);
 			} else GenericAlert.display(customer.getUsername() + ", non hai ancora effettuato nessun ordine!");
 		});
 
