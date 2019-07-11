@@ -16,7 +16,7 @@ public class Oven {
         return this.availablePlaces;
     }
 
-    void insertPizzas(int pizze){
+    void updateAvailablePlaces(int pizze){
         this.availablePlaces -= pizze;
     }
 }

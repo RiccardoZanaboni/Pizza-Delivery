@@ -74,7 +74,7 @@ public class PizzaDB {
 	 * Consente alla pizzeria di aggiungere una pizza al Menu
 	 * che è salvato sul Database.
 	 */
-	public static void putPizza(Pizzeria pizzeria){
+	public static void putPizzaText(Pizzeria pizzeria){
 		HashMap<String,String> ingredMap = new HashMap<>();
 		try {
 			System.out.println(TextColorServices.colorSystemOut("Inserire il nome della pizza da aggiungere:\t", Color.YELLOW, false, false));

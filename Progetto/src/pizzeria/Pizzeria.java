@@ -201,10 +201,10 @@ public class Pizzeria {
 		/* PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI */
 		int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getAvailablePlaces();
 		if(disp < tot){
-			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].insertPizzas(disp);
-			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())-1].insertPizzas(tot-disp);
+			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].updateAvailablePlaces(disp);
+			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())-1].updateAvailablePlaces(tot-disp);
 		} else {
-			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].insertPizzas(tot);
+			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].updateAvailablePlaces(tot);
 		}
 		if(aFreeDeliveryMan(d.getHours(), d.getMinutes()) != null)
 			aFreeDeliveryMan(d.getHours(), d.getMinutes()).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));

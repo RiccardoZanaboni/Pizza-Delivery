@@ -17,8 +17,6 @@ import pizzeria.Customer;
 import pizzeria.Pizzeria;
 import pizzeria.services.PizzeriaServices;
 
-import java.sql.SQLException;
-
 public class LoginAccountPage {
 	public void display(Stage window, Pizzeria pizzeria) {
 
@@ -46,7 +44,6 @@ public class LoginAccountPage {
 		Button loginButton = new Button("Login");
 		loginButton.setMinSize(100, 50);
 		loginButton.setOnAction(e-> {
-			try {
 				String user = nameInput.getText();
 				String psw = passwordInput.getText();
 				switch(PizzeriaServices.checkLogin(pizzeria, user.toUpperCase(),psw.toUpperCase())){
@@ -64,7 +61,6 @@ public class LoginAccountPage {
 						insertErrorLabel.setText("Username o password errati");
 						break;
 				}
-			} catch (SQLException ignored) {}
 		});
 
 		Button signUpButton = new Button("Nuovo Account");
@@ -97,7 +93,6 @@ public class LoginAccountPage {
 				loginButton.fire();
 			}
 		});
-
 		layout.getStyleClass().add("layout");
 
 		Scene scene = new Scene(layout, 880, 600);

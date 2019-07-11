@@ -12,7 +12,7 @@ public class ToppingDB {
 
 	private static Scanner scan = new Scanner(System.in);
 
-	public static boolean putTopping( String nome){
+	public static boolean putTopping(String nome){
 		try {
 			ResultSet rs1 = Database.getStatement("select * from sql7293749.Toppings");
 			rs1.last();
@@ -27,7 +27,7 @@ public class ToppingDB {
 		}
 	}
 
-	public static void putTopping(Pizzeria pizzeria) {
+	public static void putToppingText(Pizzeria pizzeria) {
 		try {
 			System.out.print(TextColorServices.colorSystemOut("Inserisci il nome del nuovo ingrediente:\t", Color.YELLOW, false, false));
 			String name = scan.nextLine().toUpperCase();

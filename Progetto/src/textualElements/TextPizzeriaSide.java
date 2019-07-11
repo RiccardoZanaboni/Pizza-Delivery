@@ -144,13 +144,13 @@ public class TextPizzeriaSide {
 	public void howModifyMenuAnswer(String risposta, Pizzeria pizzeria, TextualInterface textualInterface) throws SQLException {
 		switch (risposta){
 			case "A":
-				PizzaDB.putPizza(pizzeria);
+				PizzaDB.putPizzaText(pizzeria);
 				break;
 			case "R":
 				PizzaDB.removePizzaText(pizzeria);
 				break;
 			case "AI":
-				ToppingDB.putTopping(pizzeria);
+				ToppingDB.putToppingText(pizzeria);
 				break;
 			case "RI":
 				ToppingDB.removeToppingText(pizzeria);

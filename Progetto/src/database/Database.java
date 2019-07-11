@@ -25,13 +25,13 @@ public class Database {
 		}
 	}
 
-	/** Chiude il programma, se la connessione alla rete viene a mancare. */
+	/** Chiude il programma, se manca la connessione alla rete. */
 	public static void missingConnection(){
 		System.out.println(TextColorServices.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
 		System.exit(1);
 	}
 
-	public static void insertStatement(String query){
+	static void insertStatement(String query){
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement= con.prepareStatement(query);
@@ -41,7 +41,7 @@ public class Database {
 		}
 	}
 
-	public static ResultSet getStatement(String query){
+	static ResultSet getStatement(String query){
 		ResultSet rs = null;
 		try {
 			Statement statement = con.createStatement();
@@ -89,7 +89,7 @@ public class Database {
 	public static Date getLastUpdate() {
 		Date last = null;
 		String requestSql = "select * from sql7293749.LastUpdate";
-		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = con.prepareStatement(requestSql);
 			ResultSet rs = preparedStatement.executeQuery();

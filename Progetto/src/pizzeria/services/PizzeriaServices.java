@@ -107,16 +107,19 @@ public class PizzeriaServices {
 		}
 	}
 
-	public static LoginPossibilities checkLogin(Pizzeria pizzeria, String user, String psw) throws SQLException {
-		if(user.equals(pizzeria.getUserPizzeria()) && psw.equals(pizzeria.getPswPizzeria())){
-			/* se è la pizzeria, allora accede come tale */
-			return LoginPossibilities.PIZZERIA;
-		} else if (CustomerDB.getCustomer(user,psw)){
-			/* se è un utente identificato, accede come tale */
-			return LoginPossibilities.OK;
-		} else {
-			/* se la combinazione utente-password è errata */
-			return LoginPossibilities.NO;
+	public static LoginPossibilities checkLogin(Pizzeria pizzeria, String user, String psw) {
+		try {
+			if (user.equals(pizzeria.getUserPizzeria()) && psw.equals(pizzeria.getPswPizzeria())) {
+				/* se è la pizzeria, allora accede come tale */
+				return LoginPossibilities.PIZZERIA;
+			} else if (CustomerDB.getCustomer(user, psw)) {
+				/* se è un utente identificato, accede come tale */
+				return LoginPossibilities.OK;
+			}
+		} catch (SQLException sqle) {
+			Database.missingConnection();
 		}
+		/* se la combinazione utente-password è errata */
+		return LoginPossibilities.NO;
 	}
 }
