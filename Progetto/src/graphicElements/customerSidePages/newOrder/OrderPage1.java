@@ -38,6 +38,7 @@ public class OrderPage1 {
     private static Button backButton;
 
     public void display(Stage window, Order order, Pizzeria pizzeria, Customer customer) {
+        window.setTitle("Wolf of Pizza - Nuovo Ordine");
 
         order.setCustomer(customer);
         int tot = 0;

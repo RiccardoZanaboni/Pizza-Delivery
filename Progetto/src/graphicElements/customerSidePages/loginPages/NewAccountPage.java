@@ -20,6 +20,7 @@ import pizzeria.services.PizzeriaServices;
 
 public class NewAccountPage {
 	public void display(Stage window, Pizzeria pizzeria) {
+		window.setTitle("Wolf of Pizza - Nuovo Account");
 
 		Label username = new Label(" Username:");
 		TextField nameInput = new TextField();

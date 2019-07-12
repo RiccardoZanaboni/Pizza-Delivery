@@ -16,6 +16,7 @@ import pizzeria.Pizzeria;
 public class PizzeriaHomePage {
 
     public void display (Pizzeria pizzeria,Stage window) {
+        window.setTitle("Wolf of Pizza - Home");
 
         Label label = new Label("PIZZERIA");
         Button logoutButton = new Button();

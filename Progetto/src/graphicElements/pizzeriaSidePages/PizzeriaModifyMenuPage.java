@@ -21,7 +21,9 @@ import java.util.HashMap;
 public class PizzeriaModifyMenuPage {
 
     public void display(Pizzeria pizzeria, Stage window) {
-        TableView<Pizza> table = new TableView<>();
+		window.setTitle("Wolf of Pizza - Modifica Menu");
+
+		TableView<Pizza> table = new TableView<>();
 
         /* Name column */
         TableColumn<Pizza, String> nameColumn = new TableColumn<>("PIZZAS");

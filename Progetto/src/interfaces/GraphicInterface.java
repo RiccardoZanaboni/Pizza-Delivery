@@ -63,6 +63,7 @@ public class GraphicInterface extends Application {
 
 		Scene scene0 = new Scene(stackPane, 880, 600);
 		window.getIcons().add(new Image("/graphicElements/images/wolf_pizza.png"));
+		window.setTitle("Wolf of Pizza");
 		window.setScene(scene0);
 		window.show();
 		FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), stackPane);

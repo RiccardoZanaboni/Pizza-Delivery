@@ -28,9 +28,8 @@ import java.util.ArrayList;
 
 public class OrderPage3 {
 
-	public void display(boolean isNewOrder, Stage window, Order order, Pizzeria pizzeria, Scene scene3, Customer customer) {
-
-		//TODO MIGLIORARE LA PAGINA @ MUSI
+	public void display(Stage window, Order order, Pizzeria pizzeria, Scene scene3, Customer customer) {
+		window.setTitle("Wolf of Pizza - Nuovo Ordine");
 
 		ArrayList<Label> nomiLabels = new ArrayList<>();
 		ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -62,30 +61,23 @@ public class OrderPage3 {
 		buttonBox.setAlignment(Pos.CENTER);
 		buttonBox.setMinSize(600, 30);
 
-		Label yourOrder;
+		Label yourOrder = new Label("Il tuo ordine:\t\t" + order.getOrderCode());
 
-		if(isNewOrder) {
-			confirmButton.setId("confirmButton");
-			confirmButton.setOnAction(e -> {
-				OrderDB.putOrder(order);
-				order.setCompletedDb(pizzeria,order.getNumPizze(),order.getTime());
-				HomePage homePage = new HomePage();
-				OrderPage1.getBackButton().fire();
-				homePage.display(window, pizzeria, customer);
-			});
+		confirmButton.setId("confirmButton");
+		confirmButton.setOnAction(e -> {
+			OrderDB.putOrder(order);
+			order.setCompletedDb(pizzeria,order.getNumPizze(),order.getTime());
+			HomePage homePage = new HomePage();
+			OrderPage1.getBackButton().fire();
+			homePage.display(window, pizzeria, customer);
+		});
 
-			closeButton.setId("closeButton");
-			closeButton.setOnAction(e -> {
-				window.close();
-			});
+		closeButton.setId("closeButton");
+		closeButton.setOnAction(e ->
+			window.close()
+		);
 
-			buttonBox.getChildren().addAll(backButton, confirmButton, closeButton);
-
-			yourOrder = new Label("Il tuo ordine:\t\t" + order.getOrderCode());
-		} else {
-			yourOrder = new Label("Il tuo ultimo ordine:\t\t" + order.getOrderCode());
-			buttonBox.getChildren().add(backButton);
-		}
+		buttonBox.getChildren().addAll(backButton, confirmButton, closeButton);
 
 		HBox titleBox = new HBox();
 		titleBox.getChildren().add(yourOrder);
@@ -114,7 +106,7 @@ public class OrderPage3 {
 		layout.setId("layout");
 		layout.prefWidthProperty().bind(window.widthProperty());
 		layout.prefHeightProperty().bind(window.heightProperty());
-		scene4.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage3.css").toExternalForm());	//TODO: ???
+		scene4.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage3.css").toExternalForm());
 		window.setScene(scene4);
 	}
 

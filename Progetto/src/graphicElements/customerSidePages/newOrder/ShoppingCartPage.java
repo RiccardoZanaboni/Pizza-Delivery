@@ -22,11 +22,9 @@ public class ShoppingCartPage {
 	private Stage window = new Stage();
 
 	public void display(Order order, Button shoppingCartButton) {
+		window.setTitle("Wolf of Pizza - Il tuo Carrello");
+
 		VBox layout = new VBox();
-		Label label = new Label("Il tuo carrello");
-		HBox hBox = new HBox();
-		hBox.getChildren().add(label);
-		hBox.setAlignment(Pos.CENTER);
 
 		GridPane gridPane = createGridPane(window, shoppingCartButton, order);
 		gridPane.setPadding(new Insets(10, 10, 10, 10));
@@ -35,7 +33,7 @@ public class ShoppingCartPage {
 
 		ScrollPane scrollPane = new ScrollPane(gridPane);
 		scrollPane.setMinSize(600, 400);
-		layout.getChildren().addAll(hBox, scrollPane);
+		layout.getChildren().add(scrollPane);
 		Scene scene = new Scene(layout);
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setScene(scene);

@@ -16,6 +16,7 @@ import pizzeria.pizzeriaSendMail.SendJavaMail;
 
 public class RecoverPswPage {
 	public void display(Stage window, Pizzeria pizzeria) {
+		window.setTitle("Wolf of Pizza - Recupero Password");
 
 		Label label = new Label(" Il tuo indirizzo e-mail:  ");
 		TextField mailInput = new TextField();

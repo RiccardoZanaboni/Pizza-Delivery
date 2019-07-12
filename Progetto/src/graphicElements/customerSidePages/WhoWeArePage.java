@@ -1,6 +1,5 @@
 package graphicElements.customerSidePages;
 
-import graphicAlerts.GenericAlert;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,15 +13,13 @@ import pizzeria.Customer;
 import pizzeria.Pizzeria;
 import pizzeria.services.PizzeriaServices;
 
-import java.awt.*;
-import java.net.URI;
-
 public class WhoWeArePage {
 
     public void display(Stage window, Pizzeria pizzeria, Customer customer) {
+        window.setTitle("Wolf of Pizza - Chi Siamo");
 
         String history = PizzeriaServices.getHistory(true);
-        TextArea textField=new TextArea();
+        TextArea textField = new TextArea();
         textField.setText(history);
 
         textField.setEditable(false);
@@ -50,12 +47,12 @@ public class WhoWeArePage {
             }
         });
         */
-        HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(backButton/*,buttonVideo*/);
-        hBox.setAlignment(Pos.CENTER);
+        HBox buttonBox = new HBox(10);
+        buttonBox.getChildren().addAll(backButton/*,buttonVideo*/);
+        buttonBox.setAlignment(Pos.CENTER);
 
-        VBox layout=new VBox();
-        layout.getChildren().addAll(stackPane,hBox);
+        VBox layout = new VBox();
+        layout.getChildren().addAll(stackPane,buttonBox);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
         layout.setOnKeyPressed(ke -> {
@@ -70,8 +67,6 @@ public class WhoWeArePage {
         scene5.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage2.css").toExternalForm());
         //window.setResizable(false);
         window.setScene(scene5);
-        window.setTitle("Wolf of Pizza");
-
         window.show();
     }
 }

@@ -34,6 +34,8 @@ public class HomePage {
 	private Scene scene1;
 
 	public void display(Stage window, Pizzeria pizzeria, Customer customer) {
+		window.setTitle("Wolf of Pizza - Home");
+
 		Label label1 = new Label("Benvenuto");
 		Label usernameLabel = new Label("");
 		usernameLabel.setText(customer.getUsername());
@@ -148,7 +150,6 @@ public class HomePage {
 		scene1.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/menuStyle.css").toExternalForm());
 		//window.setResizable(false);
 		window.setScene(scene1);
-		window.setTitle("Wolf of Pizza");
 		//window.getIcons().add(new Image("graphicElements/images/wolf_pizza.png"));
 		window.show();
 	}

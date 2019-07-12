@@ -15,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
+import pizzeria.services.TextColorServices;
+import pizzeria.services.TimeServices;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +24,8 @@ import java.util.Date;
 public class PizzeriaVisualizeOrdersPage {
 
 	public static void display(Pizzeria pizzeria, Stage window) {
+		window.setTitle("Wolf of Pizza - Elenco Ordini");
+
 		ArrayList<Label> nameLabels = new ArrayList<>();
 		ArrayList<Label> toppingLabels = new ArrayList<>();
 		ArrayList<Label> priceLabels = new ArrayList<>();
@@ -41,8 +45,12 @@ public class PizzeriaVisualizeOrdersPage {
 			PizzeriaHomePage pizzeriaHomePage=new PizzeriaHomePage();
 			pizzeriaHomePage.display(pizzeria, window);
 		});
-		HBox hBox1=new HBox(10);
-		hBox1.getChildren().add(backButton);
+		Button refreshButton = new Button("Aggiorna pagina ");
+		refreshButton.setOnAction(e ->
+				display(pizzeria,window)
+		);
+		HBox hBox1 = new HBox(10);
+		hBox1.getChildren().addAll(backButton,refreshButton);
 		hBox1.setAlignment(Pos.CENTER);
 
 		layout.setOnKeyPressed(ke -> {
@@ -52,31 +60,32 @@ public class PizzeriaVisualizeOrdersPage {
 		layout.getChildren().add(hBox1);
 		ScrollPane scrollPane = new ScrollPane(layout);
 		Scene scene = new Scene(scrollPane, 880, 600);
+		/* prova */ scene.getStylesheets().addAll(PizzeriaVisualizeOrdersPage.class.getResource("/graphicElements/cssStyle/orderPage3.css").toExternalForm());
 		window.setScene(scene);
 		window.show();
 	}
 
-	private static VBox addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels,  ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
-		HBox hBox = new HBox();
-		Label orderLabel = new Label(order.getOrderCode()+" ");
-		Label timeLabel = new Label(order.getTime()+" ");
-		Label label=new Label(order.getName()+" "+order.getAddress()+" ");
-		hBox.getChildren().addAll( timeLabel,orderLabel,label);
-		//hBox.setAlignment(Pos.CENTER);
+	private static VBox addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels) {
+		Label orderLabel = new Label(order.getOrderCode() + "\t");
+		Label timeLabel = new Label(TimeServices.dateTimeStamp(order.getTime()) + "\t");
+		Label infoLabel = new Label(order.getName() + "\t" + order.getAddress());
+		HBox infoBox = new HBox();
+		infoBox.getChildren().addAll(timeLabel,orderLabel,infoLabel);
+		HBox spazioBox = new HBox();
+		spazioBox.getChildren().add(new Label(TextColorServices.getLine()));
 
 		GridPane gridPane;
-		gridPane = OrderPage3.graphicRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels,order);
-		gridPane.getColumnConstraints().add(new ColumnConstraints(80));
-		gridPane.getColumnConstraints().add(new ColumnConstraints(100));
+		gridPane = OrderPage3.graphicRecap(nomiLabels, countPizzeLabels, ingrLabels, prezziLabels, order);
+		gridPane.getColumnConstraints().add(new ColumnConstraints(60));
+		gridPane.getColumnConstraints().add(new ColumnConstraints(160));
 		gridPane.getColumnConstraints().add(new ColumnConstraints(500));
 		gridPane.getColumnConstraints().add(new ColumnConstraints(80));
 		gridPane.setHgap(10);
-		gridPane.setVgap(30);
+		gridPane.setVgap(25);
 
 		VBox vBox = new VBox();
-		vBox.getChildren().addAll(hBox,gridPane);
+		vBox.getChildren().addAll(infoBox,gridPane,spazioBox);
 		// gridPane.getChildren().add(hBox);
 		return vBox;
 	}
-
 }

@@ -16,6 +16,7 @@ import pizzeria.Pizzeria;
 public class YourProfilePage {
 
     public void display(Stage window, Pizzeria pizzeria, Customer customer) {
+        window.setTitle("Wolf of Pizza - I tuoi Dati");
 
         Label nameLabel = new Label("Nome:\t ");
         TextField nameInput = new TextField();

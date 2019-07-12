@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class LastOrderPage{
 
     public void display(Stage window, Order order, Pizzeria pizzeria, Customer customer) {
+        window.setTitle("Wolf of Pizza - Ultimo Ordine");
 
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();

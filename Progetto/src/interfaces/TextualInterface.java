@@ -12,8 +12,6 @@ import textualElements.TextNewOrder;
 import textualElements.TextPizzeriaSide;
 
 import java.sql.SQLException;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static enums.OpeningPossibilities.*;
@@ -76,7 +74,7 @@ public class TextualInterface {
 	}
 
 	/** In whatDoYouWant(), gestisce le possibili risposte alla domanda. */
-	public void whatDoYouWantAnswers(boolean isOpen, String risposta, Customer customer) throws SQLException {
+	private void whatDoYouWantAnswers(boolean isOpen, String risposta, Customer customer) throws SQLException {
 		switch (risposta){
 			case "L":
 				Order last = PizzeriaServices.CustomerLastOrder(customer,wolf);
