@@ -61,7 +61,7 @@ public class GraphicInterface extends Application {
 		StackPane stackPane = new StackPane();
 		stackPane.getChildren().addAll(imageView);
 
-		Scene scene0 = new Scene(stackPane, 880, 600);
+		Scene scene0 = new Scene(stackPane, 800, 600);
 		window.getIcons().add(new Image("/graphicElements/images/wolf_pizza.png"));
 		window.setTitle("Wolf of Pizza");
 		window.setScene(scene0);

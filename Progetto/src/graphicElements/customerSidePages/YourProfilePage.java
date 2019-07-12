@@ -46,6 +46,8 @@ public class YourProfilePage {
         addressBox.setAlignment(Pos.CENTER);
 
         Button backButton = new Button("← Torna indietro");
+        backButton.setMinHeight(35);
+        backButton.setMaxHeight(40);
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
            HomePage homePage = new HomePage();
@@ -53,6 +55,8 @@ public class YourProfilePage {
         });
 
         Button confirmButton = new Button(" Conferma modifiche");
+        confirmButton.setMinHeight(35);
+        confirmButton.setMaxHeight(40);
         confirmButton.setOnAction(e-> {
             String newName = nameInput.getText();
             String newSurname = surnameInput.getText();

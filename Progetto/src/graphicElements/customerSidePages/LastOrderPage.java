@@ -35,6 +35,7 @@ public class LastOrderPage{
         recapBox.setId("recapBox");
 
         Button backButton = new Button("← Torna indietro");
+        backButton.setPrefHeight(35);
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
             HomePage homePage = new HomePage();
@@ -44,7 +45,6 @@ public class LastOrderPage{
 
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.setMinSize(600, 30);
         buttonBox.getChildren().add(backButton);
 
         Label yourOrder = new Label("Il tuo ultimo ordine:\t\t" + order.getOrderCode());
@@ -55,13 +55,13 @@ public class LastOrderPage{
         titleBox.setMinSize(600, 50);
 
         ScrollPane scrollPane = new ScrollPane(gridPane);
-        scrollPane.setMinSize(600, 400);
-        buttonBox.setMinSize(600, 100);
+        //scrollPane.setMinSize(600, 400);
+        buttonBox.setMinSize(600, 60);
 
         VBox layout = new VBox();
         layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
 
-        Scene scene4 = new Scene(layout);
+        Scene scene4 = new Scene(layout, 800,600);
 
         layout.setId("layout");
         layout.prefWidthProperty().bind(window.widthProperty());

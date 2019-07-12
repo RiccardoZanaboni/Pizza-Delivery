@@ -46,7 +46,7 @@ public class HomePage {
         imageView1.setFitHeight(20);
         imageView1.setFitWidth(20);
         logoutButton.setGraphic(imageView1);
-        //logoutButton.setMinSize(100, 50);
+        logoutButton.setMinSize(100, 50);
         logoutButton.setOnAction(e->{
             LoginAccountPage loginAccountPage = new LoginAccountPage();
             loginAccountPage.display(window, pizzeria);
@@ -144,7 +144,7 @@ public class HomePage {
             }
         });
 
-		scene1 = new Scene(layout,800, 600);
+		scene1 = new Scene(layout,800	, 600);
 		scene1.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/menuStyle.css").toExternalForm());
 		//window.setResizable(false);
 		window.setScene(scene1);

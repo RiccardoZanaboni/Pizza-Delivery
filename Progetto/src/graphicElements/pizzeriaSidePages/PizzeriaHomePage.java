@@ -58,7 +58,7 @@ public class PizzeriaHomePage {
 
         VBox layout = new VBox(20);
         layout.getChildren().addAll(hBox, gridPane);
-        Scene scene = new Scene(layout, 880, 600);
+        Scene scene = new Scene(layout, 800, 600);
         scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/pizzeriaHomePage.css").toExternalForm());
         window.setScene(scene);
         window.show();

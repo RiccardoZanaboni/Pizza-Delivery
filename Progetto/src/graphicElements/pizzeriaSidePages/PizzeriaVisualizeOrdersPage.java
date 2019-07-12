@@ -21,11 +21,10 @@ import pizzeria.services.TimeServices;
 import java.util.ArrayList;
 import java.util.Date;
 
+@SuppressWarnings("deprecation")
 public class PizzeriaVisualizeOrdersPage {
 
 	public static void display(Pizzeria pizzeria, Stage window) {
-		window.setTitle("Wolf of Pizza - Elenco Ordini");
-
 		ArrayList<Label> nameLabels = new ArrayList<>();
 		ArrayList<Label> toppingLabels = new ArrayList<>();
 		ArrayList<Label> priceLabels = new ArrayList<>();
@@ -45,11 +44,15 @@ public class PizzeriaVisualizeOrdersPage {
 			PizzeriaHomePage pizzeriaHomePage=new PizzeriaHomePage();
 			pizzeriaHomePage.display(pizzeria, window);
 		});
+		HBox hBox1=new HBox(10);
+		hBox1.getChildren().add(backButton);
+		backButton.setMinHeight(35);
+        hBox1.setMinSize(600, 60);
+        hBox1.setAlignment(Pos.CENTER);
 		Button refreshButton = new Button("Aggiorna pagina ");
 		refreshButton.setOnAction(e ->
 				display(pizzeria,window)
 		);
-		HBox hBox1 = new HBox(10);
 		hBox1.getChildren().addAll(backButton,refreshButton);
 		hBox1.setAlignment(Pos.CENTER);
 
@@ -57,10 +60,11 @@ public class PizzeriaVisualizeOrdersPage {
 			if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE)
 				backButton.fire();
 		});
-		layout.getChildren().add(hBox1);
-		ScrollPane scrollPane = new ScrollPane(layout);
-		Scene scene = new Scene(scrollPane, 880, 600);
-		/* prova */ scene.getStylesheets().addAll(PizzeriaVisualizeOrdersPage.class.getResource("/graphicElements/cssStyle/orderPage3.css").toExternalForm());
+        ScrollPane scrollPane = new ScrollPane(layout);
+		VBox vBox=new VBox();
+		vBox.getChildren().addAll(scrollPane,hBox1);
+		Scene scene = new Scene(vBox, 800, 600);
+		/* prova */ //scene.getStylesheets().addAll(PizzeriaVisualizeOrdersPage.class.getResource("/graphicElements/cssStyle/orderPage3.css").toExternalForm());
 		window.setScene(scene);
 		window.show();
 	}
@@ -88,4 +92,5 @@ public class PizzeriaVisualizeOrdersPage {
 		// gridPane.getChildren().add(hBox);
 		return vBox;
 	}
+
 }

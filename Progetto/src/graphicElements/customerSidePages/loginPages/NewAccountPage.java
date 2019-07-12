@@ -62,7 +62,7 @@ public class NewAccountPage {
 		insertErrorLabel.setId("errorLabel");
 
 		Button signUpButton = new Button("Registrati");
-		signUpButton.setMinSize(100, 50);
+		signUpButton.setMinSize(100, 35);
 		signUpButton.setOnAction(e->{
 			switch(PizzeriaServices.canCreateAccount(mailInput.getText(),nameInput.getText(),passwordInput.getText(),passwordInput2.getText())){
 				case OK:
@@ -94,8 +94,9 @@ public class NewAccountPage {
 		});
 
 		Button backButton = createBackButton(pizzeria, window);
+        backButton.setMinHeight(35);
 
-		HBox buttonBox = new HBox(50);
+        HBox buttonBox = new HBox(50);
 		VBox vBox = new VBox(20);
 		buttonBox.getChildren().addAll(backButton,signUpButton);
 		buttonBox.setAlignment(Pos.CENTER);
@@ -114,7 +115,7 @@ public class NewAccountPage {
 
 		layout.getStyleClass().add("layout");
 
-		Scene scene = new Scene(layout, 880, 600);
+		Scene scene = new Scene(layout, 800, 600);
 		window.setScene(scene);
 		scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/loginPageStyle.css").toExternalForm());
 		window.show();

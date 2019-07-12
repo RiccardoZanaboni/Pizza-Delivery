@@ -81,6 +81,7 @@ public class OrderPage2 {
 
 		Button confirmButton = new Button("Prosegui →");
         confirmButton.setId("confirmButton");
+		confirmButton.setMinHeight(35);
 		confirmButton.setOnAction(e-> {
 			this.name = surnameInput.getText();
 			this.address = getInfo(addressInput);
@@ -96,6 +97,7 @@ public class OrderPage2 {
 		});
 
 		Button backButton = new Button("← Torna indietro");
+        backButton.setMinHeight(35);
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
 			this.name = getInfo(surnameInput);
@@ -127,7 +129,7 @@ public class OrderPage2 {
 		layout.getChildren().addAll(hBoxIntestazione, hBox, buttonBox);
 		layout.setId("grid");
 
-		scene3 = new Scene(layout);
+		scene3 = new Scene(layout,800,600);
         scene3.setOnKeyPressed(ke -> {
             if(ke.getCode()== KeyCode.ENTER) {
                 confirmButton.fire();

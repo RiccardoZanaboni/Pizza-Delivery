@@ -41,7 +41,6 @@ public class OrderPage1 {
         window.setTitle("Wolf of Pizza - Nuovo Ordine");
 
         order.setCustomer(customer);
-        int tot = 0;
 
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -77,9 +76,13 @@ public class OrderPage1 {
 
         confirmButton = createConfirmButton(customer, window, order, pizzeria);
         backButton = createBackButton(pizzeria, window, customer);
+        confirmButton.setPrefHeight(35);
+        backButton.setPrefHeight(35);
+
 
         HBox hBoxButton = new HBox(10);
         hBoxButton.getChildren().addAll(backButton, confirmButton);
+        hBoxButton.setMinSize(600, 60);
         hBoxButton.setAlignment(Pos.CENTER);
         hBoxButton.setId("buttonBox");
 
@@ -126,6 +129,7 @@ public class OrderPage1 {
         scene2.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage1.css").toExternalForm());
         window.setScene(scene2);
         window.show();
+
     }
 
     /**

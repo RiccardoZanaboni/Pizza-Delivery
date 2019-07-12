@@ -31,7 +31,7 @@ public class RecoverPswPage {
 		insertErrorLabel.setId("errorLabel");
 
 		Button recoverPswButton = new Button("Recupera Password");
-		recoverPswButton.setMinSize(100, 50);
+		recoverPswButton.setMinSize(100, 30);
 		recoverPswButton.setOnAction(e-> {
 			insertErrorLabel.setText("");		// fixme: non funziona (dovrebbe togliere la scritta "indirizzo non corretto", mentre sta inviando la mail).
 			String mailAddress =  mailInput.getText();
@@ -48,6 +48,7 @@ public class RecoverPswPage {
 
 		Button backButton = new Button("← Torna indietro");
 		backButton.setId("backButton");
+		recoverPswButton.setMinSize(100, 30);
 		backButton.setOnAction(e -> {
 			LoginAccountPage loginAccountPage = new LoginAccountPage();
 			loginAccountPage.display(window, pizzeria);
@@ -72,7 +73,7 @@ public class RecoverPswPage {
 
 		layout.getStyleClass().add("layout");
 
-		Scene scene = new Scene(layout, 880, 600);
+		Scene scene = new Scene(layout, 800, 600);
 		window.setScene(scene);
 		scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/loginPageStyle.css").toExternalForm());
 		window.show();

@@ -56,8 +56,14 @@ public class OrderPage3 {
 		);
 
 		HBox buttonBox = new HBox(10);
-		Button confirmButton = new Button("Conferma ordine ✔");
-		Button closeButton = new Button("Annulla ordine ☓");
+		Button confirmButton = new Button("Conferma e torna alla Home ✔");
+		Button closeButton = new Button("Esci senza confermare ☓");
+		confirmButton.setMaxHeight(35);
+		backButton.setMaxHeight(35);
+		closeButton.setMaxHeight(35);
+        confirmButton.setMinHeight(35);
+        backButton.setMinHeight(35);
+        closeButton.setMinHeight(35);
 		buttonBox.setAlignment(Pos.CENTER);
 		buttonBox.setMinSize(600, 30);
 
@@ -72,12 +78,12 @@ public class OrderPage3 {
 			homePage.display(window, pizzeria, customer);
 		});
 
-		closeButton.setId("closeButton");
-		closeButton.setOnAction(e ->
-			window.close()
-		);
+			closeButton.setId("closeButton");
+			closeButton.setOnAction(e -> {
+				window.close();
+			});
 
-		buttonBox.getChildren().addAll(backButton, confirmButton, closeButton);
+			buttonBox.getChildren().addAll(backButton, confirmButton, closeButton);
 
 		HBox titleBox = new HBox();
 		titleBox.getChildren().add(yourOrder);
@@ -86,8 +92,11 @@ public class OrderPage3 {
 		titleBox.setMinSize(600, 50);
 
 		ScrollPane scrollPane = new ScrollPane(gridPane);
-		scrollPane.setMinSize(600, 400);
-		buttonBox.setMinSize(600, 100);
+        scrollPane.prefWidthProperty().bind(window.widthProperty());
+        scrollPane.prefHeightProperty().bind(window.heightProperty());
+        scrollPane.setPadding(new Insets(10, 1, 5, 10));
+		//scrollPane.setMinSize(600, 400);
+		buttonBox.setMinSize(600, 60);
 
 		VBox layout = new VBox();
 		layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
@@ -102,11 +111,11 @@ public class OrderPage3 {
 		});
 
 		Scene scene4;
-		scene4 = new Scene(layout);
+		scene4 = new Scene(layout,800,600);
 		layout.setId("layout");
 		layout.prefWidthProperty().bind(window.widthProperty());
 		layout.prefHeightProperty().bind(window.heightProperty());
-		scene4.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage3.css").toExternalForm());
+		scene4.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage3.css").toExternalForm());	//TODO: ???
 		window.setScene(scene4);
 	}
 
@@ -123,6 +132,7 @@ public class OrderPage3 {
 		GridPane.setConstraints(totalBox, 1, nomiLabels.size()+2);
 		return gridPane;
 	}
+
 
 	/** Costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
 	public static GridPane graphicRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, Order order) {

@@ -7,7 +7,7 @@
 .button {
   -fx-background-color: #eda615;
   -fx-color: black;
-  -fx-padding: 16px 32px;
+  -fx-font-size: 12px;
   -fx-text-align: center;
   -fx-display: inline-block;
   -fx-font-family: Helvetica, Arial, sans-serif;

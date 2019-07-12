@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import pizzeria.*;
 
@@ -55,8 +56,8 @@ public class PizzeriaModifyMenuPage {
         toppingsList.getItems().addAll(pizzeria.getIngredientsPizzeria().values());
         toppingsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        Label infoNewPizzaLabel = new Label();
-        infoNewPizzaLabel.setText("Selezionare gli ingredienti usando CTRL.");
+        Text infoNewPizzaLabel = new Text();
+        infoNewPizzaLabel.setText("Per selezionare piú ingredienti \n tenere premuto CTRL.");
 
         Button addPizzaButton = new Button("Add Pizza");
         addPizzaButton.setOnAction(e ->
@@ -76,6 +77,7 @@ public class PizzeriaModifyMenuPage {
 		);
 
 		Button backButton = new Button("← Return");
+		backButton.setMinHeight(35);
 		backButton.setOnAction(e -> {
 			PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
 			pizzeriaHomePage.display(pizzeria, window);
@@ -104,11 +106,12 @@ public class PizzeriaModifyMenuPage {
 
         VBox layout = new VBox();
         layout.getChildren().addAll(table, hBox, returnHBox);
+        layout.setPadding(new Insets(10,10,10,10));
         layout.setOnKeyPressed(ke -> {
             if(ke.getCode() == KeyCode.BACK_SPACE)
                 backButton.fire();
         });
-        Scene scene = new Scene(layout);
+        Scene scene = new Scene(layout,800,600);
         window.setScene(scene);
         window.show();
     }
