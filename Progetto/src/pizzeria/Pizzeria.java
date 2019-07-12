@@ -89,7 +89,7 @@ public class Pizzeria {
 
 	public HashMap<String,Order> getOrders() {
 		try {
-			this.orders = OrderDB.getOrders(this, this.orders);
+			this.orders = OrderDB.getOrders(this.orders);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

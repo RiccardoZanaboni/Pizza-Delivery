@@ -33,7 +33,7 @@ public class OrderDB {
         Database.insertStatement("insert into sql7293749.OrderedPizza values ('" + order.getOrderCode() + "', '" + p.getName() + "', '" + p.getDescription() + "', '" + p.getPrice() + "'); ");
     }
 
-    public static HashMap<String, Order> getOrders(Pizzeria pizzeria, HashMap<String, Order> orders) throws SQLException {
+    public static HashMap<String, Order> getOrders(HashMap<String, Order> orders) throws SQLException {
         ResultSet rs = Database.getStatement("SELECT * FROM sql7293749.Orders left JOIN sql7293749.Users ON Orders.username = Users.User;");
         int i = 0;
         while (rs.next()) {
@@ -49,7 +49,10 @@ public class OrderDB {
                 order.setName(citofono);
                 order.setAddress(address);
                 order.setTime(date);
-                order.setCompletedDb(pizzeria, quantity, date);
+                //order.setCompletedDb(pizzeria, quantity, date);
+                // TODO: questo dava problema critico,
+                //  quando si chiede l'ultimo ordine subito dopo avere confermato un nuovo ordine...
+                //  Senza questa riga sembra funzionare comunque!
                 ResultSet rsPizza = OrderDB.getOrderedPizzasById(orderID);
                 while (rsPizza.next()) {
                     HashMap<String, String> ingr = new HashMap<>();

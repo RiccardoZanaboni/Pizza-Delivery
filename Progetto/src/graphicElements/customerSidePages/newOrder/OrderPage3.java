@@ -56,8 +56,8 @@ public class OrderPage3 {
 		);
 
 		HBox buttonBox = new HBox(10);
-		Button confirmButton = new Button("Conferma e torna alla Home ✔");
-		Button closeButton = new Button("Esci senza confermare ☓");
+		Button confirmButton = new Button("Conferma ordine ✔");
+		Button closeButton = new Button("Annulla ordine ☓");
 		buttonBox.setAlignment(Pos.CENTER);
 		buttonBox.setMinSize(600, 30);
 
@@ -123,7 +123,6 @@ public class OrderPage3 {
 		GridPane.setConstraints(totalBox, 1, nomiLabels.size()+2);
 		return gridPane;
 	}
-
 
 	/** Costruisce etichette per il riepilogo della versione grafica, in OrderPage3. */
 	public static GridPane graphicRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, Order order) {

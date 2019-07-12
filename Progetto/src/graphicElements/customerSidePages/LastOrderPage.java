@@ -84,8 +84,9 @@ public class LastOrderPage{
         return gridPane;
     }
 
+    // TODO: questo metodo è IDENTICO a quello in OrderPage3, dobbiamo trovare una soluzione.
 
-    /** Costruisce etichette per il riepilogo della versione grafica*/
+    /** Costruisce etichette per il riepilogo della versione grafica */
     public static GridPane graphicRecap(ArrayList<Label> nomiLabels, ArrayList<Label> countPizzeLabels, ArrayList<Label> ingrLabels, ArrayList<Label> prezziLabels, Order order) {
         GridPane gridPane = new GridPane();
         Label label = new Label();

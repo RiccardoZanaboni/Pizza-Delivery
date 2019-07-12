@@ -11,9 +11,8 @@ public class CustomerDB {
         try {
             Database.insertStatement("insert into sql7293749.Users values ('" + nome + "', '" + password +  "', '" + mailAddress + "', '', '', '') ");	// inserisce account nel DB
             return true;
-        } catch (NumberFormatException nfe) {
-            String err = "\nErrore nell'inserimento dei dati utente. Riprovare:";
-            System.out.println(TextColorServices.colorSystemOut(err, Color.RED, false, false));
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -27,7 +26,7 @@ public class CustomerDB {
         return hasRows;
     }
 
-    public static String  getCustomerFromUsername(String username, int columnIndex){
+    public static String getCustomerFromUsername(String username, int columnIndex){
         ResultSet rs;
         String info = null;
         try {

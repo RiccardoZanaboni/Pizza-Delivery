@@ -70,9 +70,7 @@ public class HomePage {
 		spazioPane.getChildren().add(imageView);
 		spazioPane.setAlignment(Pos.CENTER);
 
-		// makeNewOrder - login - register - myAccount (bloccato se non loggato)
-
-		Button makeOrderButton = new Button("Nuovo Ordine");
+		Button makeOrderButton = new Button("Nuovo ordine");
         makeOrderButton.prefWidthProperty().bind(window.widthProperty());
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
         OpeningPossibilities checkOpen = TimeServices.checkTimeOrder(pizzeria);
@@ -109,7 +107,7 @@ public class HomePage {
         	Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
         	if(last != null) {
 				LastOrderPage lastOrderPage = new LastOrderPage();
-				lastOrderPage.display(window, PizzeriaServices.CustomerLastOrder(customer, pizzeria), pizzeria, customer);
+				lastOrderPage.display(window, last, pizzeria, customer);
 			} else GenericAlert.display(customer.getUsername() + ", non hai ancora effettuato nessun ordine!");
 		});
 

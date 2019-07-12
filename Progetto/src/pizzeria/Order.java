@@ -92,12 +92,10 @@ public class Order implements Comparable<Order> {
     }*/
 
     /** Setta l'ordine come completo e aggiorna le disponibilità. */
-    // todo: probabilmente va sistemato/spostato
 	public void setCompletedDb(Pizzeria pizzeria, int tot, Date orario) {
 		Date oggi = new Date();
 		if(oggi.getDate() == orario.getDate())		// controllo nel caso sia scattata la mezzanotte
 			pizzeria.updateOvenAndDeliveryMan(orario, tot, this);
-		//this.isCompleted = true;		// TODO: isCompleted da togliere
 	}
 
 	public void setTime(Date orario) {
