@@ -15,9 +15,13 @@ import pizzeria.Pizzeria;
 
 public class YourProfilePage {
 
+    /** Lo Stage mostra una pagina in cui è possibile aggiornare i propri dati presenti
+     * all'interno del DB. Il DB mostra in automatico quelli già presenti (dove disponibili).
+     * Premendo il pulsante di conferma, i dati vengono aggiornati e salvati. */
     public void display(Stage window, Pizzeria pizzeria, Customer customer) {
         window.setTitle("Wolf of Pizza - I tuoi Dati");
 
+        /* Campo Nome */
         Label nameLabel = new Label("Nome:\t ");
         TextField nameInput = new TextField();
         nameInput.setPromptText("Il tuo nome");
@@ -27,6 +31,7 @@ public class YourProfilePage {
         nameBox.getChildren().addAll(nameLabel, nameInput);
         nameBox.setAlignment(Pos.CENTER);
 
+        /* Campo Cognome */
         Label surnameLabel = new Label("Cognome: ");
         TextField surnameInput = new TextField();
         surnameInput.setPromptText("Il tuo cognome");
@@ -36,6 +41,7 @@ public class YourProfilePage {
         surnameBox.getChildren().addAll(surnameLabel, surnameInput);
         surnameBox.setAlignment(Pos.CENTER);
 
+        /* Campo Indirizzo */
         Label addressLabel = new Label("Indirizzo: ");
         TextField addressInput = new TextField();
         addressInput.setPromptText("Il tuo indirizzo");
@@ -45,6 +51,7 @@ public class YourProfilePage {
         addressBox.getChildren().addAll(addressLabel, addressInput);
         addressBox.setAlignment(Pos.CENTER);
 
+        /* Bottone per tornare alla HomePage senza salvare le modifiche */
         Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
@@ -52,14 +59,12 @@ public class YourProfilePage {
            homePage.display(window, pizzeria, customer);
         });
 
+        /* Bottone per confermare le modifiche */
         Button confirmButton = new Button(" Conferma modifiche");
         confirmButton.setOnAction(e-> {
             String newName = nameInput.getText();
             String newSurname = surnameInput.getText();
             String newAddress = addressInput.getText();
-            //customer.setName(newName);
-            //customer.setSurname(newSurname);
-            //customer.setAddress(newAddress);
             if(CustomerDB.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress)) {
                 HomePage homePage = new HomePage();
                 homePage.display(window, pizzeria, customer);
@@ -79,6 +84,4 @@ public class YourProfilePage {
         window.setScene(scene);
         window.show();
     }
-
-    //TODO: manca CSS
 }

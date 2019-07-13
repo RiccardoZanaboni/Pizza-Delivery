@@ -1,19 +1,87 @@
 package textualElements;
 
 import database.CustomerDB;
+import enums.OpeningPossibilities;
+import interfaces.TextualInterface;
 import javafx.scene.paint.Color;
 import pizzeria.Customer;
 import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
+import pizzeria.services.PizzeriaServices;
 import pizzeria.services.TextColorServices;
 import pizzeria.services.TimeServices;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static enums.OpeningPossibilities.CLOSING;
+
 public class TextCustomerSide {
 	private Scanner scan = new Scanner(System.in);
+
+	/** Al lancio di interfaces.TextualInterface, inizia un nuovo ordine solo se richiesto. */
+	public void whatDoYouWant(Customer customer, Pizzeria pizzeria) throws SQLException {
+		String risposta;
+		OpeningPossibilities isOpen = TimeServices.checkTimeOrder(pizzeria);
+		/* se la pizzeria è aperta */
+		if (isOpen == OpeningPossibilities.OPEN) {
+			System.out.println(TextCustomerSide.whatDoYouWantPossibilities(true));
+			System.out.print(TextColorServices.colorSystemOut("\t>> ", Color.YELLOW, false, false));
+			risposta = scan.nextLine().toUpperCase();
+			whatDoYouWantAnswers(true, risposta, customer,pizzeria);
+			/* se la pizzeria è chiusa o in chiusura */
+		} else {
+			String chiusura;
+			if (isOpen == CLOSING)
+				chiusura = "\nAttenzione: la pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
+			else
+				chiusura = "\nAttenzione: la pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
+			System.out.println(TextColorServices.colorSystemOut(chiusura, Color.RED, false, false));
+			System.out.println(TextCustomerSide.whatDoYouWantPossibilities(false));
+			System.out.print(TextColorServices.colorSystemOut("\t>> ", Color.YELLOW, false, false));
+			risposta = scan.nextLine().toUpperCase();
+			whatDoYouWantAnswers(false, risposta, customer,pizzeria);
+		}
+	}
+
+	/** In whatDoYouWant(), gestisce le possibili risposte alla domanda. */
+	private void whatDoYouWantAnswers(boolean isOpen, String risposta, Customer customer, Pizzeria pizzeria) throws SQLException {
+		switch (risposta){
+			case "L":
+				Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
+				if(last != null){
+					System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
+					System.out.println(TextCustomerSide.recapOrder(last));
+				} else System.out.println(TextColorServices.colorSystemOut("\n" + customer.getUsername() + ", non hai ancora effettuato nessun ordine!\n",Color.RED,false,false));
+				whatDoYouWant(customer,pizzeria);
+				break;
+			case "M":
+				TextCustomerSide customerSide = new TextCustomerSide();
+				customerSide.modifyAccount(customer);
+				whatDoYouWant(customer,pizzeria);
+				break;
+			case "H":
+				System.out.println(PizzeriaServices.getHistory(false));
+				whatDoYouWant(customer,pizzeria);
+				break;
+			case "E":
+				System.out.println(TextColorServices.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
+				/* logout */
+				TextualInterface textualInterface = new TextualInterface();
+				textualInterface.askAccess();
+				break;
+			default:
+				if(isOpen && risposta.equals("N")){
+					TextNewOrder newOrder = new TextNewOrder();
+					newOrder.makeOrderText(customer, pizzeria, new TextCustomerSide());
+				} else {
+					System.out.println(TextColorServices.colorSystemOut("\nSpiacenti: inserito carattere non valido. Riprovare:", Color.RED, false, false));
+					whatDoYouWant(customer,pizzeria);
+				} break;
+		}
+	}
 
 	/** Elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
 	public static String possibleAddictions(Pizzeria pizzeria) {
@@ -134,7 +202,7 @@ public class TextCustomerSide {
 	}
 
 	/** Restituisce una stringa con i vari prodotti, per il riepilogo. */
-	public static String textRecapProducts(Order order) {		// todo: va in testuale?
+	public static String textRecapProducts(Order order) {
 		StringBuilder prodotti = new StringBuilder("\n");
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		for (int i = 0; i < order.getNumPizze(); i++) {

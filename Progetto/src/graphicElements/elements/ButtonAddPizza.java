@@ -16,17 +16,15 @@ public class ButtonAddPizza extends Button {
 	public ButtonAddPizza(Button shoppingCartButton, Order order, Pizza pizza){
 		this.setId("addpizza");
 		this.setShape(new Circle(1000));
-		this.setText("✚");//("Aggiungi al carrello ✔︎");
+		this.setText("✚");
 		this.setOnAction(e-> {
 			if (order.getNumPizze()<16) {
 				order.addPizza(pizza, 1);
 				pizza.setCount(true);
-				//countPizza.setText(""+pizzeria.getMenu().get(pizza).getCount());
 				order.setNumTemporaryPizze(true);
 				shoppingCartButton.setText(order.getNumTemporaryPizze()+"");
 			} else
 				GenericAlert.display("Attenzione: numero massimo di pizze raggiunto!");
 		});
 	}
-
 }

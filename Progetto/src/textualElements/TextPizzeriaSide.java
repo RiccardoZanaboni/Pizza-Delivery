@@ -23,7 +23,7 @@ public class TextPizzeriaSide {
 		switch (risposta){
 			case "V":
 				pizzeria.updatePizzeriaToday();
-				System.out.println(TextColorServices.colorSystemOut("Ecco gli ordini da evadere...\n", Color.YELLOW, false, false));
+				System.out.println(TextColorServices.colorSystemOut("Questi sono gli ordini da evadere:\n", Color.YELLOW, false, false));
 				/* Visualizza solo gli ordini di oggi */
 				for(String code : pizzeria.getOrders().keySet()){
 					if(pizzeria.getOrders().get(code).getTime().getDate()==(new Date().getDate()))
@@ -69,24 +69,6 @@ public class TextPizzeriaSide {
 
 		return (TextColorServices.getLine() + intro + con + ordini + ordiniS + con + modMenu + modMenuS
 				+ con + mail + mailS + con + exit + exitS);
-	}
-
-	public static String modifyMenuPossibilities() {
-		String intro = TextColorServices.colorSystemOut("\nQuesto è ciò che puoi fare:\n",Color.YELLOW,false,false);
-		String con = "\t- con '";
-		String add = TextColorServices.colorSystemOut("A", Color.ORANGE,true,false);
-		String addS = "' puoi aggiungere una pizza al menu;\n";
-		String rmv = TextColorServices.colorSystemOut("R",Color.ORANGE,true,false);
-		String rmvS = "' puoi rimuovere una pizza dal menu;\n";
-		String addIng = TextColorServices.colorSystemOut("AI",Color.ORANGE,true,false);
-		String addIngS = "' puoi aggiungere un ingrediente possibile;\n";
-		String rmvIng = TextColorServices.colorSystemOut("RI",Color.ORANGE,true,false);
-		String rmvIngS = "' puoi rimuovere un ingrediente da quelli possibili;\n";
-		String ret = TextColorServices.colorSystemOut("B",Color.ORANGE,true,false);
-		String retS = "' puoi tornare indietro.\n";
-
-		return (intro + con + add + addS + con + rmv + rmvS + con + addIng + addIngS + con + rmvIng + rmvIngS
-				+ con + ret + retS);
 	}
 
 	public void sendTextualMail() {
@@ -141,6 +123,24 @@ public class TextPizzeriaSide {
 		}
 	}
 
+	public static String modifyMenuPossibilities() {
+		String intro = TextColorServices.colorSystemOut("\nQuesto è ciò che puoi fare:\n",Color.YELLOW,false,false);
+		String con = "\t- con '";
+		String add = TextColorServices.colorSystemOut("A", Color.ORANGE,true,false);
+		String addS = "' puoi aggiungere una pizza al menu;\n";
+		String rmv = TextColorServices.colorSystemOut("R",Color.ORANGE,true,false);
+		String rmvS = "' puoi rimuovere una pizza dal menu;\n";
+		String addIng = TextColorServices.colorSystemOut("AI",Color.ORANGE,true,false);
+		String addIngS = "' puoi aggiungere un ingrediente possibile;\n";
+		String rmvIng = TextColorServices.colorSystemOut("RI",Color.ORANGE,true,false);
+		String rmvIngS = "' puoi rimuovere un ingrediente da quelli possibili;\n";
+		String ret = TextColorServices.colorSystemOut("B",Color.ORANGE,true,false);
+		String retS = "' puoi tornare indietro.\n";
+
+		return (intro + con + add + addS + con + rmv + rmvS + con + addIng + addIngS + con + rmvIng + rmvIngS
+				+ con + ret + retS);
+	}
+
 	public void howModifyMenuAnswer(String risposta, Pizzeria pizzeria, TextualInterface textualInterface) throws SQLException {
 		switch (risposta){
 			case "A":
@@ -162,7 +162,7 @@ public class TextPizzeriaSide {
 				break;
 			default:
 				System.out.println(TextColorServices.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
-				/*  torna a "ecco cosa puoi fare" */
+				/* torna a "ecco cosa puoi fare" */
 				break;
 		}
 	}

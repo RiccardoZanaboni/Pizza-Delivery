@@ -15,6 +15,11 @@ import pizzeria.Pizzeria;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
 
 public class RecoverPswPage {
+
+	/** Lo Stage ospita la pagina di Recupero password.
+	 * Se l'indirizzo e-mail è effettivamente presente nel DB, una mail con i dati di accesso
+	 * viene inviata all'utente, il quale potrà tornare alla pagina di login e accedere.
+	 * */
 	public void display(Stage window, Pizzeria pizzeria) {
 		window.setTitle("Wolf of Pizza - Recupero Password");
 
@@ -33,7 +38,7 @@ public class RecoverPswPage {
 		Button recoverPswButton = new Button("Recupera Password");
 		recoverPswButton.setMinSize(100, 50);
 		recoverPswButton.setOnAction(e-> {
-			insertErrorLabel.setText("");		// fixme: non funziona (dovrebbe togliere la scritta "indirizzo non corretto", mentre sta inviando la mail).
+			insertErrorLabel.setText("");
 			String mailAddress =  mailInput.getText();
 			SendJavaMail newMail = new SendJavaMail();
 			if(Database.checkMail(mailAddress)) {
@@ -69,7 +74,6 @@ public class RecoverPswPage {
 				recoverPswButton.fire();
 			}
 		});
-
 		layout.getStyleClass().add("layout");
 
 		Scene scene = new Scene(layout, 880, 600);
@@ -77,5 +81,4 @@ public class RecoverPswPage {
 		scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/loginPageStyle.css").toExternalForm());
 		window.show();
 	}
-
 }

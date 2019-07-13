@@ -16,6 +16,7 @@ import java.util.StringTokenizer;
 
 public class OrderDB {
 
+    /** Aggiunge al DB i dati definitivi dell'ordine. */
     public static void putOrder(Order order) {
         DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dataString = dateFormatYMD.format(order.getTime());
@@ -29,30 +30,29 @@ public class OrderDB {
         }
     }
 
-    public static void putOrderedPizzas(Order order, Pizza p) {
+    /** Aggiorna nel DB l'elenco delle pizze ordinate. */
+    private static void putOrderedPizzas(Order order, Pizza p) {
         Database.insertStatement("insert into sql7293749.OrderedPizza values ('" + order.getOrderCode() + "', '" + p.getName() + "', '" + p.getDescription() + "', '" + p.getPrice() + "'); ");
     }
 
-    public static HashMap<String, Order> getOrders(HashMap<String, Order> orders) throws SQLException {
+    /** Recupera dal DB tutti gli ordini relativi al giorno corrente. */
+    public static HashMap<String, Order> getOrders(Pizzeria pizzeria, HashMap<String, Order> orders) throws SQLException {
         ResultSet rs = Database.getStatement("SELECT * FROM sql7293749.Orders left JOIN sql7293749.Users ON Orders.username = Users.User;");
         int i = 0;
         while (rs.next()) {
             String orderID = rs.getString(1);
-            String username = rs.getString(2);
-            String address = rs.getString(3);
-            String citofono = rs.getString(4);
             int quantity = rs.getInt(5);
-            Date date = rs.getTimestamp(6);
-            Order order = new Order(i);
             if (!orders.containsKey(orderID) && quantity > 0) {
+                String username = rs.getString(2);
+                String address = rs.getString(3);
+                String citofono = rs.getString(4);
+                Date date = rs.getTimestamp(6);
+                Order order = new Order(i);
                 order.setCustomer(new Customer(username));
                 order.setName(citofono);
                 order.setAddress(address);
                 order.setTime(date);
-                //order.setCompletedDb(pizzeria, quantity, date);
-                // TODO: questo dava problema critico,
-                //  quando si chiede l'ultimo ordine subito dopo avere confermato un nuovo ordine...
-                //  Senza questa riga sembra funzionare comunque!
+                order.updateAvailability(pizzeria, quantity, date);
                 ResultSet rsPizza = OrderDB.getOrderedPizzasById(orderID);
                 while (rsPizza.next()) {
                     HashMap<String, String> ingr = new HashMap<>();
@@ -62,7 +62,8 @@ public class OrderDB {
                         try {
                             String ingredienteAggiuntoString = SettleStringsServices.arrangeIngredientString(stAgg);
                             ingr.put(ingredienteAggiuntoString, ingredienteAggiuntoString);
-                        } catch (Exception ignored) {
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                     Pizza p = new Pizza(rsPizza.getString(1), ingr, rsPizza.getDouble(3));
@@ -75,8 +76,8 @@ public class OrderDB {
         return PizzeriaServices.sortOrders(orders);
     }
 
-
-    public static ResultSet getOrderedPizzasById( String orderID) {
+    /** Recupera dal DB tutte le pizze presenti in un determinato ordine. */
+    private static ResultSet getOrderedPizzasById( String orderID) {
         return Database.getStatement("select nome, ingrediente, prezzo from sql7293749.Orders natural join sql7293749.OrderedPizza where orderID = " + "\"" + orderID + "\"");
 
     }

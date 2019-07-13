@@ -15,6 +15,8 @@ import pizzeria.services.PizzeriaServices;
 
 public class WhoWeArePage {
 
+    /** Lo Stage mostra la pagina di History della Pizzeria, che racconta le origini e le peculiarità del locale.
+     * Il tutto è recuperato dal file di testo "history.txt". */
     public void display(Stage window, Pizzeria pizzeria, Customer customer) {
         window.setTitle("Wolf of Pizza - Chi Siamo");
 
@@ -36,19 +38,8 @@ public class WhoWeArePage {
             homePage.display(window, pizzeria, customer);
         });
 
-        /*Button buttonVideo= new Button("Video Presentazione!!");
-        buttonVideo.setId("confirmButton");
-        buttonVideo.setOnAction(event ->  {
-            //TODO: non funziona!!!
-            try {
-                Desktop.getDesktop().browse(new URI("https://drive.google.com/open?id=1IywtXGVTaywaYirjZSVLLV3KDOI1bBx-"));
-            } catch (Exception e) {
-                GenericAlert.display("Spiacenti: video di presentazione al momento non disponibile.");
-            }
-        });
-        */
         HBox buttonBox = new HBox(10);
-        buttonBox.getChildren().addAll(backButton/*,buttonVideo*/);
+        buttonBox.getChildren().addAll(backButton);
         buttonBox.setAlignment(Pos.CENTER);
 
         VBox layout = new VBox();

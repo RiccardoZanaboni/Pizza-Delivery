@@ -15,34 +15,37 @@ import pizzeria.Pizzeria;
 
 public class PizzeriaHomePage {
 
+    /** Lo Stage mostra la HomePage dal lato della Pizzeria, una volta che questa si sia
+     * correttamente autenticata come tale. */
     public void display (Pizzeria pizzeria,Stage window) {
         window.setTitle("Wolf of Pizza - Home");
-
         Label label = new Label("PIZZERIA");
         Button logoutButton = new Button();
         Image image = new Image("graphicElements/images/logout-128.png");
         ImageView imageView1 = new ImageView(image);
         imageView1.setFitHeight(20);
         imageView1.setFitWidth(20);
+
+        /* Bottone di Logout */
         logoutButton.setGraphic(imageView1);
-        //logoutButton.setMinSize(100, 50);
         logoutButton.setOnAction(e->{
             LoginAccountPage loginAccountPage = new LoginAccountPage();
             loginAccountPage.display(window,pizzeria);
         });
-        HBox hBox=new HBox(10);
+        HBox hBox = new HBox(10);
         hBox.getChildren().addAll(label,logoutButton);
         hBox.setAlignment(Pos.CENTER);
 
+        /* Bottone per visualizzare l'elenco degli ordini da evadere oggi */
         Button visualizeOrdersButton = new Button("Visualizza Ordini");
         visualizeOrdersButton.setOnAction(e-> {
-            //PizzeriaVisualizeOrdersPage pizzeriaOrderPage = new PizzeriaVisualizeOrdersPage();
             pizzeria.updatePizzeriaToday();
             PizzeriaVisualizeOrdersPage.display(pizzeria, window);
         });
         visualizeOrdersButton.prefWidthProperty().bind(window.widthProperty());
         visualizeOrdersButton.prefHeightProperty().bind(window.heightProperty());
 
+        /* Bottone per modificare il menu */
         Button manageMenuButton = new Button("Gestisci Menu");
         manageMenuButton.prefWidthProperty().bind(window.widthProperty());
         manageMenuButton.prefHeightProperty().bind(window.heightProperty());

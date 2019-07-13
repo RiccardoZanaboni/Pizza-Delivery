@@ -70,10 +70,7 @@ public class PizzaDB {
 		}
 		return menu;
 	}
-	/**
-	 * Consente alla pizzeria di aggiungere una pizza al Menu
-	 * che è salvato sul Database.
-	 */
+	/** Consente alla pizzeria di aggiungere una pizza al Menu che è salvato sul Database. */
 	public static void putPizzaText(Pizzeria pizzeria){
 		HashMap<String,String> ingredMap = new HashMap<>();
 		try {
@@ -120,6 +117,7 @@ public class PizzaDB {
 		}
 	}
 
+	/** Consente alla pizzeria di rimuovere una pizza dal Menu salvato sul Database. */
 	public static void removePizzaText(Pizzeria pizzeria) {
 		try {
 			System.out.print(TextColorServices.colorSystemOut("Inserisci il nome della pizza da rimuovere:\t", Color.YELLOW, false, false));

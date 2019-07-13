@@ -1,20 +1,16 @@
 package interfaces;
 
 import database.*;
-import enums.OpeningPossibilities;
 import javafx.scene.paint.Color;
 import pizzeria.*;
 import pizzeria.pizzeriaSendMail.SendJavaMail;
 import pizzeria.services.*;
 import pizzeria.services.TextColorServices;
 import textualElements.TextCustomerSide;
-import textualElements.TextNewOrder;
 import textualElements.TextPizzeriaSide;
 
 import java.sql.SQLException;
 import java.util.*;
-
-import static enums.OpeningPossibilities.*;
 
 /**
  * * @authors: Javengers, 2019
@@ -32,85 +28,14 @@ import static enums.OpeningPossibilities.*;
 
 public class TextualInterface {
 
-	/**
-	 * TODO: questa spiegazione va in pizzeria.
-	 * 16 parametri: nome, indirizzo, 7 orari di apertura (da domenica a sabato),
-	 * 7 orari di chiusura (da domenica a sabato).
-	 *
-	 * Gli orari partono sempre da LocalTime.MIN, che corrisponde a mezzanotte.
-	 * A questo si aggiunge (con il metodo plus()) ora e minuti desiderati.
-	 *
-	 * ATTENZIONE: Per lasciare la pizzeria chiusa in un particolare giorno, porre openTime = closeTime.
-	 * PRESTARE PARTICOLARE ATTENZIONE: assicurarsi che ogni giorno la pizzeria rimanga aperta almeno 20 minuti.
-	 *
-	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
-	 * */
-	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia");
+	/** Richiama il costruttore della pizzeria. */
+	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via della Mozzarella, Pavia");
 	private Scanner scan = new Scanner(System.in);
 
-	/** Al lancio di interfaces.TextualInterface, inizia un nuovo ordine solo se richiesto. */
-	public void whatDoYouWant(Customer customer) throws SQLException {
-		String risposta;
-		OpeningPossibilities isOpen = TimeServices.checkTimeOrder(wolf);
-		/* se la pizzeria è aperta */
-		if (isOpen == OpeningPossibilities.OPEN) {
-			System.out.println(TextCustomerSide.whatDoYouWantPossibilities(true));
-			System.out.print(TextColorServices.colorSystemOut("\t>> ", Color.YELLOW, false, false));
-			risposta = scan.nextLine().toUpperCase();
-			whatDoYouWantAnswers(true, risposta, customer);
-			/* se la pizzeria è chiusa o in chiusura */
-		} else {
-			String chiusura;
-			if (isOpen == CLOSING)
-				chiusura = "\nAttenzione: la pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
-			else
-				chiusura = "\nAttenzione: la pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
-			System.out.println(TextColorServices.colorSystemOut(chiusura, Color.RED, false, false));
-			System.out.println(TextCustomerSide.whatDoYouWantPossibilities(false));
-			System.out.print(TextColorServices.colorSystemOut("\t>> ", Color.YELLOW, false, false));
-			risposta = scan.nextLine().toUpperCase();
-			whatDoYouWantAnswers(false, risposta, customer);
-		}
-	}
-
-	/** In whatDoYouWant(), gestisce le possibili risposte alla domanda. */
-	private void whatDoYouWantAnswers(boolean isOpen, String risposta, Customer customer) throws SQLException {
-		switch (risposta){
-			case "L":
-				Order last = PizzeriaServices.CustomerLastOrder(customer,wolf);
-				if(last != null){
-					System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
-					System.out.println(TextCustomerSide.recapOrder(last));
-				} else System.out.println(TextColorServices.colorSystemOut("\n" + customer.getUsername() + ", non hai ancora effettuato nessun ordine!\n",Color.RED,false,false));
-				whatDoYouWant(customer);
-				break;
-			case "M":
-				TextCustomerSide customerSide = new TextCustomerSide();
-				customerSide.modifyAccount(customer);
-				whatDoYouWant(customer);
-				break;
-			case "H":
-				System.out.println(PizzeriaServices.getHistory(false));
-				whatDoYouWant(customer);
-				break;
-			case "E":
-				System.out.println(TextColorServices.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
-				/* logout */
-				askAccess();
-				break;
-			default:
-				if(isOpen && risposta.equals("N")){
-					TextNewOrder newOrder = new TextNewOrder();
-					newOrder.makeOrderText(customer, wolf, this);
-				} else {
-					System.out.println(TextColorServices.colorSystemOut("\nSpiacenti: inserito carattere non valido. Riprovare:", Color.RED, false, false));
-					whatDoYouWant(customer);
-				} break;
-		}
-	}
-
-	/** Chiede se si vuole procedere con il login o con la creazione di un nuovo account. */
+	/** Chiede se si vuole procedere con il login o con la creazione di un nuovo account, agendo di conseguenza. */
 	public void askAccess() throws SQLException {
+
+		/* Domanda di accesso */
 		String log = TextColorServices.colorSystemOut("L",Color.ORANGE,true,false);
 		String newAcc = TextColorServices.colorSystemOut("N",Color.ORANGE,true,false);
 		String recPsw = TextColorServices.colorSystemOut("R",Color.ORANGE,true,false);
@@ -118,9 +43,12 @@ public class TextualInterface {
 				+ "\t\t'" + log + "' per eseguire il login,\n\t\t'" + newAcc + "' per creare un nuovo account,\n\t\t'"
 				+ recPsw + "' per recuperare i dati del tuo account.");
 		System.out.print(TextColorServices.colorSystemOut("\t>>\t",Color.YELLOW,false,false));
+
+		/* Lettura della risposta */
 		String answer = scan.nextLine().toUpperCase();
 		switch (answer) {
 			case "L":
+				/* login: vengono richiesti username e password */
 				String userQuestion = TextColorServices.colorSystemOut("\n\tUsername:\t", Color.YELLOW, false, false);
 				System.out.print(userQuestion);
 				String user = scan.nextLine().toUpperCase();
@@ -131,22 +59,27 @@ public class TextualInterface {
 				System.out.print(working1);
 				switch(PizzeriaServices.checkLogin(wolf, user,psw)){
 					case OK:
+						/* l'utente ha correttamente effettuato il login */
 						Customer c = new Customer(user);
 						System.out.println("\nBenvenuto: " + user);
-						whatDoYouWant(c);
+						TextCustomerSide customerSide = new TextCustomerSide();
+						customerSide.whatDoYouWant(c,wolf);
 						break;
 					case PIZZERIA:
+						/* la pizzeria si è correttamente autenticata come tale */
 						System.out.println("\nBenvenuto: " + user + " (utente privilegiato)");
 						TextPizzeriaSide pizzeriaSide = new TextPizzeriaSide();
 						pizzeriaSide.whatDoesPizzeriaWant(this,wolf);
 						break;
 					case NO:
+						/* la combinazione username-password non corrisponde ad alcun utente salvato nel DB */
 						System.out.println(TextColorServices.colorSystemOut("\nUsername o password errati: riprovare.\n",Color.RED,false,false));
 						askAccess();
 						break;
 				}
 				break;
 			case "N":
+				/* Viene richiesta la creazione di un nuovo account */
 				String newUserQuestion = TextColorServices.colorSystemOut("\n\tNuovo username:\t\t", Color.YELLOW, false, false);
 				System.out.print(newUserQuestion);
 				String newUser = scan.nextLine().toUpperCase();
@@ -163,48 +96,58 @@ public class TextualInterface {
 				System.out.print(working2);
 				switch(PizzeriaServices.canCreateAccount(mail,newUser,newPsw,confPsw)) {
 					case OK:
+						/* tutti i dati sono stati correttamente inseriti */
 						SendJavaMail newMail = new SendJavaMail();
-						if(!newMail.welcomeMail(newUser,newPsw,mail)) {    // se indirizzo mail non valido
-							System.out.println(TextColorServices.colorSystemOut("Errore: indirizzo e-mail non valido. Riprovare.",Color.RED,false,false));
-							askAccess();
-						}
-						else {
+						if (newMail.welcomeMail(newUser, newPsw, mail)) {
+							/* se l'indirizzo e-mail risulta valido */
 							CustomerDB.putCustomer(newUser,newPsw,mail);
 							System.out.println("\nBenvenuto: " + newUser.toUpperCase() + ". Hai creato un nuovo account.\n");
 							/* login automatico */
 							Customer c = new Customer(newUser);
-							whatDoYouWant(c);
+							TextCustomerSide customerSide = new TextCustomerSide();
+							customerSide.whatDoYouWant(c,wolf);
+						} else {
+							/* se indirizzo e-mail non valido */
+							System.out.println(TextColorServices.colorSystemOut("Errore: indirizzo e-mail non valido. Riprovare.",Color.RED,false,false));
+							askAccess();
 						}
 						break;
 					case SHORT:
+						/* Username o password non sono lunghi almeno TOT caratteri */
 						System.out.println(TextColorServices.colorSystemOut("\nUsername o password troppo breve: riprovare.\n",Color.RED,false,false));
 						askAccess();
 						break;
 					case EXISTING:
+						/* Un account con stesso username o indirizzo e-mail risulta già presente nel DB */
 						System.out.println(TextColorServices.colorSystemOut("\nDati già presenti nel Database: riprovare con indirizzo e-mail o username differente.\nSe già registrato, effettuare il login.\n",Color.RED,false,false));
 						askAccess();
 						break;
 					case DIFFERENT:
+						/* La password non è stata confermata correttamente */
 						System.out.println(TextColorServices.colorSystemOut("\nPassword non coincidente: riprovare.\n",Color.RED,false,false));
 						askAccess();
 						break;
 				}
 				break;
 			case "R":
+				/* viene richiesta una e-mail, in caso di smarrimento dei dati di accesso */
 				String recoverMailQuestion = TextColorServices.colorSystemOut("\n\tInserisci l'indirizzo e-mail dell'account:\t", Color.YELLOW, false, false);
 				System.out.print(recoverMailQuestion);
 				String recMail = scan.nextLine().toUpperCase();
 				if(Database.checkMail(recMail)) {
+					/* Se l'indirizzo e-mail risulta presente nel DB */
 					SendJavaMail newMail = new SendJavaMail();
 					newMail.recoverPassword(recMail);
 					System.out.println(TextColorServices.colorSystemOut("\nUna e-mail ti è stata inviata.\n", Color.YELLOW, false, false));
 					askAccess();
 				} else {
+					/* Indirizzo e-mail non presente */
 					System.out.println(TextColorServices.colorSystemOut("\nSpiacenti: indirizzo e-mail non presente nel Database.\n", Color.RED, false, false));
 					askAccess();
 				}
 				break;
 			default:
+				/* Carattere non valido */
 				String spiacenti = "\nSpiacenti: carattere inserito non valido. Riprovare:\n";
 				System.out.println(TextColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
 				askAccess();
@@ -212,6 +155,7 @@ public class TextualInterface {
 		}
 	}
 
+	/** Viene presentata la pizzeria e subito richiamato il metodo di accesso all'area riservata. */
 	public static void main(String[] args) {
 		TextualInterface textInterface = new TextualInterface();
 		System.out.println(TextCustomerSide.helloThere(textInterface.wolf));

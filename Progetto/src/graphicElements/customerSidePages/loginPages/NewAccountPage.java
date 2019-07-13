@@ -19,6 +19,11 @@ import pizzeria.pizzeriaSendMail.SendJavaMail;
 import pizzeria.services.PizzeriaServices;
 
 public class NewAccountPage {
+
+	/** Lo Stage ospita la pagina di creazione di un nuovo account.
+	 * Una volta inseriti i dati in modo corretto, il login viene effettuato automaticamente.
+	 * In alternativa viene stampato un messaggio di errore.
+	 * */
 	public void display(Stage window, Pizzeria pizzeria) {
 		window.setTitle("Wolf of Pizza - Nuovo Account");
 
@@ -111,7 +116,6 @@ public class NewAccountPage {
 				signUpButton.fire();
 			}
 		});
-
 		layout.getStyleClass().add("layout");
 
 		Scene scene = new Scene(layout, 880, 600);
@@ -120,6 +124,7 @@ public class NewAccountPage {
 		window.show();
 	}
 
+	/** Dafinisce il bottone per tornare alla pagina di Login. */
 	private Button createBackButton(Pizzeria pizzeria, Stage window) {
 		Button backButton = new Button("← Torna indietro");
 		backButton.setId("backButton");

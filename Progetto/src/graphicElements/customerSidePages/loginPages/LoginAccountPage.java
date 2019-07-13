@@ -18,6 +18,11 @@ import pizzeria.Pizzeria;
 import pizzeria.services.PizzeriaServices;
 
 public class LoginAccountPage {
+	/** Lo Stage ospita la pagina di Login.
+	 * E' possibile inserire direttamente i dati per l'accesso, oppure
+	 * passare alle pagine per richiedere la creazione di un nuovo account
+	 * oppure per il recupero dei dati utente.
+	 * */
 	public void display(Stage window, Pizzeria pizzeria) {
 		window.setTitle("Wolf of Pizza - Login");
 

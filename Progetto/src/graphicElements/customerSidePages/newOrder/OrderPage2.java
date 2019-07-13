@@ -41,6 +41,18 @@ public class OrderPage2 {
 	private String name;
 	private Date time;
 
+	/** Lo Stage ospita la seconda pagina della richiesta di un nuovo ordine, quella di inserimento dei dati.
+	 * Se l'utente ha precedentemente inserito nel DB i propri dati personali, le informazioni riguardo
+	 * al cognome e all'indirizzo risultano già presenti (ovviamente modificabili, nel caso l'utente
+	 * non si trovi, per quest'ordine, nel domicilio usuale).
+	 * Il cuore dell'applicazione si nasconde dietro alla scelta dei possibili orari, in quanto
+	 * per la visualizzazione della lista di orari disponibili vi è uno studio degli ordini già effettuati
+	 * da altri utenti, attraverso il DB, in relazione con le disponibilità di forni e fattorini
+	 * da parte della pizzeria.
+	 * Viene visualizzato un messaggio di errore se uno qualunque dei tre campi richiesti non venga riempito.
+	 * Attraverso i bottoni in fondo pagina è possibile spostarsi alla OrderPage3 (Avanti) oppure nuovamente
+	 * alla OrderPage1, per modificare le pizze richieste (Indietro).
+	 * */
 	public void display (Stage window, Order order, Pizzeria pizzeria, Customer customer) {
 		window.setTitle("Wolf of Pizza - Nuovo Ordine");
 
@@ -49,45 +61,56 @@ public class OrderPage2 {
 		hBoxIntestazione.getChildren().add(label);
 		hBoxIntestazione.setAlignment(Pos.CENTER);
 
+		/* Campo Surname */
 		Label surnameLabel = new Label(" Cognome:  ");
 		surnameLabel.setId("nomiLabel");
 		TextField surnameInput = new TextField();
 		surnameInput.setPromptText("Your Surname");
-		String surname = CustomerDB.getCustomerFromUsername(customer.getUsername(),5);
+		String surname;
+		if (order.getName() != null)
+			surname = order.getName();
+		else
+			surname = CustomerDB.getCustomerFromUsername(customer.getUsername(),5);
 		if(surname != null)
 			surnameInput.setText(surname);
 
 		HBox usernameBox = new HBox(50);
 		usernameBox.getChildren().addAll(surnameLabel, surnameInput);
 
+		/* Campo Address */
 		Label addressLabel = new Label(" Indirizzo:    ");
 		addressLabel.setId("nomiLabel");
         TextField addressInput = new TextField();
 		addressInput.setPromptText("Your Address");
-		String address = CustomerDB.getCustomerFromUsername(customer.getUsername(),6);
+		String address;
+		if(!order.getAddress().equals(""))
+			address = order.getAddress();
+		else
+			address = CustomerDB.getCustomerFromUsername(customer.getUsername(),6);
 		if(address != null)
 			addressInput.setText(address);
 
 		HBox addressBox = new HBox(50);
 		addressBox.getChildren().addAll(addressLabel, addressInput);
 
-		Label choiceLabel = new Label(" Orario:\t   ");
-		choiceLabel.setId("nomiLabel");
+		/* Campo TimeChoice */
+		Label timeChoiceLabel = new Label(" Orario:\t   ");
+		timeChoiceLabel.setId("nomiLabel");
 		ChoiceBox<String> choiceBox = new ChoiceBox<>();
 		choiceBox.getItems().addAll(getTime(pizzeria, order.getNumPizze(), customer, window));
 
 		HBox choiceHBox = new HBox(50);
-		choiceHBox.getChildren().addAll(choiceLabel, choiceBox);
+		choiceHBox.getChildren().addAll(timeChoiceLabel, choiceBox);
 
+		/* Bottone di conferma */
 		Button confirmButton = new Button("Prosegui →");
         confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e-> {
-			this.name = surnameInput.getText();
+			this.name = getInfo(surnameInput);
 			this.address = getInfo(addressInput);
 			this.time = getChoice(choiceBox);
 			order.setName(this.name);
 			order.setAddress(this.address);
-			order.setCustomer(customer);
 			order.setTime(this.time);
 			if (checkInsert(this.name,this.address,this.time)) {
 				OrderPage3 orderPage3 = new OrderPage3();
@@ -95,11 +118,12 @@ public class OrderPage2 {
 			}
 		});
 
+		/* Bottone per tornare indietro */
 		Button backButton = new Button("← Torna indietro");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
-			this.name = getInfo(surnameInput);
-			this.address = getInfo(addressInput);
+			order.setName(getInfo(surnameInput));
+			order.setAddress(getInfo(addressInput));
 			OrderPage1 orderPage1 = new OrderPage1();
 			orderPage1.display(window, order, pizzeria, customer);
 		});
@@ -108,12 +132,11 @@ public class OrderPage2 {
 		buttonBox.getChildren().addAll(backButton, confirmButton);
 		buttonBox.setAlignment(Pos.CENTER);
 
+		/* Definizione elementi del GridPane */
 		GridPane gridPane = new GridPane();
-
 		GridPane.setConstraints(usernameBox,0,0);
 		GridPane.setConstraints(addressBox, 0, 1);
 		GridPane.setConstraints(choiceHBox, 0, 2);
-
 		gridPane.getChildren().addAll(usernameBox, addressBox, choiceHBox);
 		gridPane.setPadding(new Insets(130, 5, 20, 70));
 		gridPane.setVgap(20);
@@ -132,7 +155,7 @@ public class OrderPage2 {
             if(ke.getCode()== KeyCode.ENTER) {
                 confirmButton.fire();
             }
-            if(ke.getCode() == KeyCode.CONTROL||ke.getCode() == KeyCode.BACK_SPACE) {
+            if(ke.getCode() == KeyCode.CONTROL || ke.getCode() == KeyCode.BACK_SPACE) {
                 backButton.fire();
             }
         });
@@ -142,6 +165,7 @@ public class OrderPage2 {
         window.setScene(scene3);
 	}
 
+	/* Verifica che tutti i campi siano stati riempiti. */
 	private boolean checkInsert(String name, String address, Date time) {
 		if(name.equals("")) {
 			GenericAlert.display("Attenzione: non è stato inserito il nome!");
@@ -158,11 +182,9 @@ public class OrderPage2 {
 		else return true;
 	}
 
-	// FIXME DA SISTEMARE getChoice , time funziona ma poco carino
-
-	/** legge e restituisce l'orario desiderato */
+	/** Legge e restituisce l'orario sleezionato. */
 	private Date getChoice(ChoiceBox<String> choiceBox) {
-		Date oraScelta;
+		Date choiceTime;
 		String orario = choiceBox.getValue();
 		Calendar calendar = new GregorianCalendar();
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -171,22 +193,23 @@ public class OrderPage2 {
 		orario = day + "/" + month + "/" + year + " " + orario;
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		try {
-			oraScelta = formato.parse(orario);
+			choiceTime = formato.parse(orario);
 		} catch (ParseException e) {
 			return null;
 		}
-		return oraScelta;
+		return choiceTime;
 	}
 
-	/** legge e restituisce l'informazione inserita */
+	/** Legge e restituisce l'informazione inserita */
 	private String getInfo(TextField nInput) {
     	return nInput.getText();
 	}
 
-	/** aggiunge tutti gli orari disponibili alla ObservableList */
+	/** Aggiunge tutti gli orari disponibili alla ObservableList */
 	private ObservableList<String> getTime(Pizzeria pizzeria, int tot, Customer customer, Stage window) {
 		ObservableList<String> orari = FXCollections.observableArrayList();
 		try{
+			//noinspection ConstantConditions
 			orari.addAll(TimeServices.availableTimes(pizzeria, tot));
 		} catch (NullPointerException npe){
 			/* se l'ordine inizia in un orario ancora valido, ma impiega troppo tempo e diventa troppo tardi: */

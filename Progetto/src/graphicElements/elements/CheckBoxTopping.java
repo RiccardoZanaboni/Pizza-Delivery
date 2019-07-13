@@ -9,9 +9,9 @@ public class CheckBoxTopping extends CheckBox {
     private boolean isPresent;
 
     /**
-     * CheckBox utile, nell'interfaccia grafica, per modificare la pizza in questione
-     * aggiungendo o rimuovendo l'ingrediente scelto. Setta automaticamente
-     * gli ingredienti già compresi nella versione della pizza presente nel menu.
+     * CheckBox utile, nell'apposito Box dell'interfaccia grafica, per modificare la pizza selezionata,
+     * aggiungendo o rimuovendo l'ingrediente scelto.
+     * Setta automaticamente gli ingredienti già compresi nella versione della pizza presente nel menu.
      */
 
     public CheckBoxTopping(String ingr, Pizza nuovaPizza) {

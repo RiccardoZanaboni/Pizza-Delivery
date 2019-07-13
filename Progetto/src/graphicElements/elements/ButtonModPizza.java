@@ -13,15 +13,14 @@ public class ButtonModPizza extends Button {
      * un'istanza della pizza desiderata, opportunamente modificata con
      * aggiunta o rimozione di ingredienti, tramite apposito box di modifica.
      */
-
     public ButtonModPizza(Button shoppingCartButton, Order order, Pizzeria pizzeria, String pizza){
         this.setId("modPizza");
         this.setText("Modifica");
         this.setOnAction(e-> {
-            if(order.getNumPizze()<16) {
-                if (ModifyBox.display(order, pizzeria,pizza)) {
+            if(order.getNumPizze() < 16) {
+                ModifyBox box = new ModifyBox();
+                if (box.display(order, pizzeria,pizza)) {
                     order.increaseCountModifiedPizze();
-                    //countModificheLabel.setText("" + order.getCountModifiedPizze());
                     ModifyBox.setAnswer();
                     order.setNumTemporaryPizze(true);
                     shoppingCartButton.setText(order.getNumTemporaryPizze()+"");

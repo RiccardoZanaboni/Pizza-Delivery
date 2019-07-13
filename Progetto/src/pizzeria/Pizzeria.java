@@ -43,9 +43,7 @@ public class Pizzeria {
 	 * una ArrayList di fattorini e una di ordini del giorno.
 	 */
 
-	public Pizzeria(String name, String address/*,
-					LocalTime op1, LocalTime op2, LocalTime op3, LocalTime op4, LocalTime op5, LocalTime op6, LocalTime op7,
-					LocalTime cl1, LocalTime cl2, LocalTime cl3, LocalTime cl4, LocalTime cl5, LocalTime cl6, LocalTime cl7*/) {
+	public Pizzeria(String name, String address){
 		this.userPizzeria = "pizzeria".toUpperCase();
 		this.pswPizzeria = "password".toUpperCase();
 		this.menu = new HashMap<>();
@@ -53,7 +51,7 @@ public class Pizzeria {
 		this.name = name;
 		this.orders = new LinkedHashMap<>();
 		this.address = address;
-		setDayOfTheWeek(/*op1,op2,op3,op4,op5,op6,op7,cl1,cl2,cl3,cl4,cl5,cl6,cl7*/);  // 1 = domenica, 2 = lunedi, ... 7 = sabato.
+		setDayOfTheWeek();
 		this.deliveryMen = new ArrayList<>();
 		this.SUPPL_PRICE = 0.5;
 		this.availablePlaces = 8;
@@ -64,9 +62,14 @@ public class Pizzeria {
 	}
 
 	/**
-	 * Riempie i vettori della pizzeria contenenti gli orari
-	 * di apertura e di chiusura per ogni giorno della settimana.
-	 * Utilizzato nel costruttore della pizzeria, ma riutilizzabile in caso di cambiamenti.
+	 * Riempie i vettori della pizzeria contenenti 7 orari di apertura (da domenica a sabato),
+	 * 7 orari di chiusura (da domenica a sabato).
+	 *
+	 * Gli orari partono sempre da LocalTime.MIN, che corrisponde a mezzanotte.
+	 * A questo si aggiunge (con il metodo plus()) ora e minuti desiderati.
+	 *
+	 * ATTENZIONE: Per lasciare la pizzeria chiusa in un particolare giorno, porre openTime = closeTime.
+	 * PRESTARE PARTICOLARE ATTENZIONE: assicurarsi che ogni giorno la pizzeria rimanga aperta almeno 20 minuti.
 	 * */
 	private void setDayOfTheWeek() {
 		/* orari di apertura, da domenica a sabato */
@@ -89,7 +92,7 @@ public class Pizzeria {
 
 	public HashMap<String,Order> getOrders() {
 		try {
-			this.orders = OrderDB.getOrders(this.orders);
+			this.orders = OrderDB.getOrders(this,this.orders);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -154,7 +157,7 @@ public class Pizzeria {
 	/** Crea un nuovo ordine e aggiorna il numero di ordini giornalieri. */
 	public Order initializeNewOrder() {
 		Order order;
-		getOrders();
+		//getOrders();
 		order = new Order(Database.countOrdersDB());
 		Database.addNewVoidOrderToDB(order);
 		return order;
@@ -208,7 +211,7 @@ public class Pizzeria {
 		}
 		if(aFreeDeliveryMan(d.getHours(), d.getMinutes()) != null)
 			aFreeDeliveryMan(d.getHours(), d.getMinutes()).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
-		else System.out.println("problema critico per l'ordine " + order.getOrderCode());    //fixme: questo significa problema GRAVE
+		//fixme: else System.out.println("problema critico per l'ordine " + order.getOrderCode());    //fixme: questo significa problema GRAVE
 	}
 
 	/** Verifica che sia possibile cuocere le pizze nell'infornata richiesta e in quella appena precedente. */

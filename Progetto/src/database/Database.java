@@ -14,6 +14,7 @@ import static database.CustomerDB.getInfoCustomerFromMailAddress;
 public class Database {
 	private static Connection con;
 
+	/** Apre una connessione con il Database (se c'è connessione). */
 	public static void openDatabase() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -31,16 +32,20 @@ public class Database {
 		System.exit(1);
 	}
 
-	static void insertStatement(String query){
+	/** Esegue la query di inserimento nel DB. */
+	static boolean insertStatement(String query){
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement= con.prepareStatement(query);
 			preparedStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
+	/** Esegue la query di recupero dati dal DB. */
 	static ResultSet getStatement(String query){
 		ResultSet rs = null;
 		try {
@@ -52,6 +57,7 @@ public class Database {
 		return rs;
 	}
 
+	/** Aggiunge al DB un nuovo ordine, costituito al momento soltanto dal codice e una data fittizia. */
 	public static void addNewVoidOrderToDB(Order order) {
 		try {
 			DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -64,13 +70,14 @@ public class Database {
 			preparedStatement.setString(3, "");
 			preparedStatement.setString(4, "");
 			preparedStatement.setInt(5, 0);
-			preparedStatement.setTimestamp(6, data);		// mette il Time attuale, ma non è un problema
+			preparedStatement.setTimestamp(6, data);	/* per il momento inserisce il Time attuale */
 			preparedStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/** Conta gli ordini presenti nel DB, per conoscere il prossimo OrderCode. */
 	public static int countOrdersDB() {
 		String requestSql = "select count(*) from sql7293749.Orders";
 		int num = -1;
@@ -85,7 +92,7 @@ public class Database {
 		return num;
 	}
 
-
+	/** Recupera la data di ultimo aggiornamento del DB. */
 	public static Date getLastUpdate() {
 		Date last = null;
 		String requestSql = "select * from sql7293749.LastUpdate";
@@ -101,6 +108,7 @@ public class Database {
 		return last;
 	}
 
+	/** Aggiorna la data di ultimo aggiornamento del DB con la data odierna. */
 	public static void setLastUpdate(java.util.Date oldDate) {
 		DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd");
 		String newDateString = dateFormatYMD.format(new Date());
@@ -117,6 +125,7 @@ public class Database {
 		}
 	}
 
+	/** Controlla che l'indirizzo e-amil inserito sia effettivamente nella tabella degli utenti. */
 	public static boolean checkMail(String mail){
 		return (getInfoCustomerFromMailAddress(mail,1) != null);
 	}

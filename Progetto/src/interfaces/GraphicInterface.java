@@ -10,10 +10,6 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 import pizzeria.Pizzeria;
-import pizzeria.services.TimeServices;
-
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 
 /**
  * * @authors: Javengers, 2019
@@ -29,29 +25,22 @@ import java.time.temporal.ChronoUnit;
 
 public class GraphicInterface extends Application {
 
-	/**
-	 * 16 parametri: nome, indirizzo, 7 orari di apertura (da domenica a sabato),
-	 * 7 orari di chiusura (da domenica a sabato).
-	 *
-	 * Gli orari partono sempre da LocalTime.MIN, che corrisponde a mezzanotte.
-	 * A questo si aggiunge (con il metodo plus()) ora e minuti desiderati.
-	 *
-	 * ATTENZIONE: Per lasciare la pizzeria chiusa in un particolare giorno, porre openTime = closeTime.
-	 * PRESTARE PARTICOLARE ATTENZIONE: assicurarsi che ogni giorno la pizzeria rimanga aperta almeno 20 minuti.
-	 *
-	 * Per modificare gli orari successivamente, lavorerò con il metodo Pizzeria.setDayOfTheWeek().
-	 * */
-	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via Bolzano 10, Pavia");
+	/** Richiama il costruttore della pizzeria. */
+	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via della Mozzarella, Pavia");
 	private Stage window;
 
+	/** Il main() consiste semplicemente nella chiamata a start() */
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	/** Crea un nuovo Stage (window), in cui compare un'immagine di benvenuto in dissolvenza, dopodichè
+	 * viene visualizzata la pagina iniziale di Login. */
 	@Override
 	public void start(Stage primaryStage){
-
 		window = primaryStage;
+		window.getIcons().add(new Image("/graphicElements/images/wolf_pizza.png"));
+		window.setTitle("Wolf of Pizza");
 
 		Image image = new Image("/graphicElements/images/wolf_pizza.png");
 		ImageView imageView = new ImageView(image);
@@ -62,8 +51,6 @@ public class GraphicInterface extends Application {
 		stackPane.getChildren().addAll(imageView);
 
 		Scene scene0 = new Scene(stackPane, 880, 600);
-		window.getIcons().add(new Image("/graphicElements/images/wolf_pizza.png"));
-		window.setTitle("Wolf of Pizza");
 		window.setScene(scene0);
 		window.show();
 		FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), stackPane);
@@ -77,7 +64,6 @@ public class GraphicInterface extends Application {
 		fadeOut.setCycleCount(1);
 
 		fadeIn.play();
-
 		fadeIn.setOnFinished(e -> {
 			fadeOut.play();
 			LoginAccountPage loginAccountPage = new LoginAccountPage();

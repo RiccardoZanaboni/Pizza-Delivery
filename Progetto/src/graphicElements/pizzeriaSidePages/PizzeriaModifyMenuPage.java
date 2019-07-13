@@ -20,6 +20,18 @@ import java.util.HashMap;
 
 public class PizzeriaModifyMenuPage {
 
+	/**
+	 * Lo Stage mostra la pagina atta a effettuare modifiche al menu, da parte della pizzeria.
+	 * Nella parte superiore, la tabella "table" mostra il menu attuale, con nomi, descrizione e prezzo delle pizze.
+	 * Nella parte inferiore si hanno gli strumenti per la modifica:
+	 * - inserendo nome e prezzo di una nuova pizza, selezionandone gli ingredienti dalla lista (tenendo premuto
+	 *   il tasto CTRL), è possibile aggiungere una pizza al menu ("Add Pizza").
+	 * - selezionando una pizza dal menu, cliccando "Delete Pizza", è possibile rimuoverla dal menu.
+	 * - inserendo il nome di un nuovo ingrediente, è possibile aggiungerlo a quelli disponibili.
+	 * - selezionando un ingrediente dalla lista, è possibile rimuoverlo ("Delete Topping").
+	 * In entrambi i casi di inserimento, viene visualizzato errore se un elemento con lo stesso nome
+	 * risulta già salvato nel DB.
+	 * */
     public void display(Pizzeria pizzeria, Stage window) {
 		window.setTitle("Wolf of Pizza - Modifica Menu");
 
@@ -40,6 +52,7 @@ public class PizzeriaModifyMenuPage {
         priceColumn.setMinWidth(70);
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));	/* richiama Pizza.getPrice() */
 
+		/* Campi di inserimento */
         TextField nameInput = new TextField();
         nameInput.setPromptText("New Pizza Name");
         nameInput.setMinWidth(100);
@@ -58,6 +71,7 @@ public class PizzeriaModifyMenuPage {
         Label infoNewPizzaLabel = new Label();
         infoNewPizzaLabel.setText("Selezionare gli ingredienti usando CTRL.");
 
+        /* Bottoni di inserimento/eliminazione */
         Button addPizzaButton = new Button("Add Pizza");
         addPizzaButton.setOnAction(e ->
                 addPizzaButtonClicked(pizzeria, nameInput, toppingsList, priceInput, table)
@@ -119,6 +133,7 @@ public class PizzeriaModifyMenuPage {
         return pizze;
     }
 
+    /** Gestisce la richiesta di aggiungere una nuova pizza */
     private void addPizzaButtonClicked(Pizzeria pizzeria, TextField nameInput, ListView toppingInput, TextField priceInput, TableView table){
 		try {
 			ObservableList<String> toppings;
@@ -160,7 +175,9 @@ public class PizzeriaModifyMenuPage {
 		}
     }
 
-    private void deletePizzaButtonClicked(Pizzeria pizzeria, TableView table) {
+    /** Gestisce la richiesta di eliminare una pizza */
+    @SuppressWarnings("unchecked")
+	private void deletePizzaButtonClicked(Pizzeria pizzeria, TableView table) {
         ObservableList<Pizza> pizzaSelected, allPizzas;
         allPizzas = table.getItems();
         pizzaSelected = table.getSelectionModel().getSelectedItems();
@@ -175,6 +192,8 @@ public class PizzeriaModifyMenuPage {
 		}
     }
 
+    /** Gestisce la richiesta di aggiungere un nuovo topping */
+	@SuppressWarnings("unchecked")
 	private void addToppingButtonClicked(Pizzeria pizzeria, TextField newToppingInput, ListView toppingsList) {
 		String topping = newToppingInput.getText().toUpperCase();
 		if (topping.length() == 0) {
@@ -189,11 +208,9 @@ public class PizzeriaModifyMenuPage {
 		}
 	}
 
+	/** Gestisce la richiesta di eliminare un topping */
+	@SuppressWarnings("unchecked")
 	private void deleteToppingButtonClicked(Pizzeria pizzeria, ListView table) {
-
-		// TODO: ma ne elimina solo uno alla volta... (se non funziona, togliere gli "almeno").
-		// TODO: vorrei che dopo l'eliminazione/aggiunta, gli ingredienti si DESELEZIONASSERO !!!
-
 		ObservableList<String> toppingsSelected, allToppings;
 		allToppings = table.getItems();
 		toppingsSelected = table.getSelectionModel().getSelectedItems();

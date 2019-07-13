@@ -24,18 +24,15 @@ import enums.OpeningPossibilities;
 import pizzeria.services.PizzeriaServices;
 import pizzeria.services.TimeServices;
 
-
-/**
- * Finestra iniziale che rappresenta la "Home", con le varie possibilità
- * di utilizzo del programma. Si attiva al "run" di GraphicInterface.
- */
-
 public class HomePage {
-	private Scene scene1;
 
+	/**
+	 * Visualizza la Scene iniziale che rappresenta la "Home", con le varie possibilità
+	 * di utilizzo del programma, rappresentate dai 4 bottoni centrali.
+	 * Si attiva al "run" di GraphicInterface.
+	 */
 	public void display(Stage window, Pizzeria pizzeria, Customer customer) {
 		window.setTitle("Wolf of Pizza - Home");
-
 		Label label1 = new Label("Benvenuto");
 		Label usernameLabel = new Label("");
 		usernameLabel.setText(customer.getUsername());
@@ -45,15 +42,15 @@ public class HomePage {
         ImageView imageView1 = new ImageView(image);
         imageView1.setFitHeight(20);
         imageView1.setFitWidth(20);
+
+        /* Bottone per il logout */
         logoutButton.setGraphic(imageView1);
-        //logoutButton.setMinSize(100, 50);
         logoutButton.setOnAction(e->{
             LoginAccountPage loginAccountPage = new LoginAccountPage();
             loginAccountPage.display(window, pizzeria);
-
         });
-        hBox.getChildren().addAll(label1, usernameLabel,logoutButton);
 
+        hBox.getChildren().addAll(label1, usernameLabel,logoutButton);
         hBox.setAlignment(Pos.CENTER);
 		StackPane stackPane = new StackPane();
 		stackPane.getChildren().addAll(hBox);
@@ -70,6 +67,7 @@ public class HomePage {
 		spazioPane.getChildren().add(imageView);
 		spazioPane.setAlignment(Pos.CENTER);
 
+		/* Bottone "Nuovo ordine" */
 		Button makeOrderButton = new Button("Nuovo ordine");
         makeOrderButton.prefWidthProperty().bind(window.widthProperty());
         makeOrderButton.prefHeightProperty().bind(window.heightProperty());
@@ -77,7 +75,7 @@ public class HomePage {
 		makeOrderButton.setOnAction(e -> {
 			pizzeria.updatePizzeriaToday();
 			switch (checkOpen) {
-				case OPEN:        // pizzeria aperta
+				case OPEN:        /* pizzeria aperta e in attività */
 					Order order = pizzeria.initializeNewOrder();
 					OrderPage1 orderPage1 = new OrderPage1();
 					orderPage1.display(window, order, pizzeria, customer);
@@ -91,19 +89,20 @@ public class HomePage {
 			}
 		});
 
-		Button chiSiamoButton = new Button("Chi siamo");
-		chiSiamoButton.setOnAction(event -> {
+		/* Bottone "Chi siamo" */
+		Button whoWeAreButton = new Button("Chi siamo");
+		whoWeAreButton.setOnAction(event -> {
 		    WhoWeArePage whoWeArePage = new WhoWeArePage();
 		    whoWeArePage.display(window,pizzeria, customer);
         });
-		chiSiamoButton.prefWidthProperty().bind(window.widthProperty());
-        chiSiamoButton.prefHeightProperty().bind(window.heightProperty());
-        //chiSiamoButton.setShape(new Rectangle(10,10));
+		whoWeAreButton.prefWidthProperty().bind(window.widthProperty());
+        whoWeAreButton.prefHeightProperty().bind(window.heightProperty());
 
-        Button recapOrdiniButton = new Button("Ultimo ordine");
-        recapOrdiniButton.prefWidthProperty().bind(window.widthProperty());
-        recapOrdiniButton.prefHeightProperty().bind(window.heightProperty());
-        recapOrdiniButton.setOnAction(event -> {
+		/* Bottone "Ultimo Ordine" */
+		Button lastOrderButton = new Button("Ultimo ordine");
+        lastOrderButton.prefWidthProperty().bind(window.widthProperty());
+        lastOrderButton.prefHeightProperty().bind(window.heightProperty());
+        lastOrderButton.setOnAction(event -> {
         	Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
         	if(last != null) {
 				LastOrderPage lastOrderPage = new LastOrderPage();
@@ -111,21 +110,22 @@ public class HomePage {
 			} else GenericAlert.display(customer.getUsername() + ", non hai ancora effettuato nessun ordine!");
 		});
 
-        Button altroButton = new Button("Il tuo profilo");
-        altroButton.setOnAction(e->{
+		/* Bottone "Il tuo profilo" */
+		Button dataButton = new Button("Il tuo profilo");
+        dataButton.setOnAction(e->{
             YourProfilePage yourProfilePage = new YourProfilePage();
             yourProfilePage.display(window, pizzeria, customer);
         });
-		altroButton.prefWidthProperty().bind(window.widthProperty());
-        altroButton.prefHeightProperty().bind(window.heightProperty());
+		dataButton.prefWidthProperty().bind(window.widthProperty());
+        dataButton.prefHeightProperty().bind(window.heightProperty());
 
+        /* Costruisce il GridPane con gli elementi */
 		GridPane gridPane = new GridPane();
-		gridPane.getChildren().addAll(makeOrderButton, chiSiamoButton, recapOrdiniButton, altroButton);
+		gridPane.getChildren().addAll(makeOrderButton, whoWeAreButton, lastOrderButton, dataButton);
 		GridPane.setConstraints(makeOrderButton, 1, 1);
-		GridPane.setConstraints(chiSiamoButton, 2, 1);
-		GridPane.setConstraints(recapOrdiniButton, 1, 2);
-		GridPane.setConstraints(altroButton, 2, 2);
-
+		GridPane.setConstraints(whoWeAreButton, 2, 1);
+		GridPane.setConstraints(lastOrderButton, 1, 2);
+		GridPane.setConstraints(dataButton, 2, 2);
 		gridPane.setPadding(new Insets(10, 10, 10, 10));
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
@@ -136,19 +136,9 @@ public class HomePage {
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
 
-        layout.setOnKeyPressed(ke -> {
-            if(ke.getCode()== KeyCode.RIGHT) {
-                chiSiamoButton.fire();
-            }if(ke.getCode()==KeyCode.LEFT) {
-            	makeOrderButton.fire();
-            }
-        });
-
-		scene1 = new Scene(layout,800, 600);
+		Scene scene1 = new Scene(layout, 800, 600);
 		scene1.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/menuStyle.css").toExternalForm());
-		//window.setResizable(false);
 		window.setScene(scene1);
-		//window.getIcons().add(new Image("graphicElements/images/wolf_pizza.png"));
 		window.show();
 	}
 }

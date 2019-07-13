@@ -3,7 +3,6 @@ package textualElements;
 import database.OrderDB;
 import exceptions.RestartOrderExc;
 import exceptions.TryAgainExc;
-import interfaces.TextualInterface;
 import javafx.scene.paint.Color;
 import pizzeria.Customer;
 import pizzeria.Order;
@@ -19,11 +18,11 @@ import java.util.*;
 public class TextNewOrder {
 	private Scanner scan = new Scanner(System.in);
 
-	/** Effettua tutte le operazioni necessarie ad effettuare un nuovo ordine.
+	/** Effettua tutte le operazioni necessarie per effettuare un nuovo ordine.
 	 * Utilizzo la sigla-chiave "OK" una volta terminata la scelta delle pizze, per continuare.
 	 * Utilizzo ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio.
 	 * */
-	public void makeOrderText(Customer customer, Pizzeria pizzeria, TextualInterface textualInterface) throws SQLException {
+	void makeOrderText(Customer customer, Pizzeria pizzeria, TextCustomerSide customerSide) throws SQLException {
 		pizzeria.updatePizzeriaToday();
 		System.out.println(TextCustomerSide.printMenu(pizzeria));
 		Order order = pizzeria.initializeNewOrder();
@@ -36,13 +35,13 @@ public class TextNewOrder {
 			do {
 				nomePizza = whichPizza(pizzeria, isPrimaRichiesta);
 				if (nomePizza.equals("OK")) {
-					break;      // smette di chiedere pizze
+					break;      /* smette di chiedere pizze */
 				}
 				isPrimaRichiesta = false;
 				num = howManySpecificPizza(pizzeria, order, nomePizza);
 				if (order.getNumPizze() == 16) {
 					tot += num;
-					break;      // hai chiesto esattamente 16 pizze in totale: smette di chiedere pizze
+					break;      /* hai chiesto esattamente 16 pizze in totale: smette di chiedere pizze */
 				}
 				tot += num;
 			} while (true);
@@ -52,19 +51,19 @@ public class TextNewOrder {
 			System.out.println(orario);
 			if (insertNameAndAddress(order)) {
 				System.out.println(TextCustomerSide.recapOrder(order));
-				askConfirm(pizzeria, order, orario, textualInterface);
+				askConfirm(pizzeria, order, orario, customerSide);
 			}
 		} catch (RestartOrderExc e) {
 			String annullato = TextColorServices.colorSystemOut("L'ordine è stato annullato.", Color.ORANGE,true,false);
 			System.out.println("\t>> " + annullato);
 			System.out.println(TextColorServices.getLine());
-			textualInterface.whatDoYouWant(customer);
+			customerSide.whatDoYouWant(customer,pizzeria);
 		}
 	}
 
 	/** Esegue i controlli dovuti sulla stringa relativa all'orario e,
 	 * in caso di successo, restituisce il Date "orarioScelto". */
-	public Date orderTime(Order order, int tot, Pizzeria pizzeria) throws RestartOrderExc {
+	private Date orderTime(Order order, int tot, Pizzeria pizzeria) throws RestartOrderExc {
 		String orarioScelto = insertTime(pizzeria,tot);
 		Date d;
 		try {
@@ -109,6 +108,7 @@ public class TextNewOrder {
 		int c = 0;
 		System.out.print("\t");
 		try {
+			//noinspection ConstantConditions
 			for (String s : TimeServices.availableTimes(pizzeria,tot)) {
 				System.out.print(s);
 				c++;
@@ -126,13 +126,13 @@ public class TextNewOrder {
 
 	/** Assicura che all'orario attuale della richiesta
 	 * sia effettivamente possibile portare a termine un ordine */
-	public boolean checkNotTooLate(Pizzeria pizzeria, Date orarioScelto, int tot) {
+	private boolean checkNotTooLate(Pizzeria pizzeria, Date orarioScelto, int tot) {
 		int chosenTime = TimeServices.getMinutes(orarioScelto);
 		int nowTime = TimeServices.getNowMinutes();
 		if(tot < pizzeria.getOvens()[0].getAvailablePlaces())
-			nowTime += 14;       // tengo conto dei tempi minimi di una infornata e consegna.
+			nowTime += 14;       /* tengo conto dei tempi minimi di una infornata e consegna. */
 		else
-			nowTime += 19;       // tengo conto dei tempi minimi di due infornate e consegna.
+			nowTime += 19;       /* tengo conto dei tempi minimi di due infornate e consegna. */
 		return (chosenTime >= nowTime);
 	}
 
@@ -172,10 +172,10 @@ public class TextNewOrder {
 		return nomePizza;
 	}
 
-	/** Ritorna il numero desiderato della pizza specifica richiesta.
+	/** Ritorna il numero desiderato di pizze del tipo richiesto.
 	 * Il numero di pizze complessivamente ordinate non deve superare
-	 * il valore massimo consentito. */
-	public int howManySpecificPizza(Pizzeria pizzeria, Order order, String nomePizza) {
+	 * il valore massimo consentito dalla pizzeria. */
+	private int howManySpecificPizza(Pizzeria pizzeria, Order order, String nomePizza) {
 		boolean ok = false;
 		int num = 0;
 		int totOrdinate = order.getNumPizze();
@@ -187,7 +187,7 @@ public class TextNewOrder {
 				num = Integer.parseInt(line);
 				if (num <= 0)
 					throw new NumberFormatException();
-				else if (totOrdinate + num > 2*pizzeria.getAvailablePlaces())    // max 16 pizze per ordine
+				else if (totOrdinate + num > 2* pizzeria.getAvailablePlaces())    /* max 16 pizze per ordine */
 					throw new TryAgainExc();
 				else {
 					ok = true;
@@ -206,15 +206,15 @@ public class TextNewOrder {
 
 	/** Gestisce la possibilità che la pizza desiderata necessiti di aggiunte o rimozioni
 	 * di ingredienti, rispetto ad una specifica presente sul menu. */
-	public void askModifyPizza(Pizzeria pizzeria, Order order, String nomePizza, int num) {
+	private void askModifyPizza(Pizzeria pizzeria, Order order, String nomePizza, int num) {
 		String domanda = TextColorServices.colorSystemOut("Vuoi apportare modifiche alle " + num + " " + nomePizza + "?",Color.YELLOW,false,false);
 		System.out.println(domanda + "\t[S/N]: ");
 		String answer = scan.nextLine().toUpperCase();
 		switch (answer) {
 			case "S":
 				System.out.println(TextCustomerSide.possibleAddictions(pizzeria));
-				String advise = TextColorServices.colorSystemOut("(Attenzione: è prevista una maggiorazione di 0.50 € per ogni ingrediente aggiunto)",Color.YELLOW,false,false);
-				System.out.println(advise);
+				String avviso = TextColorServices.colorSystemOut("(Attenzione: è prevista una maggiorazione di 0.50 € per ogni ingrediente aggiunto)",Color.YELLOW,false,false);
+				System.out.println(avviso);
 				String adding = TextColorServices.colorSystemOut("Inserisci gli ingredienti da AGGIUNGERE, separati da virgola, poi invio:",Color.YELLOW,false,false);
 				System.out.println(adding);
 				String aggiunte = scan.nextLine().toUpperCase();
@@ -242,7 +242,7 @@ public class TextNewOrder {
 	}
 
 	/** Gestisce l'inserimento del nome del cliente e dell'indirizzo di spedizione. */
-	public boolean insertNameAndAddress(Order order) throws RestartOrderExc {
+	private boolean insertNameAndAddress(Order order) throws RestartOrderExc {
 		String qst = TextColorServices.colorSystemOut("Nome sul citofono:",Color.YELLOW,false,false);
 		System.out.println(qst + "\t\t(Inserisci 'F' per annullare l'ordine)");
 		String nome = scan.nextLine();
@@ -262,7 +262,7 @@ public class TextNewOrder {
 
 	/** Aggiunge la pizza all'Order, nella quantità inserita.
 	 * Effettua, nel caso, tutte le modifiche richieste, aggiornando il prezzo. */
-	public Pizza addAndRmvToppingsText(Pizza pizza, String aggiunte, String rimozioni, double prezzoSuppl) {
+	private Pizza addAndRmvToppingsText(Pizza pizza, String aggiunte, String rimozioni, double prezzoSuppl) {
 		HashMap<String, String> ingr = new HashMap<>(pizza.getToppings());
 		Pizza p = new Pizza(pizza.getName(false), ingr, pizza.getPrice());
 		int suppl = 0;
@@ -284,7 +284,7 @@ public class TextNewOrder {
 				p.rmvIngredients(ingredienteRimossoString);
 			} catch (Exception ignored) { }
 		}
-		p.setPrice(p.getPrice() + (suppl * prezzoSuppl));        // aggiunto 0.50 per ogni ingrediente
+		p.setPrice(p.getPrice() + (suppl * prezzoSuppl));        /* aggiunto 0.50 per ogni ingrediente */
 		if(!p.getToppings().equals(pizza.getToppings()))
 			p.setName(pizza.getName(false) + "*");
 		return p;
@@ -292,7 +292,7 @@ public class TextNewOrder {
 
 	/** Chiede conferma dell'ordine e lo salva tra quelli completati
 	 * (pronti all'evasione), aggiornando il vettore orario del forno e del fattorino. */
-	public void askConfirm(Pizzeria pizzeria, Order order, Date orario, TextualInterface textualInterface) throws SQLException {
+	private void askConfirm(Pizzeria pizzeria, Order order, Date orario, TextCustomerSide customerSide) throws SQLException {
 		Customer customer = order.getCustomer();
 		String domanda = TextColorServices.colorSystemOut("Confermi l'ordine?",Color.YELLOW,false,false);
 		String s = TextColorServices.colorSystemOut("S",Color.ORANGE,true,false);
@@ -303,37 +303,28 @@ public class TextNewOrder {
 			case "S":
 				/* Conferma l'ordine e lo aggiunge a quelli della pizzeria. */
 				OrderDB.putOrder(order);
-				order.setCompletedDb(pizzeria,order.getNumPizze(),order.getTime());
+				order.updateAvailability(pizzeria,order.getNumPizze(),order.getTime());
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
 				System.out.println(TextColorServices.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = TimeServices.dateTimeStamp(orario);
 				confirmedTime = TextColorServices.colorSystemOut(confirmedTime,Color.GREEN,true,false);
 				System.out.println("\t>> Consegna prevista: " + confirmedTime + ".");
 				System.out.println(TextColorServices.getLine());
-				textualInterface.whatDoYouWant(customer);
+				customerSide.whatDoYouWant(customer,pizzeria);
 				break;
 			case "N":
 				/* Annulla l'ordine. */
-				try {
-					throw new RestartOrderExc();
-				} catch (RestartOrderExc roe) {
-					String annullato = TextColorServices.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
-					System.out.println("\t>> " + annullato);
-					System.out.println(TextColorServices.getLine());
-					textualInterface.whatDoYouWant(customer);
-				}
+				String annullato = TextColorServices.colorSystemOut("L'ordine è stato annullato.",Color.ORANGE,true,false);
+				System.out.println("\t>> " + annullato);
+				System.out.println(TextColorServices.getLine());
+				customerSide.whatDoYouWant(customer,pizzeria);
 				break;
 			default:
 				/* è stato inserito un carattere diverso da 'S' o 'N'. */
-				try {
-					throw new TryAgainExc();
-				} catch (TryAgainExc re) {
-					String spiacenti = "Spiacenti: carattere inserito non valido. Riprovare: ";
-					System.out.println(TextColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
-					askConfirm(pizzeria, order, orario, textualInterface);
-				}
+				String spiacenti = "Spiacenti: carattere inserito non valido. Riprovare: ";
+				System.out.println(TextColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
+				askConfirm(pizzeria, order, orario, customerSide);
 				break;
 		}
 	}
-
 }

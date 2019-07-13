@@ -22,10 +22,15 @@ import javafx.stage.Stage;
  * Blocca l'utilizzo della pagina OrderPage1, fino all'attivamento del confirmButton.
  */
 
-public class ModifyBox{
-    private static boolean answer = false;  // answer = true se la pizza ha subìto modifiche
+public class ModifyBox {
+    private static boolean answer = false;  /* answer = true se la pizza ha effettivamente subìto modifiche */
 
-    public static boolean display(Order order, Pizzeria pizzeria, String pizzaName) {
+    /** In un nuovo Stage viene visualizzato il Box in cui selezionare o deselezionare
+     * gli ingredienti per la pizza desiderata.
+     * E' possibile confermare l'aggiunta di una "pizza modificata" solo se sono state
+     * effettivamente apportate modifiche, altrimenti viene visualizzato un messaggio di errore.
+     * */
+    public boolean display(Order order, Pizzeria pizzeria, String pizzaName) {
         Stage window = new Stage();
 
         Pizza pizzaMenu = new Pizza(pizzaName, pizzeria.getMenu().get(pizzaName).getToppings(), pizzeria.getMenu().get(pizzaName).getPrice());
@@ -50,7 +55,7 @@ public class ModifyBox{
             else {
                 handleOptions(checkBoxes, nuovaPizza);
                 if(!pizzaMenu.getToppings().equals(nuovaPizza.getToppings())){
-                    nuovaPizza.setName(pizzaName + "*");           // aggiungo un asterisco al nome della pizza modificata
+                    nuovaPizza.setName(pizzaName + "*");    /* aggiungo un asterisco al nome della pizza modificata */
                     order.addPizza(nuovaPizza, 1);
                     nuovaPizza.setCount(true);
                     answer = true;
@@ -66,7 +71,7 @@ public class ModifyBox{
         layout.getChildren().addAll(scrollPane, confirmButton);
         layout.setAlignment(Pos.CENTER);
 
-        window.initModality(Modality.APPLICATION_MODAL);    // Impedisce di fare azioni sulle altre finestre
+        window.initModality(Modality.APPLICATION_MODAL);    /* Impedisce di fare azioni sulle altre finestre */
         window.setTitle("Modifica la pizza (+0.50 € per aggiunta)");
         window.setMinWidth(350);
         window.setMaxWidth(400);
@@ -82,8 +87,8 @@ public class ModifyBox{
         return answer;
     }
 
-    /** riempie il GridPane con tutti gli elementi necessari */
-    public static GridPane setGridPaneContraints(ArrayList<Label> ingrLabels, ArrayList<HBox> hBoxes) {
+    /** Riempie il GridPane con tutti gli elementi necessari */
+    private GridPane setGridPaneContraints(ArrayList<Label> ingrLabels, ArrayList<HBox> hBoxes) {
         GridPane gridPane = new GridPane();
         for (int i=0; i<ingrLabels.size(); i++) {
             gridPane.getChildren().addAll(ingrLabels.get(i), hBoxes.get(i));
@@ -96,8 +101,8 @@ public class ModifyBox{
         return gridPane;
     }
 
-    /** riempie ogni HBox con il relativo CheckBox */
-    public static void fillHBoxes(ArrayList<HBox> hBoxes, ArrayList<CheckBoxTopping> checkBoxToppings) {
+    /** Riempie ogni HBox con il relativo CheckBox */
+    private static void fillHBoxes(ArrayList<HBox> hBoxes, ArrayList<CheckBoxTopping> checkBoxToppings) {
         for (CheckBoxTopping checkBoxTopping : checkBoxToppings) {
             HBox hBox = new HBox(4);
             hBox.getChildren().add(checkBoxTopping);
@@ -105,16 +110,16 @@ public class ModifyBox{
         }
     }
 
-    /** costruisce la lista dei vari Labels, CheckBoxes */
-    public static void fillLabelsAndCheckBoxes(Pizzeria pizzeria, Pizza nuovaPizza, ArrayList<Label> ingrLabels, ArrayList<CheckBoxTopping> checkBoxes) {
+    /** Costruisce la lista dei vari Labels, CheckBoxes */
+    private static void fillLabelsAndCheckBoxes(Pizzeria pizzeria, Pizza nuovaPizza, ArrayList<Label> ingrLabels, ArrayList<CheckBoxTopping> checkBoxes) {
         for (String ingr : pizzeria.getIngredientsPizzeria().values()) {
             ingrLabels.add(new Label(ingr.toUpperCase().replace("_"," ")));
             checkBoxes.add(new CheckBoxTopping(ingr, nuovaPizza));
         }
     }
 
-    /** setta gli ingredienti come presenti o assenti sulla pizza */
-    public static void handleOptions(ArrayList<CheckBoxTopping> checkBoxToppings, Pizza pizza){
+    /** Setta gli ingredienti come presenti o assenti sulla pizza */
+    private static void handleOptions(ArrayList<CheckBoxTopping> checkBoxToppings, Pizza pizza){
         for (CheckBoxTopping checkBoxTopping : checkBoxToppings) {
             if (checkBoxTopping.isSelected()) {
                 if (!checkBoxTopping.isPresent()) {
@@ -129,8 +134,8 @@ public class ModifyBox{
         }
     }
 
-    /** controlla che sia stato selezionato almeno un ingrediente per la pizza modificata */
-    public static boolean checkCheckBoxTopping (ArrayList<CheckBoxTopping> checkBoxToppings) {
+    /** Controlla che sia stato selezionato almeno un ingrediente per la pizza modificata */
+    private static boolean checkCheckBoxTopping(ArrayList<CheckBoxTopping> checkBoxToppings) {
         for (CheckBoxTopping checkBoxTopping : checkBoxToppings) {
             if (checkBoxTopping.isPresent()) {
                 return true;

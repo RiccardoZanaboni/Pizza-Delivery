@@ -5,13 +5,17 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 import pizzeria.Order;
 import pizzeria.Pizza;
 
 public class ButtonRmvPizza extends Button {
 
-	public ButtonRmvPizza(Stage window, Label nomeLabels, Label toppingLabel, Label prezzoLabel, Button shoppingCartButton, Order order, Pizza pizza, Label countPizza) {
+	/**
+	 * Bottone utile, nel carrello dell'interfaccia grafica, per rimuovere dall'ordine
+	 * un'istanza della pizza selezionata.
+	 */
+
+	public ButtonRmvPizza(Label nomeLabels, Label toppingLabel, Label prezzoLabel, Button shoppingCartButton, Order order, Pizza pizza, Label countPizza) {
 		Image image1 = new Image("/graphicElements/images/cestino.png");
 		ImageView imageView = new ImageView(image1);
 		imageView.setFitHeight(20);
@@ -40,16 +44,14 @@ public class ButtonRmvPizza extends Button {
 		    order.setNumTemporaryPizze(false);
 		    shoppingCartButton.setText(order.getNumTemporaryPizze() + "");
 
-		    if (pizza.getCount()==0) {		// se eliminate tutte, vengono tolte dal carrello
+		    if (pizza.getCount()==0) {
+		    	/* se eliminate tutte le istanze di una data pizza, la linea corrispondente viene tolta dal carrello */
 		        nomeLabels.setText("");
 		        prezzoLabel.setText("");
 		        toppingLabel.setText("");
 		        countPizza.setText("");
 		        this.setVisible(false);
 		    }
-			/*else if(pizza.getCount()<0) {		// fixme: questo tecnicamente è inutile, non può verificarsi
-		        MinPizzasAlert.display(pizza.getName(false));
-		    }*/
 		});
     }
 }

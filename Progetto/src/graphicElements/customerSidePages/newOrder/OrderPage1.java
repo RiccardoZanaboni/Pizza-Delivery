@@ -22,27 +22,25 @@ import pizzeria.Pizzeria;
 
 import java.util.ArrayList;
 
-/**
- * OrderPage1 è la pagina di ordinazione che consente di visualizzare il menu,
- * selezionando numero e tipo delle pizze desiderate, oltre ad eventuali modifiche.
- *
- * Vi si accede tramite il bottone "Nuovo Ordine" in HomePage oppure "Indietro" in OrderPage2.
- * Cliccando "Indietro", l'ordine viene annullato e si torna a HomePage.
- * Cliccando "Avanti", si salvano i dati e si accede alla pagina OrderPage2.
- */
-
 public class OrderPage1 {
-
-    private static Scene scene2;
     private Button confirmButton;
     private static Button backButton;
 
+    /** Lo Stage ospita la prima pagina della richiesta di un nuovo ordine, quella di scelta dal menu.
+     * E' possibile selezionare di volta in volta una pizza dal menu, eventualmente richiedendo modifiche
+     * attraverso l'apposito bottone.
+     * In alto viene visualizzato un contatore delle pizze ordinate, che funziona da bottone
+     * per accedere al carrello.
+     * Viene visualizzato un messaggio di errore se viene richiesto un numero complessivo di pizze
+     * maggiore del massimo consentito dalla pizzeria.
+     * Attraverso i bottoni in fondo pagina è possibile spostarsi alla OrderPage2 (Avanti) o annullare
+     * l'ordine, tornando alla HomePage (Indietro).
+     * */
     public void display(Stage window, Order order, Pizzeria pizzeria, Customer customer) {
         window.setTitle("Wolf of Pizza - Nuovo Ordine");
-
         order.setCustomer(customer);
-        int tot = 0;
 
+        /* Dichiarazione dei vari vettori di etichette e bottoni, uno per ogni pizza */
         ArrayList<Label> nomiLabels = new ArrayList<>();
         ArrayList<Label> ingrLabels = new ArrayList<>();
         ArrayList<Label> prezziLabels = new ArrayList<>();
@@ -57,6 +55,7 @@ public class OrderPage1 {
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);
 
+        /* Definizione del bottone per accedere al Carrello */
         Button shoppingCartButton = new Button();
         shoppingCartButton.setGraphic(imageView);
         shoppingCartButton.setOnAction(e->{
@@ -75,6 +74,7 @@ public class OrderPage1 {
         hBoxIntestazione.setAlignment(Pos.CENTER);
         hBoxIntestazione.setId("hboxIntestazione");
 
+        /* Bottoni per lasciare la pagina (Avanti/Indietro). */
         confirmButton = createConfirmButton(customer, window, order, pizzeria);
         backButton = createBackButton(pizzeria, window, customer);
 
@@ -83,7 +83,7 @@ public class OrderPage1 {
         hBoxButton.setAlignment(Pos.CENTER);
         hBoxButton.setId("buttonBox");
 
-        /* metodi esterni per non appesantire */
+        /* Metodi esterni, per non appesantire */
         fillLabelsAndButtons(shoppingCartButton, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, addButtons, modButtons);
         fillVBoxesNomeAndIngr(pizzeria, vBoxNomeDescr, nomiLabels, ingrLabels);
         fillVBoxesButtons(pizzeria, vBoxBottoni, addButtons, modButtons);
@@ -96,7 +96,7 @@ public class OrderPage1 {
         gridPane.getColumnConstraints().add(new ColumnConstraints(250));
         gridPane.setId("grid");
 
-        /* Metto il gridPane con tutte le pizze all'interno di uno ScrollPane */
+        /* Posizionamento del gridPane, con tutte le pizze, all'interno di uno ScrollPane */
         ScrollPane scroll = new ScrollPane(gridPane);
         scroll.setFitToHeight(true);
         scroll.setFitToWidth(true);
@@ -121,16 +121,14 @@ public class OrderPage1 {
                 shoppingCartButton.fire();
         });
 
-
-        scene2 = new Scene(layout, 800, 600);
+        /* Inserimento del layout nella Scena e quindi nello Stage. */
+        Scene scene2 = new Scene(layout, 800, 600);
         scene2.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage1.css").toExternalForm());
         window.setScene(scene2);
         window.show();
     }
 
-    /**
-     * Costruisce i vari Labels e Buttons per ogni pizza del menu.
-     */
+    /** Costruisce i vari Labels e Buttons per ogni pizza del menu */
     private static void fillLabelsAndButtons(Button shoppingCartButton, Pizzeria pizzeria, Order order,
                                              ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels,
                                              ArrayList<Label> prezziLabels, ArrayList<ButtonAddPizza> addButtons,
@@ -147,9 +145,7 @@ public class OrderPage1 {
         }
     }
 
-    /**
-     * Riempie i vari HBoxes di Buttons.
-     */
+    /** Riempie i vari HBoxes di Buttons. */
     private static void fillVBoxesButtons(Pizzeria pizzeria, ArrayList<VBox> vBoxBottoni, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
             vBoxBottoni.add(new VBox(5));
@@ -157,9 +153,7 @@ public class OrderPage1 {
         }
     }
 
-    /**
-     * Riempie i vari VBoxes di Labels.
-     */
+    /** Riempie i vari VBoxes di Labels. */
     private static void fillVBoxesNomeAndIngr(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
             vBoxNomeDescr.add(new VBox(10));
@@ -167,9 +161,7 @@ public class OrderPage1 {
         }
     }
 
-    /**
-     * Riempie i vari HBoxes di Labels e Buttons.
-     */
+    /** Riempie i vari HBoxes di Labels e Buttons. */
     private static void fillHBoxesPrezzoAndBottoni(Pizzeria pizzeria, ArrayList<HBox> hBoxPrezzoBottoni, ArrayList<Label> prezziLabels, ArrayList<VBox> vBoxBottoni) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
             hBoxPrezzoBottoni.add(new HBox(10));
@@ -177,35 +169,27 @@ public class OrderPage1 {
         }
     }
 
-    /**
-     * Riempie il GridPane con Labels e Buttons per ogni pizza del menu.
-     */
+    /** Riempie il GridPane con Labels e Buttons per ogni pizza del menu. */
     private static GridPane setGridPaneContraints(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr, ArrayList<HBox> hBoxPrezzoBottoni) {
         int i;
         for (i = 0; i < pizzeria.getMenu().values().size(); i++) {
-            //GridPane.setConstraints(countPizzeLabels.get(i), 0, i + 1);
             GridPane.setConstraints(vBoxNomeDescr.get(i), 1, i + 1);
             GridPane.setConstraints(hBoxPrezzoBottoni.get(i), 2, i + 1);
         }
-
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setHgap(1);
         gridPane.setVgap(30);
         for (i = 0; i < pizzeria.getMenu().values().size(); i++) {
             gridPane.getChildren().add(hBoxPrezzoBottoni.get(i));
-        }
-        for (i = 0; i < pizzeria.getMenu().values().size(); i++) {
             gridPane.getChildren().add(vBoxNomeDescr.get(i));
         }
         return gridPane;
     }
 
-    /**
-     * Costruisce il backButton
-     */
+    /** Costruisce il backButton */
     private Button createBackButton(Pizzeria pizzeria, Stage window, Customer customer) {
-        backButton = new Button("← Torna indietro");
+        backButton = new Button("← Annulla ordine");
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
             HomePage homePage = new HomePage();
@@ -214,9 +198,7 @@ public class OrderPage1 {
         return backButton;
     }
 
-    /**
-     * Costruisce il bottone di conferma, che consente il passaggio ad OrderPage2
-     */
+    /** Costruisce il bottone di conferma, che consente il passaggio ad OrderPage2 */
     private Button createConfirmButton(Customer customer, Stage window, Order order, Pizzeria pizzeria) {
         OrderPage2 orderPage2 = new OrderPage2();
         confirmButton = new Button("Prosegui  →");
@@ -229,10 +211,4 @@ public class OrderPage1 {
         });
         return confirmButton;
     }
-
-    /** Restituisce il backButton */
-    static Button getBackButton() {
-        return backButton;
-    }
-
 }

@@ -1,12 +1,10 @@
 package database;
 
-import javafx.scene.paint.Color;
-import pizzeria.services.TextColorServices;
-
 import java.sql.*;
 
 public class CustomerDB {
 
+    /** Aggiunge un utente al database. */
     public static boolean putCustomer(String nome, String password, String mailAddress){
         try {
             Database.insertStatement("insert into sql7293749.Users values ('" + nome + "', '" + password +  "', '" + mailAddress + "', '', '', '') ");	// inserisce account nel DB
@@ -17,7 +15,8 @@ public class CustomerDB {
         }
     }
 
-    public static boolean getCustomer( String username, String password)throws SQLException{
+    /** Restituisce un ResultSet con 0/1 tuple: l'utente richiesto esiste o meno. */
+    public static boolean getCustomer( String username, String password) throws SQLException{
         ResultSet rs = Database.getStatement("select * from sql7293749.Users where User = '" + username + "' && Pass = '" + password + "' ");
         boolean hasRows = false;
         while (rs.next()) {
@@ -26,6 +25,7 @@ public class CustomerDB {
         return hasRows;
     }
 
+    /** Recupera i dati dell'utente, identificato dall'username, tramite DB */
     public static String getCustomerFromUsername(String username, int columnIndex){
         ResultSet rs;
         String info = null;
@@ -40,6 +40,7 @@ public class CustomerDB {
         return info;
     }
 
+    /** Recupera i dati dell'utente, identificato dall'indirizzo e-mail, tramite DB */
     public static String getInfoCustomerFromMailAddress(String mail, int columnIndex){
         ResultSet rs;
         String user = null;
@@ -54,9 +55,8 @@ public class CustomerDB {
         return user;
     }
 
+    /** Aggiorna i dati dell'utente contenuti nel DB. */
     public static boolean addInfoCustomer( String username, String name, String surname, String address) {
-            Database.insertStatement("update sql7293749.Users set Name = '" + name + "', Surname = '" + surname +  "', Address = '" + address + "' where User = '" + username + "' ");	// aggiorna account nel DB
-            return true;
-
+        return Database.insertStatement("update sql7293749.Users set Name = '" + name + "', Surname = '" + surname + "', Address = '" + address + "' where User = '" + username + "' ");
     }
 }

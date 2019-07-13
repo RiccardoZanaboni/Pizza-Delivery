@@ -15,10 +15,9 @@ public class Order implements Comparable<Order> {
 	private int numTemporaryPizze;
 
     /**
-	 * L'ordine è identificato con un orderCode univoco.
-	 * I suoi attributi vengono man mano riempiti, durante l'avanzamento
-	 * delle procedure di ordinazione.
-	 * Viene preso in carico dalla pizzeria solo una volta confermato dal cliente.
+	 * L'ordine è identificato con un orderCode univoco, costituito da una sigla ed un seriale.
+	 * I suoi attributi vengono man mano riempiti, durante l'avanzamento delle procedure di ordinazione.
+	 * Viene preso in carico dalla pizzeria, e salvato nel DB, solo una volta confermato dal cliente.
 	 * */
 
     public Order(int num) {
@@ -32,11 +31,7 @@ public class Order implements Comparable<Order> {
         this.numTemporaryPizze = 0;
     }
 
-    public int getNumTemporaryPizze() {
-        return this.numTemporaryPizze;
-    }
-
-    /** aggiorna il numero temporaneo di pizze dell'ordine, in seguito ad una aggiunta o rimozione.
+    /** Aggiorna il numero temporaneo di pizze dell'ordine, in seguito ad una aggiunta o rimozione.
 	 * Due possibilità: true = +1 oppure false = -1. */
     public void setNumTemporaryPizze(boolean isPlus) {
     	if (isPlus)
@@ -45,14 +40,14 @@ public class Order implements Comparable<Order> {
     		this.numTemporaryPizze --;
 	}
 
-    /** aggiunge la pizza all'ordine. */
+    /** Aggiunge "num" pizze all'ordine. */
     public void addPizza(Pizza pizza, int num) {
         for (int i = 0; i < num; i++) {
             this.orderedPizze.add(pizza);
         }
     }
 
-    /** Calcola e restituisce la spesa totale. */
+    /** Calcola e restituisce la spesa complssiva per l'ordine. */
 	public double getTotalPrice() {
 		double totale = 0;
 		for(int i = 0; i< getNumPizze(); i++){
@@ -61,23 +56,8 @@ public class Order implements Comparable<Order> {
 		return totale;
 	}
 
-	/** Restituisce true se la pizza specificata è stata ordinata. */
-	public boolean searchPizza(Pizza pizza){
-		for (Pizza pizza1 : this.orderedPizze) {
-			if (pizza1.equals(pizza))
-				return true;
-		}
-		return false;
-	}
-
-    public boolean searchModificata(Pizza pizza){   //ricerca se esiste una pizza con le stesse modifiche alla pizza, non é uguale a searchPizza
-        for (Pizza pizza1 : this.orderedPizze) {
-            if (pizza1.getDescription().equals(pizza.getDescription()))
-                return true;
-        }
-        return false;
-    }
-    public int countPizzaModificata(Pizza pizza){ // conta quante pizze modificate dello stesso tipo ci sono
+	/** Conta quante pizze modificate dello stesso tipo ci sono */
+    public int countPizzaModificata(Pizza pizza){
 	    int i=0;
         for (Pizza pizza1 : this.orderedPizze) {
             if (pizza1.getName(false).equals(pizza.getName(false)) && pizza1.getToppings().equals(pizza.getToppings()))
@@ -86,15 +66,10 @@ public class Order implements Comparable<Order> {
         return i;
     }
 
-    /** Il server-pizzeria inizia a preparare le pizze solo se isCompleted = true. */
-    /*public boolean isCompleted() {
-    	return this.isCompleted;
-    }*/
-
-    /** Setta l'ordine come completo e aggiorna le disponibilità. */
-	public void setCompletedDb(Pizzeria pizzeria, int tot, Date orario) {
+    /** Richiama un aggiornamento delle disponibilità di forni e fattorini. */
+	public void updateAvailability(Pizzeria pizzeria, int tot, Date orario) {
 		Date oggi = new Date();
-		if(oggi.getDate() == orario.getDate())		// controllo nel caso sia scattata la mezzanotte
+		if(oggi.getDate() == orario.getDate())	/* controllo nel caso sia scattata la mezzanotte */
 			pizzeria.updateOvenAndDeliveryMan(orario, tot, this);
 	}
 
@@ -108,10 +83,6 @@ public class Order implements Comparable<Order> {
 
 	public void setAddress(String indirizzo) {
 		this.customerAddress = indirizzo;
-	}
-
-	public int getCountModifiedPizze() {
-		return this.countModifiedPizze;
 	}
 
 	public Customer getCustomer() {
@@ -138,6 +109,10 @@ public class Order implements Comparable<Order> {
         return this.orderedPizze.size();
     }
 
+	public int getNumTemporaryPizze() {
+		return this.numTemporaryPizze;
+	}
+
 	public void increaseCountModifiedPizze() {
 		this.countModifiedPizze++;
 	}
@@ -163,6 +138,7 @@ public class Order implements Comparable<Order> {
 		return this.orderCode + " " + this.name + " " + this.customerAddress + " " + this.time + elenco.toString();
 	}
 
+	/** Ordina gli Orders in base all'orario. */
 	@Override
 	public int compareTo(Order o) {
 		if(this.time.getHours() > o.time.getHours()){

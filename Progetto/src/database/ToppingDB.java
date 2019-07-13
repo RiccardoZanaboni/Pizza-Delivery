@@ -12,6 +12,7 @@ public class ToppingDB {
 
 	private static Scanner scan = new Scanner(System.in);
 
+	/** Consente alla pizzeria di aggiungere un topping a quelli salvati sul Database. */
 	public static boolean putTopping(String nome){
 		try {
 			ResultSet rs1 = Database.getStatement("select * from sql7293749.Toppings");
@@ -27,6 +28,7 @@ public class ToppingDB {
 		}
 	}
 
+	/** Consente alla pizzeria di aggiungere, tramite interfaccia testuale, un topping a quelli salvati sul Database. */
 	public static void putToppingText(Pizzeria pizzeria) {
 		try {
 			System.out.print(TextColorServices.colorSystemOut("Inserisci il nome del nuovo ingrediente:\t", Color.YELLOW, false, false));
@@ -44,6 +46,7 @@ public class ToppingDB {
 		}
 	}
 
+	/** Consente alla pizzeria di rimuovere, tramite interfaccia testuale, un topping da quelli salvati sul Database. */
 	public static boolean removeTopping(String nome){
 		try {
 			ResultSet rs1 = Database.getStatement("select * from sql7293749.Toppings");
@@ -59,6 +62,7 @@ public class ToppingDB {
 		}
 	}
 
+	/** Consente alla pizzeria di rimuovere, tramite interfaccia testuale, un topping da quelli salvati sul Database. */
 	public static void removeToppingText(Pizzeria pizzeria) {
 		try {
 			System.out.print(TextColorServices.colorSystemOut("Inserisci il nome dell'ingrediente da rimuovere:\t", Color.YELLOW, false, false));
@@ -76,6 +80,7 @@ public class ToppingDB {
 		}
 	}
 
+	/** Consente alla pizzeria di recuperare i toppings salvati sul Database. */
 	public static HashMap<String, String> getToppings(HashMap<String, String> ingredienti)  throws SQLException{
 		ResultSet rs = Database.getStatement("select * from sql7293749.Toppings");
 		while (rs.next()) {
