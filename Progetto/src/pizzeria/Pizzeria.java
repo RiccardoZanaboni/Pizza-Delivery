@@ -20,16 +20,16 @@ import static pizzeria.services.TimeServices.getMinutes;
 public class Pizzeria {
 	private String name;
 	private String address;
-	private LocalTime[] openings = new LocalTime[7];    // orari di apertura in tutti i giorni della settimana
-	private LocalTime[] closings = new LocalTime[7];    // orari di chiusura in tutti i giorni della settimana
+	private LocalTime[] openings = new LocalTime[7];    /* orari di apertura in tutti i giorni della settimana */
+	private LocalTime[] closings = new LocalTime[7];    /* orari di chiusura in tutti i giorni della settimana */
 	private Oven[] ovens;
 	private ArrayList<DeliveryMan> deliveryMen;
 	private HashMap<String, Pizza> menu;
 	private HashMap<String, String> pizzeriaIngredients;
 	private HashMap<String,Order> orders;
 	private int availablePlaces;
-	private final int OVEN_MINUTES = 5;      // ogni 5 minuti
-	private final int DELIVERYMAN_MINUTES = 10;   // ogni 10 minuti
+	private final int OVEN_MINUTES = 5;      /* ogni 5 minuti */
+	private final int DELIVERYMAN_MINUTES = 10;   /* ogni 10 minuti */
 	private final double SUPPL_PRICE;
 	private final String userPizzeria;
 	private final String pswPizzeria;
@@ -39,8 +39,8 @@ public class Pizzeria {
 	 * @param name: nome identificativo della Pizzeria
 	 * @param address: indirizzo della Pizzeria
 	 *
-	 * Inizializza anche il forno, con tutte le possibili infornate,
-	 * una ArrayList di fattorini e una di ordini del giorno.
+	 * E' responsabile della inizializzazione del forno, con tutte le possibili infornate,
+	 * di una ArrayList di fattorini e una di ordini del giorno.
 	 */
 
 	public Pizzeria(String name, String address){
@@ -55,17 +55,18 @@ public class Pizzeria {
 		this.deliveryMen = new ArrayList<>();
 		this.SUPPL_PRICE = 0.5;
 		this.availablePlaces = 8;
-		openDatabase();		/* Apre la connessione con il database */
+		/* Apre la connessione con il database */
+		openDatabase();
 		addDeliveryMan(new DeliveryMan("Musi", this));
-		//addDeliveryMan(new DeliveryMan("Zanzatroni", this));
+		//addDeliveryMan(new DeliveryMan("Zana", this));
 		updatePizzeriaToday();
 	}
 
 	/**
-	 * Riempie i vettori della pizzeria contenenti 7 orari di apertura (da domenica a sabato),
+	 * Riempie i vettori della pizzeria contenenti 7 orari di apertura (da domenica a sabato) e
 	 * 7 orari di chiusura (da domenica a sabato).
 	 *
-	 * Gli orari partono sempre da LocalTime.MIN, che corrisponde a mezzanotte.
+	 * Gli orari partono sempre da LocalTime.MIN, che corrisponde alla mezzanotte.
 	 * A questo si aggiunge (con il metodo plus()) ora e minuti desiderati.
 	 *
 	 * ATTENZIONE: Per lasciare la pizzeria chiusa in un particolare giorno, porre openTime = closeTime.
@@ -90,6 +91,7 @@ public class Pizzeria {
 		this.closings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 	}
 
+	/** Aggiorna il vettore "locale" degli ordini, sincronizzandolo con gli ordini salvati nel DB. */
 	public HashMap<String,Order> getOrders() {
 		try {
 			this.orders = OrderDB.getOrders(this,this.orders);
@@ -108,19 +110,17 @@ public class Pizzeria {
 		this.deliveryMen.add(deliveryMan);
 	}
 
-	/** Aggiorna quotidianamente il menu e ripristina il vettore di infornate, ad ogni apertura della pizzeria */
+	/**
+	 * Aggiorna quotidianamente il menu e ripristina il vettore di infornate, ad ogni apertura della pizzeria.
+	 * Questo viene fatto confrontando la data odierna con la data di ultimo update, salvata nel DB:
+	 * se non corrispondono, allora è il primo accesso di oggi all'applicazione, pertanto occorre aggiornare.
+	 * */
 	public void updatePizzeriaToday() {
-		// FIXME:	(RISOLTO: SI PUO TOGLIERE)
-		//  creare in db una tabella con alcuni dati della pizzeria (orari di apertura/chiusura? indirizzo?...):
-		//  in particolare una data di ultimo aggiornamento: ogni volta che la pizzeria vuole visualizzare gli ordini o
-		//  che un cliente vuole effettuare un nuovo ordine, si controlla se la data di ultimo aggiornamento corrisponde:
-		//  se non corrisponde, si aggiorna tutto (si richiama questo metodo update()) e si aggiorna la data nel DB.
-
 		setIngredientsPizzeria();
 		createMenu();
 		int closeMinutes = getMinutes(getClosingToday());
 		int openMinutes = getMinutes(getOpeningToday());
-		this.ovens = new Oven[(closeMinutes - openMinutes) / this.OVEN_MINUTES];    // minutiTotali/5
+		this.ovens = new Oven[(closeMinutes - openMinutes) / this.OVEN_MINUTES];    /* minutiTotali/5 */
 		for (int i = 0; i < this.ovens.length; i++) {
 			this.ovens[i] = new Oven(this.availablePlaces);
 		}
@@ -154,10 +154,9 @@ public class Pizzeria {
 		}
 	}
 
-	/** Crea un nuovo ordine e aggiorna il numero di ordini giornalieri. */
+	/** Crea un nuovo ordine e aggiorna il numero seriale degli ordini. */
 	public Order initializeNewOrder() {
 		Order order;
-		//getOrders();
 		order = new Order(Database.countOrdersDB());
 		Database.addNewVoidOrderToDB(order);
 		return order;
@@ -172,23 +171,24 @@ public class Pizzeria {
 		return (requestTime >= openTime && requestTime < closeTime);
 	}
 
-	/** ritorna l'indice della casella temporale (forno) desiderata. */
+	/** Ritorna l'indice della casella temporale (forno) desiderata. */
 	public int findTimeBoxOven(int oraDesiderata, int minutiDesiderati){
 		return findTimeBox(oraDesiderata,minutiDesiderati,OVEN_MINUTES);
 	}
 
-	/** ritorna l'indice della casella temporale (fattorino) desiderata. */
+	/** Ritorna l'indice della casella temporale (fattorino) desiderata. */
 	public int findTimeBoxDeliveryMan(int oraDesiderata, int minutiDesiderati){
 		return findTimeBox(oraDesiderata,minutiDesiderati,DELIVERYMAN_MINUTES);
 	}
 
+	/** Restituisce l'indice della casella temporale desiderata, in base al parametro. */
 	private int findTimeBox(int oraDesiderata, int minutiDesiderati, int parameter){
 		int openMinutes = getMinutes(getOpeningToday());
 		int desiredMinutes = getMinutes(oraDesiderata,minutiDesiderati);
 		return (desiredMinutes - openMinutes)/parameter;
 	}
 
-	/** restituisce il primo fattorino della pizzeria che sia disponibile all'orario indicato. */
+	/** Restituisce il primo fattorino che risulta disponibile all'orario indicato. */
 	public DeliveryMan aFreeDeliveryMan(int oraDesiderata, int minutiDesiderati){
 		for(DeliveryMan man : this.deliveryMen){
 			if(man.getDeliveryManTimes()[findTimeBoxDeliveryMan(oraDesiderata,minutiDesiderati)].isFree()){
@@ -200,7 +200,7 @@ public class Pizzeria {
 
 	/** Controlla che la pizzeria possa garantire la consegna di "tot" pizze all'orario "d",
 	 * in base alla disponibilità di forno e fattorini. */
-	public void updateOvenAndDeliveryMan(Date d, int tot, Order order) {
+	void updateOvenAndDeliveryMan(Date d, int tot) {
 		/* PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI */
 		int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getAvailablePlaces();
 		if(disp < tot){
@@ -211,10 +211,10 @@ public class Pizzeria {
 		}
 		if(aFreeDeliveryMan(d.getHours(), d.getMinutes()) != null)
 			aFreeDeliveryMan(d.getHours(), d.getMinutes()).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
-		//fixme: else System.out.println("problema critico per l'ordine " + order.getOrderCode());    //fixme: questo significa problema GRAVE
 	}
 
-	/** Verifica che sia possibile cuocere le pizze nell'infornata richiesta e in quella appena precedente. */
+	/** Verifica che sia possibile cuocere le pizze nell'infornata richiesta
+	 * e, al massimo, in quella appena precedente. */
 	public boolean checkTimeBoxOven(int ora, int minuti, int tot) {
 		int postiDisponibiliQuestaInfornata = this.ovens[findTimeBoxOven(ora, minuti)].getAvailablePlaces();
 		int postiDisponibiliPrecedenteInfornata = this.ovens[findTimeBoxOven(ora, minuti) - 1].getAvailablePlaces();
@@ -253,11 +253,7 @@ public class Pizzeria {
 		return this.availablePlaces;
 	}
 
-	public int getOVEN_MINUTES() {
-		return this.OVEN_MINUTES;
-	}
-
-	public int getDELIVERYMAN_MINUTES() {
+	int getDELIVERYMAN_MINUTES() {
 		return this.DELIVERYMAN_MINUTES;
 	}
 
@@ -279,7 +275,7 @@ public class Pizzeria {
 
 	private Date getToday(LocalTime[] vector){
 		Calendar cal = new GregorianCalendar();
-		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);  // oggi
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);  /* oggi */
 		Date date = new Date();
 		date.setHours(vector[dayOfWeek-1].getHour());
 		date.setMinutes(vector[dayOfWeek-1].getMinute());

@@ -11,13 +11,12 @@ public class Order implements Comparable<Order> {
     private String customerAddress;
     private Date time;
     private ArrayList<Pizza> orderedPizze;
-    private int countModifiedPizze;
 	private int numTemporaryPizze;
 
     /**
 	 * L'ordine è identificato con un orderCode univoco, costituito da una sigla ed un seriale.
 	 * I suoi attributi vengono man mano riempiti, durante l'avanzamento delle procedure di ordinazione.
-	 * Viene preso in carico dalla pizzeria, e salvato nel DB, solo una volta confermato dal cliente.
+	 * Viene salvato nel DB e preso in carico dalla pizzeria solo quando confermato dal cliente.
 	 * */
 
     public Order(int num) {
@@ -27,7 +26,6 @@ public class Order implements Comparable<Order> {
         this.customerAddress = "";
         this.time = null;
         this.orderedPizze = new ArrayList<>();
-        this.countModifiedPizze = 0;
         this.numTemporaryPizze = 0;
     }
 
@@ -47,7 +45,7 @@ public class Order implements Comparable<Order> {
         }
     }
 
-    /** Calcola e restituisce la spesa complssiva per l'ordine. */
+    /** Calcola e restituisce la spesa complessiva per l'ordine. */
 	public double getTotalPrice() {
 		double totale = 0;
 		for(int i = 0; i< getNumPizze(); i++){
@@ -66,11 +64,11 @@ public class Order implements Comparable<Order> {
         return i;
     }
 
-    /** Richiama un aggiornamento delle disponibilità di forni e fattorini. */
+    /** Richiama l'aggiornamento delle disponibilità di forni e fattorini. */
 	public void updateAvailability(Pizzeria pizzeria, int tot, Date orario) {
 		Date oggi = new Date();
-		if(oggi.getDate() == orario.getDate())	/* controllo nel caso sia scattata la mezzanotte */
-			pizzeria.updateOvenAndDeliveryMan(orario, tot, this);
+		if(oggi.getDate() == orario.getDate())	/* controllo che non sia scattata la mezzanotte */
+			pizzeria.updateOvenAndDeliveryMan(orario, tot);
 	}
 
 	public void setTime(Date orario) {
@@ -111,10 +109,6 @@ public class Order implements Comparable<Order> {
 
 	public int getNumTemporaryPizze() {
 		return this.numTemporaryPizze;
-	}
-
-	public void increaseCountModifiedPizze() {
-		this.countModifiedPizze++;
 	}
 
 	public String getCustomerAddress(){

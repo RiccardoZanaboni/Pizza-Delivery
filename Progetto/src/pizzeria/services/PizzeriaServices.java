@@ -19,13 +19,16 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Fornisce molteplici servizi, grafici o funzionali, in grado di supportare
+ * Fornisce molteplici servizi, grafici o funzionali, alla pizzeria, in modo da supportare
  * il buon funzionamento del programma (e tuttavia non direttamente imputabili
  * a nessuna delle classi fino ad ora definite).
  * */
 @SuppressWarnings("deprecation")
 public class PizzeriaServices {
 
+	/** Restituisce, come Stringa, il contenuto del file di testo History.txt
+	 * Funzionamento leggermente differente se la richiesta è fatta tramite interfaccia
+	 * testuale o grafica. */
 	public static String getHistory(boolean isGraphicRequest) {
 		StringBuilder history = new StringBuilder("\n");
 		try {
@@ -48,6 +51,7 @@ public class PizzeriaServices {
 		return history.toString();
 	}
 
+	/** Effettua un ordinamento degli ordini, in ordine cronologico. */
 	public static HashMap<String, Order> sortOrders(HashMap<String, Order> orders) {
 		Set<Map.Entry<String, Order>> entries = orders.entrySet();
 		Comparator<Map.Entry<String, Order>> valueComparator = (o1, o2) -> {
@@ -55,9 +59,10 @@ public class PizzeriaServices {
 			Order v2 = o2.getValue();
 			return v1.compareTo(v2);
 		};
-		List<Map.Entry<String, Order>> listOfEntries = new ArrayList<>(entries); // Sort method needs a List, so let's first convert Set to List
-		Collections.sort(listOfEntries, valueComparator);// sorting HashMap by values using comparator
-		// copying entries from List to Map
+		/* Converte il Set in List, per potere usare la Sort() */
+		List<Map.Entry<String, Order>> listOfEntries = new ArrayList<>(entries);
+		listOfEntries.sort(valueComparator);
+		/* Copia gli elementi della List in una Map */
 		LinkedHashMap<String, Order> sortedByValue = new LinkedHashMap<>(listOfEntries.size());
 		for(Map.Entry<String, Order> entry : listOfEntries){
 			sortedByValue.put(entry.getKey(), entry.getValue());
@@ -66,6 +71,7 @@ public class PizzeriaServices {
 		return orders;
 	}
 
+	/** Calcola l'ordine più recente effettuato dal cliente. */
 	public static Order CustomerLastOrder(Customer customer, Pizzeria pizzeria) {
 		Order last = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -86,6 +92,7 @@ public class PizzeriaServices {
 		return last;
 	}
 
+	/** Controlla il corretto inserimento dei dati per la creazione di un nuovo account. */
 	public static AccountPossibilities canCreateAccount(String mailAddress, String newUser, String newPsw, String confPsw) {
 		if(newPsw.equals(confPsw)){
 			if(newUser.length() > 2 && newPsw.length() > 2) {
@@ -107,6 +114,7 @@ public class PizzeriaServices {
 		}
 	}
 
+	/** Controlla il corretto inserimento dei dati per effettuare il login. */
 	public static LoginPossibilities checkLogin(Pizzeria pizzeria, String user, String psw) {
 		try {
 			if (user.equals(pizzeria.getUserPizzeria()) && psw.equals(pizzeria.getPswPizzeria())) {

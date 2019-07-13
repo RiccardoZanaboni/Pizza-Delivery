@@ -1,29 +1,21 @@
-
-
 #backButton {
-    -fx-background-color: #f39f18; /* yellow */
+    -fx-background-color: #cb810b; /* yellow */
     -fx-color: white;
     -fx-font-size: 12px;
     -fx-border-style: solid;
     -fx-text-align: center;
-    -fx-display: inline-block;
-    -fx-cursor: pointer;
-}
-
-#closeButton {                            /*colore iniziale del bottone*/
-    -fx-background-color: #a52a2a;
-    -fx-color: white;
-    -fx-font-size: 12px;
-    -fx-border-style: solid;
-    -fx-text-align: center;
-    -fx-text-decoration: none;
     -fx-display: inline-block;
     -fx-margin: 4px 2px;
     -fx-cursor: pointer;
+}
+
+backButton:hover {                   /*Effetto di quando ci passi sopra con il puntatore*/
+    -fx-background-color: #f39f18;
+    -fx-color: white;
 }
 
 #confirmButton {
-    -fx-background-color: #4CAF50; /* Green */
+    -fx-background-color: #3d8c40; /* Green */
     -fx-color: white;
     -fx-font-size: 12px;
     -fx-border-style: solid;
@@ -33,13 +25,28 @@
     -fx-margin: 4px 2px;
     -fx-cursor: pointer;
 }
-
-#grid {
-    -fx-background-image: url("../images/backPizza2.jpg");
-    -fx-background-repeat: repeat-y;
+#confirmButton:hover {                   /*Effetto di quando ci passi sopra con il puntatore*/
+    -fx-background-color: #4CAF50;
+    -fx-color: white;
 }
 
+#buttonBox{
+      -fx-background-color: #eda615;
+      -fx-color: black;
+      -fx-padding: 16px 32px;
+      -fx-text-align: center;
+      -fx-display: inline-block;
+      -fx-font-family: Helvetica, Arial, sans-serif;
+      -fx-text-fill: black;
+      -fx-font-size: 12px;
+      -fx-transition-duration: 0.4s;
+      -fx-cursor: pointer;
+}
 
+#grid {
+    -fx-background-image: url("/graphicElements/images/backPizza2.jpg");
+    -fx-background-repeat: repeat-y;
+}
 
 #nomiLabel {
      -fx-font-family: "Arial Black", Gadget, sans-serif;

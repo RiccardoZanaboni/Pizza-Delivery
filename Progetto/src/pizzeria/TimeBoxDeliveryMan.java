@@ -1,13 +1,14 @@
 package pizzeria;
 
+@SuppressWarnings("ALL")
 public class TimeBoxDeliveryMan {
     private boolean isFree;
     private int orders;
-    private final int maxDeliveries = 2;    // un fattorino non può consegnare più di 2 orders per volta
+    private final int MAX_DELIVERIES = 2;
 
     /**
-     * La "casella temporale" del fattorino, ovvero l'arco di tempo (definito
-     * nella classe Pizzeria) in cui il fattorino può effettuare al massimo due consegne.
+     * La "casella temporale" del fattorino, ovvero l'arco di tempo (la cui durata è definita
+     * nella classe Pizzeria) in cui il fattorino può effettuare al massimo TOT=2 consegne.
      */
 
     TimeBoxDeliveryMan() {
@@ -15,9 +16,11 @@ public class TimeBoxDeliveryMan {
         this.orders = 0;
     }
 
+    /** Aggiunge una consegna al fattorino, in questo TimeBox. Nello stesso TimeBox il fattorino
+     * non può farsi carico di più di TOT consegne. */
     void insertOrder() {
         this.orders++;
-        if(this.orders == maxDeliveries)
+        if(this.orders == MAX_DELIVERIES)
             this.isFree = false;
     }
 

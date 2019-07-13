@@ -1,7 +1,6 @@
 package pizzeria.services;
 
 import enums.OpeningPossibilities;
-import javafx.scene.paint.Color;
 import pizzeria.DeliveryMan;
 import pizzeria.Pizzeria;
 
@@ -9,6 +8,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Fornisce servizi riguardanti la gestione del tempo.
+ * */
 public class TimeServices {
 
 	/** Restituisce i minuti passati dalla mezzanotte all'orario richiesto. */
@@ -16,14 +18,14 @@ public class TimeServices {
 		return 60*ora + minuto;
 	}
 
-	/** Restituisce i minuti passati dalla mezzanotte all'orario richiesto. */
+	/** Restituisce i minuti passati dalla mezzanotte all'orario richiesto di "date". */
 	public static int getMinutes(Date date) {
 		int ora = date.getHours();
 		int minuto = date.getMinutes();
 		return getMinutes(ora, minuto);
 	}
 
-	/** Restituisce i minuti passati dalla mezzanotte di oggi. */
+	/** Restituisce i minuti passati dalla mezzanotte all'orario attuale di oggi. */
 	public static int getNowMinutes() {
 		Calendar cal = new GregorianCalendar();
 		int nowHour = cal.get(Calendar.HOUR_OF_DAY);
@@ -32,19 +34,19 @@ public class TimeServices {
 	}
 
 	/** Restituisce tutti gli orari in cui la pizzeria potrebbe garantire la consegna di "tot" pizze.
-	 * la var "scarto" risponde all'eventualità che la pizzeria sia già aperta al momento attuale. */
+	 * Richiama altri metodi di questa classe, per gestire ogni eventualità. */
 	public static ArrayList<String> availableTimes(Pizzeria pizzeria, int tot){
 		ArrayList<String> availables = new ArrayList<>();
 		int now = getNowMinutes();
 		int restaAperta = calculateOpeningMinutesPizzeria(pizzeria);
-		int esclusiIniziali = calculateStartIndex(pizzeria, now, tot);     // primo orario da visualizzare (in minuti)
+		int esclusiIniziali = calculateStartIndex(pizzeria, now, tot);     /* primo orario da visualizzare (in minuti) */
 
-		for(int i = esclusiIniziali; i < restaAperta; i++) {    // considera i tempi minimi di preparazione e consegna
+		for(int i = esclusiIniziali; i < restaAperta; i++) {    /* considera i tempi minimi di preparazione e consegna */
 			if(i % 5 == 0) {
 				if (pizzeria.getOvens()[i / 5].getAvailablePlaces() + pizzeria.getOvens()[(i / 5) - 1].getAvailablePlaces() >= tot) {
 					for (DeliveryMan a : pizzeria.getDeliveryMen()) {
 						if (a.getDeliveryManTimes()[i / 10].isFree()) {
-							int newMinutes = getMinutes(pizzeria.getOpeningToday()) + i;   // NON POSSO PARTIRE DA TROVACASELLA MENO 1: RISCHIO ECCEZIONE
+							int newMinutes = getMinutes(pizzeria.getOpeningToday()) + i;
 							int ora = newMinutes / 60;
 							int min = newMinutes % 60;
 							String nuovoOrario = timeStamp(ora,min);
@@ -63,25 +65,25 @@ public class TimeServices {
 	}
 
 	/** Calcola i minuti totali in cui la pizzeria rimane aperta oggi. */
-	public static int calculateOpeningMinutesPizzeria(Pizzeria pizzeria){
+	private static int calculateOpeningMinutesPizzeria(Pizzeria pizzeria){
 		int openMinutes = getMinutes(pizzeria.getOpeningToday());
 		int closeMinutes = getMinutes(pizzeria.getClosingToday());
 		return closeMinutes - openMinutes - 10;
 	}
 
 	/** esegue i controlli necessari per determinare il primo orario disponibile da restituire. */
-	public static int calculateStartIndex(Pizzeria pizzeria, int now, int tot) {
+	private static int calculateStartIndex(Pizzeria pizzeria, int now, int tot) {
 		int esclusiIniziali = 0;
-		int giaPassati;      // minuti attualmente già passati dall'apertura
-		int tempiFissi;      // tempi da considerare per la cottura e la consegna
+		int giaPassati;      /* minuti attualmente già passati dall'apertura */
+		int tempiFissi;      /* tempi da considerare per la cottura e la consegna */
 		if(tot <= pizzeria.getAvailablePlaces())
-			tempiFissi = 15;      // 1 infornata: 5 minuti per la cottura e 10 minuti per la consegna
+			tempiFissi = 15;      /* 1 infornata: 5 minuti per la cottura e 10 minuti per la consegna */
 		else
-			tempiFissi = 20;      // 2 infornate: 10 minuti per la cottura e 10 minuti per la consegna
-		if(now > getMinutes(pizzeria.getOpeningToday())) {     // Se adesso la pizzeria è già aperta...
-			giaPassati = now - getMinutes(pizzeria.getOpeningToday());	// ... allora calcolo da quanti minuti lo è.
+			tempiFissi = 20;      /* 2 infornate: 10 minuti per la cottura e 10 minuti per la consegna */
+		if(now > getMinutes(pizzeria.getOpeningToday())) {     /* Se adesso la pizzeria è già aperta... */
+			giaPassati = now - getMinutes(pizzeria.getOpeningToday());	/* ... allora calcolo da quanti minuti lo è. */
 			if(tempiFissi < giaPassati)
-				esclusiIniziali = giaPassati;	// i tempi fissi sono già compresi
+				esclusiIniziali = giaPassati;	/* i tempi fissi sono già compresi */
 		}
 		return esclusiIniziali + tempiFissi;
 	}
@@ -95,9 +97,9 @@ public class TimeServices {
 		int month = calendar.get(Calendar.MONTH) + 1;
 		int year = calendar.get(Calendar.YEAR);
 		sDate1 = day + "/" + month + "/" + year + " " + sDate1;
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		try {
-			d = formato.parse(sDate1);
+			d = sdf.parse(sDate1);
 		} catch (ParseException e) {
 			return null;
 		}
@@ -125,19 +127,16 @@ public class TimeServices {
 		return true;
 	}
 
-	/** Esegue i controlli necessari per scrivere l'orario in formato [HH:mm]. */
+	/** Restituisce l'orario in formato [HH:mm]. */
 	public static String timeStamp(int ora, int min) {
-		String orario = "";
-		if(ora < 10)
-			orario += "0";
-		if (min < 10) {
-			orario += (ora + ":0" + min);
-		} else {
-			orario += (ora + ":" + min);
-		}
-		return orario;
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		Date date = new Date();
+		date.setHours(ora);
+		date.setMinutes(min);
+		return sdf.format(date);
 	}
 
+	/** Restituisce una stringa con un Date in formato [dd/MM/yyyy HH:mm] */
 	public static String dateTimeStamp(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String dataStr = sdf.format(date);
@@ -145,14 +144,14 @@ public class TimeServices {
 		return dataStr;
 	}
 
-	/** Controlla, prima di un nuovo ordine, se sei ancora in tempo prima che la pizzeria chiuda. */
+	/** Controlla, prima di un nuovo ordine, se si è ancora in tempo, prima che la pizzeria chiuda. */
 	public static OpeningPossibilities checkTimeOrder(Pizzeria pizzeria) {
 		int nowMin = getNowMinutes();
 		int openMin = getMinutes(pizzeria.getOpeningToday());
 		int closeMin = getMinutes(pizzeria.getClosingToday());
 		if(closeMin <= nowMin || openMin == closeMin)
 			return OpeningPossibilities.CLOSE;
-		if(closeMin - nowMin >= 0)// TODO: risistemare alla fine (mettere 20)!! Ho settato a 0 per poter lavorare anche alle 23:50!!!
+		if(closeMin - nowMin >= 20)
 			return OpeningPossibilities.OPEN;
 		else
 			return OpeningPossibilities.CLOSING;

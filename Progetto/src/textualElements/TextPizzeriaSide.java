@@ -12,19 +12,26 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Scanner;
 
+/** Gestisce ciò che la Pizzeria può fare, attraverso interfaccia testuale, dopo essersi autenticata. */
 public class TextPizzeriaSide {
 	private Scanner scan = new Scanner(System.in);
 
+	/** Comunica ciò che la pizzeria può fare, una volta autenticata. */
 	public void whatDoesPizzeriaWant(TextualInterface textualInterface, Pizzeria pizzeria) throws SQLException {
 		String risposta;
 		System.out.println(TextPizzeriaSide.whatDoesPizzeriaWantPossibilities());
 		System.out.print(TextColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 		risposta = scan.nextLine().toUpperCase();
+		whatDoesPizzeriaWantAnswers(textualInterface,risposta,pizzeria);
+	}
+
+	/** Gestisce l epossibili azioni che la pizzeria può intraprendere */
+	private void whatDoesPizzeriaWantAnswers(TextualInterface textualInterface, String risposta, Pizzeria pizzeria) throws SQLException {
 		switch (risposta){
 			case "V":
+				/* Visualizza gli ordini da evadere oggi */
 				pizzeria.updatePizzeriaToday();
 				System.out.println(TextColorServices.colorSystemOut("Questi sono gli ordini da evadere:\n", Color.YELLOW, false, false));
-				/* Visualizza solo gli ordini di oggi */
 				for(String code : pizzeria.getOrders().keySet()){
 					if(pizzeria.getOrders().get(code).getTime().getDate()==(new Date().getDate()))
 						System.out.println(TextCustomerSide.recapOrder(pizzeria.getOrders().get(code)));
@@ -32,6 +39,7 @@ public class TextPizzeriaSide {
 				whatDoesPizzeriaWant(textualInterface,pizzeria);
 				break;
 			case "M":
+				/* Modifica il menu */
 				System.out.println(TextPizzeriaSide.modifyMenuPossibilities());
 				System.out.print(TextColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
@@ -39,23 +47,26 @@ public class TextPizzeriaSide {
 				whatDoesPizzeriaWant(textualInterface,pizzeria);
 				break;
 			case "S":
+				/* Invia una e-mail personalizzata */
 				sendTextualMail();
 				whatDoesPizzeriaWant(textualInterface,pizzeria);
 				break;
 			case "E":
+				/* Esce dall'area riservata */
 				System.out.println(TextColorServices.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
 				/* logout */
 				textualInterface.askAccess();
 				break;
 			default:
+				/* Inserito carattere errato */
 				System.out.println(TextColorServices.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
 				whatDoesPizzeriaWant(textualInterface,pizzeria);
 				break;
 		}
 	}
 
-	/** In interfaces.TextualInterface.whatDoYouWant(), chiede quali siano le intenzioni della pizzeria, per procedere. */
-	public static String whatDoesPizzeriaWantPossibilities(){
+	/** Specifica quali siano le possibilità della pizzeria per procedere. */
+	private static String whatDoesPizzeriaWantPossibilities(){
 		String intro = TextColorServices.colorSystemOut("\nPizzeria, ecco che cosa puoi fare:\n", Color.YELLOW,false,false);
 		String con = "\t- con '";
 		String ordini = TextColorServices.colorSystemOut("V", Color.ORANGE,true,false);
@@ -71,7 +82,8 @@ public class TextPizzeriaSide {
 				+ con + mail + mailS + con + exit + exitS);
 	}
 
-	public void sendTextualMail() {
+	/** Consente alla pizzeria di inviare una e-mail personalizzata all'indirizzo desiderato. */
+	private void sendTextualMail() {
 		String newAddQuestion = TextColorServices.colorSystemOut("Inserire indirizzo e-mail:\t\t\t", Color.YELLOW, false, false);
 		System.out.print(newAddQuestion);
 		String address = scan.nextLine().toLowerCase();
@@ -91,7 +103,8 @@ public class TextPizzeriaSide {
 		askConfirmSendMail(address, subject, txt.toString());
 	}
 
-	public void askConfirmSendMail(String address, String subject, String txt){
+	/** Chiede conferma riguardo l'invio di una e-mail. */
+	private void askConfirmSendMail(String address, String subject, String txt){
 		String confAddrQuestion = TextColorServices.colorSystemOut("Confermi l'invio a:\t\t", Color.YELLOW, false, false);
 		System.out.print(confAddrQuestion);
 		String confAddr = TextColorServices.colorSystemOut(address,Color.WHITE,false,false);
@@ -123,7 +136,8 @@ public class TextPizzeriaSide {
 		}
 	}
 
-	public static String modifyMenuPossibilities() {
+	/** Specifica alla Pizzeria in che modo essa può apportare modifiche al menu. */
+	private static String modifyMenuPossibilities() {
 		String intro = TextColorServices.colorSystemOut("\nQuesto è ciò che puoi fare:\n",Color.YELLOW,false,false);
 		String con = "\t- con '";
 		String add = TextColorServices.colorSystemOut("A", Color.ORANGE,true,false);
@@ -141,28 +155,28 @@ public class TextPizzeriaSide {
 				+ con + ret + retS);
 	}
 
-	public void howModifyMenuAnswer(String risposta, Pizzeria pizzeria, TextualInterface textualInterface) throws SQLException {
+	/** Gestisce le varie possibilità che la pizzeria ha di modificare il menu, in base alla risposta data. */
+	private void howModifyMenuAnswer(String risposta, Pizzeria pizzeria, TextualInterface textualInterface) throws SQLException {
 		switch (risposta){
-			case "A":
+			case "A":	/* Aggiungere una pizza al menu */
 				PizzaDB.putPizzaText(pizzeria);
 				break;
-			case "R":
+			case "R":	/* Rimuovere una pizza dal menu */
 				PizzaDB.removePizzaText(pizzeria);
 				break;
-			case "AI":
+			case "AI":	/* Aggiungere un ingrediente a quelli possibili */
 				ToppingDB.putToppingText(pizzeria);
 				break;
-			case "RI":
+			case "RI":	/* Rimuovere un ingrediente da quelli possibili */
 				ToppingDB.removeToppingText(pizzeria);
 				break;
-			case "B":
+			case "B":	/* Tornare indietro */
 				System.out.println(TextColorServices.colorSystemOut("Nessuna modifica effettuata al menu.\n", Color.YELLOW, false, false));
-				// logout
 				whatDoesPizzeriaWant(textualInterface,pizzeria);
 				break;
 			default:
+				/* Carattere non valido: torna a "ecco cosa puoi fare" */
 				System.out.println(TextColorServices.colorSystemOut("Spiacenti: inserito carattere non valido. Riprovare: ", Color.RED, false, false));
-				/* torna a "ecco cosa puoi fare" */
 				break;
 		}
 	}

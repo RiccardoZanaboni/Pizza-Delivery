@@ -18,38 +18,41 @@ import java.util.Scanner;
 
 import static enums.OpeningPossibilities.CLOSING;
 
+/** Gestisce ciò che il cliente può fare, attraverso interfaccia testuale, dopo essersi autenticato. */
 public class TextCustomerSide {
 	private Scanner scan = new Scanner(System.in);
 
-	/** Al lancio di interfaces.TextualInterface, inizia un nuovo ordine solo se richiesto. */
+	/** Controlla, in base all'orario, cosa il cliente può effettivamente fare e lo comunica. */
 	public void whatDoYouWant(Customer customer, Pizzeria pizzeria) throws SQLException {
 		String risposta;
 		OpeningPossibilities isOpen = TimeServices.checkTimeOrder(pizzeria);
 		/* se la pizzeria è aperta */
 		if (isOpen == OpeningPossibilities.OPEN) {
-			System.out.println(TextCustomerSide.whatDoYouWantPossibilities(true));
+			System.out.println(whatDoYouWantPossibilities(true));
 			System.out.print(TextColorServices.colorSystemOut("\t>> ", Color.YELLOW, false, false));
 			risposta = scan.nextLine().toUpperCase();
 			whatDoYouWantAnswers(true, risposta, customer,pizzeria);
-			/* se la pizzeria è chiusa o in chiusura */
 		} else {
+			/* se la pizzeria è chiusa o in chiusura */
 			String chiusura;
 			if (isOpen == CLOSING)
 				chiusura = "\nAttenzione: la pizzeria è in chiusura. Impossibile effettuare ordini al momento.";
 			else
 				chiusura = "\nAttenzione: la pizzeria per oggi è chiusa. Impossibile effettuare ordini al momento.";
 			System.out.println(TextColorServices.colorSystemOut(chiusura, Color.RED, false, false));
-			System.out.println(TextCustomerSide.whatDoYouWantPossibilities(false));
+			/* stampa a video le varie possibilità */
+			System.out.println(whatDoYouWantPossibilities(false));
 			System.out.print(TextColorServices.colorSystemOut("\t>> ", Color.YELLOW, false, false));
 			risposta = scan.nextLine().toUpperCase();
 			whatDoYouWantAnswers(false, risposta, customer,pizzeria);
 		}
 	}
 
-	/** In whatDoYouWant(), gestisce le possibili risposte alla domanda. */
+	/** Gestisce le possibili azioni che il cliente decide di intraprendere. */
 	private void whatDoYouWantAnswers(boolean isOpen, String risposta, Customer customer, Pizzeria pizzeria) throws SQLException {
 		switch (risposta){
 			case "L":
+				/* Visualizzare l'ultimo ordine effettuato */
 				Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
 				if(last != null){
 					System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
@@ -58,32 +61,36 @@ public class TextCustomerSide {
 				whatDoYouWant(customer,pizzeria);
 				break;
 			case "M":
+				/* Modificare i propri dati personali */
 				TextCustomerSide customerSide = new TextCustomerSide();
 				customerSide.modifyAccount(customer);
 				whatDoYouWant(customer,pizzeria);
 				break;
 			case "H":
+				/* Visualizzare la History della Pizzeria */
 				System.out.println(PizzeriaServices.getHistory(false));
 				whatDoYouWant(customer,pizzeria);
 				break;
 			case "E":
+				/* Effettuare il logout */
 				System.out.println(TextColorServices.colorSystemOut("Uscendo dall'area riservata...\n", Color.YELLOW, false, false));
-				/* logout */
 				TextualInterface textualInterface = new TextualInterface();
 				textualInterface.askAccess();
 				break;
 			default:
 				if(isOpen && risposta.equals("N")){
+					/* Effettuare un nuovo ordine */
 					TextNewOrder newOrder = new TextNewOrder();
 					newOrder.makeOrderText(customer, pizzeria, new TextCustomerSide());
 				} else {
+					/* Inserito carattere non valido */
 					System.out.println(TextColorServices.colorSystemOut("\nSpiacenti: inserito carattere non valido. Riprovare:", Color.RED, false, false));
 					whatDoYouWant(customer,pizzeria);
 				} break;
 		}
 	}
 
-	/** Elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
+	/** Inizializza l'elenco di tutti gli ingredienti che l'utente può scegliere, per modificare una pizza. */
 	public static String possibleAddictions(Pizzeria pizzeria) {
 		StringBuilder possibiliIngr = new StringBuilder();
 		possibiliIngr.append(TextColorServices.colorSystemOut("\tPossibili aggiunte: ",Color.ORANGE,false,false));
@@ -91,9 +98,8 @@ public class TextCustomerSide {
 		return possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")); // elimina ultima virgola
 	}
 
-	/** In interfaces.TextualInterface, elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza.
-	 * */
-	public static String listPossibleAddictions(Pizzeria pizzeria) {
+	/** Elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
+	private static String listPossibleAddictions(Pizzeria pizzeria) {
 		StringBuilder possibiliIngr = new StringBuilder();
 		int i = 0;
 		for (String ingr : pizzeria.getIngredientsPizzeria().values()) {
@@ -105,29 +111,8 @@ public class TextCustomerSide {
 		return possibiliIngr.toString();
 	}
 
-	/** Su interfaces.TextualInterface dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria.
-	 * @param pizzeria*/
-	public static String helloThere(Pizzeria pizzeria){
-		String opTime = TimeServices.timeStamp(pizzeria.getOpeningToday().getHours(), pizzeria.getOpeningToday().getMinutes());
-		String clTime = TimeServices.timeStamp(pizzeria.getClosingToday().getHours(), pizzeria.getClosingToday().getMinutes());
-		StringBuilder hello = new StringBuilder("\n");
-		hello.append(TextColorServices.colorSystemOut("\nBenvenuto!\n", Color.GREEN,true,true));
-		hello.append(TextColorServices.colorSystemOut("\nPIZZERIA ", Color.ORANGE,false,false));
-		hello.append(TextColorServices.colorSystemOut("\"" + pizzeria.getName() + "\"\n\t",Color.RED,true,false));
-		hello.append(TextColorServices.colorSystemOut(pizzeria.getAddress(),Color.ORANGE,false,false));
-		if(pizzeria.getOpeningToday().equals(pizzeria.getClosingToday()))
-			hello.append(TextColorServices.colorSystemOut("\n\tOGGI CHIUSO", Color.RED, true, false));
-		else {
-			hello.append(TextColorServices.colorSystemOut("\n\tApertura oggi: ", Color.ORANGE, false, false));
-			hello.append(TextColorServices.colorSystemOut(opTime + " - " + clTime, Color.RED, true, false));
-		}
-		hello.append("\n").append(TextColorServices.getLine());
-		return hello.toString();
-	}
-
-	/** Da interfaces.TextualInterface, permette di stampare a video il menu completo.
-	 * @param pizzeria*/
-	public static String printMenu(Pizzeria pizzeria) {
+	/** Permette di stampare a video il menu completo. */
+	static String printMenu(Pizzeria pizzeria) {
 		String line = TextColorServices.getLine();
 		TextColorServices.paintMenuString();
 		StringBuilder s = new StringBuilder();
@@ -137,8 +122,8 @@ public class TextCustomerSide {
 		return s.toString() + "\n" + line;
 	}
 
-	/** In interfaces.TextualInterface.whatDoYouWant(), chiede quali siano le intenzioni del cliente per procedere. */
-	public static String whatDoYouWantPossibilities(boolean isOpen){
+	/** Specifica quali siano le intenzioni del cliente per procedere. */
+	private String whatDoYouWantPossibilities(boolean isOpen){
 		String intro = TextColorServices.colorSystemOut("\nEcco che cosa puoi fare:\n", Color.YELLOW,false,false);
 		String con = "\t- con '";
 		String newOrd = TextColorServices.colorSystemOut("N", Color.ORANGE,true,false);
@@ -165,7 +150,8 @@ public class TextCustomerSide {
 		return string.toString();
 	}
 
-	public void modifyAccount(Customer customer) {
+	/** Consente al cliente di modificare i propri dati salvati nel DB. */
+	private void modifyAccount(Customer customer) {
 		String user = customer.getUsername();
 		System.out.print("\nInserisci il tuo nome: ");
 		String nome = scan.nextLine();
@@ -173,16 +159,14 @@ public class TextCustomerSide {
 		String cognome = scan.nextLine();
 		System.out.print("Inserisci il tuo indirizzo principale: ");
 		String indirizzo = scan.nextLine();
-		if(CustomerDB.addInfoCustomer(user,nome,cognome,indirizzo)) {
+		if(CustomerDB.addInfoCustomer(user,nome,cognome,indirizzo))
 			System.out.println(TextColorServices.colorSystemOut("\nGrazie! Dati aggiornati.", Color.YELLOW, false, false));
-			//customer.setName(nome);
-			//customer.setSurname(cognome);
-			//customer.setAddress(indirizzo);
-		} else System.out.println(TextColorServices.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
+		else
+			System.out.println(TextColorServices.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
 	}
 
-	/** In interfaces.TextualInterface, stampa a video il riepilogo dell'ordine. */
-	public static String recapOrder(Order order){
+	/** Stampa a video il riepilogo dell'ordine. */
+	static String recapOrder(Order order){
 		String line = TextColorServices.getLine();
 		StringBuilder recap = new StringBuilder();
 		recap.append(TextColorServices.colorSystemOut("ORDINE N. ", Color.RED,true,false));
@@ -202,7 +186,7 @@ public class TextCustomerSide {
 	}
 
 	/** Restituisce una stringa con i vari prodotti, per il riepilogo. */
-	public static String textRecapProducts(Order order) {
+	private static String textRecapProducts(Order order) {
 		StringBuilder prodotti = new StringBuilder("\n");
 		ArrayList<Pizza> elencate = new ArrayList<>();
 		for (int i = 0; i < order.getNumPizze(); i++) {

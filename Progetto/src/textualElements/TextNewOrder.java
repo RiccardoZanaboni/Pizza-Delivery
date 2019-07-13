@@ -15,13 +15,15 @@ import pizzeria.services.TimeServices;
 import java.sql.SQLException;
 import java.util.*;
 
-public class TextNewOrder {
+/**
+ * Contiene tutti i metodi necessari al cliente per effettuare un nuovo ordine da interfaccia testuale.
+ * Utilizzata la sigla-chiave "OK" una volta terminata la scelta delle pizze, per continuare.
+ * Utilizzata ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio.
+ * */
+class TextNewOrder {
 	private Scanner scan = new Scanner(System.in);
 
-	/** Effettua tutte le operazioni necessarie per effettuare un nuovo ordine.
-	 * Utilizzo la sigla-chiave "OK" una volta terminata la scelta delle pizze, per continuare.
-	 * Utilizzo ovunque la sigla-chiave "F" per l'annullamento dell'ordine: si torna all'inizio.
-	 * */
+	/** Esegue tutte le operazioni necessarie per effettuare un nuovo ordine. */
 	void makeOrderText(Customer customer, Pizzeria pizzeria, TextCustomerSide customerSide) throws SQLException {
 		pizzeria.updatePizzeriaToday();
 		System.out.println(TextCustomerSide.printMenu(pizzeria));
@@ -64,7 +66,8 @@ public class TextNewOrder {
 	/** Esegue i controlli dovuti sulla stringa relativa all'orario e,
 	 * in caso di successo, restituisce il Date "orarioScelto". */
 	private Date orderTime(Order order, int tot, Pizzeria pizzeria) throws RestartOrderExc {
-		String orarioScelto = insertTime(pizzeria,tot);
+		possibleTimes(pizzeria,tot);
+		String orarioScelto = scan.nextLine();
 		Date d;
 		try {
 			if (orarioScelto.toUpperCase().equals("F")) {
@@ -72,7 +75,7 @@ public class TextNewOrder {
 			}
 			if (TimeServices.checkValidTime(orarioScelto)) {
 				d = TimeServices.stringToDate(orarioScelto);
-				assert d != null : "Error"; // se la condizione non è verificata, il programma viene terminato
+				assert d != null : "Error";
 				int ora = d.getHours();
 				int minuti = d.getMinutes();
 				if (!pizzeria.isOpen(d)) {
@@ -99,9 +102,8 @@ public class TextNewOrder {
 		return d;
 	}
 
-	/** Stampa a video tutti gli orari disponibili per la consegna
-	 * e ritorna la stringa inserita dall'utente. */
-	public String insertTime (Pizzeria pizzeria, int tot) throws RestartOrderExc {
+	/** Stampa a video tutti gli orari disponibili per la consegna. */
+	private void possibleTimes(Pizzeria pizzeria, int tot) throws RestartOrderExc {
 		String domanda = TextColorServices.colorSystemOut("A che ora vuoi ricevere la consegna? [formato HH:mm]",Color.YELLOW,false,false);
 		System.out.println(domanda + " \t\t(Inserisci 'F' per annullare.)");
 		System.out.println(TextColorServices.colorSystemOut("\tEcco gli orari disponibili:",Color.YELLOW,false,false));
@@ -121,11 +123,10 @@ public class TextNewOrder {
 			System.out.println(TextColorServices.colorSystemOut(spiacenti, Color.RED, false, false));
 			throw new RestartOrderExc();
 		}
-		return scan.nextLine();
 	}
 
 	/** Assicura che all'orario attuale della richiesta
-	 * sia effettivamente possibile portare a termine un ordine */
+	 * sia ancora effettivamente possibile portare a termine un ordine */
 	private boolean checkNotTooLate(Pizzeria pizzeria, Date orarioScelto, int tot) {
 		int chosenTime = TimeServices.getMinutes(orarioScelto);
 		int nowTime = TimeServices.getNowMinutes();
@@ -136,10 +137,12 @@ public class TextNewOrder {
 		return (chosenTime >= nowTime);
 	}
 
-	/** Restituisce il nome della pizza desiderata, dopo avere effettuato i dovuti controlli:
+	/**
+	 * Restituisce il nome della pizza desiderata, dopo avere effettuato i dovuti controlli:
 	 * - che non sia stato inserito "OK" oppure "F";
-	 * - che la stringa inserita corrisponda ad una pizza valida. */
-	public String whichPizza(Pizzeria pizzeria, boolean isPrimaRichiesta) throws RestartOrderExc {
+	 * - che la stringa inserita corrisponda ad una pizza valida.
+	 * */
+	private String whichPizza(Pizzeria pizzeria, boolean isPrimaRichiesta) throws RestartOrderExc {
 		String nomePizza;
 		boolean ok = false;
 		do {
@@ -162,8 +165,8 @@ public class TextNewOrder {
 					ok = true;
 				else if (!(pizzeria.getMenu().containsKey(nomePizza)))
 					throw new TryAgainExc();
-				else    // pizza inserita correttamente
-					ok = true;
+				else
+					ok = true;	/* pizza inserita correttamente */
 			} catch (TryAgainExc tae) {
 				String spiacenti = "Spiacenti: \"" + nomePizza + "\" non presente sul menu. Riprovare:";
 				System.out.println(TextColorServices.colorSystemOut(spiacenti,Color.RED,false,false));
@@ -241,7 +244,7 @@ public class TextNewOrder {
 		}
 	}
 
-	/** Gestisce l'inserimento del nome del cliente e dell'indirizzo di spedizione. */
+	/** Gestisce l'inserimento del nome del cliente e dell'indirizzo di consegna. */
 	private boolean insertNameAndAddress(Order order) throws RestartOrderExc {
 		String qst = TextColorServices.colorSystemOut("Nome sul citofono:",Color.YELLOW,false,false);
 		System.out.println(qst + "\t\t(Inserisci 'F' per annullare l'ordine)");
@@ -260,8 +263,7 @@ public class TextNewOrder {
 		return true;
 	}
 
-	/** Aggiunge la pizza all'Order, nella quantità inserita.
-	 * Effettua, nel caso, tutte le modifiche richieste, aggiornando il prezzo. */
+	/** Effettua tutte le modifiche richieste, aggiornando il prezzo della pizza richiesta. */
 	private Pizza addAndRmvToppingsText(Pizza pizza, String aggiunte, String rimozioni, double prezzoSuppl) {
 		HashMap<String, String> ingr = new HashMap<>(pizza.getToppings());
 		Pizza p = new Pizza(pizza.getName(false), ingr, pizza.getPrice());
@@ -290,8 +292,8 @@ public class TextNewOrder {
 		return p;
 	}
 
-	/** Chiede conferma dell'ordine e lo salva tra quelli completati
-	 * (pronti all'evasione), aggiornando il vettore orario del forno e del fattorino. */
+	/** Chiede conferma dell'ordine e lo salva nel DB tra quelli pronti all'evasione,
+	 * aggiornando i vettori orari del forno e del fattorino. */
 	private void askConfirm(Pizzeria pizzeria, Order order, Date orario, TextCustomerSide customerSide) throws SQLException {
 		Customer customer = order.getCustomer();
 		String domanda = TextColorServices.colorSystemOut("Confermi l'ordine?",Color.YELLOW,false,false);

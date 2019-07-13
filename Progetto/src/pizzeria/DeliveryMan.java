@@ -16,14 +16,14 @@ public class DeliveryMan {
         this.name = name;
         int startMinutes = TimeServices.getMinutes(pizzeria.getOpeningToday());
         int endMinutes = TimeServices.getMinutes(pizzeria.getClosingToday());
-        int length = (endMinutes-startMinutes)/pizzeria.getDELIVERYMAN_MINUTES();     // (..-..)/5
+        int length = (endMinutes-startMinutes)/pizzeria.getDELIVERYMAN_MINUTES();     // (..-..)/10
         this.deliveryManTimes = new TimeBoxDeliveryMan[length];
         for(int i = 0; i < length; i++){
             deliveryManTimes[i] = new TimeBoxDeliveryMan();
         }
     }
 
-    /** assegna una consegna al fattorino in un certo orario. */
+    /** Assegna una consegna al fattorino in un certo orario. */
     public  void assignDelivery(int i) {
         this.deliveryManTimes[i].insertOrder();
     }

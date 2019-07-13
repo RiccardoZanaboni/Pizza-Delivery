@@ -3,6 +3,7 @@ package graphicElements.customerSidePages.newOrder;
 import database.OrderDB;
 import graphicElements.customerSidePages.HomePage;
 import graphicElements.elements.GraphicRecap;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -34,9 +35,21 @@ public class OrderPage3 {
 		Button backButton = new Button("← Torna indietro");
 		backButton.setId("backButton");
 		backButton.setOnAction(e ->
-				window.setScene(scene3)
+			window.setScene(scene3)
 		);
-		Button confirmButton = new Button("Conferma ordine ✔");
+
+		HBox buttonBox = new HBox(10);
+		Button confirmButton = new Button("Conferma Ordine ✔");
+		Button closeButton = new Button("Annulla Ordine ☓");
+		confirmButton.setMaxHeight(35);
+		backButton.setMaxHeight(35);
+		closeButton.setMaxHeight(35);
+        confirmButton.setMinHeight(35);
+        backButton.setMinHeight(35);
+        closeButton.setMinHeight(35);
+		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.setMinSize(600, 30);
+
 		confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e -> {
 			OrderDB.putOrder(order);
@@ -44,15 +57,13 @@ public class OrderPage3 {
 			HomePage homePage = new HomePage();
 			homePage.display(window, pizzeria, customer);
 		});
-		Button closeButton = new Button("Annulla ordine ☓");
+
 		closeButton.setId("closeButton");
 		closeButton.setOnAction(e -> {
-				HomePage home = new HomePage();
-				home.display(window,pizzeria,customer);
+			HomePage home = new HomePage();
+			home.display(window,pizzeria,customer);
 		});
-		HBox buttonBox = new HBox(10);
-		buttonBox.setAlignment(Pos.CENTER);
-		buttonBox.setMinSize(600, 30);
+
 		buttonBox.getChildren().addAll(backButton, confirmButton, closeButton);
 
 		/* Intestazione */
@@ -60,8 +71,11 @@ public class OrderPage3 {
 		HBox titleBox = GraphicRecap.setIntestation(yourOrder);
 
 		ScrollPane scrollPane = new ScrollPane(gridPane);
-		scrollPane.setMinSize(600, 400);
-		buttonBox.setMinSize(600, 100);
+        scrollPane.prefWidthProperty().bind(window.widthProperty());
+        scrollPane.prefHeightProperty().bind(window.heightProperty());
+        scrollPane.setPadding(new Insets(10, 1, 5, 10));
+		//scrollPane.setMinSize(600, 400);
+		buttonBox.setMinSize(600, 60);
 
 		VBox layout = new VBox();
 		layout.getChildren().addAll(titleBox, recapBox, scrollPane,buttonBox);
@@ -72,7 +86,7 @@ public class OrderPage3 {
 
 		/* Inserimento del layout nella Scene e quindi nello Stage */
 		Scene scene4;
-		scene4 = new Scene(layout);
+		scene4 = new Scene(layout,800,600);
 		layout.setId("layout");
 		layout.prefWidthProperty().bind(window.widthProperty());
 		layout.prefHeightProperty().bind(window.heightProperty());

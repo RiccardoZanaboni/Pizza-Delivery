@@ -26,15 +26,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * OrderPage2 è la pagina di ordinazione che consente di selezionare username,
- * indirizzo di consegna e orario desiderato (tra quelli disponibili).
- *
- * Vi si accede tramite il bottone "Avanti" in OrderPage1 o "Indietro" in OrderPage3.
- * Cliccando "Indietro", l'inserimento dati nella pagina viene annullato e si torna a OrderPage1.
- * Cliccando "Avanti", si salvano i dati inseriti e si accede alla pagina OrderPage3.
- */
-
 public class OrderPage2 {
 	private Scene scene3;
 	private String address;
@@ -105,6 +96,7 @@ public class OrderPage2 {
 		/* Bottone di conferma */
 		Button confirmButton = new Button("Prosegui →");
         confirmButton.setId("confirmButton");
+		confirmButton.setMinHeight(35);
 		confirmButton.setOnAction(e-> {
 			this.name = getInfo(surnameInput);
 			this.address = getInfo(addressInput);
@@ -120,6 +112,7 @@ public class OrderPage2 {
 
 		/* Bottone per tornare indietro */
 		Button backButton = new Button("← Torna indietro");
+        backButton.setMinHeight(35);
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
 			order.setName(getInfo(surnameInput));
@@ -130,7 +123,9 @@ public class OrderPage2 {
 
 		HBox buttonBox = new HBox(10);
 		buttonBox.getChildren().addAll(backButton, confirmButton);
+		buttonBox.setMinSize(600, 60);
 		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.setId("buttonBox");
 
 		/* Definizione elementi del GridPane */
 		GridPane gridPane = new GridPane();
@@ -150,7 +145,7 @@ public class OrderPage2 {
 		layout.getChildren().addAll(hBoxIntestazione, hBox, buttonBox);
 		layout.setId("grid");
 
-		scene3 = new Scene(layout);
+		scene3 = new Scene(layout,800,600);
         scene3.setOnKeyPressed(ke -> {
             if(ke.getCode()== KeyCode.ENTER) {
                 confirmButton.fire();
@@ -165,7 +160,7 @@ public class OrderPage2 {
         window.setScene(scene3);
 	}
 
-	/* Verifica che tutti i campi siano stati riempiti. */
+	/** Verifica che tutti i campi siano stati riempiti. */
 	private boolean checkInsert(String name, String address, Date time) {
 		if(name.equals("")) {
 			GenericAlert.display("Attenzione: non è stato inserito il nome!");
@@ -182,7 +177,7 @@ public class OrderPage2 {
 		else return true;
 	}
 
-	/** Legge e restituisce l'orario sleezionato. */
+	/** Legge e restituisce l'orario selezionato. */
 	private Date getChoice(ChoiceBox<String> choiceBox) {
 		Date choiceTime;
 		String orario = choiceBox.getValue();

@@ -155,10 +155,29 @@ public class TextualInterface {
 		}
 	}
 
+	/** Dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria. */
+	private static String helloThere(Pizzeria pizzeria){
+		String opTime = TimeServices.timeStamp(pizzeria.getOpeningToday().getHours(), pizzeria.getOpeningToday().getMinutes());
+		String clTime = TimeServices.timeStamp(pizzeria.getClosingToday().getHours(), pizzeria.getClosingToday().getMinutes());
+		StringBuilder hello = new StringBuilder("\n");
+		hello.append(TextColorServices.colorSystemOut("\nBenvenuto!\n", Color.GREEN,true,true));
+		hello.append(TextColorServices.colorSystemOut("\nPIZZERIA ", Color.ORANGE,false,false));
+		hello.append(TextColorServices.colorSystemOut("\"" + pizzeria.getName() + "\"\n\t",Color.RED,true,false));
+		hello.append(TextColorServices.colorSystemOut(pizzeria.getAddress(),Color.ORANGE,false,false));
+		if(pizzeria.getOpeningToday().equals(pizzeria.getClosingToday()))
+			hello.append(TextColorServices.colorSystemOut("\n\tOGGI CHIUSO", Color.RED, true, false));
+		else {
+			hello.append(TextColorServices.colorSystemOut("\n\tApertura oggi: ", Color.ORANGE, false, false));
+			hello.append(TextColorServices.colorSystemOut(opTime + " - " + clTime, Color.RED, true, false));
+		}
+		hello.append("\n").append(TextColorServices.getLine());
+		return hello.toString();
+	}
+
 	/** Viene presentata la pizzeria e subito richiamato il metodo di accesso all'area riservata. */
 	public static void main(String[] args) {
 		TextualInterface textInterface = new TextualInterface();
-		System.out.println(TextCustomerSide.helloThere(textInterface.wolf));
+		System.out.println(helloThere(textInterface.wolf));
 		try {
             textInterface.askAccess();
         } catch (SQLException e) {

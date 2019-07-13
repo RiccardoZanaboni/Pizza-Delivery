@@ -2,17 +2,19 @@ package pizzeria.services;
 
 import java.util.StringTokenizer;
 
+/**
+ * Fornisce alcuni servizi riguardanti la gestione di stringhe.
+ * */
 public class SettleStringsServices {
 
-	/** In interfaces.TextualInterface, gestisce eventuali errori di inserimento da tastiera (spazi/virgole) degli ingredienti. */
+	/** Gestisce eventuali errori di inserimento da tastiera (spazi/virgole) degli ingredienti. */
 	public static String arrangeIngredientString(StringTokenizer st){
 		String ingred = st.nextToken(",");
-		while (ingred.startsWith(" "))		// elimina tutti gli spazi prima della stringa
+		while (ingred.startsWith(" "))		/* elimina tutti gli spazi prima della stringa */
 			ingred = ingred.substring(1);
-		while (ingred.endsWith(" "))		// elimina tutti gli spazi dopo la stringa
+		while (ingred.endsWith(" "))		/* elimina tutti gli spazi dopo la stringa */
 			ingred = ingred.substring(0,ingred.length()-1);
 		ingred = ingred.replace("'"," ");
-		//ingred = ingred.replace(" ","_");
 		ingred = ingred.toUpperCase();
 		return ingred;
 	}

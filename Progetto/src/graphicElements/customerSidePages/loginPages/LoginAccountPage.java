@@ -60,7 +60,8 @@ public class LoginAccountPage {
 						break;
 					case PIZZERIA:
 						PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
-						pizzeriaHomePage.display(pizzeria, window);
+						Stage stage=new Stage();
+						pizzeriaHomePage.display(pizzeria, stage);
 						break;
 					default:
 						insertErrorLabel.setTextFill(Color.DARKRED);
@@ -101,7 +102,7 @@ public class LoginAccountPage {
 		});
 		layout.getStyleClass().add("layout");
 
-		Scene scene = new Scene(layout, 880, 600);
+		Scene scene = new Scene(layout, 800, 600);
 		window.setScene(scene);
 		scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/loginPageStyle.css").toExternalForm());
 		window.show();

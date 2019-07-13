@@ -50,7 +50,7 @@ public class GraphicInterface extends Application {
 		StackPane stackPane = new StackPane();
 		stackPane.getChildren().addAll(imageView);
 
-		Scene scene0 = new Scene(stackPane, 880, 600);
+		Scene scene0 = new Scene(stackPane, 800, 600);
 		window.setScene(scene0);
 		window.show();
 		FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), stackPane);

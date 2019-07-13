@@ -20,7 +20,6 @@ public class ButtonModPizza extends Button {
             if(order.getNumPizze() < 16) {
                 ModifyBox box = new ModifyBox();
                 if (box.display(order, pizzeria,pizza)) {
-                    order.increaseCountModifiedPizze();
                     ModifyBox.setAnswer();
                     order.setNumTemporaryPizze(true);
                     shoppingCartButton.setText(order.getNumTemporaryPizze()+"");

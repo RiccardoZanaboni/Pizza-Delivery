@@ -45,6 +45,7 @@ public class HomePage {
 
         /* Bottone per il logout */
         logoutButton.setGraphic(imageView1);
+        logoutButton.setMinSize(100, 50);
         logoutButton.setOnAction(e->{
             LoginAccountPage loginAccountPage = new LoginAccountPage();
             loginAccountPage.display(window, pizzeria);

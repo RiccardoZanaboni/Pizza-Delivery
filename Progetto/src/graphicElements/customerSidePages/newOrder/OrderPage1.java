@@ -76,12 +76,15 @@ public class OrderPage1 {
 
         /* Bottoni per lasciare la pagina (Avanti/Indietro). */
         confirmButton = createConfirmButton(customer, window, order, pizzeria);
+        confirmButton.setPrefHeight(35);
         backButton = createBackButton(pizzeria, window, customer);
+        backButton.setPrefHeight(35);
 
-        HBox hBoxButton = new HBox(10);
-        hBoxButton.getChildren().addAll(backButton, confirmButton);
-        hBoxButton.setAlignment(Pos.CENTER);
-        hBoxButton.setId("buttonBox");
+        HBox buttonBox = new HBox(10);
+        buttonBox.getChildren().addAll(backButton, confirmButton);
+        buttonBox.setMinSize(600, 60);
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.setId("buttonBox");
 
         /* Metodi esterni, per non appesantire */
         fillLabelsAndButtons(shoppingCartButton, pizzeria, order, nomiLabels, ingrLabels, prezziLabels, addButtons, modButtons);
@@ -110,7 +113,7 @@ public class OrderPage1 {
 
         VBox layout = new VBox();
         layout.setId("layout");
-        layout.getChildren().addAll(hBoxIntestazione, hBox, hBoxButton);
+        layout.getChildren().addAll(hBoxIntestazione, hBox, buttonBox);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
 
@@ -201,7 +204,7 @@ public class OrderPage1 {
     /** Costruisce il bottone di conferma, che consente il passaggio ad OrderPage2 */
     private Button createConfirmButton(Customer customer, Stage window, Order order, Pizzeria pizzeria) {
         OrderPage2 orderPage2 = new OrderPage2();
-        confirmButton = new Button("Prosegui  →");
+        confirmButton = new Button("Prosegui →");
         confirmButton.setId("confirmButton");
         confirmButton.setOnAction(e -> {
             if(order.getNumTemporaryPizze()>0)

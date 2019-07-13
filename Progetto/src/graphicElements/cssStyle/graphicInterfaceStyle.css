@@ -24,7 +24,7 @@
 }
 
 #pane {
-    -fx-background-image: url("../images/wolf_pizza.png");
+    -fx-background-image: url("/graphicElements/images/wolf_pizza.png");
     -fx-opacity:0.6;
     -fx-background-repeat: stretch;
     -fx-background-size: 300 150;

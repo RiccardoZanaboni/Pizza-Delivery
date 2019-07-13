@@ -15,8 +15,8 @@ import static org.junit.Assert.assertEquals;
 public class PizzeriaTest {
     private Pizzeria pizzeria = new Pizzeria("Wolf of Pizza","Via Bolzano 10");
 
-    /* Attraverso questo test verifico che, in un orario prestabillito, i TimeBox relativi
-    al forno in quell'orario e quelli relativi al DeliveryMan siano corretti. L'uno deve inoltre
+    /** Verifica che, in un orario prestabillito, i TimeBox relativi al forno in quell'orario
+     * e quelli relativi al DeliveryMan siano corretti. L'uno deve inoltre
     essere il doppio dell'altro, affinché il ragionamento utilizzato sia corretto. */
     @Test
     public void testFindTimeBoxOven_and_FindTimeBoxDeliveryman(){
@@ -24,8 +24,7 @@ public class PizzeriaTest {
         assertEquals(6, pizzeria.findTimeBoxDeliveryMan(15, 0));
    }
 
-    /* Con questo test verifico che il DeliveryMan aggiunto alla pizzeria sia effettivamente reperibile
-    per la consegna */
+    /** Verifica che il DeliveryMan aggiunto alla pizzeria sia effettivamente reperibile per la consegna */
    @Test
    public void testAFreeDeliveryMan(){
        DeliveryMan fetch = new DeliveryMan("fetch",pizzeria);
@@ -38,7 +37,6 @@ public class PizzeriaTest {
        pizzeria.aFreeDeliveryMan(19,0).assignDelivery(pizzeria.findTimeBoxDeliveryMan(19,00));
        /* dopo aver assegnato due ordini a musi, quello libero e' "fetch" ora */
        assertEquals(fetch.getName(),pizzeria.aFreeDeliveryMan(19,0).getName());
-
    }
 
    @Test
@@ -57,7 +55,7 @@ public class PizzeriaTest {
         assertEquals(LoginPossibilities.NO,PizzeriaServices.checkLogin(pizzeria,"macchina","33"));
     }
 
-    /* Test che controlla l'apertura in base alla data di apertura e chiusura */
+    /** Test che controlla l'apertura in base alla data di apertura e chiusura */
    @Test
     public void testCheckTimeOrder(){
         assertEquals(OpeningPossibilities.OPEN, TimeServices.checkTimeOrder(pizzeria));

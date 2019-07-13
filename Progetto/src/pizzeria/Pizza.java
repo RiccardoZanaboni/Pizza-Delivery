@@ -13,7 +13,7 @@ public class Pizza {
     private int count = 0;
 
     /**
-     * Il prodotto Pizza è caratterizzato da un nome, un prezzo ed una lista di ingredienti.
+     * Il prodotto Pizza è caratterizzato da un nome, un prezzo ed una HashMap di ingredienti.
      * Rispetto alle pizze del menu, gli ingredienti (e conseguentemente il prezzo)
      * possono variare su richiesta del cliente.
      */
@@ -24,6 +24,7 @@ public class Pizza {
         this.ingredients = ingred;
     }
 
+    /** Utilizzato nel Menu dell'interfaccia testuale. */
     @Override
     public String toString() {
         String descrizione = this.getDescription();
@@ -33,7 +34,7 @@ public class Pizza {
         return "- " + nome + prezzo + this.price + " €" + ingr + descrizione;
     }
 
-    /** Restituisce il nome (così come è salvato, se non è da visualizzare) */
+    /** Restituisce il nome della pizza. Se è da visualizzare, allora vengono impiegati degli accorgimenti. */
     public String getName(boolean isToVisualize) {
         if(isToVisualize)
             return SettleStringsServices.getSettledName(this.name);
@@ -45,7 +46,7 @@ public class Pizza {
         return this.ingredients;
     }
 
-    /** Restituisce un'unica String che corrisponde alla lista degli ingredienti della pizza. */
+    /** Restituisce un'unica String che elenca gli ingredienti della pizza. */
     public String getDescription() {
         String descrizione = "";
         for (String ingr: this.ingredients.values()) {
@@ -96,21 +97,15 @@ public class Pizza {
 
     public String getName() {
         return name;
-    }       // non cancellatelo
+    }
 
-    /** Override del metodo che viene usato da contains in modo da non confrontare il puntatore ma gli attributi dell'oggetto*/
-
+    /** Override del metodo che viene usato da contains, in modo da non confrontare il puntatore,
+     * ma gli attributi dell'oggetto*/
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-
-        if (!(obj instanceof Pizza)) {
-            return false;
-        }
-
+        if (obj == null) return false;
+        if (!(obj instanceof Pizza)) return false;
         Pizza p = (Pizza) obj;
-        return p.name.equals(this.name) && p.ingredients.equals(this.ingredients) && p.price==this.price;
+        return (p.name.equals(this.name) && p.ingredients.equals(this.ingredients) && (p.price == this.price));
     }
 }

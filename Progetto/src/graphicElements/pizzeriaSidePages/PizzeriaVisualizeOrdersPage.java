@@ -21,6 +21,7 @@ import pizzeria.services.TimeServices;
 import java.util.ArrayList;
 import java.util.Date;
 
+@SuppressWarnings("deprecation")
 public class PizzeriaVisualizeOrdersPage {
 
 	/** Lo Stage mostra, dal lato Pizzeria, tutti gli ordini che devono essere evasi oggi.
@@ -49,11 +50,15 @@ public class PizzeriaVisualizeOrdersPage {
 			PizzeriaHomePage pizzeriaHomePage=new PizzeriaHomePage();
 			pizzeriaHomePage.display(pizzeria, window);
 		});
+		HBox hBox1=new HBox(10);
+		hBox1.getChildren().add(backButton);
+		backButton.setMinHeight(35);
+        hBox1.setMinSize(600, 60);
+        hBox1.setAlignment(Pos.CENTER);
 		Button refreshButton = new Button("Aggiorna pagina ");
 		refreshButton.setOnAction(e ->
 				display(pizzeria,window)
 		);
-		HBox hBox1 = new HBox(10);
 		hBox1.getChildren().addAll(backButton,refreshButton);
 		hBox1.setAlignment(Pos.CENTER);
 

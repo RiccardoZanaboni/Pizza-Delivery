@@ -11,15 +11,8 @@
         -fx-font-variant: small-caps;
 }
 
-/*.button {
-    -fx-background-color: transparent;
-    -fx-border-style: solid solid solid solid;
-    -fx-font-family: Helvetica, Arial, sans-serif;
-    -fx-text-fill: black;
-    -fx-font-size: 20px;
-}*/
 .button {
-  -fx-background-color: #eda615; //*FIXME DA CAMBIARE IL COLORE   @MUSI*/
+  -fx-background-color: #eda615;
   -fx-color: black;
   -fx-padding: 16px 32px;
   -fx-text-align: center;
@@ -36,8 +29,6 @@
   -fx-background-color: linear-gradient(#a61022,  #f39f18);
   -fx-border-color: black;
 }
-
-
 
 .layout {
     -fx-background-color: linear-gradient(#a61022,  #f39f18);
