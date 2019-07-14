@@ -3,7 +3,7 @@ package interfaces;
 import database.*;
 import javafx.scene.paint.Color;
 import pizzeria.*;
-import pizzeria.pizzeriaSendMail.SendJavaMail;
+import pizzeria.services.sendMail.SendJavaMail;
 import pizzeria.services.*;
 import pizzeria.services.TextColorServices;
 import textualElements.TextCustomerSide;

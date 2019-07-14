@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Pizzeria;
-import pizzeria.pizzeriaSendMail.SendJavaMail;
+import pizzeria.services.sendMail.SendJavaMail;
 import pizzeria.services.PizzeriaServices;
 
 public class NewAccountPage {

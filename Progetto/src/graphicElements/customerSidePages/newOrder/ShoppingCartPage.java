@@ -78,7 +78,7 @@ public class ShoppingCartPage {
 
 				nomiLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getName(true)));
 				ingrLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getDescription()));
-				prezziLabels.add(numTipo, new Label((SettleStringsServices.settlePriceDecimal(order.getOrderedPizze().get(i).getPrice() * num) + " €")));
+				prezziLabels.add(numTipo, new Label("  x  " + SettleStringsServices.settlePriceDecimal(order.getOrderedPizze().get(i).getPrice()) + " €"));
 				countPizzeLabels.add(numTipo, new Label());
 				countPizzeLabels.get(numTipo).setText("" + num);
 				buttonRmvPizzas.add(new ButtonRmvPizza(nomiLabels.get(numTipo), ingrLabels.get(numTipo), prezziLabels.get(numTipo), shoppingCartButton, total, order, order.getOrderedPizze().get(i), countPizzeLabels.get(numTipo)));
@@ -90,9 +90,9 @@ public class ShoppingCartPage {
 				gridPane.getChildren().add(buttonRmvPizzas.get(numTipo));
 
 				GridPane.setConstraints(countPizzeLabels.get(numTipo), 0, numTipo + 1);
-				GridPane.setConstraints(nomiLabels.get(numTipo), 1, numTipo + 1);
-				GridPane.setConstraints(ingrLabels.get(numTipo), 2, numTipo + 1);
-				GridPane.setConstraints(prezziLabels.get(numTipo), 3, numTipo + 1);
+				GridPane.setConstraints(prezziLabels.get(numTipo), 1, numTipo + 1);
+				GridPane.setConstraints(nomiLabels.get(numTipo), 2, numTipo + 1);
+				GridPane.setConstraints(ingrLabels.get(numTipo), 3, numTipo + 1);
 				GridPane.setConstraints(buttonRmvPizzas.get(numTipo), 4, numTipo + 1);
 
 				numTipo++;		// ho un "tipo di pizza" in piu

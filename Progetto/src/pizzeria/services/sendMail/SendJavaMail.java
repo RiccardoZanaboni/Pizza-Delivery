@@ -1,4 +1,4 @@
-package pizzeria.pizzeriaSendMail;
+package pizzeria.services.sendMail;
 
 import database.CustomerDB;
 import javafx.scene.paint.Color;

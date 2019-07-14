@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pizzeria.Pizzeria;
-import pizzeria.pizzeriaSendMail.SendJavaMail;
+import pizzeria.services.sendMail.SendJavaMail;
 
 public class RecoverPswPage {
 

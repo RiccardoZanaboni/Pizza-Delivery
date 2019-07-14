@@ -1,4 +1,4 @@
-package pizzeria.pizzeriaSendMail;
+package pizzeria.services.sendMail;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;

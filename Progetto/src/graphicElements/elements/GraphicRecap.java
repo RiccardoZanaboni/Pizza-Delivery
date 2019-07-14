@@ -60,9 +60,9 @@ public class GraphicRecap {
 				}
 				nomiLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getName(true)));
 				ingrLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getDescription()));
-				prezziLabels.add(numTipo, new Label((SettleStringsServices.settlePriceDecimal(order.getOrderedPizze().get(i).getPrice() * num) + " €")));
+				prezziLabels.add(numTipo, new Label("  x " + SettleStringsServices.settlePriceDecimal(order.getOrderedPizze().get(i).getPrice()) + " €"));
 				countPizzeLabels.add(numTipo, new Label());
-				countPizzeLabels.get(numTipo).setText("" + num);
+				countPizzeLabels.get(numTipo).setText(String.valueOf(num));
 
 				gridPane.getChildren().add(nomiLabels.get(numTipo));
 				gridPane.getChildren().add(ingrLabels.get(numTipo));
@@ -70,9 +70,9 @@ public class GraphicRecap {
 				gridPane.getChildren().add(prezziLabels.get(numTipo));
 
 				GridPane.setConstraints(countPizzeLabels.get(numTipo), 0, numTipo + 1);
-				GridPane.setConstraints(nomiLabels.get(numTipo), 1, numTipo + 1);
-				GridPane.setConstraints(ingrLabels.get(numTipo), 2, numTipo + 1);
-				GridPane.setConstraints(prezziLabels.get(numTipo), 3, numTipo + 1);
+				GridPane.setConstraints(prezziLabels.get(numTipo), 1, numTipo + 1);
+				GridPane.setConstraints(nomiLabels.get(numTipo), 2, numTipo + 1);
+				GridPane.setConstraints(ingrLabels.get(numTipo), 3, numTipo + 1);
 
 				numTipo++;	/* ho un "tipo di pizza" in più */
 			}

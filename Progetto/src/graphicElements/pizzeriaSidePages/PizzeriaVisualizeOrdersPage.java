@@ -46,7 +46,7 @@ public class PizzeriaVisualizeOrdersPage {
 		/* Bottoni di fondo pagina */
 		Button backButton = new Button("← Torna indietro");
 		backButton.setOnAction(e -> {
-			PizzeriaHomePage pizzeriaHomePage=new PizzeriaHomePage();
+			PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
 			pizzeriaHomePage.display(pizzeria, window);
 		});
 		backButton.setMinHeight(35);
@@ -70,22 +70,24 @@ public class PizzeriaVisualizeOrdersPage {
 		window.show();
 	}
 
-	/* Aggiunge tutte le informazioni necessarie al GridPane */
+	/** Aggiunge tutte le informazioni necessarie al GridPane */
 	private static VBox addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels) {
 		Label orderLabel = new Label(order.getOrderCode() + "\t");
 		Label timeLabel = new Label(TimeServices.dateTimeStamp(order.getTime()) + "\t");
 		Label infoLabel = new Label(order.getName() + "\t" + order.getAddress());
+		Label totalLabel = new Label("\tTOTALE:  " + order.getTotalPrice() + " €");
 		HBox infoBox = new HBox();
-		infoBox.getChildren().addAll(timeLabel,orderLabel,infoLabel);
+		infoBox.getChildren().addAll(timeLabel,orderLabel,infoLabel,totalLabel);
 		HBox spazioBox = new HBox();
 		spazioBox.getChildren().add(new Label(TextColorServices.getLine()));
 
 		GridPane gridPane;
 		gridPane = GraphicRecap.graphicRecap(nomiLabels, order);
-		gridPane.getColumnConstraints().add(new ColumnConstraints(60));
+		gridPane.getColumnConstraints().add(new ColumnConstraints(50));
+		gridPane.getColumnConstraints().add(new ColumnConstraints(100));
 		gridPane.getColumnConstraints().add(new ColumnConstraints(160));
 		gridPane.getColumnConstraints().add(new ColumnConstraints(500));
-		gridPane.getColumnConstraints().add(new ColumnConstraints(80));
+
 		gridPane.setHgap(10);
 		gridPane.setVgap(25);
 
