@@ -16,9 +16,9 @@ import java.util.Properties;
  * Consente di inviare una e-mail di testo dall'indirizzo della pizzeria, autenticata
  * tramite password in SMTPAuthenticator, ad un destinatario alla volta.
  *
- * ATTENZIONE: Per poter inviare e-mail, è necessario estrarre il contenuto di "jaf-1.1.zip"
+ * ATTENZIONE: Per poter inviare e-mail, è necessario estrarre il contenuto di "ExternalLibraries.zip"
  * (tra i file del progetto) in una vostra cartella locale;
- * il contenuto sono i due file: activation.jar, mail.jar.
+ * nel contenuto vi sono i due file: activation.jar, mail.jar.
  * A questo punto, su Intellij, cliccare in alto File/Project_Structure/Libraries/+/
  * [qui seleziono il percorso dei due file, separatamente].
  *

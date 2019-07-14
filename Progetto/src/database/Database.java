@@ -11,6 +11,12 @@ import java.util.Date;
 
 import static database.CustomerDB.getInfoCustomerFromMailAddress;
 
+/** ATTENZIONE: Per poter utilizzare il Database, è necessario estrarre il contenuto di "ExternalLibraries.zip"
+ * (tra i file del progetto) in una vostra cartella locale;
+ * nel contenuto vi è il file: mysql-connector-java-5.1.42-bin.jar.
+ * A questo punto, su Intellij, cliccare in alto File/Project_Structure/Libraries/+/
+ * [qui seleziono il percorso del file].
+ * */
 public class Database {
 	private static Connection con;
 
