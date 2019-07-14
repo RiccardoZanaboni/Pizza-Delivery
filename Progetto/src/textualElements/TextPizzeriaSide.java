@@ -32,10 +32,15 @@ public class TextPizzeriaSide {
 				/* Visualizza gli ordini da evadere oggi */
 				pizzeria.updatePizzeriaToday();
 				System.out.println(TextColorServices.colorSystemOut("Questi sono gli ordini da evadere:\n", Color.YELLOW, false, false));
-				for(String code : pizzeria.getOrders().keySet()){
-					if(pizzeria.getOrders().get(code).getTime().getDate()==(new Date().getDate()))
+				boolean almostOne = false;
+				for(String code : pizzeria.getOrders().keySet()) {
+					if (pizzeria.getOrders().get(code).getTime().getDate() == (new Date().getDate())){
 						System.out.println(TextCustomerSide.recapOrder(pizzeria.getOrders().get(code)));
+						almostOne = true;
+					}
 				}
+				if(!almostOne)
+					System.out.println(TextColorServices.colorSystemOut("\nAttualmente nessun ordine da evadere.\n", Color.YELLOW, false, false));
 				whatDoesPizzeriaWant(textualInterface,pizzeria);
 				break;
 			case "M":

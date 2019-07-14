@@ -31,7 +31,7 @@ public class Pizza {
         String nome = TextColorServices.colorSystemOut(this.name, Color.YELLOW, false, true);
         String prezzo = TextColorServices.colorSystemOut("\n\t\tPrezzo: ",Color.ORANGE,false,false);
         String ingr = TextColorServices.colorSystemOut("\n\t\tIngredienti: ",Color.ORANGE,false,false);
-        return "- " + nome + prezzo + this.price + " €" + ingr + descrizione;
+        return "- " + nome + prezzo + SettleStringsServices.settlePriceDecimal(this.price) + " €" + ingr + descrizione;
     }
 
     /** Restituisce il nome della pizza. Se è da visualizzare, allora vengono impiegati degli accorgimenti. */

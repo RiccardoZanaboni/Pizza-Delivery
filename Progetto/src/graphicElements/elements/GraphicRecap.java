@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pizzeria.Order;
 import pizzeria.Pizza;
+import pizzeria.services.SettleStringsServices;
 import pizzeria.services.TimeServices;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class GraphicRecap {
 				}
 				nomiLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getName(true)));
 				ingrLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getDescription()));
-				prezziLabels.add(numTipo, new Label((order.getOrderedPizze().get(i).getPrice()*num + " €")));
+				prezziLabels.add(numTipo, new Label((SettleStringsServices.settlePriceDecimal(order.getOrderedPizze().get(i).getPrice() * num) + " €")));
 				countPizzeLabels.add(numTipo, new Label());
 				countPizzeLabels.get(numTipo).setText("" + num);
 

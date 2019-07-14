@@ -24,7 +24,7 @@ public class PizzaDB {
 			ResultSet rs1 = Database.getStatement("select * from sql7293749.Pizze");
 			rs1.last();
 			int prima = rs1.getRow();
-			Database.insertStatement("insert into sql7293749.Pizze values ('" + nome + "', '" + ingred + "', '" + prezzo + "');");
+			Database.insertStatement("insert into sql7293749.Pizze values ('" + nome.toUpperCase() + "', '" + ingred + "', '" + prezzo + "');");
 			ResultSet rs2 = Database.getStatement("select * from sql7293749.Pizze");
 			rs2.last();
 			int dopo = rs2.getRow();
@@ -50,7 +50,7 @@ public class PizzaDB {
 	}
 
 	public static HashMap<String, Pizza> getPizzeDB(HashMap<String, Pizza> menu) throws SQLException{
-		ResultSet rs= Database.getStatement("select * from sql7293749.Pizze");
+		ResultSet rs = Database.getStatement("select * from sql7293749.Pizze");
 		while (rs.next()) {
 			HashMap<String, String> ingr = new HashMap<>();
 			String nomePizza = rs.getString(1);

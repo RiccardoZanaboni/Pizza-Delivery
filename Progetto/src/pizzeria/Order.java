@@ -1,5 +1,7 @@
 package pizzeria;
 
+import pizzeria.services.SettleStringsServices;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -46,12 +48,12 @@ public class Order implements Comparable<Order> {
     }
 
     /** Calcola e restituisce la spesa complessiva per l'ordine. */
-	public double getTotalPrice() {
+	public String getTotalPrice() {
 		double totale = 0;
 		for(int i = 0; i< getNumPizze(); i++){
 			totale += this.orderedPizze.get(i).getPrice();
 		}
-		return totale;
+		return SettleStringsServices.settlePriceDecimal(totale);
 	}
 
 	/** Conta quante pizze modificate dello stesso tipo ci sono */

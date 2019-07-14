@@ -19,6 +19,7 @@ import pizzeria.Customer;
 import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
+import pizzeria.services.SettleStringsServices;
 
 import java.util.ArrayList;
 
@@ -141,7 +142,7 @@ public class OrderPage1 {
             nomiLabels.add(i, new Label(pizzaMenu.getName(true)));
             nomiLabels.get(i).setId("nomiLabel");
             ingrLabels.add(i, new Label(pizzaMenu.getDescription()));
-            prezziLabels.add(i, new Label(pizzaMenu.getPrice() + " €"));
+            prezziLabels.add(i, new Label(SettleStringsServices.settlePriceDecimal(pizzaMenu.getPrice()) + " €"));
             addButtons.add(new ButtonAddPizza(shoppingCartButton, order, pizzaMenu));
             modButtons.add(new ButtonModPizza(shoppingCartButton, order, pizzeria, pizzaMenu.getName(false)));
             i++;

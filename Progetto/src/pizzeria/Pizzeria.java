@@ -15,7 +15,7 @@ import static database.Database.openDatabase;
 import static database.Database.setLastUpdate;
 import static pizzeria.services.TimeServices.getMinutes;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings("ALL")
 
 public class Pizzeria {
 	private String name;
@@ -27,10 +27,10 @@ public class Pizzeria {
 	private HashMap<String, Pizza> menu;
 	private HashMap<String, String> pizzeriaIngredients;
 	private HashMap<String,Order> orders;
-	private int availablePlaces;
+	private final int availablePlaces = 8;
 	private final int OVEN_MINUTES = 5;      /* ogni 5 minuti */
 	private final int DELIVERYMAN_MINUTES = 10;   /* ogni 10 minuti */
-	private final double SUPPL_PRICE;
+	private final double SUPPL_PRICE = 0.5;
 	private final String userPizzeria;
 	private final String pswPizzeria;
 
@@ -49,14 +49,14 @@ public class Pizzeria {
 		this.menu = new HashMap<>();
 		this.pizzeriaIngredients = new HashMap<>();
 		this.name = name;
-		this.orders = new LinkedHashMap<>();
 		this.address = address;
-		setDayOfTheWeek();
+		this.orders = new LinkedHashMap<>();
 		this.deliveryMen = new ArrayList<>();
-		this.SUPPL_PRICE = 0.5;
-		this.availablePlaces = 8;
 		/* Apre la connessione con il database */
 		openDatabase();
+		setIngredientsPizzeria();
+		createMenu();
+		setDayOfTheWeek();
 		addDeliveryMan(new DeliveryMan("Musi", this));
 		//addDeliveryMan(new DeliveryMan("Zana", this));
 		updatePizzeriaToday();
@@ -74,19 +74,19 @@ public class Pizzeria {
 	 * */
 	private void setDayOfTheWeek() {
 		/* orari di apertura, da domenica a sabato */
-		this.openings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES);
 		this.openings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
-		this.openings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
-		this.openings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
-		this.openings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
-		this.openings[5] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
-		this.openings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(19,0), ChronoUnit.MINUTES);
+		this.openings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(19,0), ChronoUnit.MINUTES);
+		this.openings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(19,0), ChronoUnit.MINUTES);
+		this.openings[5] = LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES);
+		this.openings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES);
 		/* orari di apertura, da domenica a sabato */
 		this.closings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
-		this.closings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
-		this.closings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
-		this.closings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
-		this.closings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
+		this.closings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.closings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(23,0), ChronoUnit.MINUTES);
+		this.closings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(23,0), ChronoUnit.MINUTES);
+		this.closings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(23,0), ChronoUnit.MINUTES);
 		this.closings[5] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 		this.closings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 	}
@@ -116,8 +116,6 @@ public class Pizzeria {
 	 * se non corrispondono, allora è il primo accesso di oggi all'applicazione, pertanto occorre aggiornare.
 	 * */
 	public void updatePizzeriaToday() {
-		setIngredientsPizzeria();
-		createMenu();
 		int closeMinutes = getMinutes(getClosingToday());
 		int openMinutes = getMinutes(getOpeningToday());
 		this.ovens = new Oven[(closeMinutes - openMinutes) / this.OVEN_MINUTES];    /* minutiTotali/5 */
@@ -146,8 +144,8 @@ public class Pizzeria {
 	/** Una tantum: viene creato il menu della pizzeria; ad ogni pizza vengono aggiunti i rispettivi toppings. */
 	private void createMenu() {
 		try {
-			for(String s : PizzaDB.getPizzeDB(menu).keySet()){
-				addPizza(menu.get(s));
+			for(String s : PizzaDB.getPizzeDB(this.menu).keySet()){
+				addPizza(this.menu.get(s));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

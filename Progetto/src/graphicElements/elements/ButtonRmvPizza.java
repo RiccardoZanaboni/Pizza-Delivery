@@ -4,9 +4,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import pizzeria.Order;
 import pizzeria.Pizza;
+import pizzeria.services.SettleStringsServices;
 
 public class ButtonRmvPizza extends Button {
 
@@ -15,7 +17,7 @@ public class ButtonRmvPizza extends Button {
 	 * un'istanza della pizza selezionata.
 	 */
 
-	public ButtonRmvPizza(Label nomeLabels, Label toppingLabel, Label prezzoLabel, Button shoppingCartButton, Order order, Pizza pizza, Label countPizza) {
+	public ButtonRmvPizza(Label nomeLabels, Label toppingLabel, Label prezzoLabel, Button shoppingCartButton, Label total, Order order, Pizza pizza, Label countPizza) {
 		Image image1 = new Image("/graphicElements/images/cestino.png");
 		ImageView imageView = new ImageView(image1);
 		imageView.setFitHeight(20);
@@ -40,7 +42,8 @@ public class ButtonRmvPizza extends Button {
 		    }
 
 		    countPizza.setText("" + pizza.getCount());
-		    prezzoLabel.setText("" + (pizza.getPrice() * pizza.getCount()));
+		    prezzoLabel.setText("" + (SettleStringsServices.settlePriceDecimal(pizza.getPrice() * pizza.getCount())));
+		    total.setText(order.getTotalPrice() + " €");
 		    order.setNumTemporaryPizze(false);
 		    shoppingCartButton.setText(order.getNumTemporaryPizze() + "");
 

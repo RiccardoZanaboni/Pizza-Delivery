@@ -14,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pizzeria.Order;
 import pizzeria.Pizza;
+import pizzeria.services.SettleStringsServices;
 
 import java.util.ArrayList;
 
@@ -24,16 +25,23 @@ public class ShoppingCartPage {
 	/** Lo Stage mostra il carrello dell'ordine, con i prodotti fino ad allora selezionati. */
 	public void display(Order order, Button shoppingCartButton) {
 		window.setTitle("Wolf of Pizza - Il tuo Carrello");
-		VBox layout = new VBox();
 
-		GridPane gridPane = createGridPane(shoppingCartButton, order);
+		HBox totalBox = new HBox();
+		Label label = new Label("Totale: ");
+		Label totLabel = new Label(order.getTotalPrice() + " €");
+		totalBox.getChildren().addAll(label,totLabel);
+		totalBox.setMinHeight(50);
+		totalBox.setAlignment(Pos.CENTER);
+
+		GridPane gridPane = createGridPane(shoppingCartButton, totLabel, order);
 		gridPane.setPadding(new Insets(10, 10, 10, 10));
 		gridPane.setHgap(10);
 		gridPane.setVgap(30);
 
 		ScrollPane scrollPane = new ScrollPane(gridPane);
-		scrollPane.setMinSize(600, 400);
-		layout.getChildren().add(scrollPane);
+		scrollPane.setMinSize(600, 350);
+		VBox layout = new VBox();
+		layout.getChildren().addAll(scrollPane,totalBox);
 		Scene scene = new Scene(layout);
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setScene(scene);
@@ -41,7 +49,7 @@ public class ShoppingCartPage {
 	}
 
 	/** Crea tutti gli elementi necessari per la Scene del carrello e li riunisce nel GridPane. */
-	private static GridPane createGridPane(Button shoppingCartButton, Order order) {
+	private GridPane createGridPane(Button shoppingCartButton, Label total, Order order) {
 		GridPane gridPane = new GridPane();
 		ArrayList<Label> nomiLabels = new ArrayList<>();
 		ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -70,10 +78,10 @@ public class ShoppingCartPage {
 
 				nomiLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getName(true)));
 				ingrLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getDescription()));
-				prezziLabels.add(numTipo, new Label((order.getOrderedPizze().get(i).getPrice()*num + " €")));
+				prezziLabels.add(numTipo, new Label((SettleStringsServices.settlePriceDecimal(order.getOrderedPizze().get(i).getPrice() * num) + " €")));
 				countPizzeLabels.add(numTipo, new Label());
 				countPizzeLabels.get(numTipo).setText("" + num);
-				buttonRmvPizzas.add(new ButtonRmvPizza(nomiLabels.get(numTipo), ingrLabels.get(numTipo), prezziLabels.get(numTipo), shoppingCartButton, order, order.getOrderedPizze().get(i), countPizzeLabels.get(numTipo)));
+				buttonRmvPizzas.add(new ButtonRmvPizza(nomiLabels.get(numTipo), ingrLabels.get(numTipo), prezziLabels.get(numTipo), shoppingCartButton, total, order, order.getOrderedPizze().get(i), countPizzeLabels.get(numTipo)));
 
 				gridPane.getChildren().add(nomiLabels.get(numTipo));
 				gridPane.getChildren().add(ingrLabels.get(numTipo));

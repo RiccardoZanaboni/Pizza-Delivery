@@ -53,7 +53,7 @@ public class OrderDB {
                 order.setAddress(address);
                 order.setTime(date);
                 order.updateAvailability(pizzeria, quantity, date);
-                ResultSet rsPizza = OrderDB.getOrderedPizzasById(orderID);
+                ResultSet rsPizza = OrderDB.getPizzasByOrderId(orderID);
                 while (rsPizza.next()) {
                     HashMap<String, String> ingr = new HashMap<>();
                     String ingrediente = rsPizza.getString(2);
@@ -77,8 +77,7 @@ public class OrderDB {
     }
 
     /** Recupera dal DB tutte le pizze presenti in un determinato ordine. */
-    private static ResultSet getOrderedPizzasById( String orderID) {
-        return Database.getStatement("select nome, ingrediente, prezzo from sql7293749.Orders natural join sql7293749.OrderedPizza where orderID = " + "\"" + orderID + "\"");
-
+    private static ResultSet getPizzasByOrderId(String orderID) {
+        return Database.getStatement("select nome, ingrediente, prezzo from sql7293749.Orders natural join sql7293749.OrderedPizza where orderID = '" + orderID + "'");
     }
 }

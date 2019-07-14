@@ -16,17 +16,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/**
- * Finestra che si attiva se viene premuto un qualunque bottone "modifica" in OrderPage1.
- * Dà all'utente la possibilità di selezionare gli ingredienti desiderati alla propria pizza.
- * Blocca l'utilizzo della pagina OrderPage1, fino all'attivamento del confirmButton.
- */
-
 public class ModifyBox {
     private static boolean answer = false;  /* answer = true se la pizza ha effettivamente subìto modifiche */
 
     /** In un nuovo Stage viene visualizzato il Box in cui selezionare o deselezionare
      * gli ingredienti per la pizza desiderata.
+     * Questa nuova finestra compare se viene premuto un qualunque bottone "modifica" in OrderPage1.
+     * Blocca l'utilizzo della pagina OrderPage1, fino alla pressione del confirmButton.
      * E' possibile confermare l'aggiunta di una "pizza modificata" solo se sono state
      * effettivamente apportate modifiche, altrimenti viene visualizzato un messaggio di errore.
      * */

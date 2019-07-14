@@ -159,7 +159,7 @@ public class TextualInterface {
 	private static String helloThere(Pizzeria pizzeria){
 		String opTime = TimeServices.timeStamp(pizzeria.getOpeningToday().getHours(), pizzeria.getOpeningToday().getMinutes());
 		String clTime = TimeServices.timeStamp(pizzeria.getClosingToday().getHours(), pizzeria.getClosingToday().getMinutes());
-		StringBuilder hello = new StringBuilder("\n");
+		StringBuilder hello = new StringBuilder();
 		hello.append(TextColorServices.colorSystemOut("\nBenvenuto!\n", Color.GREEN,true,true));
 		hello.append(TextColorServices.colorSystemOut("\nPIZZERIA ", Color.ORANGE,false,false));
 		hello.append(TextColorServices.colorSystemOut("\"" + pizzeria.getName() + "\"\n\t",Color.RED,true,false));
@@ -176,7 +176,9 @@ public class TextualInterface {
 
 	/** Viene presentata la pizzeria e subito richiamato il metodo di accesso all'area riservata. */
 	public static void main(String[] args) {
+		System.out.println("Inizializzando...");
 		TextualInterface textInterface = new TextualInterface();
+		System.out.println("Pronto.");
 		System.out.println(helloThere(textInterface.wolf));
 		try {
             textInterface.askAccess();

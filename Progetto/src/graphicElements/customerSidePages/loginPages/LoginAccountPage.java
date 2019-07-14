@@ -60,8 +60,7 @@ public class LoginAccountPage {
 						break;
 					case PIZZERIA:
 						PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
-						Stage stage=new Stage();
-						pizzeriaHomePage.display(pizzeria, stage);
+						pizzeriaHomePage.display(pizzeria, window);
 						break;
 					default:
 						insertErrorLabel.setTextFill(Color.DARKRED);

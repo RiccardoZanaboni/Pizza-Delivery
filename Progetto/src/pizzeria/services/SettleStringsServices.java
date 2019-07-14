@@ -1,11 +1,26 @@
 package pizzeria.services;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.StringTokenizer;
 
 /**
  * Fornisce alcuni servizi riguardanti la gestione di stringhe.
  * */
 public class SettleStringsServices {
+
+	/** Restituisce, da un double, una String con esattamente due cifre decimali. */
+	public static String settlePriceDecimal(double d){
+
+		DecimalFormatSymbols symb = new DecimalFormatSymbols();
+		symb.setDecimalSeparator('.');
+
+		DecimalFormat df = new DecimalFormat();
+		df.setDecimalFormatSymbols(symb);
+		df.setMinimumFractionDigits(2);
+		df.setMaximumFractionDigits(2);
+		return df.format(d);
+	}
 
 	/** Gestisce eventuali errori di inserimento da tastiera (spazi/virgole) degli ingredienti. */
 	public static String arrangeIngredientString(StringTokenizer st){

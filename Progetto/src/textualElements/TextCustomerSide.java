@@ -9,6 +9,7 @@ import pizzeria.Order;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;
 import pizzeria.services.PizzeriaServices;
+import pizzeria.services.SettleStringsServices;
 import pizzeria.services.TextColorServices;
 import pizzeria.services.TimeServices;
 
@@ -181,7 +182,7 @@ public class TextCustomerSide {
 		recap.append(TextColorServices.colorSystemOut(TimeServices.dateTimeStamp(order.getTime()),Color.GREEN,true,false));
 		recap.append(textRecapProducts(order));
 		recap.append(TextColorServices.colorSystemOut("TOTALE: € ",Color.YELLOW,true,false));
-		recap.append(TextColorServices.colorSystemOut(String.valueOf(order.getTotalPrice()),Color.RED,true,false));
+		recap.append(TextColorServices.colorSystemOut(order.getTotalPrice(),Color.RED,true,false));
 		return line + recap + line;
 	}
 
@@ -205,7 +206,7 @@ public class TextCustomerSide {
 					if (p.getName(false).equals(order.getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(order.getOrderedPizze().get(j).getToppings()))
 						num++;
 				}
-				prodotti.append("\t€ ").append(p.getPrice()).append("  x  ");
+				prodotti.append("\t€ ").append(SettleStringsServices.settlePriceDecimal(p.getPrice())).append("  x  ");
 				prodotti.append(TextColorServices.colorSystemOut(String.valueOf(num),Color.WHITE,true,false));
 				prodotti.append("  ").append(TextColorServices.colorSystemOut(p.getName(true).toUpperCase(),Color.WHITE,true,false));
 				prodotti.append("\t\t").append(p.getDescription()).append("\n");

@@ -19,6 +19,7 @@ import pizzeria.*;
 
 import java.util.HashMap;
 
+@SuppressWarnings("ALL")
 public class PizzeriaModifyMenuPage {
 
 	/**
@@ -45,7 +46,7 @@ public class PizzeriaModifyMenuPage {
 
         /* Topping column */
         TableColumn<Pizza, String> toppingColumn = new TableColumn<>("TOPPINGS");
-        toppingColumn.setMinWidth(580);
+        toppingColumn.setMinWidth(540);
         toppingColumn.setCellValueFactory(new PropertyValueFactory<>("description"));	/* richiama Pizza.getDescription() */
 
         /* Price column */
@@ -86,14 +87,16 @@ public class PizzeriaModifyMenuPage {
 				addToppingButtonClicked(pizzeria, newToppingInput, toppingsList)
 		);
 		Button deleteToppingButton = new Button("Delete Topping");
-		deleteToppingButton.setOnAction(e ->
-				deleteToppingButtonClicked(pizzeria, toppingsList)
-		);
+		deleteToppingButton.setOnAction(e -> {
+			deleteToppingButtonClicked(pizzeria, toppingsList);
+			display(pizzeria,window);
+		});
 
 		Button backButton = new Button("← Return");
 		backButton.setMinHeight(35);
 		backButton.setOnAction(e -> {
 			PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
+			/* Ricarica la pagina, in modo da visualizzare se alcune pizze sono state automaticamente rimosse. */
 			pizzeriaHomePage.display(pizzeria, window);
 		});
 
@@ -220,7 +223,7 @@ public class PizzeriaModifyMenuPage {
 		if (toppingsSelected.size() > 0) {
 			for (String topping : toppingsSelected) {
 				pizzeria.getIngredientsPizzeria().remove(topping);
-				ToppingDB.removeTopping(topping);
+				ToppingDB.removeTopping(pizzeria,topping);
 				allToppings.remove(topping);
 			}
 		} else {

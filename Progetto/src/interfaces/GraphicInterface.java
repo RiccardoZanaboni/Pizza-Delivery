@@ -31,6 +31,7 @@ public class GraphicInterface extends Application {
 
 	/** Il main() consiste semplicemente nella chiamata a start() */
 	public static void main(String[] args) {
+		System.out.println("Inizializzando...");
 		launch(args);
 	}
 
@@ -38,6 +39,7 @@ public class GraphicInterface extends Application {
 	 * viene visualizzata la pagina iniziale di Login. */
 	@Override
 	public void start(Stage primaryStage){
+		System.out.println("Pronto.");
 		window = primaryStage;
 		window.getIcons().add(new Image("/graphicElements/images/wolf_pizza.png"));
 		window.setTitle("Wolf of Pizza");

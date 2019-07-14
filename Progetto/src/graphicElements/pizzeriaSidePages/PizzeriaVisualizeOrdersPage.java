@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -50,15 +49,14 @@ public class PizzeriaVisualizeOrdersPage {
 			PizzeriaHomePage pizzeriaHomePage=new PizzeriaHomePage();
 			pizzeriaHomePage.display(pizzeria, window);
 		});
-		HBox hBox1=new HBox(10);
-		hBox1.getChildren().add(backButton);
 		backButton.setMinHeight(35);
-        hBox1.setMinSize(600, 60);
-        hBox1.setAlignment(Pos.CENTER);
 		Button refreshButton = new Button("Aggiorna pagina ");
 		refreshButton.setOnAction(e ->
 				display(pizzeria,window)
 		);
+		HBox hBox1 = new HBox(10);
+        hBox1.setMinSize(600, 60);
+        hBox1.setAlignment(Pos.CENTER);
 		hBox1.getChildren().addAll(backButton,refreshButton);
 		hBox1.setAlignment(Pos.CENTER);
 

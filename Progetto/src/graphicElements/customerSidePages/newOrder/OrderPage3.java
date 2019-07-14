@@ -37,19 +37,10 @@ public class OrderPage3 {
 		backButton.setOnAction(e ->
 			window.setScene(scene3)
 		);
-
-		HBox buttonBox = new HBox(10);
-		Button confirmButton = new Button("Conferma Ordine ✔");
-		Button closeButton = new Button("Annulla Ordine ☓");
-		confirmButton.setMaxHeight(35);
 		backButton.setMaxHeight(35);
-		closeButton.setMaxHeight(35);
-        confirmButton.setMinHeight(35);
-        backButton.setMinHeight(35);
-        closeButton.setMinHeight(35);
-		buttonBox.setAlignment(Pos.CENTER);
-		buttonBox.setMinSize(600, 30);
+		backButton.setMinHeight(35);
 
+		Button confirmButton = new Button("Conferma Ordine ✔");
 		confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e -> {
 			OrderDB.putOrder(order);
@@ -57,13 +48,21 @@ public class OrderPage3 {
 			HomePage homePage = new HomePage();
 			homePage.display(window, pizzeria, customer);
 		});
+		confirmButton.setMaxHeight(35);
+		confirmButton.setMinHeight(35);
 
+		Button closeButton = new Button("Annulla Ordine ☓");
+		closeButton.setMaxHeight(35);
+        closeButton.setMinHeight(35);
 		closeButton.setId("closeButton");
 		closeButton.setOnAction(e -> {
 			HomePage home = new HomePage();
 			home.display(window,pizzeria,customer);
 		});
 
+		HBox buttonBox = new HBox(10);
+		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.setMinSize(600, 30);
 		buttonBox.getChildren().addAll(backButton, confirmButton, closeButton);
 
 		/* Intestazione */
@@ -74,7 +73,6 @@ public class OrderPage3 {
         scrollPane.prefWidthProperty().bind(window.widthProperty());
         scrollPane.prefHeightProperty().bind(window.heightProperty());
         scrollPane.setPadding(new Insets(10, 1, 5, 10));
-		//scrollPane.setMinSize(600, 400);
 		buttonBox.setMinSize(600, 60);
 
 		VBox layout = new VBox();
