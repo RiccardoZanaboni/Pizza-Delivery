@@ -50,17 +50,20 @@ public class PizzeriaVisualizeOrdersPage {
 			pizzeriaHomePage.display(pizzeria, window);
 		});
 		backButton.setMinHeight(35);
+
 		Button refreshButton = new Button("Aggiorna pagina ");
 		refreshButton.setOnAction(e ->
 				display(pizzeria,window)
 		);
-		HBox hBox1 = new HBox(10);
-        hBox1.setMinSize(600, 60);
-        hBox1.setAlignment(Pos.CENTER);
-		hBox1.getChildren().addAll(backButton,refreshButton);
-		hBox1.setAlignment(Pos.CENTER);
+		refreshButton.setMinHeight(35);
 
-		layout.getChildren().add(hBox1);
+		HBox buttonsBox = new HBox(10);
+        buttonsBox.setMinSize(600, 60);
+		buttonsBox.getChildren().addAll(backButton,refreshButton);
+		buttonsBox.setAlignment(Pos.CENTER);
+
+		layout.getChildren().add(buttonsBox);
+		layout.setMinHeight(540);
 		ScrollPane scrollPane = new ScrollPane(layout);
 		Scene scene = new Scene(scrollPane, 880, 600);
 		window.setScene(scene);

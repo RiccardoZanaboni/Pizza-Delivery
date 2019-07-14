@@ -44,6 +44,7 @@ public class WhoWeArePage {
         });
 
         HBox buttonBox = new HBox(10);
+        buttonBox.setId("buttonBox");
         buttonBox.getChildren().addAll(backButton);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setAlignment(Pos.CENTER);
@@ -54,7 +55,7 @@ public class WhoWeArePage {
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
         layout.setOnKeyPressed(ke -> {
-            if(ke.getCode()== KeyCode.CONTROL||ke.getCode()== KeyCode.BACK_SPACE){
+            if(ke.getCode()== KeyCode.ENTER){
                 backButton.fire();
             }
         });
@@ -63,7 +64,6 @@ public class WhoWeArePage {
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
         scene5.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage2.css").toExternalForm());
-        //window.setResizable(false);
         window.setScene(scene5);
         window.show();
     }

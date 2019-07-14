@@ -71,7 +71,7 @@ public class PizzeriaModifyMenuPage {
         toppingsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         Text infoNewPizzaLabel = new Text();
-        infoNewPizzaLabel.setText("Per selezionare piú ingredienti \n tenere premuto CTRL.");
+        infoNewPizzaLabel.setText("Per selezionare piú ingredienti \n tenere premuto CTRL.\n");
 
         /* Bottoni di inserimento/eliminazione */
         Button addPizzaButton = new Button("Add Pizza");
@@ -89,15 +89,8 @@ public class PizzeriaModifyMenuPage {
 		Button deleteToppingButton = new Button("Delete Topping");
 		deleteToppingButton.setOnAction(e -> {
 			deleteToppingButtonClicked(pizzeria, toppingsList);
-			display(pizzeria,window);
-		});
-
-		Button backButton = new Button("← Return");
-		backButton.setMinHeight(35);
-		backButton.setOnAction(e -> {
-			PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
 			/* Ricarica la pagina, in modo da visualizzare se alcune pizze sono state automaticamente rimosse. */
-			pizzeriaHomePage.display(pizzeria, window);
+			display(pizzeria,window);
 		});
 
 		table.setItems(getMenu(pizzeria));
@@ -113,23 +106,33 @@ public class PizzeriaModifyMenuPage {
 		newToppingHBox.getChildren().addAll(newToppingInput,addToppingButton,deleteToppingButton);
 		newToppingHBox.setAlignment(Pos.BASELINE_RIGHT);
 
-		HBox hBox = new HBox(10);
-		hBox.setPadding(new Insets(10,10,10,10));
-		hBox.getChildren().addAll(newPizzaVBox,toppingsList,newToppingHBox);
+		HBox hBoxInferiore = new HBox(10);
+		hBoxInferiore.setPadding(new Insets(10,10,10,10));
+		hBoxInferiore.getChildren().addAll(newPizzaVBox,toppingsList,newToppingHBox);
+
+		/* Bottone per tornare indietro */
+		Button backButton = new Button("← Return");
+		backButton.setMinHeight(35);
+		backButton.setOnAction(e -> {
+			PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
+			pizzeriaHomePage.display(pizzeria, window);
+		});
 
         HBox returnHBox = new HBox(10);
         returnHBox.getChildren().add(backButton);
+        returnHBox.setMinHeight(60);
         returnHBox.setAlignment(Pos.CENTER);
 
         VBox layout = new VBox();
-        layout.getChildren().addAll(table, hBox, returnHBox);
+        layout.getChildren().addAll(table, hBoxInferiore, returnHBox);
         layout.setPadding(new Insets(10,10,10,10));
         layout.setOnKeyPressed(ke -> {
             if(ke.getCode() == KeyCode.BACK_SPACE)
                 backButton.fire();
         });
         Scene scene = new Scene(layout,800,600);
-        window.setScene(scene);
+		//scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/ButtonPizza.css").toExternalForm());
+		window.setScene(scene);
         window.show();
     }
 
