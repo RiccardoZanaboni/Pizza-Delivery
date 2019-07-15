@@ -1,25 +1,18 @@
 package graphicElements.customerSidePages;
 
-import graphicAlerts.GenericAlert;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Pizzeria;
 import pizzeria.services.PizzeriaServices;
-import sun.java2d.loops.GeneralRenderer;
-
-import java.awt.*;
-import java.net.URI;
 
 public class WhoWeArePage {
 

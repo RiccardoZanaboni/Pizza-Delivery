@@ -11,6 +11,7 @@ import java.util.*;
 /**
  * Fornisce servizi riguardanti la gestione del tempo.
  * */
+@SuppressWarnings("deprecation")
 public class TimeServices {
 
 	/** Restituisce i minuti passati dalla mezzanotte all'orario richiesto. */

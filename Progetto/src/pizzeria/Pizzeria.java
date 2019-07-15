@@ -15,7 +15,7 @@ import static database.Database.openDatabase;
 import static database.Database.setLastUpdate;
 import static pizzeria.services.TimeServices.getMinutes;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("deprecation")
 
 public class Pizzeria {
 	private String name;
@@ -76,6 +76,7 @@ public class Pizzeria {
 		/* orari di apertura, da domenica a sabato */
 		this.openings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES);
 		this.openings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		//fixme rimettere lunedí chiuso
 		this.openings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(19,0), ChronoUnit.MINUTES);
 		this.openings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(19,0), ChronoUnit.MINUTES);
 		this.openings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(19,0), ChronoUnit.MINUTES);
@@ -83,7 +84,8 @@ public class Pizzeria {
 		this.openings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES);
 		/* orari di apertura, da domenica a sabato */
 		this.closings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
-		this.closings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.closings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
+		// FIXME: 15/07/2019 rimettere lunedi chiuso
 		this.closings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(23,0), ChronoUnit.MINUTES);
 		this.closings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(23,0), ChronoUnit.MINUTES);
 		this.closings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(23,0), ChronoUnit.MINUTES);

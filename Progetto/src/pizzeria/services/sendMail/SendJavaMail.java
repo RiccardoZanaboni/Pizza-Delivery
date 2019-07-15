@@ -77,13 +77,11 @@ public class SendJavaMail {
 	 * quando si registra un nuovo account */
 	public boolean welcomeMail(String newUser, String newPsw, String dest) {
 		String subject = "Welcome to WolfPizza!";
-		StringBuilder txt = new StringBuilder();
-		txt.append("Carissimo/a ").append(newUser).append(",\n\n");
-		txt.append("Abbiamo il piacere di darti il benvenuto nella famiglia WolfPizza!\n");
-		txt.append("Hai creato con successo un nuovo account, tramite il quale avrai accesso a tutti i nostri servizi.\n");
-		txt.append("User: ").append(newUser).append("\n");
-		txt.append("Password: ").append(newPsw).append("\n\nAccedi ed ordina con noi!");
-		String messageBody = txt.toString();
+		String messageBody = "Carissimo/a " + newUser + ",\n\n" +
+				"Abbiamo il piacere di darti il benvenuto nella famiglia WolfPizza!\n" +
+				"Hai creato con successo un nuovo account, tramite il quale avrai accesso a tutti i nostri servizi.\n" +
+				"User: " + newUser + "\n" +
+				"Password: " + newPsw + "\n\nAccedi ed ordina con noi!";
 		return sendMail(dest,subject,messageBody);
 	}
 
