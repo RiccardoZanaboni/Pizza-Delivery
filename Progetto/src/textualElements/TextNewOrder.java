@@ -14,6 +14,7 @@ import pizzeria.services.TimeServices;
 
 import java.sql.SQLException;
 import java.util.*;
+ @SuppressWarnings("all")
 
 /**
  * Contiene tutti i metodi necessari al cliente per effettuare un nuovo ordine da interfaccia testuale.

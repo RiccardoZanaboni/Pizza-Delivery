@@ -56,7 +56,7 @@ public class CustomerDB {
     }
 
     /** Aggiorna i dati dell'utente contenuti nel DB. */
-    public static boolean addInfoCustomer( String username, String name, String surname, String address) {
-        return Database.insertStatement("update sql7293749.Users set Name = '" + name + "', Surname = '" + surname + "', Address = '" + address + "' where User = '" + username + "' ");
+    public static boolean addInfoCustomer( String username, String name, String surname, String address, String mail) {
+        return Database.insertStatement("update sql7293749.Users set Name = '" + name + "', MailAddress = '" + mail +"', Surname = '" + surname + "', Address = '" + address + "' where User = '" + username + "' ");
     }
 }

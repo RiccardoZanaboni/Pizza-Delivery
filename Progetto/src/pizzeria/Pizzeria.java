@@ -5,7 +5,6 @@ import database.OrderDB;
 import database.PizzaDB;
 import database.ToppingDB;
 import pizzeria.services.TimeServices;
-
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -74,21 +73,21 @@ public class Pizzeria {
 	 * */
 	private void setDayOfTheWeek() {
 		/* orari di apertura, da domenica a sabato */
-		this.openings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES);
+		this.openings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
 		this.openings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
 		//fixme rimettere lunedí chiuso
-		this.openings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(19,0), ChronoUnit.MINUTES);
-		this.openings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(19,0), ChronoUnit.MINUTES);
-		this.openings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(19,0), ChronoUnit.MINUTES);
-		this.openings[5] = LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES);
-		this.openings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(18,30), ChronoUnit.MINUTES);
+		this.openings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[5] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
+		this.openings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
 		/* orari di apertura, da domenica a sabato */
 		this.closings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 		this.closings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 		// FIXME: 15/07/2019 rimettere lunedi chiuso
-		this.closings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(23,0), ChronoUnit.MINUTES);
-		this.closings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(23,0), ChronoUnit.MINUTES);
-		this.closings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(23,0), ChronoUnit.MINUTES);
+		this.closings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
+		this.closings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
+		this.closings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 		this.closings[5] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 		this.closings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 	}

@@ -7,12 +7,11 @@ import javafx.scene.paint.Color;
 import pizzeria.Pizzeria;
 import pizzeria.services.sendMail.SendJavaMail;
 import pizzeria.services.TextColorServices;
-
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Scanner;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings("all")
 
      /** Gestisce ciò che la Pizzeria può fare, attraverso interfaccia testuale, dopo essersi autenticata. **/
 public class TextPizzeriaSide {

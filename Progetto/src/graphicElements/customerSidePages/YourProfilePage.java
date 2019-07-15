@@ -51,6 +51,17 @@ public class YourProfilePage {
         addressBox.getChildren().addAll(addressLabel, addressInput);
         addressBox.setAlignment(Pos.CENTER);
 
+        /* Campo Email */
+        Label emailLabel = new Label("Email: ");
+        TextField emailField = new TextField();
+        emailField.setPromptText("La tua email");
+        emailField.setMinWidth(280);
+        String email = CustomerDB.getCustomerFromUsername(customer.getUsername(), 3);
+        emailField.setText(email);
+        HBox emailBox = new HBox(50);
+        emailBox.getChildren().addAll(emailLabel, emailField);
+        emailBox.setAlignment(Pos.CENTER);
+
         /* Bottone per tornare alla HomePage senza salvare le modifiche */
         Button backButton = new Button("← Torna indietro");
         backButton.setMinHeight(35);
@@ -69,7 +80,8 @@ public class YourProfilePage {
             String newName = nameInput.getText();
             String newSurname = surnameInput.getText();
             String newAddress = addressInput.getText();
-            if(CustomerDB.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress)) {
+            String mail=emailField.getText();
+            if(CustomerDB.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress, mail)) {
                 HomePage homePage = new HomePage();
                 homePage.display(window, pizzeria, customer);
             } else GenericAlert.display("Modifica dei dati non riuscita.");
@@ -80,7 +92,7 @@ public class YourProfilePage {
         buttonBox.setAlignment(Pos.CENTER);
 
         VBox layout = new VBox(30);
-        layout.getChildren().addAll(nameBox, surnameBox, addressBox, buttonBox);
+        layout.getChildren().addAll(nameBox, surnameBox, addressBox, emailBox, buttonBox);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout, 800, 600);
         layout.getStyleClass().add("layout");

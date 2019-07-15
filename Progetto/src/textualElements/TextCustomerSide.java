@@ -12,7 +12,6 @@ import pizzeria.services.PizzeriaServices;
 import pizzeria.services.SettleStringsServices;
 import pizzeria.services.TextColorServices;
 import pizzeria.services.TimeServices;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -160,7 +159,9 @@ public class TextCustomerSide {
 		String cognome = scan.nextLine();
 		System.out.print("Inserisci il tuo indirizzo principale: ");
 		String indirizzo = scan.nextLine();
-		if(CustomerDB.addInfoCustomer(user,nome,cognome,indirizzo))
+        System.out.print("Inserisci la tua E-Mail: ");
+        String mail = scan.nextLine();
+		if(CustomerDB.addInfoCustomer(user,nome,cognome,indirizzo,mail))
 			System.out.println(TextColorServices.colorSystemOut("\nGrazie! Dati aggiornati.", Color.YELLOW, false, false));
 		else
 			System.out.println(TextColorServices.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));

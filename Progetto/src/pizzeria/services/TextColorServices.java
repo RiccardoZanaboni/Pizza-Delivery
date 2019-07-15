@@ -18,7 +18,7 @@ public class TextColorServices {
 		else if(color == Color.YELLOW) background = "\u001B[43m";
 		else if(color == Color.BLUE) background = "\u001B[44m";
 		else if(color == Color.MAGENTA) background = "\u001B[45m";
-		else if(color == Color.CYAN) background = "\u001B[46m"; // FIXME: 15/07/2019 perché da warning?
+		else if(color == Color.CYAN) background = "\u001B[46m";
 		else if(color == Color.WHITE) background = "\u001B[47m";
 		return background;
 	}
