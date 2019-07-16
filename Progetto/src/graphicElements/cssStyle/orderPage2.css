@@ -9,7 +9,7 @@
     -fx-cursor: pointer;
 }
 
-backButton:hover {                   /*Effetto di quando ci passi sopra con il puntatore*/
+#backButton:hover {                   /*Effetto di quando ci passi sopra con il puntatore*/
     -fx-background-color: #f39f18;
     -fx-color: white;
 }

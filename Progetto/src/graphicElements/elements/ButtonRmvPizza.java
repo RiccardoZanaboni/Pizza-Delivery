@@ -4,7 +4,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import pizzeria.Order;
 import pizzeria.Pizza;
@@ -42,7 +41,7 @@ public class ButtonRmvPizza extends Button {
 		    }
 
 		    countPizza.setText("" + pizza.getCount());
-		    prezzoLabel.setText("" + (SettleStringsServices.settlePriceDecimal(pizza.getPrice() * pizza.getCount())));
+		    prezzoLabel.setText("  x  " + (SettleStringsServices.settlePriceDecimal(pizza.getPrice()))+" €");
 		    total.setText(order.getTotalPrice() + " €");
 		    order.setNumTemporaryPizze(false);
 		    shoppingCartButton.setText(order.getNumTemporaryPizze() + "");

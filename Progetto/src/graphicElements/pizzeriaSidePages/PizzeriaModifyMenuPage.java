@@ -19,7 +19,7 @@ import pizzeria.*;
 
 import java.util.HashMap;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("deprecation")
 public class PizzeriaModifyMenuPage {
 
 	/**

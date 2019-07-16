@@ -3,7 +3,6 @@ package pizzeria.services;
 import enums.OpeningPossibilities;
 import pizzeria.DeliveryMan;
 import pizzeria.Pizzeria;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -11,6 +10,7 @@ import java.util.*;
 /**
  * Fornisce servizi riguardanti la gestione del tempo.
  * */
+@SuppressWarnings("deprecation")
 public class TimeServices {
 
 	/** Restituisce i minuti passati dalla mezzanotte all'orario richiesto. */

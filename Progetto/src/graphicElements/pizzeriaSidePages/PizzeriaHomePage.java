@@ -37,7 +37,7 @@ public class PizzeriaHomePage {
         hBox.setAlignment(Pos.CENTER);
 
         /* Bottone per visualizzare l'elenco degli ordini da evadere oggi */
-        Button visualizeOrdersButton = new Button("Visualizza Ordini");
+        Button visualizeOrdersButton = new Button("Visualizza \n  Ordini");
         visualizeOrdersButton.setOnAction(e-> {
             pizzeria.updatePizzeriaToday();
             PizzeriaVisualizeOrdersPage.display(pizzeria, window);
@@ -54,10 +54,22 @@ public class PizzeriaHomePage {
             pizzeriaMenuPage.display(pizzeria, window);
         });
 
+        Button mandaEmail = new Button("Manda E-Mail");
+        mandaEmail.prefWidthProperty().bind(window.widthProperty());
+        mandaEmail.prefHeightProperty().bind(window.heightProperty());
+        mandaEmail.setOnAction(e-> {
+           PizzeriaMandaMail pizzeriaMandaMail=new PizzeriaMandaMail();
+            pizzeriaMandaMail.display(window,pizzeria);
+        });
+
+
+
+
         GridPane gridPane = new GridPane();
-        gridPane.getChildren().addAll(visualizeOrdersButton, manageMenuButton);
+        gridPane.getChildren().addAll(visualizeOrdersButton, manageMenuButton,mandaEmail);
         GridPane.setConstraints(visualizeOrdersButton, 0, 0);
         GridPane.setConstraints(manageMenuButton, 1, 0);
+        GridPane.setConstraints(mandaEmail, 2, 0);
 
         VBox layout = new VBox(20);
         layout.getChildren().addAll(hBox, gridPane);

@@ -7,12 +7,13 @@ import javafx.scene.paint.Color;
 import pizzeria.Pizzeria;
 import pizzeria.services.sendMail.SendJavaMail;
 import pizzeria.services.TextColorServices;
-
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Scanner;
 
-/** Gestisce ciò che la Pizzeria può fare, attraverso interfaccia testuale, dopo essersi autenticata. */
+@SuppressWarnings("all")
+
+     /** Gestisce ciò che la Pizzeria può fare, attraverso interfaccia testuale, dopo essersi autenticata. **/
 public class TextPizzeriaSide {
 	private Scanner scan = new Scanner(System.in);
 

@@ -123,26 +123,23 @@ public class OrderPage2 {
 
 		HBox buttonBox = new HBox(10);
 		buttonBox.getChildren().addAll(backButton, confirmButton);
-		buttonBox.setMinSize(600, 60);
+		buttonBox.setMinSize(600, 58);
 		buttonBox.setAlignment(Pos.CENTER);
 		buttonBox.setId("buttonBox");
 
 		/* Definizione elementi del GridPane */
 		GridPane gridPane = new GridPane();
-		GridPane.setConstraints(usernameBox,0,0);
-		GridPane.setConstraints(addressBox, 0, 1);
-		GridPane.setConstraints(choiceHBox, 0, 2);
+		GridPane.setConstraints(usernameBox,2,0);
+		GridPane.setConstraints(addressBox, 2, 1);
+		GridPane.setConstraints(choiceHBox, 2, 2);
+		//GridPane.setConstraints(buttonBox,1, 10);
 		gridPane.getChildren().addAll(usernameBox, addressBox, choiceHBox);
-		gridPane.setPadding(new Insets(130, 5, 20, 70));
+		gridPane.setPadding(new Insets(130, 5, 20, 200));
 		gridPane.setVgap(20);
-
-        HBox hBox = new HBox(40);
-        gridPane.setHgap(50);
-        hBox.getChildren().add(gridPane);
-        hBox.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(600,519);
 
 		VBox layout = new VBox();
-		layout.getChildren().addAll(hBoxIntestazione, hBox, buttonBox);
+		layout.getChildren().addAll(hBoxIntestazione, gridPane,buttonBox);
 		layout.setId("grid");
 
 		scene3 = new Scene(layout,800,600);
