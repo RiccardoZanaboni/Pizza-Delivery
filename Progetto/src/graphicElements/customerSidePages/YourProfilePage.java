@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Pizzeria;
+import pizzeria.services.sendMail.SendJavaMail;
 
 public class YourProfilePage {
 
@@ -80,8 +81,10 @@ public class YourProfilePage {
             String newName = nameInput.getText();
             String newSurname = surnameInput.getText();
             String newAddress = addressInput.getText();
-            String mail=emailField.getText();
-            if(CustomerDB.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress, mail)) {
+            String mail = emailField.getText();
+            if(CustomerDB.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress,mail)) {
+                SendJavaMail javaMail = new SendJavaMail();
+                javaMail.changeMailAddress(customer,mail);
                 HomePage homePage = new HomePage();
                 homePage.display(window, pizzeria, customer);
             } else GenericAlert.display("Modifica dei dati non riuscita.");

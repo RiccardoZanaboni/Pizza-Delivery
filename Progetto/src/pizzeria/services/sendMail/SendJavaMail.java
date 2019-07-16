@@ -2,6 +2,7 @@ package pizzeria.services.sendMail;
 
 import database.CustomerDB;
 import javafx.scene.paint.Color;
+import pizzeria.Customer;
 import pizzeria.services.TextColorServices;
 
 import javax.mail.*;
@@ -102,5 +103,23 @@ public class SendJavaMail {
 		txt.append("Password: ").append(psw).append("\n\nAccedi ed ordina con noi!");
 		String messageBody = txt.toString();
 		sendMail(dest,subject,messageBody);
+	}
+
+	/** Intestazione per l'invio di una mail di avviso di cambio di indirizzo e-mail,
+	 * inviata in automatico quando richiesto */
+	public void changeMailAddress(Customer customer, String newMail) {
+		String user = customer.getUsername();
+		String nome = CustomerDB.getCustomerFromUsername(user,4);
+		String subject = "E-mail Address Changed";
+		StringBuilder txt = new StringBuilder();
+		txt.append("Carissimo/a ");
+		if(nome == null)
+			txt.append("utente");
+		else
+			txt.append(nome.toUpperCase());
+		txt.append(",\n\nTi confermiamo che questa è la tua nuova e-mail associata.");
+		txt.append("\n\nAccedi ed ordina con noi!");
+		String messageBody = txt.toString();
+		sendMail(newMail,subject,messageBody);
 	}
 }

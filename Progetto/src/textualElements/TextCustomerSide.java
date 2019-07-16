@@ -12,6 +12,9 @@ import pizzeria.services.PizzeriaServices;
 import pizzeria.services.SettleStringsServices;
 import pizzeria.services.TextColorServices;
 import pizzeria.services.TimeServices;
+import pizzeria.services.sendMail.SendJavaMail;
+
+import java.lang.invoke.SerializedLambda;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -157,11 +160,24 @@ public class TextCustomerSide {
 		String nome = scan.nextLine();
 		System.out.print("Inserisci il tuo cognome: ");
 		String cognome = scan.nextLine();
-		System.out.print("Inserisci il tuo indirizzo principale: ");
+		System.out.print("Inserisci il tuo indirizzo di casa: ");
 		String indirizzo = scan.nextLine();
-        System.out.print("Inserisci la tua E-Mail: ");
-        String mail = scan.nextLine();
-		if(CustomerDB.addInfoCustomer(user,nome,cognome,indirizzo,mail))
+        System.out.print("Inserisci il tuo indirizzo e-mail: ");
+        String newMail = scan.nextLine();
+		SendJavaMail javaMail = new SendJavaMail();
+		if(newMail.equals("") || newMail.equals(CustomerDB.getCustomerFromUsername(customer.getUsername(),3))) {	/* se la mail non è stata variata */
+			newMail = CustomerDB.getCustomerFromUsername(customer.getUsername(),3);
+		}else{
+			System.out.print("Conferma il tuo nuovo indirizzo e-mail: ");
+			String confirmNewMail = scan.nextLine();
+			if(newMail.equals(confirmNewMail))
+				javaMail.changeMailAddress(customer,newMail);
+			else {
+				String err = TextColorServices.colorSystemOut("Attenzione: l'indirizzo e-mail è rimasto invariato.",Color.YELLOW,false,false);
+				System.out.println(err);
+			}
+		}
+		if(CustomerDB.addInfoCustomer(user,nome,cognome,indirizzo,newMail))
 			System.out.println(TextColorServices.colorSystemOut("\nGrazie! Dati aggiornati.", Color.YELLOW, false, false));
 		else
 			System.out.println(TextColorServices.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
