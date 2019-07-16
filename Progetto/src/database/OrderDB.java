@@ -78,6 +78,6 @@ public class OrderDB {
 
     /** Recupera dal DB tutte le pizze presenti in un determinato ordine. */
     private static ResultSet getPizzasByOrderId(String orderID) {
-        return Database.getStatement("select nome, ingrediente, prezzo from sql2298759.Orders natural join sql2298759.OrderedPizza where orderID = '" + orderID + "'");
+        return Database.getStatement("select nome, ingredienti, prezzo from sql2298759.Orders natural join sql2298759.OrderedPizza where orderID = '" + orderID + "'");
     }
 }
