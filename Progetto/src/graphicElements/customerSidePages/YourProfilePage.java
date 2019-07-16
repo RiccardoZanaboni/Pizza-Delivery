@@ -2,6 +2,7 @@ package graphicElements.customerSidePages;
 
 import database.CustomerDB;
 import graphicAlerts.GenericAlert;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,9 +29,6 @@ public class YourProfilePage {
         nameInput.setPromptText("Il tuo nome");
         String name = CustomerDB.getCustomerFromUsername(customer.getUsername(), 4);
         nameInput.setText(name);
-        HBox nameBox = new HBox(50);
-        nameBox.getChildren().addAll(nameLabel, nameInput);
-        nameBox.setAlignment(Pos.CENTER);
 
         /* Campo Cognome */
         Label surnameLabel = new Label("Cognome: ");
@@ -38,9 +36,6 @@ public class YourProfilePage {
         surnameInput.setPromptText("Il tuo cognome");
         String surname = CustomerDB.getCustomerFromUsername(customer.getUsername(), 5);
         surnameInput.setText(surname);
-        HBox surnameBox = new HBox(50);
-        surnameBox.getChildren().addAll(surnameLabel, surnameInput);
-        surnameBox.setAlignment(Pos.CENTER);
 
         /* Campo Indirizzo */
         Label addressLabel = new Label("Indirizzo: ");
@@ -48,9 +43,6 @@ public class YourProfilePage {
         addressInput.setPromptText("Il tuo indirizzo");
         String address = CustomerDB.getCustomerFromUsername(customer.getUsername(), 6);
         addressInput.setText(address);
-        HBox addressBox = new HBox(50);
-        addressBox.getChildren().addAll(addressLabel, addressInput);
-        addressBox.setAlignment(Pos.CENTER);
 
         /* Campo Email */
         Label emailLabel = new Label("Email: ");
@@ -59,9 +51,6 @@ public class YourProfilePage {
         emailField.setMinWidth(280);
         String email = CustomerDB.getCustomerFromUsername(customer.getUsername(), 3);
         emailField.setText(email);
-        HBox emailBox = new HBox(50);
-        emailBox.getChildren().addAll(emailLabel, emailField);
-        emailBox.setAlignment(Pos.CENTER);
 
         /* Bottone per tornare alla HomePage senza salvare le modifiche */
         Button backButton = new Button("← Torna indietro");
@@ -94,8 +83,18 @@ public class YourProfilePage {
         buttonBox.getChildren().addAll(backButton, confirmButton);
         buttonBox.setAlignment(Pos.CENTER);
 
+        VBox labelVBox= new VBox(30);
+        labelVBox.getChildren().addAll(nameLabel,surnameLabel,addressLabel,emailLabel);
+        VBox fieldVBox =new VBox(49);
+        fieldVBox.getChildren().addAll(nameInput,surnameInput,addressInput,emailField);
+        labelVBox.setAlignment(Pos.CENTER_LEFT);
+        labelVBox.setPadding(new Insets(0,20,0,165));
+        fieldVBox.setAlignment(Pos.CENTER_RIGHT);
+        HBox hBox=new HBox(30);
+        hBox.getChildren().addAll(labelVBox,fieldVBox);
+
         VBox layout = new VBox(30);
-        layout.getChildren().addAll(nameBox, surnameBox, addressBox, emailBox, buttonBox);
+        layout.getChildren().addAll(hBox, buttonBox);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout, 800, 600);
         layout.getStyleClass().add("layout");
