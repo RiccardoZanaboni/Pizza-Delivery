@@ -7,7 +7,7 @@ public class CustomerDB {
     /** Aggiunge un utente al database. */
     public static boolean putCustomer(String nome, String password, String mailAddress){
         try {
-            Database.insertStatement("insert into sql7293749.Users values ('" + nome + "', '" + password +  "', '" + mailAddress + "', '', '', '') ");	// inserisce account nel DB
+            Database.insertStatement("insert into sql2298759.Users values ('" + nome + "', '" + password +  "', '" + mailAddress + "', '', '', '') ");	// inserisce account nel DB
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -17,7 +17,7 @@ public class CustomerDB {
 
     /** Restituisce un ResultSet con 0/1 tuple: l'utente richiesto esiste o meno. */
     public static boolean getCustomer( String username, String password) throws SQLException{
-        ResultSet rs = Database.getStatement("select * from sql7293749.Users where User = '" + username + "' && Pass = '" + password + "' ");
+        ResultSet rs = Database.getStatement("select * from sql2298759.Users where User = '" + username + "' && Pass = '" + password + "' ");
         boolean hasRows = false;
         while (rs.next()) {
             hasRows = true;
@@ -30,7 +30,7 @@ public class CustomerDB {
         ResultSet rs;
         String info = null;
         try {
-            rs = Database.getStatement("select * from sql7293749.Users where User = '" + username + "' ");
+            rs = Database.getStatement("select * from sql2298759.Users where User = '" + username + "' ");
             while (rs.next()) {
                 info = rs.getString(columnIndex);
             }
@@ -45,7 +45,7 @@ public class CustomerDB {
         ResultSet rs;
         String user = null;
         try {
-            rs = Database.getStatement("select * from sql7293749.Users where MailAddress = '" + mail + "' ");
+            rs = Database.getStatement("select * from sql2298759.Users where MailAddress = '" + mail + "' ");
             while (rs.next()) {
                 user = rs.getString(columnIndex);
             }
@@ -57,6 +57,6 @@ public class CustomerDB {
 
     /** Aggiorna i dati dell'utente contenuti nel DB. */
     public static boolean addInfoCustomer( String username, String name, String surname, String address) {
-        return Database.insertStatement("update sql7293749.Users set Name = '" + name + "', Surname = '" + surname + "', Address = '" + address + "' where User = '" + username + "' ");
+        return Database.insertStatement("update sql2298759.Users set Name = '" + name + "', Surname = '" + surname + "', Address = '" + address + "' where User = '" + username + "' ");
     }
 }

@@ -17,11 +17,11 @@ public class ToppingDB {
 	/** Consente alla pizzeria di aggiungere un topping a quelli salvati sul Database. */
 	public static boolean putTopping(String nome){
 		try {
-			ResultSet rs1 = Database.getStatement("select * from sql7293749.Toppings");
+			ResultSet rs1 = Database.getStatement("select * from sql2298759.Toppings");
 			rs1.last();
 			int prima = rs1.getRow();
-			Database.insertStatement("insert into sql7293749.Toppings values ('" + nome + "');");
-			ResultSet rs2 =  Database.getStatement("select * from sql7293749.Toppings");
+			Database.insertStatement("insert into sql2298759.Toppings values ('" + nome + "');");
+			ResultSet rs2 =  Database.getStatement("select * from sql2298759.Toppings");
 			rs2.last();
 			int dopo = rs2.getRow();
 			return prima != dopo;
@@ -64,11 +64,11 @@ public class ToppingDB {
 					}
 				}
 			}
-			ResultSet rs1 = Database.getStatement("select * from sql7293749.Toppings");
+			ResultSet rs1 = Database.getStatement("select * from sql2298759.Toppings");
 			rs1.last();
 			int prima = rs1.getRow();
-			Database.insertStatement("delete from sql7293749.Toppings where Topping = '" + rmvTopping + "';");
-			ResultSet rs2 =  Database.getStatement("select * from sql7293749.Toppings");
+			Database.insertStatement("delete from sql2298759.Toppings where Topping = '" + rmvTopping + "';");
+			ResultSet rs2 =  Database.getStatement("select * from sql2298759.Toppings");
 			rs2.last();
 			int dopo = rs2.getRow();
 			if(prima != dopo)
@@ -99,7 +99,7 @@ public class ToppingDB {
 
 	/** Consente alla pizzeria di recuperare i toppings salvati sul Database. */
 	public static HashMap<String, String> getToppings(HashMap<String, String> ingredienti)  throws SQLException{
-		ResultSet rs = Database.getStatement("select * from sql7293749.Toppings");
+		ResultSet rs = Database.getStatement("select * from sql2298759.Toppings");
 		while (rs.next()) {
 			String ingrediente = rs.getString(1);
 			ingredienti.put(ingrediente,ingrediente);

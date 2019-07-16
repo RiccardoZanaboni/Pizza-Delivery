@@ -21,7 +21,7 @@ public class OrderDB {
         DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dataString = dateFormatYMD.format(order.getTime());
         java.sql.Timestamp data = java.sql.Timestamp.valueOf(dataString);
-        String requestSql = "update sql7293749.Orders set username = '" + order.getCustomer().getUsername()
+        String requestSql = "update sql2298759.Orders set username = '" + order.getCustomer().getUsername()
                 + "', address = '" + order.getAddress() + "', citofono = '" + order.getName() + "', quantity = "
                 + order.getNumPizze() + ", date = '" + data + "' where orderID = '" + order.getOrderCode() + "'";
         Database.insertStatement(requestSql);
@@ -32,12 +32,12 @@ public class OrderDB {
 
     /** Aggiorna nel DB l'elenco delle pizze ordinate. */
     private static void putOrderedPizzas(Order order, Pizza p) {
-        Database.insertStatement("insert into sql7293749.OrderedPizza values ('" + order.getOrderCode() + "', '" + p.getName() + "', '" + p.getDescription() + "', '" + p.getPrice() + "'); ");
+        Database.insertStatement("insert into sql2298759.OrderedPizza values ('" + order.getOrderCode() + "', '" + p.getName() + "', '" + p.getDescription() + "', '" + p.getPrice() + "'); ");
     }
 
     /** Recupera dal DB tutti gli ordini relativi al giorno corrente. */
     public static HashMap<String, Order> getOrders(Pizzeria pizzeria, HashMap<String, Order> orders) throws SQLException {
-        ResultSet rs = Database.getStatement("SELECT * FROM sql7293749.Orders left JOIN sql7293749.Users ON Orders.username = Users.User;");
+        ResultSet rs = Database.getStatement("SELECT * FROM sql2298759.Orders left JOIN sql2298759.Users ON Orders.username = Users.User;");
         int i = 0;
         while (rs.next()) {
             String orderID = rs.getString(1);
@@ -78,6 +78,6 @@ public class OrderDB {
 
     /** Recupera dal DB tutte le pizze presenti in un determinato ordine. */
     private static ResultSet getPizzasByOrderId(String orderID) {
-        return Database.getStatement("select nome, ingrediente, prezzo from sql7293749.Orders natural join sql7293749.OrderedPizza where orderID = '" + orderID + "'");
+        return Database.getStatement("select nome, ingrediente, prezzo from sql2298759.Orders natural join sql2298759.OrderedPizza where orderID = '" + orderID + "'");
     }
 }

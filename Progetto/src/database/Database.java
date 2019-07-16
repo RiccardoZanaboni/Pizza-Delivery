@@ -24,7 +24,7 @@ public class Database {
 	public static void openDatabase() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7293749?autoReconnect=true&useSSL=false", "sql7293749", "geZxKTlyi1");
+			con = DriverManager.getConnection("jdbc:mysql://sql2.freesqldatabase.com:3306/sql2298759?autoReconnect=true&useSSL=false", "sql2298759", "pM7!mR1*");
 		} catch (SQLException sqle) {
 			missingConnection();
 		} catch (ClassNotFoundException cnfe) {
@@ -69,7 +69,7 @@ public class Database {
 			DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String dataString = dateFormatYMD.format(new Date());
 			java.sql.Timestamp data = java.sql.Timestamp.valueOf(dataString);
-			String requestSql = "insert into sql7293749.Orders (orderID, username, address, citofono, quantity, date) VALUES (?,?,?,?,?,?)";
+			String requestSql = "insert into sql2298759.Orders (orderID, username, address, citofono, quantity, date) VALUES (?,?,?,?,?,?)";
 			PreparedStatement preparedStatement = con.prepareStatement(requestSql);
 			preparedStatement.setString(1, order.getOrderCode());
 			preparedStatement.setString(2, "");
@@ -85,7 +85,7 @@ public class Database {
 
 	/** Conta gli ordini presenti nel DB, per conoscere il prossimo OrderCode. */
 	public static int countOrdersDB() {
-		String requestSql = "select count(*) from sql7293749.Orders";
+		String requestSql = "select count(*) from sql2298759.Orders";
 		int num = -1;
 		try {
 			PreparedStatement preparedStatement = con.prepareStatement(requestSql);
@@ -101,7 +101,7 @@ public class Database {
 	/** Recupera la data di ultimo aggiornamento del DB. */
 	public static Date getLastUpdate() {
 		Date last = null;
-		String requestSql = "select * from sql7293749.LastUpdate";
+		String requestSql = "select * from sql2298759.LastUpdate";
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = con.prepareStatement(requestSql);
@@ -121,7 +121,7 @@ public class Database {
 		String oldDateString = dateFormatYMD.format(oldDate);
 		java.sql.Date newSQLData = java.sql.Date.valueOf(newDateString);
 		java.sql.Date oldSQLData = java.sql.Date.valueOf(oldDateString);
-		String requestSql = "update sql7293749.LastUpdate set Date = '" + newSQLData + "' where Date = '" + oldSQLData + "' ";
+		String requestSql = "update sql2298759.LastUpdate set Date = '" + newSQLData + "' where Date = '" + oldSQLData + "' ";
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = con.prepareStatement(requestSql);
