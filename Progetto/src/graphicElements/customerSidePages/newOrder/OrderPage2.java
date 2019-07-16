@@ -51,6 +51,9 @@ public class OrderPage2 {
 		Label label = new Label("Inserisci i tuoi dati");
 		hBoxIntestazione.getChildren().add(label);
 		hBoxIntestazione.setAlignment(Pos.CENTER);
+		hBoxIntestazione.setMinHeight(40);
+        //hBoxIntestazione.setId("buttonBox");
+        hBoxIntestazione.setId("hboxIntestazione");
 
 		/* Campo Surname */
 		Label surnameLabel = new Label(" Cognome:  ");
@@ -132,15 +135,22 @@ public class OrderPage2 {
 		GridPane.setConstraints(usernameBox,2,0);
 		GridPane.setConstraints(addressBox, 2, 1);
 		GridPane.setConstraints(choiceHBox, 2, 2);
-		//GridPane.setConstraints(buttonBox,1, 10);
 		gridPane.getChildren().addAll(usernameBox, addressBox, choiceHBox);
 		gridPane.setPadding(new Insets(130, 5, 20, 200));
-		gridPane.setVgap(20);
-		gridPane.setMinSize(600,519);
+		 gridPane.setVgap(20);
+        gridPane.setId("grid");
 
-		VBox layout = new VBox();
-		layout.getChildren().addAll(hBoxIntestazione, gridPane,buttonBox);
-		layout.setId("grid");
+        ScrollPane scroll = new ScrollPane(gridPane);
+        scroll.setFitToHeight(true);
+        scroll.setFitToWidth(true);
+        scroll.prefWidthProperty().bind(window.widthProperty());
+        scroll.prefHeightProperty().bind(window.heightProperty());
+        scroll.setPadding(new Insets(0, 0, 0, 0));
+        scroll.setId("layout");
+
+        VBox layout = new VBox();
+		layout.getChildren().addAll(hBoxIntestazione, scroll,buttonBox);
+        layout.setId("layout");
 
 		scene3 = new Scene(layout,800,600);
         scene3.setOnKeyPressed(ke -> {
