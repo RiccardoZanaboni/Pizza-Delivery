@@ -28,8 +28,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mysql-connector-java-5.1.42-bin" level="project" />
     <orderEntry type="library" name="javax.mail" level="project" />
-    <orderEntry type="library" name="activation1" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.42-bin" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.42-bin" level="project" />
   </component>
 </module>
