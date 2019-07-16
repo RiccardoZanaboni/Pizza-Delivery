@@ -103,7 +103,7 @@ public class PizzeriaServices {
 					else
 						return AccountPossibilities.OK;
 				} catch (SQLException e) {
-					return AccountPossibilities.OK;	// è sicuro ???????????????
+					return AccountPossibilities.OK;
 				}
 			} else
 				/* password troppo breve */

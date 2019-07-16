@@ -17,7 +17,7 @@ public class CustomerDB {
 
     /** Restituisce un ResultSet con 0/1 tuple: l'utente richiesto esiste o meno. */
     public static boolean getCustomer( String username, String password) throws SQLException{
-        ResultSet rs = Database.getStatement("select * from sql2298759.Users where User = '" + username + "' && Pass = '" + password + "' ");
+        ResultSet rs = Database.getStatement("select * from sql2298759.Users where User = '" + username + "' && Password = '" + password + "' ");
         boolean hasRows = false;
         while (rs.next()) {
             hasRows = true;
