@@ -52,7 +52,6 @@ public class OrderPage2 {
 		hBoxIntestazione.getChildren().add(label);
 		hBoxIntestazione.setAlignment(Pos.CENTER);
 		hBoxIntestazione.setMinHeight(40);
-        //hBoxIntestazione.setId("buttonBox");
         hBoxIntestazione.setId("hboxIntestazione");
 
 		/* Campo Surname */

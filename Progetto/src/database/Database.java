@@ -115,7 +115,7 @@ public class Database {
 	}
 
 	/** Aggiorna la data di ultimo aggiornamento del DB con la data odierna. */
-	public static void setLastUpdate(java.util.Date oldDate) {
+	public static void setLastUpdate(Date oldDate) {
 		DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd");
 		String newDateString = dateFormatYMD.format(new Date());
 		String oldDateString = dateFormatYMD.format(oldDate);
