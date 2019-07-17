@@ -136,7 +136,7 @@ public class OrderPage2 {
 		GridPane.setConstraints(choiceHBox, 2, 2);
 		gridPane.getChildren().addAll(usernameBox, addressBox, choiceHBox);
 		gridPane.setPadding(new Insets(130, 5, 20, 200));
-		 gridPane.setVgap(20);
+		gridPane.setVgap(20);
         gridPane.setId("grid");
 
         ScrollPane scroll = new ScrollPane(gridPane);
@@ -148,7 +148,7 @@ public class OrderPage2 {
         scroll.setId("layout");
 
         VBox layout = new VBox();
-		layout.getChildren().addAll(hBoxIntestazione, scroll,buttonBox);
+		layout.getChildren().addAll(hBoxIntestazione, scroll, buttonBox);
         layout.setId("layout");
 
 		scene3 = new Scene(layout,800,600);

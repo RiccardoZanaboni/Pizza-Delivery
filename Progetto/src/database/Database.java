@@ -26,15 +26,16 @@ public class Database {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://sql2.freesqldatabase.com:3306/sql2298759?autoReconnect=true&useSSL=false", "sql2298759", "pM7!mR1*");
 		} catch (SQLException sqle) {
-			missingConnection();
+			String err = TextColorServices.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false);
+			criticalError(err);
 		} catch (ClassNotFoundException cnfe) {
 			cnfe.printStackTrace();
 		}
 	}
 
-	/** Chiude il programma, se manca la connessione alla rete. */
-	public static void missingConnection(){
-		System.out.println(TextColorServices.colorSystemOut("\nSpiacenti: impossibile connettersi al momento.\nControllare connessione di rete.", Color.RED,true,false));
+	/** Chiude il programma, se c'è un errore critico. */
+	public static void criticalError(String err){
+		System.out.println(err);
 		System.exit(1);
 	}
 
@@ -58,7 +59,8 @@ public class Database {
 			Statement statement = con.createStatement();
 			rs = statement.executeQuery(query);
 		} catch (SQLException sqle){
-			Database.missingConnection();
+			String err = TextColorServices.colorSystemOut("\nErrore critico per SQL.\nIl programma viene terminato.\n",Color.RED,false,false);
+			Database.criticalError(err);
 		}
 		return rs;
 	}
