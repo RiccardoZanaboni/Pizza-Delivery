@@ -62,4 +62,13 @@
      -fx-font-variant: small-caps;
      -fx-text-transform: capitalize;
      }
+
+#hboxIntestazione {
+     -fx-font-size: 15pt;
+     }
+
+#layout {
+    -fx-background-color: linear-gradient(#a61022,  #f39f18);
+}
+
 }
