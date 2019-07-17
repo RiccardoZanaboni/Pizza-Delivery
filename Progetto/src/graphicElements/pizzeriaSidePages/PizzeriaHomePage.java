@@ -58,8 +58,8 @@ public class PizzeriaHomePage {
         mandaEmail.prefWidthProperty().bind(window.widthProperty());
         mandaEmail.prefHeightProperty().bind(window.heightProperty());
         mandaEmail.setOnAction(e-> {
-           PizzeriaMandaMail pizzeriaMandaMail=new PizzeriaMandaMail();
-            pizzeriaMandaMail.display(window,pizzeria);
+           SendMailPage sendMailPage =new SendMailPage();
+            sendMailPage.display(window,pizzeria);
         });
 
 

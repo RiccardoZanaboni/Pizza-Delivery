@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
@@ -14,7 +15,7 @@ import javafx.stage.Stage;
 import pizzeria.Pizzeria;
 import pizzeria.services.sendMail.SendJavaMail;
 
-public class PizzeriaMandaMail {
+public class SendMailPage {
     public void display(Stage window, Pizzeria pizzeria) {
         window.setTitle("Wolf of Pizza - Invia Email");
 
@@ -26,7 +27,7 @@ public class PizzeriaMandaMail {
         usernameBox.getChildren().addAll(dest, mail);
         usernameBox.setAlignment(Pos.CENTER);
 
-        Label oggetto = new Label("Oggetto e-mail :  ");
+        Label oggetto = new Label("Oggetto e-mail:  ");
         TextField oggettoF = new TextField();
         oggettoF.setMinWidth(250);
         oggettoF.setPromptText("oggetto");
@@ -35,7 +36,7 @@ public class PizzeriaMandaMail {
         oggettoBox.setAlignment(Pos.CENTER);
 
         Label text = new Label("Testo e-mail:  ");
-        TextField textF = new TextField();
+        TextArea textF = new TextArea();
         textF.setPromptText("testo");
         textF.setPrefSize(300,40);
         HBox textBox = new HBox(50);

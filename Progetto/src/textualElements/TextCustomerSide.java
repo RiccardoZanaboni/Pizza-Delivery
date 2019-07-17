@@ -93,7 +93,7 @@ public class TextCustomerSide {
 	}
 
 	/** Inizializza l'elenco di tutti gli ingredienti che l'utente può scegliere, per modificare una pizza. */
-	public static String possibleAddictions(Pizzeria pizzeria) {
+	static String possibleAddictions(Pizzeria pizzeria) {
 		StringBuilder possibiliIngr = new StringBuilder();
 		possibiliIngr.append(TextColorServices.colorSystemOut("\tPossibili aggiunte: ",Color.ORANGE,false,false));
 		possibiliIngr.append(listPossibleAddictions(pizzeria));
