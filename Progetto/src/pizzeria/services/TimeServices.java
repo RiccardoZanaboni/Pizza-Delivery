@@ -144,7 +144,8 @@ public class TimeServices {
 		return dataStr;
 	}
 
-	/** Controlla, prima di un nuovo ordine, se si è ancora in tempo, prima che la pizzeria chiuda. */
+	/** Controlla, prima di un nuovo ordine, se si è ancora in tempo, prima che la pizzeria chiuda.
+	 * @return OpeningPossibilities: controlla lo stato della pizzeria. */
 	public static OpeningPossibilities checkTimeOrder(Pizzeria pizzeria) {
 		int nowMin = getNowMinutes();
 		int openMin = getMinutes(pizzeria.getOpeningToday());

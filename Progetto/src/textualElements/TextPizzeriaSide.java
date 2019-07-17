@@ -1,7 +1,5 @@
 package textualElements;
 
-import database.PizzaDB;
-import database.ToppingDB;
 import interfaces.TextualInterface;
 import javafx.scene.paint.Color;
 import pizzeria.Pizzeria;
@@ -11,9 +9,11 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Scanner;
 
+import static textualElements.TextModifyMenu.*;
+
 @SuppressWarnings("all")
 
-     /** Gestisce ciò che la Pizzeria può fare, attraverso interfaccia testuale, dopo essersi autenticata. **/
+/** Gestisce ciò che la Pizzeria può fare, attraverso interfaccia testuale, dopo essersi autenticata. **/
 public class TextPizzeriaSide {
 	private Scanner scan = new Scanner(System.in);
 
@@ -165,16 +165,16 @@ public class TextPizzeriaSide {
 	private void howModifyMenuAnswer(String risposta, Pizzeria pizzeria, TextualInterface textualInterface) throws SQLException {
 		switch (risposta){
 			case "A":	/* Aggiungere una pizza al menu */
-				PizzaDB.putPizzaText(pizzeria);
+				putPizzaText(pizzeria);
 				break;
 			case "R":	/* Rimuovere una pizza dal menu */
-				PizzaDB.removePizzaText(pizzeria);
+				removePizzaText(pizzeria);
 				break;
 			case "AI":	/* Aggiungere un ingrediente a quelli possibili */
-				ToppingDB.putToppingText(pizzeria);
+				putToppingText(pizzeria);
 				break;
 			case "RI":	/* Rimuovere un ingrediente da quelli possibili */
-				ToppingDB.removeToppingText(pizzeria);
+				removeToppingText(pizzeria);
 				break;
 			case "B":	/* Tornare indietro */
 				System.out.println(TextColorServices.colorSystemOut("Nessuna modifica effettuata al menu.\n", Color.YELLOW, false, false));

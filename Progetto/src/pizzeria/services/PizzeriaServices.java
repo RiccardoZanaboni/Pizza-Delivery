@@ -92,7 +92,8 @@ public class PizzeriaServices {
 		return last;
 	}
 
-	/** Controlla il corretto inserimento dei dati per la creazione di un nuovo account. */
+	/** Controlla il corretto inserimento dei dati per la creazione di un nuovo account.
+	 * @return AccountPossibilities: dà un riscontro sulla possibilità di creare l'account. */
 	public static AccountPossibilities canCreateAccount(String mailAddress, String newUser, String newPsw, String confPsw) {
 		if(newPsw.equals(confPsw)){
 			if(newUser.length() > 2 && newPsw.length() > 2) {
@@ -114,7 +115,8 @@ public class PizzeriaServices {
 		}
 	}
 
-	/** Controlla il corretto inserimento dei dati per effettuare il login. */
+	/** Controlla il corretto inserimento dei dati per effettuare il login.
+	 * @return LoginPossibilities: dà un riscontro sulla possibilità di effettuare il login. */
 	public static LoginPossibilities checkLogin(Pizzeria pizzeria, String user, String psw) {
 		try {
 			if (user.equals(pizzeria.getUserPizzeria()) && psw.equals(pizzeria.getPswPizzeria())) {
@@ -125,7 +127,8 @@ public class PizzeriaServices {
 				return LoginPossibilities.OK;
 			}
 		} catch (SQLException sqle) {
-			Database.missingConnection();
+			String err = TextColorServices.colorSystemOut("\nErrore critico per SQL.\nIl programma viene terminato.\n",Color.RED,false,false);
+			Database.criticalError(err);
 		}
 		/* se la combinazione utente-password è errata */
 		return LoginPossibilities.NO;

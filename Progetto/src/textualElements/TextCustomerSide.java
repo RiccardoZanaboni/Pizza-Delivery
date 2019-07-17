@@ -14,7 +14,6 @@ import pizzeria.services.TextColorServices;
 import pizzeria.services.TimeServices;
 import pizzeria.services.sendMail.SendJavaMail;
 
-import java.lang.invoke.SerializedLambda;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
