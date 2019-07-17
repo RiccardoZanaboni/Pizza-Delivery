@@ -70,10 +70,18 @@ public class YourProfilePage {
             String newName = nameInput.getText();
             String newSurname = surnameInput.getText();
             String newAddress = addressInput.getText();
-            String mail = emailField.getText();
-            if(CustomerDB.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress,mail)) {
-                SendJavaMail javaMail = new SendJavaMail();
-                javaMail.changeMailAddress(customer,mail);
+            String newMail = emailField.getText();
+            boolean modifiedMail = false;
+            if(newMail.equals("") || newMail.equals(CustomerDB.getCustomerFromUsername(customer.getUsername(),3))) {	/* se la mail non è stata variata */
+                newMail = CustomerDB.getCustomerFromUsername(customer.getUsername(),3);
+            } else {
+                modifiedMail = true;
+            }
+            if(CustomerDB.addInfoCustomer(customer.getUsername(),newName,newSurname,newAddress,newMail)) {
+                if(modifiedMail) {
+                    SendJavaMail javaMail = new SendJavaMail();
+                    javaMail.changeMailAddress(customer, newMail);
+                }
                 HomePage homePage = new HomePage();
                 homePage.display(window, pizzeria, customer);
             } else GenericAlert.display("Modifica dei dati non riuscita.");
