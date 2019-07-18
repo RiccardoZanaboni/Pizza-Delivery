@@ -1,7 +1,9 @@
 <component name="libraryTable">
   <library name="activation">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Desktop/jaf-1.1.1/activation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ExternalLibraries/activation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ExternalLibraries/javax.mail.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ExternalLibraries/javax.servlet-3.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
