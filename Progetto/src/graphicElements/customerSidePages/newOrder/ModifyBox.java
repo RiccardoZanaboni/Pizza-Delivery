@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 
 public class ModifyBox {
     private static boolean answer = false;  /* answer = true se la pizza ha effettivamente subìto modifiche */
+    private Stage window = new Stage();
+
 
     /** In un nuovo Stage viene visualizzato il Box in cui selezionare o deselezionare
      * gli ingredienti per la pizza desiderata.
@@ -27,7 +29,6 @@ public class ModifyBox {
      * effettivamente apportate modifiche, altrimenti viene visualizzato un messaggio di errore.
      * */
     public boolean display(Order order, Pizzeria pizzeria, String pizzaName) {
-        Stage window = new Stage();
 
         Pizza pizzaMenu = new Pizza(pizzaName, pizzeria.getMenu().get(pizzaName).getToppings(), pizzeria.getMenu().get(pizzaName).getPrice());
         HashMap<String, String> ingr = new HashMap<>(pizzaMenu.getToppings());
