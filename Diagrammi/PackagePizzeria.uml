@@ -58,7 +58,7 @@
 			CodeGeneration
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Thu Jul 18 22:54:46 CEST 2019'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Jul 19 00:04:50 CEST 2019'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -584,6 +584,9 @@
         <UML:Package xmi.id = '127-0-1-1--a2898c8:16c06c97679:-8000:0000000000001915'
           name = 'Pizzeria' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
+          <UML:ModelElement.clientDependency>
+            <UML:Dependency xmi.idref = '127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B84'/>
+          </UML:ModelElement.clientDependency>
           <UML:Namespace.ownedElement>
             <UML:Class xmi.id = '127-0-1-1--29ad3985:16bf07da241:-8000:0000000000000979'
               name = 'Pizza' visibility = 'public' isSpecification = 'false' isRoot = 'false'
@@ -690,10 +693,10 @@
               name = 'Order' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.clientDependency>
+                <UML:Abstraction xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:000000000000098E'/>
                 <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009AC'/>
                 <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009AD'/>
                 <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009AE'/>
-                <UML:Abstraction xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:000000000000098E'/>
               </UML:ModelElement.clientDependency>
               <UML:GeneralizableElement.generalization>
                 <UML:Generalization xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:0000000000000990'/>
@@ -925,16 +928,16 @@
               name = 'Pizzeria' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.clientDependency>
-                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009BB'/>
-                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009C4'/>
-                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009C5'/>
-                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009CC'/>
-                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009CF'/>
                 <UML:Abstraction xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009B9'/>
                 <UML:Abstraction xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009C6'/>
                 <UML:Abstraction xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009C8'/>
                 <UML:Abstraction xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009CA'/>
                 <UML:Abstraction xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009CD'/>
+                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009BB'/>
+                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009C4'/>
+                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009C5'/>
+                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009CC'/>
+                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009CF'/>
               </UML:ModelElement.clientDependency>
               <UML:Namespace.ownedElement>
                 <UML:Dependency xmi.id = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009BB'
@@ -1448,9 +1451,9 @@
               name = 'DeliveryMan' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.clientDependency>
-                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009AF'/>
                 <UML:Abstraction xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009B0'/>
                 <UML:Abstraction xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009B2'/>
+                <UML:Dependency xmi.idref = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009AF'/>
               </UML:ModelElement.clientDependency>
               <UML:Namespace.ownedElement>
                 <UML:Dependency xmi.id = '127-0-1-1--29ad3985:16bf07da241:-8000:00000000000009AF'
@@ -1593,6 +1596,33 @@
                 </UML:Operation>
               </UML:Classifier.feature>
             </UML:Class>
+            <UML:Dependency xmi.id = '127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B84'
+              isSpecification = 'false'>
+              <UML:Dependency.client>
+                <UML:Package xmi.idref = '127-0-1-1--a2898c8:16c06c97679:-8000:0000000000001915'/>
+              </UML:Dependency.client>
+              <UML:Dependency.supplier>
+                <UML:Package xmi.idref = '127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B83'/>
+              </UML:Dependency.supplier>
+            </UML:Dependency>
+          </UML:Namespace.ownedElement>
+        </UML:Package>
+        <UML:Package xmi.id = '127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B83'
+          name = 'Services' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
+          <UML:ModelElement.clientDependency>
+            <UML:Dependency xmi.idref = '127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B85'/>
+          </UML:ModelElement.clientDependency>
+          <UML:Namespace.ownedElement>
+            <UML:Dependency xmi.id = '127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B85'
+              isSpecification = 'false'>
+              <UML:Dependency.client>
+                <UML:Package xmi.idref = '127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B83'/>
+              </UML:Dependency.client>
+              <UML:Dependency.supplier>
+                <UML:Package xmi.idref = '127-0-1-1--a2898c8:16c06c97679:-8000:0000000000001915'/>
+              </UML:Dependency.supplier>
+            </UML:Dependency>
           </UML:Namespace.ownedElement>
         </UML:Package>
       </UML:Namespace.ownedElement>
@@ -1740,7 +1770,7 @@
       justification="Center"
     >DeliveryMan</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[961, 257, 295, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[961, 257, 291, 0]"
          href="127-0-1-1--29ad3985:16bf07da241:-8000:0000000000000953"
          fill="0"
          fillcolor="white"
@@ -1754,7 +1784,7 @@
       <rectangle name="Fig1.2.0"
         x="961"
         y="257"
-        width="295"
+        width="291"
         height="0"
         fill="0"
         fillcolor="white"
@@ -1930,7 +1960,7 @@
       justification="Center"
     >Oven</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1217, 137, 173, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1217, 137, 165, 0]"
          href="127-0-1-1--29ad3985:16bf07da241:-8000:00000000000008BC"
          fill="0"
          fillcolor="white"
@@ -1944,7 +1974,7 @@
       <rectangle name="Fig2.2.0"
         x="1217"
         y="137"
-        width="173"
+        width="165"
         height="0"
         fill="0"
         fillcolor="white"
@@ -2088,7 +2118,7 @@
       justification="Center"
     >Pizzeria</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[617, 209, 270, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[617, 209, 249, 0]"
          href="127-0-1-1--29ad3985:16bf07da241:-8000:00000000000008C3"
          fill="0"
          fillcolor="white"
@@ -2102,7 +2132,7 @@
       <rectangle name="Fig3.2.0"
         x="617"
         y="209"
-        width="270"
+        width="249"
         height="0"
         fill="0"
         fillcolor="white"
@@ -2845,7 +2875,7 @@
       justification="Center"
     >Customer</text>
     <group name="Fig7.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[513, 73, 153, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[513, 73, 146, 0]"
          href="127-0-1-1--29ad3985:16bf07da241:-8000:000000000000087A"
          fill="0"
          fillcolor="white"
@@ -2859,7 +2889,7 @@
       <rectangle name="Fig7.2.0"
         x="513"
         y="73"
-        width="153"
+        width="146"
         height="0"
         fill="0"
         fillcolor="white"
@@ -3003,7 +3033,7 @@
       justification="Center"
     >Order</text>
     <group name="Fig8.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[201, 137, 230, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[201, 137, 219, 0]"
          href="127-0-1-1--29ad3985:16bf07da241:-8000:0000000000000884"
          fill="0"
          fillcolor="white"
@@ -3017,7 +3047,7 @@
       <rectangle name="Fig8.2.0"
         x="201"
         y="137"
-        width="230"
+        width="219"
         height="0"
         fill="0"
         fillcolor="white"
@@ -3483,7 +3513,7 @@
       justification="Center"
     >Pizza</text>
     <group name="Fig13.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[185, 513, 204, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[185, 513, 198, 0]"
          href="127-0-1-1--29ad3985:16bf07da241:-8000:0000000000000979"
          fill="0"
          fillcolor="white"
@@ -3497,7 +3527,7 @@
       <rectangle name="Fig13.2.0"
         x="185"
         y="513"
-        width="204"
+        width="198"
         height="0"
         fill="0"
         fillcolor="white"
@@ -3897,7 +3927,7 @@
       justification="Center"
     >TimeBoxDeliveryMan</text>
     <group name="Fig18.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[929, 89, 138, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[929, 89, 184, 0]"
          href="127-0-1-1--29ad3985:16bf07da241:-8000:0000000000000945"
          fill="0"
          fillcolor="white"
@@ -3911,7 +3941,7 @@
       <rectangle name="Fig18.2.0"
         x="929"
         y="89"
-        width="138"
+        width="184"
         height="0"
         fill="0"
         fillcolor="white"
@@ -4150,6 +4180,167 @@
               y="256" />
       <lineto x="984"
               y="207" />
+    </path>
+  </group>
+  <group name="Fig21"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[1544, 304, 140, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=false"
+       href="127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B83"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig21.0"
+      x="1544"
+      y="304"
+      width="140"
+      height="100"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig21.1"
+      description="org.argouml.uml.diagram.static_structure.ui.FigPackage$PackageBackground"
+      fill="1"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    >
+      <moveto x="1544"
+              y="304" />
+      <lineto x="1634"
+              y="304" />
+      <lineto x="1634"
+              y="327" />
+      <lineto x="1683"
+              y="327" />
+      <lineto x="1683"
+              y="403" />
+      <lineto x="1544"
+              y="403" />
+      <lineto x="1544"
+              y="304" />
+    </path>
+    <text name="Fig21.2"
+      x="1544"
+      y="304"
+      width="91"
+      height="24"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Dialog"
+      italic="false"
+      bold="false"
+      textsize="12"
+      justification="Left"
+    >Services</text>
+    <group name="Fig21.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1544, 304, 90, 1]"
+         href="127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B83"
+         fill="1"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+         visibility="0"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig21.3.0"
+        x="1544"
+        y="304"
+        width="90"
+        height="1"
+        fill="1"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+    </group>
+    <text name="Fig21.4"
+      x="1544"
+      y="327"
+      width="140"
+      height="77"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Dialog"
+      italic="false"
+      bold="false"
+      textsize="12"
+      justification="Center"
+    ></text>
+  </group>
+  <group name="Fig22"
+       description="org.argouml.uml.diagram.ui.FigDependency"
+       href="127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B84"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig0.0"
+      destPortFig="Fig21"
+      sourceFigNode="Fig0"
+      destFigNode="Fig21"
+      <argouml:pathitem figname="Fig22.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigTextGroup"
+                        ownerhref="127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B84"
+                        angle="270.0"
+                        offset="25" />
+    </private>
+    <path name="Fig22.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="1472"
+              y="352" />
+      <lineto x="1544"
+              y="352" />
+    </path>
+  </group>
+  <group name="Fig23"
+       description="org.argouml.uml.diagram.ui.FigDependency"
+       href="127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B85"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig21.0"
+      destPortFig="Fig0"
+      sourceFigNode="Fig21"
+      destFigNode="Fig0"
+      <argouml:pathitem figname="Fig23.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigTextGroup"
+                        ownerhref="127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B85"
+                        angle="270.0"
+                        offset="25" />
+    </private>
+    <path name="Fig23.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="1544"
+              y="368" />
+      <lineto x="1472"
+              y="368" />
     </path>
   </group>
 </pgml>
