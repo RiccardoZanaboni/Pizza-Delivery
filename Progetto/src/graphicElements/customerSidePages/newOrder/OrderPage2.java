@@ -56,36 +56,12 @@ public class OrderPage2 {
         hBoxIntestazione.setId("hboxIntestazione");
 
 		/* Campo Surname */
-		Label surnameLabel = new Label(" Cognome:  ");
-		surnameLabel.setId("nomiLabel");
-		TextField surnameInput = new TextField();
-		surnameInput.setPromptText("Your Surname");
-		String surname;
-		if (order.getName() != null)
-			surname = order.getName();
-		else
-			surname = CustomerDB.getCustomerFromUsername(customer.getUsername(),5);
-		if(surname != null)
-			surnameInput.setText(surname);
-
-		HBox usernameBox = new HBox(50);
-		usernameBox.getChildren().addAll(surnameLabel, surnameInput);
+        TextField surnameInput = new TextField();
+		HBox usernameBox = createHBox(order,surnameInput," Cognome:  ","nomiLabel","Your Surname",customer,5);
 
 		/* Campo Address */
-		Label addressLabel = new Label(" Indirizzo:    ");
-		addressLabel.setId("nomiLabel");
         TextField addressInput = new TextField();
-		addressInput.setPromptText("Your Address");
-		String address;
-		if(!order.getAddress().equals(""))
-			address = order.getAddress();
-		else
-			address = CustomerDB.getCustomerFromUsername(customer.getUsername(),6);
-		if(address != null)
-			addressInput.setText(address);
-
-		HBox addressBox = new HBox(50);
-		addressBox.getChildren().addAll(addressLabel, addressInput);
+		HBox addressBox = createHBox(order,addressInput," Indirizzo:    ","nomiLabel","Your Address",customer,6);
 
 		/* Campo TimeChoice */
 		Label timeChoiceLabel = new Label(" Orario:\t   ");
@@ -175,6 +151,34 @@ public class OrderPage2 {
         });
         return button;
     }
+
+    private HBox createHBox (Order order,TextField textField ,String textLabel, String idLabel, String fieldText, Customer customer, int index){
+        Label label = new Label(textLabel);
+        label.setId(idLabel);
+        textField.setPromptText(fieldText);
+        String string=null;
+        switch (fieldText) {
+            case ("Your Surname"):
+                if (order.getName() != null) {
+                    string = order.getName();
+                } else
+                    string = CustomerDB.getCustomerFromUsername(customer.getUsername(), index);
+                break;
+            case ("Your Address"):
+                if (!order.getAddress().equals("")) {
+                    string = order.getAddress();
+                } else {
+                    string = CustomerDB.getCustomerFromUsername(customer.getUsername(), index);
+                }
+                break;
+        }
+        if (string != null)
+            textField.setText(string);
+        HBox hBox = new HBox(50);
+        hBox.getChildren().addAll(label, textField);
+    return hBox;
+	}
+
 	/** Verifica che tutti i campi siano stati riempiti. */
 	private boolean checkInsert(String name, String address, Date time) {
 		if(name.equals("")) {
