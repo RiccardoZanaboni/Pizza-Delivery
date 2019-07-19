@@ -58,7 +58,7 @@
 			CodeGeneration
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Jul 19 00:04:50 CEST 2019'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Jul 19 20:07:45 CEST 2019'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -4300,7 +4300,7 @@
                         offset="25" />
     </private>
     <path name="Fig22.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -4310,37 +4310,6 @@
               y="352" />
       <lineto x="1544"
               y="352" />
-    </path>
-  </group>
-  <group name="Fig23"
-       description="org.argouml.uml.diagram.ui.FigDependency"
-       href="127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B85"
-       stroke="1"
-       strokecolor="black"
-  >
-    <private>
-      sourcePortFig="Fig21.0"
-      destPortFig="Fig0"
-      sourceFigNode="Fig21"
-      destFigNode="Fig0"
-      <argouml:pathitem figname="Fig23.1"
-                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
-                        figclassname="org.argouml.uml.diagram.ui.FigTextGroup"
-                        ownerhref="127-0-1-1--32d39dbe:16c071cd69d:-8000:0000000000000B85"
-                        angle="270.0"
-                        offset="25" />
-    </private>
-    <path name="Fig23.0"
-      description="org.tigris.gef.presentation.FigPoly"
-      fill="0"
-      fillcolor="white"
-      stroke="1"
-      strokecolor="black"
-    >
-      <moveto x="1544"
-              y="368" />
-      <lineto x="1472"
-              y="368" />
     </path>
   </group>
 </pgml>

@@ -58,7 +58,7 @@
 			CodeGeneration
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Thu Jul 18 22:55:15 CEST 2019'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Jul 19 20:06:17 CEST 2019'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -1080,9 +1080,9 @@
       strokecolor="black"
     >
       <moveto x="368"
-              y="300" />
+              y="312" />
       <lineto x="720"
-              y="300" />
+              y="312" />
     </path>
   </group>
   <group name="Fig8"
@@ -1177,9 +1177,9 @@
       strokecolor="black"
     >
       <moveto x="720"
-              y="256" />
+              y="248" />
       <lineto x="548"
-              y="256" />
+              y="248" />
     </path>
   </group>
   <group name="Fig11"
@@ -1248,39 +1248,6 @@
   </group>
   <group name="Fig13"
        description="org.argouml.uml.diagram.ui.FigDependency"
-       href="127-0-1-1--6d2a1320:16c055f61c2:-8000:0000000000000891"
-       stroke="1"
-       strokecolor="black"
-  >
-    <private>
-      sourcePortFig="Fig0.0"
-      destPortFig="Fig3"
-      sourceFigNode="Fig0"
-      destFigNode="Fig3"
-      <argouml:pathitem figname="Fig13.1"
-                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
-                        figclassname="org.argouml.uml.diagram.ui.FigTextGroup"
-                        ownerhref="127-0-1-1--6d2a1320:16c055f61c2:-8000:0000000000000891"
-                        angle="270.0"
-                        offset="25" />
-    </private>
-    <path name="Fig13.0"
-      description="org.argouml.gefext.ArgoFigPoly"
-      fill="0"
-      fillcolor="white"
-      stroke="1"
-      strokecolor="black"
-    >
-      <moveto x="403"
-              y="96" />
-      <lineto x="456"
-              y="96" />
-      <lineto x="456"
-              y="176" />
-    </path>
-  </group>
-  <group name="Fig14"
-       description="org.argouml.uml.diagram.ui.FigDependency"
        href="127-0-1-1--6d2a1320:16c055f61c2:-8000:0000000000000894"
        stroke="1"
        strokecolor="black"
@@ -1290,14 +1257,14 @@
       destPortFig="Fig1"
       sourceFigNode="Fig4"
       destFigNode="Fig1"
-      <argouml:pathitem figname="Fig14.1"
+      <argouml:pathitem figname="Fig13.1"
                         classname="org.argouml.uml.diagram.ui.PathItemPlacement"
                         figclassname="org.argouml.uml.diagram.ui.FigTextGroup"
                         ownerhref="127-0-1-1--6d2a1320:16c055f61c2:-8000:0000000000000894"
                         angle="270.0"
                         offset="25" />
     </private>
-    <path name="Fig14.0"
+    <path name="Fig13.0"
       description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
