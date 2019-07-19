@@ -19,60 +19,26 @@ public class SendMailPage {
     public void display(Stage window, Pizzeria pizzeria) {
         window.setTitle("Wolf of Pizza - Invia Email");
 
-        Label dest = new Label("E-mail destinatario:  ");
         TextField mail = new TextField();
-        mail.setMinWidth(250);
-        mail.setPromptText("e-Mail");
-        HBox usernameBox = new HBox(50);
-        usernameBox.getChildren().addAll(dest, mail);
-        usernameBox.setAlignment(Pos.CENTER);
+        HBox usernameBox = createHboxField("E-mail destinatario:  ","e-Mail",mail);
 
-        Label oggetto = new Label("Oggetto e-mail:  ");
         TextField oggettoF = new TextField();
-        oggettoF.setMinWidth(250);
-        oggettoF.setPromptText("oggetto");
-        HBox oggettoBox = new HBox(50);
-        oggettoBox.getChildren().addAll(oggetto, oggettoF);
-        oggettoBox.setAlignment(Pos.CENTER);
+        HBox oggettoBox = createHboxField("Oggetto e-mail:  ", "oggetto", oggettoF);
 
-        Label text = new Label("Testo e-mail:  ");
-        TextArea textF = new TextArea();
-        textF.setPromptText("testo");
-        textF.setPrefSize(300,40);
-        HBox textBox = new HBox(50);
-        textBox.getChildren().addAll(text, textF);
-        textBox.setAlignment(Pos.CENTER);
+        TextArea textArea = new TextArea();
+        HBox textBox = createHboxArea(textArea);
 
         Label insertErrorLabel = new Label("");
         insertErrorLabel.setId("errorLabel");
 
-        Button invioButton = new Button("Invia");
-        invioButton.setMinSize(100, 30);
-        invioButton.setOnAction(e-> {
-            insertErrorLabel.setText("");
-            String mailAddress =  mail.getText();
-            SendJavaMail newMail = new SendJavaMail();
-            if(Database.checkMail(mailAddress)) {
-                insertErrorLabel.setTextFill(Color.DARKRED);
-                insertErrorLabel.setText("E-mail inviata");
-                newMail.sendMail(mail.getText(),oggettoF.getText(),textF.getText());
-            } else {
-                insertErrorLabel.setTextFill(Color.DARKRED);
-                insertErrorLabel.setText("Indirizzo non corretto");
-            }
-        });
-
-        Button backButton = new Button("← Torna indietro");
-        backButton.setMinSize(100, 30);
-        backButton.setOnAction(e -> {
-            PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
-            pizzeriaHomePage.display(pizzeria, window);
-        });
+        Button invioButton = createInvioButton(insertErrorLabel,mail,oggettoF,textArea);
+        Button backButton = createBackButton(window,pizzeria);
 
         HBox buttonBox = new HBox(50);
-        VBox vBox = new VBox(20);
         buttonBox.getChildren().addAll(backButton, invioButton);
         buttonBox.setAlignment(Pos.CENTER);
+
+        VBox vBox = new VBox(20);
         vBox.getChildren().addAll(insertErrorLabel, buttonBox);
         vBox.setAlignment(Pos.CENTER);
 
@@ -90,5 +56,56 @@ public class SendMailPage {
         window.setScene(scene);
         window.show();
     }
+
+    private Button createInvioButton(Label insertErrorLabel, TextField mail, TextField oggettoF, TextArea textArea) {
+        Button invioButton = new Button("Invia");
+        invioButton.setMinSize(100, 30);
+        invioButton.setOnAction(e-> {
+            insertErrorLabel.setText("");
+            String mailAddress =  mail.getText();
+            SendJavaMail newMail = new SendJavaMail();
+            if(Database.checkMail(mailAddress)) {
+                insertErrorLabel.setTextFill(Color.DARKRED);
+                insertErrorLabel.setText("E-mail inviata");
+                newMail.sendMail(mail.getText(),oggettoF.getText(),textArea.getText());
+            } else {
+                insertErrorLabel.setTextFill(Color.DARKRED);
+                insertErrorLabel.setText("Indirizzo non corretto");
+            }
+        });
+        return invioButton;
+    }
+
+    private Button createBackButton(Stage window, Pizzeria pizzeria){
+        Button backButton = new Button("← Torna indietro");
+        backButton.setMinSize(100, 30);
+        backButton.setOnAction(e -> {
+            PizzeriaHomePage pizzeriaHomePage = new PizzeriaHomePage();
+            pizzeriaHomePage.display(pizzeria, window);
+        });
+        return backButton;
+    }
+
+    private HBox createHboxField(String textLabel,String text, TextField textField){
+        Label label = new Label(textLabel);
+        textField.setMinWidth(250);
+        textField.setPromptText(text);
+        HBox box = new HBox(50);
+        box.getChildren().addAll(label, textField);
+        box.setAlignment(Pos.CENTER);
+        return box;
+    }
+
+    private HBox createHboxArea(TextArea textArea){
+        Label label = new Label("Testo e-mail:  ");
+        textArea.setMinWidth(250);
+        textArea.setPrefSize(300,100);
+        textArea.setPromptText("testo");
+        HBox box = new HBox(50);
+        box.getChildren().addAll(label, textArea);
+        box.setAlignment(Pos.CENTER);
+        return box;
+    }
+
 
 }

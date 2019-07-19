@@ -1,5 +1,6 @@
 package graphicElements.customerSidePages.newOrder;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import database.CustomerDB;
 import graphicAlerts.GenericAlert;
 import graphicElements.customerSidePages.HomePage;
@@ -96,33 +97,10 @@ public class OrderPage2 {
 		choiceHBox.getChildren().addAll(timeChoiceLabel, choiceBox);
 
 		/* Bottone di conferma */
-		Button confirmButton = new Button("Prosegui →");
-        confirmButton.setId("confirmButton");
-		confirmButton.setMinHeight(35);
-		confirmButton.setOnAction(e-> {
-			this.name = getInfo(surnameInput);
-			this.address = getInfo(addressInput);
-			this.time = getChoice(choiceBox);
-			order.setName(this.name);
-			order.setAddress(this.address);
-			order.setTime(this.time);
-			if (checkInsert(this.name,this.address,this.time)) {
-				OrderPage3 orderPage3 = new OrderPage3();
-				orderPage3.display(window, order, pizzeria, scene3, customer);
-			}
-		});
+		Button confirmButton = createConfirmButton(order,surnameInput,addressInput,choiceBox,window,customer,pizzeria);
 
 		/* Bottone per tornare indietro */
-		Button backButton = new Button("← Torna indietro");
-        backButton.setMinHeight(35);
-        backButton.setId("backButton");
-        backButton.setOnAction(e -> {
-			order.setName(getInfo(surnameInput));
-			order.setAddress(getInfo(addressInput));
-			OrderPage1 orderPage1 = new OrderPage1();
-			orderPage1.display(window, order, pizzeria, customer);
-		});
-
+		Button backButton = createBackButton(order, surnameInput,addressInput,window,customer,pizzeria);
 		HBox buttonBox = new HBox(10);
 		buttonBox.getChildren().addAll(backButton, confirmButton);
 		buttonBox.setMinSize(600, 58);
@@ -166,6 +144,37 @@ public class OrderPage2 {
         window.setScene(scene3);
 	}
 
+	private Button createConfirmButton(Order order, TextField surnameInput, TextField addressInput, ChoiceBox<String> choiceBox, Stage window, Customer customer, Pizzeria pizzeria){
+        Button button = new Button("Prosegui →");
+        button.setId("confirmButton");
+        button.setMinHeight(35);
+        button.setOnAction(e-> {
+            this.name = getInfo(surnameInput);
+            this.address = getInfo(addressInput);
+            this.time = getChoice(choiceBox);
+            order.setName(this.name);
+            order.setAddress(this.address);
+            order.setTime(this.time);
+            if (checkInsert(this.name,this.address,this.time)) {
+                OrderPage3 orderPage3 = new OrderPage3();
+                orderPage3.display(window, order, pizzeria, scene3, customer);
+            }
+        });
+        return button;
+	}
+
+	private Button createBackButton(Order order, TextField surnameInput, TextField addressInput, Stage window,Customer customer, Pizzeria pizzeria){
+        Button button = new Button("← Torna indietro");
+        button.setMinHeight(35);
+        button.setId("backButton");
+        button.setOnAction(e -> {
+            order.setName(getInfo(surnameInput));
+            order.setAddress(getInfo(addressInput));
+            OrderPage1 orderPage1 = new OrderPage1();
+            orderPage1.display(window, order, pizzeria, customer);
+        });
+        return button;
+    }
 	/** Verifica che tutti i campi siano stati riempiti. */
 	private boolean checkInsert(String name, String address, Date time) {
 		if(name.equals("")) {

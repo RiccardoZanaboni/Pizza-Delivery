@@ -44,24 +44,7 @@ public class ModifyBox {
         gridPane.getColumnConstraints().add(new ColumnConstraints(210));
         gridPane.getColumnConstraints().add(new ColumnConstraints(70));
 
-        Button confirmButton = new Button("Conferma le modifiche");
-        confirmButton.setOnAction(e -> {
-            handleOptions(checkBoxes, nuovaPizza);
-            if (!checkCheckBoxTopping(checkBoxes))
-                GenericAlert.display("Attenzione: inserire almeno un ingrediente!");
-            else {
-                handleOptions(checkBoxes, nuovaPizza);
-                if(!pizzaMenu.getToppings().equals(nuovaPizza.getToppings())){
-                    nuovaPizza.setName(pizzaName + "*");    /* aggiungo un asterisco al nome della pizza modificata */
-                    order.addPizza(nuovaPizza, 1);
-                    nuovaPizza.setCount(true);
-                    answer = true;
-                    window.close();
-                } else {
-                    GenericAlert.display("Attenzione: nessuna modifica effettuata!");
-                }
-            }
-        });
+        Button confirmButton = createConfirmButton(checkBoxes,nuovaPizza,pizzaMenu,pizzaName,order);
 
         ScrollPane scrollPane = new ScrollPane(gridPane);
         VBox layout = new VBox();
@@ -84,6 +67,27 @@ public class ModifyBox {
         return answer;
     }
 
+    private Button createConfirmButton(ArrayList<CheckBoxTopping> checkBoxes, Pizza nuovaPizza, Pizza pizzaMenu , String pizzaName, Order order){
+        Button button = new Button("Conferma le modifiche");
+        button.setOnAction(e -> {
+            handleOptions(checkBoxes, nuovaPizza);
+            if (!checkCheckBoxTopping(checkBoxes))
+                GenericAlert.display("Attenzione: inserire almeno un ingrediente!");
+            else {
+                handleOptions(checkBoxes, nuovaPizza);
+                if(!pizzaMenu.getToppings().equals(nuovaPizza.getToppings())){
+                    nuovaPizza.setName(pizzaName + "*");    /* aggiungo un asterisco al nome della pizza modificata */
+                    order.addPizza(nuovaPizza, 1);
+                    nuovaPizza.setCount(true);
+                    answer = true;
+                    window.close();
+                } else {
+                    GenericAlert.display("Attenzione: nessuna modifica effettuata!");
+                }
+            }
+        });
+        return button;
+    }
     /** Riempie il GridPane con tutti gli elementi necessari */
     private GridPane setGridPaneContraints(ArrayList<Label> ingrLabels, ArrayList<HBox> hBoxes) {
         GridPane gridPane = new GridPane();
