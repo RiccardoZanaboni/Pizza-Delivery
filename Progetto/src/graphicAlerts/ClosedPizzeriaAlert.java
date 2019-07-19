@@ -26,7 +26,7 @@ public class ClosedPizzeriaAlert {
 
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("ATTENZIONE");
-		Scene scene = new Scene(layout, 630, 150);
+		Scene scene = new Scene(layout, 430, 150);
 		window.setScene(scene);
 		window.show();
 	}

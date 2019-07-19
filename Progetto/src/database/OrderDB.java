@@ -26,7 +26,7 @@ public class OrderDB {
                 + order.getNumPizze() + ", date = '" + data + "' where orderID = '" + order.getOrderCode() + "'";
         Database.insertStatement(requestSql);
         for (Pizza p : order.getOrderedPizze()) {
-            OrderDB.putOrderedPizzas(order, p);
+            putOrderedPizzas(order, p);  // FIXME: 19/07/2019
         }
     }
 

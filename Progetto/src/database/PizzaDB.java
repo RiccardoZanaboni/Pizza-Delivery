@@ -1,20 +1,16 @@
 package database;
 
-import exceptions.TryAgainExc;
-import javafx.scene.paint.Color;
+
 import pizzeria.Pizza;
-import pizzeria.Pizzeria;
+
 import pizzeria.services.SettleStringsServices;
-import pizzeria.services.TextColorServices;
-import textualElements.TextCustomerSide;
+
 
 import java.sql.*;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class PizzaDB {
-	private static Scanner scan = new Scanner(System.in);
 
 	/** Tutto il controllo è fatto per verificare che la pizza non fosse già presente nel DB
 	 * (richiamando il getPizzeDB sia prima che dopo l'inserimento della nuova pizza, verifico
@@ -58,7 +54,7 @@ public class PizzaDB {
 			StringTokenizer stAgg = new StringTokenizer(ingrediente);
 			while (stAgg.hasMoreTokens()) {
 				try {
-					String ingredienteAggiuntoString = SettleStringsServices.arrangeIngredientString(stAgg);
+					String ingredienteAggiuntoString = SettleStringsServices.arrangeIngredientString(stAgg); // FIXME: 19/07/2019
 					ingr.put(ingredienteAggiuntoString, ingredienteAggiuntoString);
 				} catch (Exception ignored) {
 					/* continue */

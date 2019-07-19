@@ -23,46 +23,64 @@ public class YourProfilePage {
     public void display(Stage window, Pizzeria pizzeria, Customer customer) {
         window.setTitle("Wolf of Pizza - I tuoi Dati");
 
-        /* Campo Nome */
-        Label nameLabel = new Label("Nome:\t ");
-        TextField nameInput = new TextField();
-        nameInput.setPromptText("Il tuo nome");
-        String name = CustomerDB.getCustomerFromUsername(customer.getUsername(), 4);
-        nameInput.setText(name);
+        VBox labelVBox= new VBox(30);
+        VBox fieldVBox =new VBox(49);
+        labelVBox.setAlignment(Pos.CENTER_LEFT);
+        labelVBox.setPadding(new Insets(0,20,0,165));
+        fieldVBox.setAlignment(Pos.CENTER_RIGHT);
 
-        /* Campo Cognome */
-        Label surnameLabel = new Label("Cognome: ");
-        TextField surnameInput = new TextField();
-        surnameInput.setPromptText("Il tuo cognome");
-        String surname = CustomerDB.getCustomerFromUsername(customer.getUsername(), 5);
-        surnameInput.setText(surname);
-
-        /* Campo Indirizzo */
-        Label addressLabel = new Label("Indirizzo: ");
-        TextField addressInput = new TextField();
-        addressInput.setPromptText("Il tuo indirizzo");
-        String address = CustomerDB.getCustomerFromUsername(customer.getUsername(), 6);
-        addressInput.setText(address);
-
-        /* Campo Email */
-        Label emailLabel = new Label("Email: ");
-        TextField emailField = new TextField();
-        emailField.setPromptText("La tua email");
-        emailField.setMinWidth(280);
-        String email = CustomerDB.getCustomerFromUsername(customer.getUsername(), 3);
-        emailField.setText(email);
+        TextField nameInput = createTextField(labelVBox,fieldVBox, "Nome:\t ","Il tuo nome",customer, 4);
+        TextField surnameInput = createTextField(labelVBox,fieldVBox, "Cognome: ","Il tuo cognome",customer, 5);
+        TextField addressInput = createTextField(labelVBox,fieldVBox, "Indirizzo: ","Il tuo indirizzo",customer, 6);
+        TextField emailField = createTextField(labelVBox,fieldVBox, "Email: ","Il tuo email",customer, 3);
+        emailField.setMinWidth(300);
 
         /* Bottone per tornare alla HomePage senza salvare le modifiche */
+        Button backButton = createBackButton(window, pizzeria, customer);
+        /* Bottone per confermare le modifiche */
+        Button confirmButton = createConfirmButton(window,pizzeria,customer,nameInput,surnameInput,addressInput,emailField);
+
+        HBox buttonBox = new HBox(10);
+        buttonBox.getChildren().addAll(backButton, confirmButton);
+        buttonBox.setAlignment(Pos.CENTER);
+
+        HBox hBox=new HBox(30);
+        hBox.getChildren().addAll(labelVBox,fieldVBox);
+
+        VBox layout = new VBox(30);
+        layout.getChildren().addAll(hBox, buttonBox);
+        layout.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(layout, 800, 600);
+        layout.getStyleClass().add("layout");
+        scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/loginPageStyle.css").toExternalForm());
+        window.setScene(scene);
+        window.show();
+    }
+
+    private TextField createTextField(VBox labelVBox, VBox fieldVBox, String nameLabel, String nameField, Customer customer, int index){
+        Label label = new Label(nameLabel);
+        TextField textField = new TextField();
+        textField.setPromptText(nameField);
+        String name = CustomerDB.getCustomerFromUsername(customer.getUsername(), index);
+        textField.setText(name);
+        labelVBox.getChildren().add(label);
+        fieldVBox.getChildren().add(textField);
+        return textField;
+    }
+
+    private Button createBackButton(Stage window, Pizzeria pizzeria, Customer customer){
         Button backButton = new Button("← Torna indietro");
         backButton.setMinHeight(35);
         backButton.setMaxHeight(40);
         backButton.setId("backButton");
         backButton.setOnAction(e -> {
-           HomePage homePage = new HomePage();
-           homePage.display(window, pizzeria, customer);
+            HomePage homePage = new HomePage();
+            homePage.display(window, pizzeria, customer);
         });
+        return backButton;
+    }
 
-        /* Bottone per confermare le modifiche */
+    private Button createConfirmButton(Stage window, Pizzeria pizzeria, Customer customer,TextField nameInput,TextField surnameInput,TextField addressInput,TextField emailField){
         Button confirmButton = new Button(" Conferma modifiche");
         confirmButton.setMinHeight(35);
         confirmButton.setMaxHeight(40);
@@ -86,28 +104,8 @@ public class YourProfilePage {
                 homePage.display(window, pizzeria, customer);
             } else GenericAlert.display("Modifica dei dati non riuscita.");
         });
-
-        HBox buttonBox = new HBox(10);
-        buttonBox.getChildren().addAll(backButton, confirmButton);
-        buttonBox.setAlignment(Pos.CENTER);
-
-        VBox labelVBox= new VBox(30);
-        labelVBox.getChildren().addAll(nameLabel,surnameLabel,addressLabel,emailLabel);
-        VBox fieldVBox =new VBox(49);
-        fieldVBox.getChildren().addAll(nameInput,surnameInput,addressInput,emailField);
-        labelVBox.setAlignment(Pos.CENTER_LEFT);
-        labelVBox.setPadding(new Insets(0,20,0,165));
-        fieldVBox.setAlignment(Pos.CENTER_RIGHT);
-        HBox hBox=new HBox(30);
-        hBox.getChildren().addAll(labelVBox,fieldVBox);
-
-        VBox layout = new VBox(30);
-        layout.getChildren().addAll(hBox, buttonBox);
-        layout.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(layout, 800, 600);
-        layout.getStyleClass().add("layout");
-        scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/loginPageStyle.css").toExternalForm());
-        window.setScene(scene);
-        window.show();
+        return confirmButton;
     }
+
+
 }

@@ -6,11 +6,9 @@ import pizzeria.Pizzeria;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Scanner;
 
 public class ToppingDB {
 
-	private static Scanner scan = new Scanner(System.in);
 
 	/** Consente alla pizzeria di aggiungere un topping a quelli salvati sul Database. */
 	public static boolean putTopping(String nome){
@@ -61,7 +59,7 @@ public class ToppingDB {
 
 	/** Consente alla pizzeria di recuperare i toppings salvati sul Database. */
 	public static HashMap<String, String> getToppings(HashMap<String, String> ingredienti)  throws SQLException{
-		ResultSet rs = Database.getStatement("select * from sql2298759.Toppings");
+		ResultSet rs = Database.getStatement("select * from sql2298759.Toppings"); // FIXME: 19/07/2019
 		while (rs.next()) {
 			String ingrediente = rs.getString(1);
 			ingredienti.put(ingrediente,ingrediente);

@@ -4,6 +4,7 @@ import graphicAlerts.ClosedPizzeriaAlert;
 import graphicAlerts.GenericAlert;
 import graphicElements.customerSidePages.loginPages.LoginAccountPage;
 import graphicElements.customerSidePages.newOrder.OrderPage1;
+import javafx.beans.NamedArg;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -34,13 +35,11 @@ public class HomePage {
 		Label usernameLabel = new Label("");
 		usernameLabel.setText(customer.getUsername());
         HBox hBox = new HBox(20);
-        Button logoutButton = new Button();
-        Image image = new Image("/graphicElements/images/logout-128.png");
-        ImageView imageView1 = new ImageView(image);
-        imageView1.setFitHeight(20);
-        imageView1.setFitWidth(20);
+
+        ImageView imageView1 = creatImageView("/graphicElements/images/logout-128.png",20,20);
 
         /* Bottone per il logout */
+        Button logoutButton = new Button();
         logoutButton.setGraphic(imageView1);
         logoutButton.setMinSize(100, 50);
         logoutButton.setOnAction(e->{
@@ -54,11 +53,7 @@ public class HomePage {
 		stackPane.getChildren().addAll(hBox);
 		stackPane.getStyleClass().add("stackpane");
 
-		Image image1 = new Image("/graphicElements/images/banner_pizza.jpg");
-		ImageView imageView = new ImageView(image1);
-		imageView.setFitHeight(150);
-		imageView.setFitWidth(880);
-		imageView.autosize();
+		ImageView imageView = creatImageView("/graphicElements/images/banner_pizza.jpg",150,880);
 
 		StackPane spazioPane = new StackPane();
 		spazioPane.setMinSize(800, 150);
@@ -66,26 +61,7 @@ public class HomePage {
 		spazioPane.setAlignment(Pos.CENTER);
 
 		/* Bottone "Nuovo ordine" */
-		Button makeOrderButton = new Button("Nuovo ordine");
-        makeOrderButton.prefWidthProperty().bind(window.widthProperty());
-        makeOrderButton.prefHeightProperty().bind(window.heightProperty());
-        OpeningPossibilities checkOpen = TimeServices.checkTimeOrder(pizzeria);
-		makeOrderButton.setOnAction(e -> {
-			pizzeria.updatePizzeriaToday();
-			switch (checkOpen) {
-				case OPEN:        /* pizzeria aperta e in attività */
-					Order order = pizzeria.initializeNewOrder();
-					OrderPage1 orderPage1 = new OrderPage1();
-					orderPage1.display(window, order, pizzeria, customer);
-					break;
-				case CLOSING:
-					ClosedPizzeriaAlert.display(true);        // pizzeria in chiusura
-					break;
-				default:
-					ClosedPizzeriaAlert.display(false);        // pizzeria già chiusa
-					break;
-			}
-		});
+		Button makeOrderButton = creatMakeButton(pizzeria, window, customer) ;
 
 		/* Bottone "Chi siamo" */
 		Button whoWeAreButton = new Button("Chi siamo");
@@ -97,16 +73,7 @@ public class HomePage {
         whoWeAreButton.prefHeightProperty().bind(window.heightProperty());
 
 		/* Bottone "Ultimo Ordine" */
-		Button lastOrderButton = new Button("Ultimo ordine");
-        lastOrderButton.prefWidthProperty().bind(window.widthProperty());
-        lastOrderButton.prefHeightProperty().bind(window.heightProperty());
-        lastOrderButton.setOnAction(event -> {
-        	Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
-        	if(last != null) {
-				LastOrderPage lastOrderPage = new LastOrderPage();
-				lastOrderPage.display(window, last, pizzeria, customer);
-			} else GenericAlert.display(customer.getUsername() + ", non hai ancora effettuato nessun ordine!");
-		});
+		Button lastOrderButton = creatLastOrderButton(pizzeria, window, customer);
 
 		/* Bottone "Il tuo profilo" */
 		Button dataButton = new Button("Il tuo profilo");
@@ -139,4 +106,54 @@ public class HomePage {
 		window.setScene(scene1);
 		window.show();
 	}
+
+
+	private Button creatMakeButton(Pizzeria pizzeria, Stage window,Customer customer){
+	    Button button =new Button("Nuovo ordine");
+        OpeningPossibilities checkOpen = TimeServices.checkTimeOrder(pizzeria);
+        button.setOnAction(e -> {
+            pizzeria.updatePizzeriaToday();
+            switch (checkOpen) {
+                case OPEN:        /* pizzeria aperta e in attività */
+                    Order order = pizzeria.initializeNewOrder();
+                    OrderPage1 orderPage1 = new OrderPage1();
+                    orderPage1.display(window, order, pizzeria, customer);
+                    break;
+                case CLOSING:
+                    ClosedPizzeriaAlert.display(true);        // pizzeria in chiusura
+                    break;
+                default:
+                    ClosedPizzeriaAlert.display(false);        // pizzeria già chiusa
+                    break;
+            }
+        });
+        button.prefWidthProperty().bind(window.widthProperty());
+        button.prefHeightProperty().bind(window.heightProperty());
+        return button;
+    }
+
+    private ImageView creatImageView ( @NamedArg("url") String url, double Height, double Width )
+    {
+        Image image1 = new Image(url);
+        ImageView imageView = new ImageView(image1);
+        imageView.setFitHeight(Height);
+        imageView.setFitWidth(Width);
+        imageView.autosize();
+        return imageView;
+    }
+
+    private Button creatLastOrderButton(Pizzeria pizzeria, Stage window,Customer customer){
+        Button button = new Button("Ultimo ordine");
+        button.prefWidthProperty().bind(window.widthProperty());
+        button.prefHeightProperty().bind(window.heightProperty());
+        button.setOnAction(event -> {
+            Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
+            if(last != null) {
+                LastOrderPage lastOrderPage = new LastOrderPage();
+                lastOrderPage.display(window, last, pizzeria, customer);
+            } else GenericAlert.display(customer.getUsername() + ", non hai ancora effettuato nessun ordine!");
+        });
+    return button;
+    }
+
 }

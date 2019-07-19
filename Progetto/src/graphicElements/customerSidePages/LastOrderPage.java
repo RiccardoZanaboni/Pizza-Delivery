@@ -10,7 +10,7 @@ import pizzeria.*;
 
 import java.util.ArrayList;
 
-public class LastOrderPage{
+public class LastOrderPage {
 
     /** Lo Stage ospita la pagina di visualizzazione dell'ultimo ordine effettuato dal cliente.
      * Restituisce un avviso nel caso il cliente non abbia mai effettuato ordini.

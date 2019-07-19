@@ -62,9 +62,6 @@ public class PizzeriaHomePage {
             sendMailPage.display(window,pizzeria);
         });
 
-
-
-
         GridPane gridPane = new GridPane();
         gridPane.getChildren().addAll(visualizeOrdersButton, manageMenuButton,mandaEmail);
         GridPane.setConstraints(visualizeOrdersButton, 0, 0);
