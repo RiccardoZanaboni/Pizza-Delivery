@@ -4,14 +4,12 @@ import java.sql.*;
 
 public class CustomerDB {
 
-    /** Aggiunge un utente al database. */
-    public static boolean putCustomer(String nome, String password, String mailAddress){
+    /** Aggiunge un utente al database. */ // FIXME: 19/07/2019 
+    public static void putCustomer(String nome, String password, String mailAddress){
         try {
             Database.insertStatement("insert into sql2298759.Users values ('" + nome + "', '" + password +  "', '" + mailAddress + "', '', '', '') ");	// inserisce account nel DB
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 

@@ -6,5 +6,7 @@ package exceptions;
  */
 
 public class RestartOrderExc extends Exception {
-    public RestartOrderExc() { }
+    public RestartOrderExc() {
+        // FIXME: 19/07/2019  aggiungere qui il messaggio?
+         }
 }

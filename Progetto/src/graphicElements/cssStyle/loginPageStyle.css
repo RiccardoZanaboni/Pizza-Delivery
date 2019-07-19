@@ -18,7 +18,6 @@
 }
 
 .button:hover {
- /* -fx-background-color: #f44336;*/
   -fx-background-color: linear-gradient(#a61022,  #f39f18);
   -fx-border-color: black;
 }

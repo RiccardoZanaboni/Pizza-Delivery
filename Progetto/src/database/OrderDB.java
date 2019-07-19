@@ -26,7 +26,7 @@ public class OrderDB {
                 + order.getNumPizze() + ", date = '" + data + "' where orderID = '" + order.getOrderCode() + "'";
         Database.insertStatement(requestSql);
         for (Pizza p : order.getOrderedPizze()) {
-            OrderDB.putOrderedPizzas(order, p);
+            putOrderedPizzas(order, p);  // FIXME: 19/07/2019
         }
     }
 
@@ -53,7 +53,7 @@ public class OrderDB {
                 order.setAddress(address);
                 order.setTime(date);
                 order.updateAvailability(pizzeria, quantity, date);
-                ResultSet rsPizza = OrderDB.getPizzasByOrderId(orderID);
+                ResultSet rsPizza = getPizzasByOrderId(orderID); // FIXME: 19/07/2019
                 while (rsPizza.next()) {
                     HashMap<String, String> ingr = new HashMap<>();
                     String ingrediente = rsPizza.getString(2);
