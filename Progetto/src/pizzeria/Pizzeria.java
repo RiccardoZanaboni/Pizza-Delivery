@@ -57,7 +57,7 @@ public class Pizzeria {
 		createMenu();
 		setDayOfTheWeek();
 		addDeliveryMan(new DeliveryMan("Musi", this));
-		//addDeliveryMan(new DeliveryMan("Zana", this));
+		//addDeliveryMan(new DeliveryMan("Zana", this)); per aggiungere un altro fattorino
 		updatePizzeriaToday();
 	}
 
@@ -127,8 +127,9 @@ public class Pizzeria {
 		Date today = new Date();
 		if (last.getDate() != today.getDate()) {
 			setLastUpdate(last);
+		}if(isOpen(today)) {
+			getOrders();
 		}
-		getOrders();
 	}
 
 	/** Una tantum: vengono aggiunti a "pizzeriaIngredients" tutti gli ingredienti utilizzabili. */
@@ -200,7 +201,6 @@ public class Pizzeria {
 	/** Controlla che la pizzeria possa garantire la consegna di "tot" pizze all'orario "d",
 	 * in base alla disponibilità di forno e fattorini. */
 	void updateOvenAndDeliveryMan(Date d, int tot) {
-		/* PRIMA CONDIZIONE PER LE INFORNATE, SUCCESSIVA SUI FATTORINI */
 		int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getAvailablePlaces();
 		if(disp < tot){
 			this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].updateAvailablePlaces(disp);

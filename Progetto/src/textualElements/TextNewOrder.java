@@ -306,7 +306,6 @@ class TextNewOrder {
 			case "S":
 				/* Conferma l'ordine e lo aggiunge a quelli della pizzeria. */
 				OrderDB.putOrder(order);
-				order.updateAvailability(pizzeria,order.getNumPizze(),order.getTime());
 				String confirm = "\nGrazie! L'ordine è stato effettuato correttamente.";
 				System.out.println(TextColorServices.colorSystemOut(confirm, Color.GREEN,true,false));
 				String confirmedTime = TimeServices.dateTimeStamp(orario);

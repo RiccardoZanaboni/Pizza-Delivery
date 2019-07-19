@@ -6,10 +6,6 @@ import pizzeria.DeliveryMan;
 import pizzeria.Pizzeria;
 import pizzeria.services.*;
 
-import java.sql.SQLException;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
-
 import static org.junit.Assert.assertEquals;
 
 public class PizzeriaTest {

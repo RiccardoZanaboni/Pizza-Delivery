@@ -37,6 +37,7 @@ public class OrderDB {
 
     /** Recupera dal DB tutti gli ordini relativi al giorno corrente. */
     public static HashMap<String, Order> getOrders(Pizzeria pizzeria, HashMap<String, Order> orders) throws SQLException {
+        Date today=new Date();
         ResultSet rs = Database.getStatement("SELECT * FROM sql2298759.Orders left JOIN sql2298759.Users ON Orders.username = Users.User;");
         int i = 0;
         while (rs.next()) {
@@ -52,7 +53,9 @@ public class OrderDB {
                 order.setName(citofono);
                 order.setAddress(address);
                 order.setTime(date);
-                order.updateAvailability(pizzeria, quantity, date);
+                if(pizzeria.isOpen(today)) {
+                    order.updateAvailability(pizzeria, quantity, date); /* Aggiorno le disponibilità solo se è aperta e posso fare un ordine */
+                }
                 ResultSet rsPizza = OrderDB.getPizzasByOrderId(orderID);
                 while (rsPizza.next()) {
                     HashMap<String, String> ingr = new HashMap<>();

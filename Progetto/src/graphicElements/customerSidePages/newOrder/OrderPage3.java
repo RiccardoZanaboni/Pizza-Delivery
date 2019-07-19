@@ -44,7 +44,6 @@ public class OrderPage3 {
 		confirmButton.setId("confirmButton");
 		confirmButton.setOnAction(e -> {
 			OrderDB.putOrder(order);
-			order.updateAvailability(pizzeria,order.getNumPizze(),order.getTime());
 			HomePage homePage = new HomePage();
 			homePage.display(window, pizzeria, customer);
 		});
