@@ -86,39 +86,6 @@ public class Database {
 	}
 
 
-	/** Recupera la data di ultimo aggiornamento del DB. */
-	public static Date getLastUpdate() {
-		Date last = null;
-		String requestSql = "select * from sql2298759.LastUpdate";
-		PreparedStatement preparedStatement;
-		try {
-			preparedStatement = con.prepareStatement(requestSql);
-			ResultSet rs = preparedStatement.executeQuery();
-			rs.next();
-			last = rs.getDate(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return last;
-	}
-
-	/** Aggiorna la data di ultimo aggiornamento del DB con la data odierna. */
-	public static void setLastUpdate(Date oldDate) {
-		DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd");
-		String newDateString = dateFormatYMD.format(new Date());
-		String oldDateString = dateFormatYMD.format(oldDate);
-		java.sql.Date newSQLData = java.sql.Date.valueOf(newDateString);
-		java.sql.Date oldSQLData = java.sql.Date.valueOf(oldDateString);
-		String requestSql = "update sql2298759.LastUpdate set Date = '" + newSQLData + "' where Date = '" + oldSQLData + "' ";
-		PreparedStatement preparedStatement;
-		try {
-			preparedStatement = con.prepareStatement(requestSql);
-			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	/** Controlla che l'indirizzo e-amil inserito sia effettivamente nella tabella degli utenti. */
 	public static boolean checkMail(String mail){
 		return (getInfoCustomerFromMailAddress(mail,1) != null);

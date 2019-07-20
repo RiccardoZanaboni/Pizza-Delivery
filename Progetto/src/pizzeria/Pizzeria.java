@@ -1,9 +1,6 @@
 package pizzeria;
 
-import database.Database;
-import database.OrderDB;
-import database.PizzaDB;
-import database.ToppingDB;
+import database.*;
 import pizzeria.services.TimeServices;
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -11,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static database.Database.openDatabase;
-import static database.Database.setLastUpdate;
+import static database.UpdateDB.setLastUpdate;
 import static pizzeria.services.TimeServices.getMinutes;
 
 @SuppressWarnings("deprecation")
@@ -123,11 +120,12 @@ public class Pizzeria {
 		for (int i = 0; i < this.ovens.length; i++) {
 			this.ovens[i] = new Oven(this.availablePlaces);
 		}
-		Date last = Database.getLastUpdate();
+		Date last = UpdateDB.getLastUpdate();
 		Date today = new Date();
 		if (last.getDate() != today.getDate()) {
 			setLastUpdate(last);
-		}if(isOpen(today)) {
+		}
+		if(isOpen(today)) {
 			getOrders();
 		}
 	}
