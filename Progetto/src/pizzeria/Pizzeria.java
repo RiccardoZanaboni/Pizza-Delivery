@@ -157,7 +157,7 @@ public class Pizzeria {
 	/** Crea un nuovo ordine e aggiorna il numero seriale degli ordini. */
 	public Order initializeNewOrder() {
 		Order order;
-		order = new Order(Database.countOrdersDB());
+		order = new Order(OrderDB.countOrdersDB());
 		Database.addNewVoidOrderToDB(order);
 		return order;
 	}

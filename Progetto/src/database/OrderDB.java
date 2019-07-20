@@ -83,4 +83,20 @@ public class OrderDB {
     private static ResultSet getPizzasByOrderId(String orderID) {
         return Database.getStatement("select pizza, ingredienti, prezzo from sql2298759.Orders natural join sql2298759.OrderedPizza where orderID = '" + orderID + "'");
     }
+
+    /** Conta gli ordini presenti nel DB, per conoscere il prossimo OrderCode. */
+    public static int countOrdersDB() {
+        String requestSql = "select count(*) from sql2298759.Orders";
+        int num = -1;
+        try{
+            ResultSet rs=  Database.getStatement(requestSql);
+            rs.next();
+            num = rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return num;
+    }
+
+
 }
