@@ -57,7 +57,7 @@ public class LoginAccountPage {
 		loginButton.setOnAction(e-> {
 				String user = nameInput.getText();
 				String psw = passwordInput.getText();
-				switch(PizzeriaServices.checkLogin(pizzeria, user.toUpperCase(),psw.toUpperCase())){
+				switch(PizzeriaServices.checkLogin(pizzeria.getUserPizzeria(),pizzeria.getPswPizzeria(), user.toUpperCase(),psw.toUpperCase())){
 					case OK:
 						HomePage homePage = new HomePage();
 						Customer customer = new Customer(user.toUpperCase());

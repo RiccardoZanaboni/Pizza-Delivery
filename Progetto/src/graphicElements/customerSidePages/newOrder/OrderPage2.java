@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 import pizzeria.Customer;
 import pizzeria.Order;
 import pizzeria.Pizzeria;
-import pizzeria.services.TimeServices;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -229,7 +228,7 @@ public class OrderPage2 {
 		ObservableList<String> orari = FXCollections.observableArrayList();
 		try{
 			//noinspection ConstantConditions
-			orari.addAll(TimeServices.availableTimes(pizzeria, tot));
+			orari.addAll(pizzeria.availableTimes(tot));
 		} catch (NullPointerException npe){
 			/* se l'ordine inizia in un orario ancora valido, ma impiega troppo tempo e diventa troppo tardi: */
 			HomePage home = new HomePage();

@@ -1,8 +1,6 @@
 package pizzeria.services;
 
 import enums.OpeningPossibilities;
-import pizzeria.DeliveryMan;
-import pizzeria.Pizzeria;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -33,57 +31,25 @@ public class TimeServices {
 		return getMinutes(nowHour, nowMinute);
 	}
 
-	/** @return tutti gli orari in cui la pizzeria potrebbe garantire la consegna di
-	 * @param tot pizze.
-	 * Richiama altri metodi di questa classe, per gestire ogni eventualità. */
-	public static ArrayList<String> availableTimes(Pizzeria pizzeria, int tot){
-		ArrayList<String> availables = new ArrayList<>();
-		int now = getNowMinutes();
-		int restaAperta = calculateOpeningMinutesPizzeria(pizzeria);
-		int esclusiIniziali = calculateStartIndex(pizzeria, now, tot);     /* primo orario da visualizzare (in minuti) */
-
-		for(int i = esclusiIniziali; i < restaAperta; i++) {    /* considera i tempi minimi di preparazione e consegna */
-			if(i % 5 == 0) {
-				if (pizzeria.getOvens()[i / 5].getAvailablePlaces() + pizzeria.getOvens()[(i / 5) - 1].getAvailablePlaces() >= tot) {
-					for (DeliveryMan a : pizzeria.getDeliveryMen()) {
-						if (a.getDeliveryManTimes()[i / 10].isFree()) {
-							int newMinutes = getMinutes(pizzeria.getOpeningToday()) + i;
-							int ora = newMinutes / 60;
-							int min = newMinutes % 60;
-							String nuovoOrario = timeStamp(ora,min);
-							availables.add(nuovoOrario + "  ");
-							break;
-						}
-					}
-				}
-			}
-		}
-		if(availables.size() > 0) {
-			return availables;
-		} else {
-			return null;
-		}
-	}
-
-	/** @return i minuti totali in cui la pizzeria rimane aperta oggi. */
-	private static int calculateOpeningMinutesPizzeria(Pizzeria pizzeria){
-		int openMinutes = getMinutes(pizzeria.getOpeningToday());
-		int closeMinutes = getMinutes(pizzeria.getClosingToday());
+	/** Calcola i minuti totali in cui la pizzeria rimane aperta oggi. */
+	public static int calculateOpeningMinutesPizzeria(Date openToday, Date closeToday){
+		int openMinutes = getMinutes(openToday);
+		int closeMinutes = getMinutes(closeToday);
 		return closeMinutes - openMinutes - 10;
 	}
 
 	/** @return il primo orario disponibile per la consegna di
 	 * @param tot pizze, dopo avere effettuato i controlli necessari. */
-	private static int calculateStartIndex(Pizzeria pizzeria, int now, int tot) {
+	public static int calculateStartIndex(int availablePlaces, Date openToday, int now, int tot) {
 		int esclusiIniziali = 0;
 		int giaPassati;      /* minuti attualmente già passati dall'apertura */
 		int tempiFissi;      /* tempi da considerare per la cottura e la consegna */
-		if(tot <= pizzeria.getAvailablePlaces())
+		if(tot <= availablePlaces)
 			tempiFissi = 15;      /* 1 infornata: 5 minuti per la cottura e 10 minuti per la consegna */
 		else
 			tempiFissi = 20;      /* 2 infornate: 10 minuti per la cottura e 10 minuti per la consegna */
-		if(now > getMinutes(pizzeria.getOpeningToday())) {     /* Se adesso la pizzeria è già aperta... */
-			giaPassati = now - getMinutes(pizzeria.getOpeningToday());	/* ... allora calcolo da quanti minuti lo è. */
+		if(now > getMinutes(openToday)) {     /* Se adesso la pizzeria è già aperta... */
+			giaPassati = now - getMinutes(openToday);	/* ... allora calcolo da quanti minuti lo è. */
 			if(tempiFissi < giaPassati)
 				esclusiIniziali = giaPassati;	/* i tempi fissi sono già compresi */
 		}
@@ -148,10 +114,10 @@ public class TimeServices {
 
 	/** Controlla, prima di un nuovo ordine, se si è ancora in tempo, prima che la pizzeria chiuda.
 	 * @return OpeningPossibilities: controlla lo stato della pizzeria. */
-	public static OpeningPossibilities checkTimeOrder(Pizzeria pizzeria) {
+	public static OpeningPossibilities checkTimeOrder(Date openToday, Date closeToday) {
 		int nowMin = getNowMinutes();
-		int openMin = getMinutes(pizzeria.getOpeningToday());
-		int closeMin = getMinutes(pizzeria.getClosingToday());
+		int openMin = getMinutes(openToday);
+		int closeMin = getMinutes(closeToday);
 		if(closeMin <= nowMin || openMin == closeMin)
 			return OpeningPossibilities.CLOSE;
 		if(closeMin - nowMin >= 20)

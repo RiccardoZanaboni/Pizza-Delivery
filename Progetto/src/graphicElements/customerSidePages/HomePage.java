@@ -110,7 +110,7 @@ public class HomePage {
 	/** @return il bottone per la creazione di un nuovo ordine. */
 	private Button createNewOrderButton(Pizzeria pizzeria, Stage window, Customer customer){
 	    Button button =new Button("Nuovo ordine");
-        OpeningPossibilities checkOpen = TimeServices.checkTimeOrder(pizzeria);
+        OpeningPossibilities checkOpen = TimeServices.checkTimeOrder(pizzeria.getOpeningToday(), pizzeria.getClosingToday());
         button.setOnAction(e -> {
             pizzeria.updatePizzeriaToday();
             switch (checkOpen) {
@@ -148,7 +148,7 @@ public class HomePage {
         button.prefWidthProperty().bind(window.widthProperty());
         button.prefHeightProperty().bind(window.heightProperty());
         button.setOnAction(event -> {
-            Order last = PizzeriaServices.customerLastOrder(customer,pizzeria);
+            Order last = PizzeriaServices.customerLastOrder(customer,pizzeria.getOrders());
             if(last != null) {
                 LastOrderPage lastOrderPage = new LastOrderPage();
                 lastOrderPage.display(window, last, pizzeria, customer);

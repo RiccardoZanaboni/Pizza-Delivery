@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class CustomerDB {
 
-    /** Aggiunge un utente al database, riempiendo i tre campi obbligatori (user, password, mail). */ // FIXME: 19/07/2019
+    /** Aggiunge un utente al database, riempiendo i tre campi obbligatori (user, password, mail). */
     public static void putCustomer(String nome, String password, String mailAddress){
         try {
             Database.insertStatement("insert into sql2298759.Users values ('" + nome + "', '" + password +  "', '" + mailAddress + "', '', '', '') ");
@@ -62,9 +62,8 @@ public class CustomerDB {
         return Database.insertStatement("update sql2298759.Users set Name = '" + name + "', MailAddress = '" + mail +"', Surname = '" + surname + "', Address = '" + address + "' where User = '" + username + "' ");
     }
 
-    /** Controlla che l'indirizzo e-mail inserito sia effettivamente presente nella tabella degli utenti.
-     * @return true se l'indirizzo mail è associato ad un Customer nel database. */
-    public static boolean checkMail(String mail){
-        return (getInfoCustomerFromMailAddress(mail,1) != null);
-    }
+	/** @return true se l'indirizzo e-mail inserito risulta effettivamente presente nella tabella degli utenti. */
+	public static boolean checkMail(String mail){
+		return (getInfoCustomerFromMailAddress(mail,1) != null);
+	}
 }
