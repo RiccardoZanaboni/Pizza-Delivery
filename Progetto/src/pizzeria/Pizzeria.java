@@ -210,6 +210,37 @@ public class Pizzeria {
 			aFreeDeliveryMan(d.getHours(), d.getMinutes()).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
 	}
 
+	/** Restituisce tutti gli orari in cui la pizzeria potrebbe garantire la consegna di "tot" pizze.
+	 * Richiama altri metodi di questa classe, per gestire ogni eventualità. */
+	public ArrayList<String> availableTimes(int tot){
+		ArrayList<String> availables = new ArrayList<>();
+		int now = TimeServices.getNowMinutes();
+		int restaAperta = TimeServices.calculateOpeningMinutesPizzeria(this.getOpeningToday(), this.getClosingToday());
+		int esclusiIniziali = TimeServices.calculateStartIndex(this.getAvailablePlaces(), this.getOpeningToday(), now, tot);     /* primo orario da visualizzare (in minuti) */
+
+		for(int i = esclusiIniziali; i < restaAperta; i++) {    /* considera i tempi minimi di preparazione e consegna */
+			if(i % 5 == 0) {
+				if (this.getOvens()[i / 5].getAvailablePlaces() + this.getOvens()[(i / 5) - 1].getAvailablePlaces() >= tot) {
+					for (DeliveryMan a : this.getDeliveryMen()) {
+						if (a.getDeliveryManTimes()[i / 10].isFree()) {
+							int newMinutes = getMinutes(this.getOpeningToday()) + i;
+							int ora = newMinutes / 60;
+							int min = newMinutes % 60;
+							String nuovoOrario = TimeServices.timeStamp(ora,min);
+							availables.add(nuovoOrario + "  ");
+							break;
+						}
+					}
+				}
+			}
+		}
+		if(availables.size() > 0) {
+			return availables;
+		} else {
+			return null;
+		}
+	}
+
 	/** Verifica che sia possibile cuocere le pizze nell'infornata richiesta
 	 * e, al massimo, in quella appena precedente. */
 	public boolean checkTimeBoxOven(int ora, int minuti, int tot) {

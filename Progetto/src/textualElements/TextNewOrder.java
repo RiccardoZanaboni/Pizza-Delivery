@@ -112,7 +112,7 @@ class TextNewOrder {
 		System.out.print("\t");
 		try {
 			//noinspection ConstantConditions
-			for (String s : TimeServices.availableTimes(pizzeria,tot)) {
+			for (String s : pizzeria.availableTimes(tot)) {
 				System.out.print(s);
 				c++;
 				if (c % 18 == 0) System.out.print("\n\t");      // stampa 18 orari su ogni riga

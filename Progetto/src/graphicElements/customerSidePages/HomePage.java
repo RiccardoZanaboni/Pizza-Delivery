@@ -110,7 +110,7 @@ public class HomePage {
 
 	private Button creatMakeButton(Pizzeria pizzeria, Stage window,Customer customer){
 	    Button button =new Button("Nuovo ordine");
-        OpeningPossibilities checkOpen = TimeServices.checkTimeOrder(pizzeria);
+        OpeningPossibilities checkOpen = TimeServices.checkTimeOrder(pizzeria.getOpeningToday(), pizzeria.getClosingToday());
         button.setOnAction(e -> {
             pizzeria.updatePizzeriaToday();
             switch (checkOpen) {

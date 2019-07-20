@@ -16,8 +16,8 @@ public class PizzeriaTest {
     essere il doppio dell'altro, affinché il ragionamento utilizzato sia corretto. */
     @Test
     public void testFindTimeBoxOven_and_FindTimeBoxDeliveryman(){
-        assertEquals(12,pizzeria.findTimeBoxOven(15,0));
-        assertEquals(6, pizzeria.findTimeBoxDeliveryMan(15, 0));
+        assertEquals(180,pizzeria.findTimeBoxOven(15,0));
+        assertEquals(90, pizzeria.findTimeBoxDeliveryMan(15, 0));
    }
 
     /** Verifica che il DeliveryMan aggiunto alla pizzeria sia effettivamente reperibile per la consegna */
@@ -54,7 +54,7 @@ public class PizzeriaTest {
     /** Test che controlla l'apertura in base alla data di apertura e chiusura */
    @Test
     public void testCheckTimeOrder(){
-        assertEquals(OpeningPossibilities.OPEN, TimeServices.checkTimeOrder(pizzeria));
+        assertEquals(OpeningPossibilities.OPEN, TimeServices.checkTimeOrder(pizzeria.getOpeningToday(), pizzeria.getClosingToday()));
    }
 
    @Test

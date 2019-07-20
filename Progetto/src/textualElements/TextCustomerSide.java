@@ -27,7 +27,7 @@ public class TextCustomerSide {
 	/** Controlla, in base all'orario, cosa il cliente può effettivamente fare e lo comunica. */
 	public void whatDoYouWant(Customer customer, Pizzeria pizzeria) throws SQLException {
 		String risposta;
-		OpeningPossibilities isOpen = TimeServices.checkTimeOrder(pizzeria);
+		OpeningPossibilities isOpen = TimeServices.checkTimeOrder(pizzeria.getOpeningToday(), pizzeria.getClosingToday());
 		/* se la pizzeria è aperta */
 		if (isOpen == OpeningPossibilities.OPEN) {
 			System.out.println(whatDoYouWantPossibilities(true));
