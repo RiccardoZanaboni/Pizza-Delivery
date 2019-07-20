@@ -55,7 +55,7 @@ public class TextCustomerSide {
 		switch (risposta){
 			case "L":
 				/* Visualizzare l'ultimo ordine effettuato */
-				Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
+				Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria.getOrders());
 				if(last != null){
 					System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
 					System.out.println(TextCustomerSide.recapOrder(last));

@@ -57,7 +57,7 @@ public class TextualInterface {
 				String psw = scan.nextLine().toUpperCase();
 				String working1 = TextColorServices.colorSystemOut("\n\tAccedendo al database...\n", Color.GREENYELLOW, false, false);
 				System.out.print(working1);
-				switch(PizzeriaServices.checkLogin(wolf, user,psw)){
+				switch(PizzeriaServices.checkLogin(wolf.getUserPizzeria(),wolf.getPswPizzeria(), user,psw)){
 					case OK:
 						/* l'utente ha correttamente effettuato il login */
 						Customer c = new Customer(user);

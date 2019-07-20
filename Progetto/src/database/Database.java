@@ -60,7 +60,7 @@ public class Database {
 			rs = statement.executeQuery(query);
 		} catch (SQLException sqle){
 			String err = TextColorServices.colorSystemOut("\nErrore critico per SQL.\nIl programma viene terminato.\n",Color.RED,false,false);
-			criticalError(err); // FIXME: 19/07/2019
+			criticalError(err);
 		}
 		return rs;
 	}

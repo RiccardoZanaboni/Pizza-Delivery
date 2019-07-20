@@ -147,7 +147,7 @@ public class HomePage {
         button.prefWidthProperty().bind(window.widthProperty());
         button.prefHeightProperty().bind(window.heightProperty());
         button.setOnAction(event -> {
-            Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
+            Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria.getOrders());
             if(last != null) {
                 LastOrderPage lastOrderPage = new LastOrderPage();
                 lastOrderPage.display(window, last, pizzeria, customer);
@@ -155,5 +155,4 @@ public class HomePage {
         });
     return button;
     }
-
 }

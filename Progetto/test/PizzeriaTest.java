@@ -45,10 +45,10 @@ public class PizzeriaTest {
 
    @Test
     public void testCheckLogin(){
-        assertEquals(LoginPossibilities.OK,PizzeriaServices.checkLogin(pizzeria,"fetch","fetch"));
-        assertEquals(LoginPossibilities.PIZZERIA,PizzeriaServices.checkLogin(pizzeria,"PIZZERIA","PASSWORD"));
-        assertEquals(LoginPossibilities.NO,PizzeriaServices.checkLogin(pizzeria,"boh","password casuale"));
-        assertEquals(LoginPossibilities.NO,PizzeriaServices.checkLogin(pizzeria,"macchina","33"));
+        assertEquals(LoginPossibilities.OK,PizzeriaServices.checkLogin(pizzeria.getUserPizzeria(),pizzeria.getPswPizzeria(),"fetch","fetch"));
+        assertEquals(LoginPossibilities.PIZZERIA,PizzeriaServices.checkLogin(pizzeria.getUserPizzeria(),pizzeria.getPswPizzeria(),"PIZZERIA","PASSWORD"));
+        assertEquals(LoginPossibilities.NO,PizzeriaServices.checkLogin(pizzeria.getUserPizzeria(),pizzeria.getPswPizzeria(),"boh","password casuale"));
+        assertEquals(LoginPossibilities.NO,PizzeriaServices.checkLogin(pizzeria.getUserPizzeria(),pizzeria.getPswPizzeria(),"macchina","33"));
     }
 
     /** Test che controlla l'apertura in base alla data di apertura e chiusura */

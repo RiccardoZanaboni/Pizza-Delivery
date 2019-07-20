@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class CustomerDB {
 
-    /** Aggiunge un utente al database. */ // FIXME: 19/07/2019 
+    /** Aggiunge un utente al database. */
     public static void putCustomer(String nome, String password, String mailAddress){
         try {
             Database.insertStatement("insert into sql2298759.Users values ('" + nome + "', '" + password +  "', '" + mailAddress + "', '', '', '') ");	// inserisce account nel DB

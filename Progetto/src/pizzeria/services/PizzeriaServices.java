@@ -8,7 +8,6 @@ import graphicAlerts.GenericAlert;
 import javafx.scene.paint.Color;
 import pizzeria.Customer;
 import pizzeria.Order;
-import pizzeria.Pizzeria;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,7 +51,7 @@ public class PizzeriaServices {
 	}
 
 	/** Effettua un ordinamento degli ordini, in ordine cronologico. */
-	public static HashMap<String, Order> sortOrders(HashMap<String, Order> orders) {
+	public static HashMap<String, Order> sortOrders(HashMap<String, Order> orders) { // FIXME: 20/07/2019 
 		Set<Map.Entry<String, Order>> entries = orders.entrySet();
 		Comparator<Map.Entry<String, Order>> valueComparator = (o1, o2) -> {
 			Order v1 = o1.getValue();
@@ -72,13 +71,13 @@ public class PizzeriaServices {
 	}
 
 	/** Calcola l'ordine più recente effettuato dal cliente. */
-	public static Order CustomerLastOrder(Customer customer, Pizzeria pizzeria) {
+	public static Order CustomerLastOrder(Customer customer, HashMap<String,Order> orderP) { // FIXME: 20/07/2019
 		Order last = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date;
 		try {
 			date = sdf.parse("1970-01-01 00:00:00");
-			for (Order order : pizzeria.getOrders().values()) {
+			for (Order order : orderP.values()) {
 				if (order.getCustomer().getUsername().equals(customer.getUsername())) {
 					if (order.getTime().getTime() > date.getTime()) {
 						last = order;
@@ -117,9 +116,9 @@ public class PizzeriaServices {
 
 	/** Controlla il corretto inserimento dei dati per effettuare il login.
 	 * @return LoginPossibilities: dà un riscontro sulla possibilità di effettuare il login. */
-	public static LoginPossibilities checkLogin(Pizzeria pizzeria, String user, String psw) {
+	public static LoginPossibilities checkLogin(String userP, String pswP, String user, String psw) {
 		try {
-			if (user.equals(pizzeria.getUserPizzeria()) && psw.equals(pizzeria.getPswPizzeria())) {
+			if (user.equals(userP) && psw.equals(pswP)) {
 				/* se è la pizzeria, allora accede come tale */
 				return LoginPossibilities.PIZZERIA;
 			} else if (CustomerDB.getCustomer(user, psw)) {
