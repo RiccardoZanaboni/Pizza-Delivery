@@ -1,6 +1,6 @@
 package pizzeria;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings("ALL")
 public class TimeBoxDeliveryMan {
     private boolean isFree;
     private int orders;

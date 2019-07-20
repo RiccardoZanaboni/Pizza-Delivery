@@ -64,8 +64,8 @@ class TextNewOrder {
 		}
 	}
 
-	/** Esegue i controlli dovuti sulla stringa relativa all'orario e,
-	 * in caso di successo, restituisce il Date "orarioScelto". */
+	/** Esegue i controlli dovuti sulla stringa relativa all'orario e, in caso di successo,
+	 * @return l'orario in formato Date. */
 	private Date orderTime(Order order, int tot, Pizzeria pizzeria) throws RestartOrderExc {
 		possibleTimes(pizzeria,tot);
 		String orarioScelto = scan.nextLine();
@@ -112,8 +112,8 @@ class TextNewOrder {
 		System.out.print("\t");
 		try {
 			//noinspection ConstantConditions
-			for (String s : TimeServices.availableTimes(pizzeria,tot)) {
-				System.out.print(s);
+			for (String time : TimeServices.availableTimes(pizzeria,tot)) {
+				System.out.print(time);
 				c++;
 				if (c % 18 == 0) System.out.print("\n\t");      // stampa 18 orari su ogni riga
 			}
@@ -126,8 +126,8 @@ class TextNewOrder {
 		}
 	}
 
-	/** Assicura che all'orario attuale della richiesta
-	 * sia ancora effettivamente possibile portare a termine un ordine */
+	/** @return true se all'orario attuale della richiesta
+	 * è ancora effettivamente possibile portare a termine un ordine */
 	private boolean checkNotTooLate(Pizzeria pizzeria, Date orarioScelto, int tot) {
 		int chosenTime = TimeServices.getMinutes(orarioScelto);
 		int nowTime = TimeServices.getNowMinutes();
@@ -139,7 +139,7 @@ class TextNewOrder {
 	}
 
 	/**
-	 * Restituisce il nome della pizza desiderata, dopo avere effettuato i dovuti controlli:
+	 * @return il nome della pizza desiderata, dopo avere effettuato i dovuti controlli:
 	 * - che non sia stato inserito "OK" oppure "F";
 	 * - che la stringa inserita corrisponda ad una pizza valida.
 	 * */
@@ -176,7 +176,7 @@ class TextNewOrder {
 		return nomePizza;
 	}
 
-	/** Ritorna il numero desiderato di pizze del tipo richiesto.
+	/** @return il numero desiderato di pizze del tipo richiesto.
 	 * Il numero di pizze complessivamente ordinate non deve superare
 	 * il valore massimo consentito dalla pizzeria. */
 	private int howManySpecificPizza(Pizzeria pizzeria, Order order, String nomePizza) {
@@ -264,7 +264,8 @@ class TextNewOrder {
 		return true;
 	}
 
-	/** Effettua tutte le modifiche richieste, aggiornando il prezzo della pizza richiesta. */
+	/** Effettua tutte le modifiche richieste, aggiornando il prezzo della pizza richiesta.
+	 * @return la pizza così modificata. */
 	private Pizza addAndRmvToppingsText(Pizza pizza, String aggiunte, String rimozioni, double prezzoSuppl) {
 		HashMap<String, String> ingr = new HashMap<>(pizza.getToppings());
 		Pizza p = new Pizza(pizza.getName(false), ingr, pizza.getPrice());

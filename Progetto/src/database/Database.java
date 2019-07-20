@@ -9,18 +9,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static database.CustomerDB.getInfoCustomerFromMailAddress;
-
 /** ATTENZIONE: Per poter utilizzare il Database, è necessario estrarre il contenuto di "ExternalLibraries.zip"
- * (tra i file del progetto) in una vostra cartella locale;
- * nel contenuto vi è il file: mysql-connector-java-5.1.42-bin.jar.
- * A questo punto, su Intellij, cliccare in alto File/Project_Structure/Libraries/+/
+ * (tra i file del progetto) in una cartella locale; nel contenuto vi è il file: mysql-connector-java-5.1.42-bin.jar.
+ * A questo punto, su Intellij, cliccare in alto: File/Project_Structure/Libraries/+/
  * [qui seleziono il percorso del file].
  * */
 public class Database {
 	private static Connection con;
 
-	/** Apre una connessione con il Database (se c'è connessione). */
+	/** Apre una connessione con il Database (se connessione disponibile). */
 	public static void openDatabase() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -52,7 +49,8 @@ public class Database {
 		}
 	}
 
-	/** Esegue la query di recupero dati dal DB. */
+	/** Esegue la query di recupero dati dal DB.
+	 * @return l'insieme di tuple selezionate tramite la query. */
 	static ResultSet getStatement(String query){
 		ResultSet rs = null;
 		try {
@@ -65,7 +63,7 @@ public class Database {
 		return rs;
 	}
 
-	/** Aggiunge al DB un nuovo ordine, costituito al momento soltanto dal codice e una data fittizia. */
+	/** Aggiunge al DB un nuovo ordine, costituito al momento soltanto dal codice e da una data fittizia. */
 	public static void addNewVoidOrderToDB(Order order) {
 		try {
 			DateFormat dateFormatYMD = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -83,11 +81,5 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-
-	/** Controlla che l'indirizzo e-amil inserito sia effettivamente nella tabella degli utenti. */
-	public static boolean checkMail(String mail){
-		return (getInfoCustomerFromMailAddress(mail,1) != null);
 	}
 }

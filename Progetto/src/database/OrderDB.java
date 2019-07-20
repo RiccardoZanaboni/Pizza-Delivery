@@ -35,7 +35,7 @@ public class OrderDB {
         Database.insertStatement("insert into sql2298759.OrderedPizza values ('" + order.getOrderCode() + "', '" + p.getName() + "', '" + p.getDescription() + "', '" + p.getPrice() + "'); ");
     }
 
-    /** Recupera dal DB tutti gli ordini relativi al giorno corrente. */
+    /** @return tutti gli ordini relativi al giorno corrente, recuperati dal DB. */
     public static HashMap<String, Order> getOrders(Pizzeria pizzeria, HashMap<String, Order> orders) throws SQLException {
         Date today=new Date();
         ResultSet rs = Database.getStatement("SELECT * FROM sql2298759.Orders left JOIN sql2298759.Users ON Orders.username = Users.User;");
@@ -79,12 +79,12 @@ public class OrderDB {
         return PizzeriaServices.sortOrders(orders);
     }
 
-    /** Recupera dal DB tutte le pizze presenti in un determinato ordine. */
+    /** @return tutte le pizze presenti in un determinato ordine. */
     private static ResultSet getPizzasByOrderId(String orderID) {
         return Database.getStatement("select pizza, ingredienti, prezzo from sql2298759.Orders natural join sql2298759.OrderedPizza where orderID = '" + orderID + "'");
     }
 
-    /** Conta gli ordini presenti nel DB, per conoscere il prossimo OrderCode. */
+    /** Conta gli ordini presenti nel DB, utile per conoscere il prossimo OrderCode. */
     public static int countOrdersDB() {
         String requestSql = "select count(*) from sql2298759.Orders";
         int num = -1;

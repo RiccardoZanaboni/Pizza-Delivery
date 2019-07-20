@@ -1,6 +1,5 @@
 package graphicElements.customerSidePages.newOrder;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import database.CustomerDB;
 import graphicAlerts.GenericAlert;
 import graphicElements.customerSidePages.HomePage;
@@ -41,7 +40,7 @@ public class OrderPage2 {
 	 * per la visualizzazione della lista di orari disponibili vi è uno studio degli ordini già effettuati
 	 * da altri utenti, attraverso il DB, in relazione con le disponibilità di forni e fattorini
 	 * da parte della pizzeria.
-	 * Viene visualizzato un messaggio di errore se uno qualunque dei tre campi richiesti non venga riempito.
+	 * Viene visualizzato un messaggio di errore in caso uno qualunque dei tre campi richiesti non venisse riempito.
 	 * Attraverso i bottoni in fondo pagina è possibile spostarsi alla OrderPage3 (Avanti) oppure nuovamente
 	 * alla OrderPage1, per modificare le pizze richieste (Indietro).
 	 * */
@@ -120,7 +119,9 @@ public class OrderPage2 {
         window.setScene(scene3);
 	}
 
-	private Button createConfirmButton(Order order, TextField surnameInput, TextField addressInput, ChoiceBox<String> choiceBox, Stage window, Customer customer, Pizzeria pizzeria){
+	/** @return il bottone di conferma inserimento dati. */
+	private Button createConfirmButton(Order order, TextField surnameInput, TextField addressInput,
+									   ChoiceBox<String> choiceBox, Stage window, Customer customer, Pizzeria pizzeria){
         Button button = new Button("Prosegui →");
         button.setId("confirmButton");
         button.setMinHeight(35);
@@ -139,7 +140,9 @@ public class OrderPage2 {
         return button;
 	}
 
-	private Button createBackButton(Order order, TextField surnameInput, TextField addressInput, Stage window,Customer customer, Pizzeria pizzeria){
+	/** @return il bottone per tornare alla pagina OrderPage1. */
+	private Button createBackButton(Order order, TextField surnameInput, TextField addressInput,
+									Stage window,Customer customer, Pizzeria pizzeria){
         Button button = new Button("← Torna indietro");
         button.setMinHeight(35);
         button.setId("backButton");
@@ -152,11 +155,13 @@ public class OrderPage2 {
         return button;
     }
 
-    private HBox createHBox (Order order,TextField textField ,String textLabel, String idLabel, String fieldText, Customer customer, int index){
+    /** @return gli HBoxes per l'inserimento dei dati per la consegna (cognome, indirizzo) */
+    private HBox createHBox (Order order,TextField textField ,String textLabel, String idLabel,
+							 String fieldText, Customer customer, int index){
         Label label = new Label(textLabel);
         label.setId(idLabel);
         textField.setPromptText(fieldText);
-        String string=null;
+        String string = null;
         switch (fieldText) {
             case ("Your Surname"):
                 if (order.getName() != null) {
@@ -179,7 +184,7 @@ public class OrderPage2 {
     return hBox;
 	}
 
-	/** Verifica che tutti i campi siano stati riempiti. */
+	/** @return true se tutti i campi sono stati riempiti. */
 	private boolean checkInsert(String name, String address, Date time) {
 		if(name.equals("")) {
 			GenericAlert.display("Attenzione: non è stato inserito il nome!");
@@ -196,7 +201,7 @@ public class OrderPage2 {
 		else return true;
 	}
 
-	/** Legge e restituisce l'orario selezionato. */
+	/** @return l'orario selezionato tramite ChoiceBox. */
 	private Date getChoice(ChoiceBox<String> choiceBox) {
 		Date choiceTime;
 		String orario = choiceBox.getValue();
@@ -214,7 +219,7 @@ public class OrderPage2 {
 		return choiceTime;
 	}
 
-	/** Legge e restituisce l'informazione inserita */
+	/** @return l'informazione inserita richiesta. */
 	private String getInfo(TextField nInput) {
     	return nInput.getText();
 	}

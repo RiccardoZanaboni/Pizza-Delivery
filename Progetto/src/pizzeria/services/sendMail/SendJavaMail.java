@@ -18,17 +18,17 @@ import java.util.Properties;
  * tramite password in SMTPAuthenticator, ad un destinatario alla volta.
  *
  * ATTENZIONE: Per poter inviare e-mail, è necessario estrarre il contenuto di "ExternalLibraries.zip"
- * (tra i file del progetto) in una vostra cartella locale;
+ * (tra i file del progetto) in una cartella locale;
  * nel contenuto vi sono i due file: activation.jar, mail.jar.
  * A questo punto, su Intellij, cliccare in alto File/Project_Structure/Libraries/+/
  * [qui seleziono il percorso dei due file, separatamente].
- *
  * */
 
 public class SendJavaMail {
 	private Properties props = setProperties();
 	private Authenticator auth = new SMTPAuthenticator("pizzeria.wolf@gmail.com", "password.01");
 
+	/** @return le proprietà richieste per l'utilizzo del servizio. */
 	private Properties setProperties(){
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -41,6 +41,8 @@ public class SendJavaMail {
 		return props;
 	}
 
+	/** Invia una e-mail come richiesto.
+	 * @return true se l'invio è avvenuto con successo. */
 	public boolean sendMail(String dest, String subject, String txt) {
 		try {
 			Session session = Session.getInstance(props,auth);

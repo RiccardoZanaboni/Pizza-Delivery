@@ -17,16 +17,17 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ModifyBox {
-    private static boolean answer = false;  /* answer = true se la pizza ha effettivamente subìto modifiche */
+    private static boolean isModified = false;  /* isModified = true se la pizza ha effettivamente subìto modifiche */
     private Stage window = new Stage();
 
 
     /** In un nuovo Stage viene visualizzato il Box in cui selezionare o deselezionare
      * gli ingredienti per la pizza desiderata.
-     * Questa nuova finestra compare se viene premuto un qualunque bottone "modifica" in OrderPage1.
+     * Questa nuova finestra appare se viene premuto un qualunque bottone "modifica" in OrderPage1.
      * Blocca l'utilizzo della pagina OrderPage1, fino alla pressione del confirmButton.
      * E' possibile confermare l'aggiunta di una "pizza modificata" solo se sono state
      * effettivamente apportate modifiche, altrimenti viene visualizzato un messaggio di errore.
+     * Se non si desidera apportare modifiche, è sufficiente chiudere la finestra.
      * */
     public boolean display(Order order, Pizzeria pizzeria, String pizzaName) {
 
@@ -64,9 +65,10 @@ public class ModifyBox {
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
-        return answer;
+        return isModified;
     }
 
+    /** @return il bottone per confermare la modifica. */
     private Button createConfirmButton(ArrayList<CheckBoxTopping> checkBoxes, Pizza nuovaPizza, Pizza pizzaMenu , String pizzaName, Order order){
         Button button = new Button("Conferma le modifiche");
         button.setOnAction(e -> {
@@ -79,7 +81,7 @@ public class ModifyBox {
                     nuovaPizza.setName(pizzaName + "*");    /* aggiungo un asterisco al nome della pizza modificata */
                     order.addPizza(nuovaPizza, 1);
                     nuovaPizza.setCount(true);
-                    answer = true;
+                    isModified = true;
                     window.close();
                 } else {
                     GenericAlert.display("Attenzione: nessuna modifica effettuata!");
@@ -88,7 +90,7 @@ public class ModifyBox {
         });
         return button;
     }
-    /** Riempie il GridPane con tutti gli elementi necessari */
+    /** @return il GridPane con tutti gli elementi necessari */
     private GridPane setGridPaneContraints(ArrayList<Label> ingrLabels, ArrayList<HBox> hBoxes) {
         GridPane gridPane = new GridPane();
         for (int i=0; i<ingrLabels.size(); i++) {
@@ -135,7 +137,7 @@ public class ModifyBox {
         }
     }
 
-    /** Controlla che sia stato selezionato almeno un ingrediente per la pizza modificata */
+    /** @return true se è stato selezionato almeno un ingrediente per la pizza modificata */
     private static boolean checkCheckBoxTopping(ArrayList<CheckBoxTopping> checkBoxToppings) {
         for (CheckBoxTopping checkBoxTopping : checkBoxToppings) {
             if (checkBoxTopping.isPresent()) {
@@ -145,8 +147,9 @@ public class ModifyBox {
         return false;
     }
 
-	public static void setAnswer() {
-		ModifyBox.answer = !ModifyBox.answer;
+    /** Setta la modifica come "effettuata". */
+	public static void setModified() {
+		isModified = !isModified;
 	}
 }
 

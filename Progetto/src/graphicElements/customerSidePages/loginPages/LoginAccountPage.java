@@ -18,6 +18,7 @@ import pizzeria.Pizzeria;
 import pizzeria.services.PizzeriaServices;
 
 public class LoginAccountPage {
+
 	/** Lo Stage ospita la pagina di Login.
 	 * E' possibile inserire direttamente i dati per l'accesso, oppure
 	 * passare alle pagine per richiedere la creazione di un nuovo account
@@ -26,6 +27,7 @@ public class LoginAccountPage {
 	public void display(Stage window, Pizzeria pizzeria) {
 		window.setTitle("Wolf of Pizza - Login");
 
+		/* Campo Username */
 		Label username = new Label(" Username:");
 		TextField nameInput = new TextField();
 		nameInput.setMinWidth(250);
@@ -35,6 +37,7 @@ public class LoginAccountPage {
 		usernameBox.getChildren().addAll(username, nameInput);
 		usernameBox.setAlignment(Pos.CENTER);
 
+		/* Campo Password */
 		Label password = new Label(" Password: ");
 		PasswordField passwordInput = new PasswordField();
 		passwordInput.setMinWidth(250);
@@ -44,9 +47,11 @@ public class LoginAccountPage {
 		passwordBox.getChildren().addAll(password, passwordInput);
 		passwordBox.setAlignment(Pos.CENTER);
 
+		/* Etichetta per informazioni */
 		Label insertErrorLabel = new Label("");
 		insertErrorLabel.setId("errorLabel");
 
+		/* Bottone di login */
 		Button loginButton = new Button("Login");
 		loginButton.setMinSize(100, 50);
 		loginButton.setOnAction(e-> {
@@ -69,6 +74,7 @@ public class LoginAccountPage {
 				}
 		});
 
+		/* Bottone per nuova registrazione */
 		Button signUpButton = new Button("Nuovo Account");
 		signUpButton.setMinSize(100, 50);
 		signUpButton.setOnAction(e-> {
@@ -76,6 +82,7 @@ public class LoginAccountPage {
 			newAccountPage.display(window,pizzeria);
 		});
 
+		/* Bottone per recuperare dati utente */
 		Button recoverPswButton = new Button("Recupera Password");
 		recoverPswButton.setMinSize(100, 50);
 		recoverPswButton.setOnAction(e-> {
@@ -90,6 +97,7 @@ public class LoginAccountPage {
 		vBox.getChildren().addAll(insertErrorLabel, buttonBox);
 		vBox.setAlignment(Pos.CENTER);
 
+		/* Layout */
 		VBox layout = new VBox(20);
 		layout.setAlignment(Pos.CENTER);
 		layout.getChildren().addAll(usernameBox, passwordBox, vBox);

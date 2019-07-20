@@ -1,6 +1,6 @@
 package graphicElements.pizzeriaSidePages;
 
-import database.Database;
+import database.CustomerDB;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,6 +16,8 @@ import pizzeria.Pizzeria;
 import pizzeria.services.sendMail.SendJavaMail;
 
 public class SendMailPage {
+
+	/** Consente alla Pizzeria di inviare una mail ad un qualsiasi destinatario, tramite il proprio account. */
     public void display(Stage window, Pizzeria pizzeria) {
         window.setTitle("Wolf of Pizza - Invia Email");
 
@@ -57,6 +59,7 @@ public class SendMailPage {
         window.show();
     }
 
+    /** @return il bottone per confermare l'invio della mail. */
     private Button createInvioButton(Label insertErrorLabel, TextField mail, TextField oggettoF, TextArea textArea) {
         Button invioButton = new Button("Invia");
         invioButton.setMinSize(100, 30);
@@ -64,7 +67,7 @@ public class SendMailPage {
             insertErrorLabel.setText("");
             String mailAddress =  mail.getText();
             SendJavaMail newMail = new SendJavaMail();
-            if(Database.checkMail(mailAddress)) {
+            if(CustomerDB.checkMail(mailAddress)) {
                 insertErrorLabel.setTextFill(Color.DARKRED);
                 insertErrorLabel.setText("E-mail inviata");
                 newMail.sendMail(mail.getText(),oggettoF.getText(),textArea.getText());
@@ -76,6 +79,7 @@ public class SendMailPage {
         return invioButton;
     }
 
+    /** @return il bottone per l'annullamento dell'operazione. Torna alla PizzeriaHomePage. */
     private Button createBackButton(Stage window, Pizzeria pizzeria){
         Button backButton = new Button("← Torna indietro");
         backButton.setMinSize(100, 30);
@@ -86,6 +90,7 @@ public class SendMailPage {
         return backButton;
     }
 
+    /** @return i box per l'inserimento di destinatario e oggetto della mail. */
     private HBox createHboxField(String textLabel,String text, TextField textField){
         Label label = new Label(textLabel);
         textField.setMinWidth(250);
@@ -96,7 +101,8 @@ public class SendMailPage {
         return box;
     }
 
-    private HBox createHboxArea(TextArea textArea){
+	/** @return il box per l'inserimento diel testo della mail. */
+	private HBox createHboxArea(TextArea textArea){
         Label label = new Label("Testo e-mail:  ");
         textArea.setMinWidth(250);
         textArea.setPrefSize(300,100);
@@ -106,6 +112,4 @@ public class SendMailPage {
         box.setAlignment(Pos.CENTER);
         return box;
     }
-
-
 }

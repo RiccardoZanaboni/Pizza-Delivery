@@ -10,7 +10,10 @@ import java.util.Iterator;
 public class ToppingDB {
 
 
-	/** Consente alla pizzeria di aggiungere un topping a quelli salvati sul Database. */
+	/** Consente alla pizzeria di aggiungere un topping a quelli salvati sul Database.
+	 * Tutto il controllo è fatto per verificare che il topping non fosse già presente nel DB
+	 * (confrontando i toppings prima e dopo l'inserimento del nuovo prodotto, verifico
+	 * che il DB sia effettivamente stato modificato). */
 	public static boolean putTopping(String nome){
 		try {
 			ResultSet rs1 = Database.getStatement("select * from sql2298759.Toppings");
@@ -57,7 +60,7 @@ public class ToppingDB {
 		return false;
 	}
 
-	/** Consente alla pizzeria di recuperare i toppings salvati sul Database. */
+	/** @return i toppings salvati sul Database. */
 	public static HashMap<String, String> getToppings(HashMap<String, String> ingredienti)  throws SQLException{
 		ResultSet rs = Database.getStatement("select * from sql2298759.Toppings"); // FIXME: 19/07/2019
 		while (rs.next()) {

@@ -24,7 +24,7 @@ public class DeliveryMan {
     }
 
     /** Assegna una consegna al fattorino in un certo orario. */
-    public  void assignDelivery(int i) {
+    public void assignDelivery(int i) {
         this.deliveryManTimes[i].insertOrder();
     }
 

@@ -13,19 +13,19 @@ import java.util.*;
 @SuppressWarnings("deprecation")
 public class TimeServices {
 
-	/** Restituisce i minuti passati dalla mezzanotte all'orario richiesto. */
+	/** @return i minuti passati dalla mezzanotte all'orario richiesto. */
 	public static int getMinutes(int ora, int minuto){
 		return 60*ora + minuto;
 	}
 
-	/** Restituisce i minuti passati dalla mezzanotte all'orario richiesto di "date". */
+	/** @return i minuti passati dalla mezzanotte all'orario richiesto di "date". */
 	public static int getMinutes(Date date) {
 		int ora = date.getHours();
 		int minuto = date.getMinutes();
 		return getMinutes(ora, minuto);
 	}
 
-	/** Restituisce i minuti passati dalla mezzanotte all'orario attuale di oggi. */
+	/** @return i minuti passati dalla mezzanotte all'orario attuale di oggi. */
 	public static int getNowMinutes() {
 		Calendar cal = new GregorianCalendar();
 		int nowHour = cal.get(Calendar.HOUR_OF_DAY);
@@ -33,7 +33,8 @@ public class TimeServices {
 		return getMinutes(nowHour, nowMinute);
 	}
 
-	/** Restituisce tutti gli orari in cui la pizzeria potrebbe garantire la consegna di "tot" pizze.
+	/** @return tutti gli orari in cui la pizzeria potrebbe garantire la consegna di
+	 * @param tot pizze.
 	 * Richiama altri metodi di questa classe, per gestire ogni eventualità. */
 	public static ArrayList<String> availableTimes(Pizzeria pizzeria, int tot){
 		ArrayList<String> availables = new ArrayList<>();
@@ -64,14 +65,15 @@ public class TimeServices {
 		}
 	}
 
-	/** Calcola i minuti totali in cui la pizzeria rimane aperta oggi. */
+	/** @return i minuti totali in cui la pizzeria rimane aperta oggi. */
 	private static int calculateOpeningMinutesPizzeria(Pizzeria pizzeria){
 		int openMinutes = getMinutes(pizzeria.getOpeningToday());
 		int closeMinutes = getMinutes(pizzeria.getClosingToday());
 		return closeMinutes - openMinutes - 10;
 	}
 
-	/** esegue i controlli necessari per determinare il primo orario disponibile da restituire. */
+	/** @return il primo orario disponibile per la consegna di
+	 * @param tot pizze, dopo avere effettuato i controlli necessari. */
 	private static int calculateStartIndex(Pizzeria pizzeria, int now, int tot) {
 		int esclusiIniziali = 0;
 		int giaPassati;      /* minuti attualmente già passati dall'apertura */
@@ -88,7 +90,7 @@ public class TimeServices {
 		return esclusiIniziali + tempiFissi;
 	}
 
-	/** La stringa, corrispondente ad un orario valido, viene appositamente
+	/** @return la stringa, corrispondente ad un orario valido, appositamente
 	 * trasformata in Date (viene considerato il giorno corrente). */
 	public static Date stringToDate(String sDate1) {
 		Date d;
@@ -106,7 +108,7 @@ public class TimeServices {
 		return d;
 	}
 
-	/** Controlla che la String inserita corrisponda ad un orario valido, nel formato [HH:mm]. */
+	/** @return true se la String inserita corrisponde ad un orario valido, nel formato [HH:mm]. */
 	public static boolean checkValidTime(String sDate1) {
 		try {
 			StringTokenizer st = new StringTokenizer(sDate1, ":");
@@ -127,7 +129,7 @@ public class TimeServices {
 		return true;
 	}
 
-	/** Restituisce l'orario in formato [HH:mm]. */
+	/** @return l'orario in formato [HH:mm]. */
 	public static String timeStamp(int ora, int min) {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		Date date = new Date();
@@ -136,7 +138,7 @@ public class TimeServices {
 		return sdf.format(date);
 	}
 
-	/** Restituisce una stringa con un Date in formato [dd/MM/yyyy HH:mm] */
+	/** @return una stringa con un Date in formato [dd/MM/yyyy HH:mm] */
 	public static String dateTimeStamp(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String dataStr = sdf.format(date);

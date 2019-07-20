@@ -19,7 +19,7 @@ import pizzeria.*;
 
 import java.util.HashMap;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings("ALL")
 public class PizzeriaModifyMenuPage {
 
 	/**
@@ -136,6 +136,7 @@ public class PizzeriaModifyMenuPage {
         window.show();
     }
 
+    /** @return la lista delle pizze presenti sul Menu. */
 	private ObservableList<Pizza> getMenu(Pizzeria pizzeria){
         ObservableList<Pizza> pizze = FXCollections.observableArrayList();
         pizze.addAll(pizzeria.getMenu().values());
@@ -185,7 +186,6 @@ public class PizzeriaModifyMenuPage {
     }
 
     /** Gestisce la richiesta di eliminare una pizza */
-    @SuppressWarnings("unchecked")
 	private void deletePizzaButtonClicked(Pizzeria pizzeria, TableView table) {
         ObservableList<Pizza> pizzaSelected, allPizzas;
         allPizzas = table.getItems();
@@ -202,7 +202,6 @@ public class PizzeriaModifyMenuPage {
     }
 
     /** Gestisce la richiesta di aggiungere un nuovo topping */
-	@SuppressWarnings("unchecked")
 	private void addToppingButtonClicked(Pizzeria pizzeria, TextField newToppingInput, ListView toppingsList) {
 		String topping = newToppingInput.getText().toUpperCase();
 		if (topping.length() == 0) {
@@ -218,7 +217,6 @@ public class PizzeriaModifyMenuPage {
 	}
 
 	/** Gestisce la richiesta di eliminare un topping */
-	@SuppressWarnings("unchecked")
 	private void deleteToppingButtonClicked(Pizzeria pizzeria, ListView table) {
 		ObservableList<String> toppingsSelected, allToppings;
 		allToppings = table.getItems();

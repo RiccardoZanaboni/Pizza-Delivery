@@ -8,7 +8,7 @@ import static javafx.scene.paint.Color.RED;
  * */
 public class TextColorServices {
 
-	/** key-String a cui aggiungere il testo della stringa:
+	/** @return una key-String a cui aggiungere il testo della stringa:
 	 * consente di cambiare colore al background del testo. */
 	private static String setBackgroundColorString(Color color){
 		String background = "";
@@ -23,8 +23,8 @@ public class TextColorServices {
 		return background;
 	}
 
-	/** key-String che consente di fornire caratteristiche aggiuntive
-	 * (colore, bold, underlined) alla stringa richiesta. */
+	/** @return una key-String che consente di fornire caratteristiche aggiuntive
+	 * (color, bold, underlined) alla stringa richiesta. */
 	public static String colorSystemOut(String text, Color color, boolean bold, boolean underlined) {
 		StringBuilder cString = new StringBuilder("\033[");
 		if(color == Color.WHITE) cString.append("30");
@@ -72,7 +72,7 @@ public class TextColorServices {
 				"\n"+tab+v+colorTab+c+colorTab+v+"\n"+tab+v+colorTab+d+colorTab+v+"\n"+tab+v+colorTab+e+colorTab+v+"\n"+tab+l2);
 	}
 
-	/** Restituisce una linea, utile per la separazione di oggetti. */
+	/** @return una linea, utile per la separazione di oggetti. */
 	public static String getLine(){
 		return "\n---------------------------------------------------------------------------------------------------\n";
 	}

@@ -20,14 +20,12 @@ public class ButtonModPizza extends Button {
             if(order.getNumPizze() < 16) {
                 ModifyBox box = new ModifyBox();
                 if (box.display(order, pizzeria,pizza)) {
-                    ModifyBox.setAnswer();
+                    ModifyBox.setModified();
                     order.setNumTemporaryPizze(true);
                     shoppingCartButton.setText(order.getNumTemporaryPizze()+"");
                 }
             } else
                 GenericAlert.display("Attenzione: numero massimo di pizze raggiunto!");
         });
-
-
     }
 }

@@ -13,7 +13,7 @@ public class ButtonRmvPizza extends Button {
 
 	/**
 	 * Bottone utile, nel carrello dell'interfaccia grafica, per rimuovere dall'ordine
-	 * un'istanza della pizza selezionata.
+	 * un'istanza della pizza selezionata. I dati vengono aggiornati real-time nel carrello.
 	 */
 
 	public ButtonRmvPizza(Label nomeLabels, Label toppingLabel, Label prezzoLabel, Button shoppingCartButton, Label total, Order order, Pizza pizza, Label countPizza) {
@@ -41,13 +41,13 @@ public class ButtonRmvPizza extends Button {
 		    }
 
 		    countPizza.setText("" + pizza.getCount());
-		    prezzoLabel.setText("  x  " + (SettleStringsServices.settlePriceDecimal(pizza.getPrice()))+" €");
+		    prezzoLabel.setText("  x  " + (SettleStringsServices.settlePriceDecimal(pizza.getPrice())) + " €");
 		    total.setText(order.getTotalPrice() + " €");
 		    order.setNumTemporaryPizze(false);
-		    shoppingCartButton.setText(order.getNumTemporaryPizze() + "");
+		    shoppingCartButton.setText(String.valueOf(order.getNumTemporaryPizze()));
 
-		    if (pizza.getCount()==0) {
-		    	/* se eliminate tutte le istanze di una data pizza, la linea corrispondente viene tolta dal carrello */
+			/* se eliminate tutte le istanze di una data pizza, la linea corrispondente viene tolta dal carrello */
+			if (pizza.getCount()==0) {
 		        nomeLabels.setText("");
 		        prezzoLabel.setText("");
 		        toppingLabel.setText("");

@@ -32,7 +32,7 @@ public class Order implements Comparable<Order> {
     }
 
     /** Aggiorna il numero temporaneo di pizze dell'ordine, in seguito ad una aggiunta o rimozione.
-	 * Due possibilità: true = +1 oppure false = -1. */
+	 * @param isPlus prevede due possibilità: true = +1 oppure false = -1. */
     public void setNumTemporaryPizze(boolean isPlus) {
     	if (isPlus)
     		this.numTemporaryPizze ++;
@@ -40,14 +40,15 @@ public class Order implements Comparable<Order> {
     		this.numTemporaryPizze --;
 	}
 
-    /** Aggiunge "num" pizze all'ordine. */
+    /** @param pizza: tipo di pizza.
+	 * @param num: quante pizze aggiungere all'ordine. */
     public void addPizza(Pizza pizza, int num) {
         for (int i = 0; i < num; i++) {
             this.orderedPizze.add(pizza);
         }
     }
 
-    /** Calcola e restituisce la spesa complessiva per l'ordine. */
+    /** @return la spesa complessiva per l'ordine, già formattata come String. */
 	public String getTotalPrice() {
 		double totale = 0;
 		for(int i = 0; i< getNumPizze(); i++){
@@ -56,7 +57,7 @@ public class Order implements Comparable<Order> {
 		return SettleStringsServices.settlePriceDecimal(totale);
 	}
 
-	/** Conta quante pizze modificate dello stesso tipo ci sono */
+	/** @return quante pizze modificate dello stesso tipo ci sono */
     public int countPizzaModificata(Pizza pizza){
 	    int i=0;
         for (Pizza pizza1 : this.orderedPizze) {

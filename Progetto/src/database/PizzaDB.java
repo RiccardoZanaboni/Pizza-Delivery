@@ -5,17 +5,17 @@ import pizzeria.Pizza;
 
 import pizzeria.services.SettleStringsServices;
 
-
 import java.sql.*;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class PizzaDB {
 
-	/** Tutto il controllo è fatto per verificare che la pizza non fosse già presente nel DB
-	 * (richiamando il getPizzeDB sia prima che dopo l'inserimento della nuova pizza, verifico
+	/** Aggiunge una pizza al DB.
+	 * Tutto il controllo è fatto per verificare che la pizza non fosse già presente nel DB
+	 * (rconfrontando le pizze prima e dopo l'inserimento della nuova pizza, verifico
 	 * che il DB sia effettivamente stato modificato). */
-	public static boolean putPizza( String nome, String ingred, double prezzo) {
+	public static boolean putPizza(String nome, String ingred, double prezzo) {
 		try {
 			ResultSet rs1 = Database.getStatement("select * from sql2298759.Pizze");
 			rs1.last();
@@ -30,12 +30,13 @@ public class PizzaDB {
 		}
 	}
 
-	public static boolean removePizza(String nome){
+	/** Rimuove la pizza indicata dal DB. */
+	public static boolean removePizza(String pizza){
 		try{
 			ResultSet rs1 = Database.getStatement("select * from sql2298759.Pizze");
 			rs1.last();
 			int prima = rs1.getRow();
-			Database.insertStatement("delete from sql2298759.Pizze where nome = '" + nome + "';");
+			Database.insertStatement("delete from sql2298759.Pizze where nome = '" + pizza + "';");
 			ResultSet rs2 = Database.getStatement("select * from sql2298759.Pizze");
 			rs2.last();
 			int dopo = rs2.getRow();
@@ -45,6 +46,7 @@ public class PizzaDB {
 		}
 	}
 
+	/** @return tutte le pizze presenti nel DB, formattate come Hashmap. */
 	public static HashMap<String, Pizza> getPizzeDB(HashMap<String, Pizza> menu) throws SQLException{
 		ResultSet rs = Database.getStatement("select * from sql2298759.Pizze");
 		while (rs.next()) {
@@ -56,9 +58,7 @@ public class PizzaDB {
 				try {
 					String ingredienteAggiuntoString = SettleStringsServices.arrangeIngredientString(stAgg); // FIXME: 19/07/2019
 					ingr.put(ingredienteAggiuntoString, ingredienteAggiuntoString);
-				} catch (Exception ignored) {
-					/* continue */
-				}
+				} catch (Exception ignored) {/* continue */}
 			}
 			double prezzo = rs.getDouble(3);
 			Pizza p = new Pizza(nomePizza, ingr, prezzo);

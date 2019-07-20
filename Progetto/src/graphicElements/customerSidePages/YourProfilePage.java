@@ -19,7 +19,8 @@ public class YourProfilePage {
 
     /** Lo Stage mostra una pagina in cui è possibile aggiornare i propri dati presenti
      * all'interno del DB. Il DB mostra in automatico quelli già presenti (dove disponibili).
-     * Premendo il pulsante di conferma, i dati vengono aggiornati e salvati. */
+     * Premendo il pulsante di conferma, i dati vengono aggiornati e salvati.
+     * Particolare attenzione, in quanto dato critico, viene posta all'aggiornamento dell'indirizzo e-mail. */
     public void display(Stage window, Pizzeria pizzeria, Customer customer) {
         window.setTitle("Wolf of Pizza - I tuoi Dati");
 
@@ -32,7 +33,7 @@ public class YourProfilePage {
         TextField nameInput = createTextField(labelVBox,fieldVBox, "Nome:\t ","Il tuo nome",customer, 4);
         TextField surnameInput = createTextField(labelVBox,fieldVBox, "Cognome: ","Il tuo cognome",customer, 5);
         TextField addressInput = createTextField(labelVBox,fieldVBox, "Indirizzo: ","Il tuo indirizzo",customer, 6);
-        TextField emailField = createTextField(labelVBox,fieldVBox, "Email: ","Il tuo email",customer, 3);
+        TextField emailField = createTextField(labelVBox,fieldVBox, "E-mail: ","La tua e-mail",customer, 3);
         emailField.setMinWidth(300);
 
         /* Bottone per tornare alla HomePage senza salvare le modifiche */
@@ -57,6 +58,7 @@ public class YourProfilePage {
         window.show();
     }
 
+    /** @return il TextField per l'inserimento di un dato. */
     private TextField createTextField(VBox labelVBox, VBox fieldVBox, String nameLabel, String nameField, Customer customer, int index){
         Label label = new Label(nameLabel);
         TextField textField = new TextField();
@@ -68,6 +70,7 @@ public class YourProfilePage {
         return textField;
     }
 
+    /** @return il bottone per tornare alla pagina di Home. */
     private Button createBackButton(Stage window, Pizzeria pizzeria, Customer customer){
         Button backButton = new Button("← Torna indietro");
         backButton.setMinHeight(35);
@@ -80,6 +83,7 @@ public class YourProfilePage {
         return backButton;
     }
 
+    /** @return il bottone per la conferma della modifica ai dati. Particolare attenzione al campo E-mail. */
     private Button createConfirmButton(Stage window, Pizzeria pizzeria, Customer customer,TextField nameInput,TextField surnameInput,TextField addressInput,TextField emailField){
         Button confirmButton = new Button(" Conferma modifiche");
         confirmButton.setMinHeight(35);
@@ -106,6 +110,4 @@ public class YourProfilePage {
         });
         return confirmButton;
     }
-
-
 }

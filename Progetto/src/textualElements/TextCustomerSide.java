@@ -55,7 +55,7 @@ public class TextCustomerSide {
 		switch (risposta){
 			case "L":
 				/* Visualizzare l'ultimo ordine effettuato */
-				Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
+				Order last = PizzeriaServices.customerLastOrder(customer,pizzeria);
 				if(last != null){
 					System.out.println("\n" + customer.getUsername() + ", questo è l'ultimo ordine che hai effettuato:");
 					System.out.println(TextCustomerSide.recapOrder(last));
@@ -100,7 +100,7 @@ public class TextCustomerSide {
 		return possibiliIngr.substring(0, possibiliIngr.lastIndexOf(",")); // elimina ultima virgola
 	}
 
-	/** Elenca tutte gli ingredienti che l'utente può scegliere, per modificare una pizza. */
+	/** @return la lista di tutti gli ingredienti che l'utente può scegliere, per modificare una pizza. */
 	private static String listPossibleAddictions(Pizzeria pizzeria) {
 		StringBuilder possibiliIngr = new StringBuilder();
 		int i = 0;
@@ -113,7 +113,7 @@ public class TextCustomerSide {
 		return possibiliIngr.toString();
 	}
 
-	/** Permette di stampare a video il menu completo. */
+	/** @return una stringa corrispondente al menu completo della pizzeria. */
 	static String printMenu(Pizzeria pizzeria) {
 		String line = TextColorServices.getLine();
 		TextColorServices.paintMenuString();
@@ -182,7 +182,7 @@ public class TextCustomerSide {
 			System.out.println(TextColorServices.colorSystemOut("\nErrore nell'aggiornamento dei dati.",Color.RED,false,false));
 	}
 
-	/** Stampa a video il riepilogo dell'ordine. */
+	/** @return una String corrispondente al riepilogo dell'ordine. */
 	static String recapOrder(Order order){
 		String line = TextColorServices.getLine();
 		StringBuilder recap = new StringBuilder();
@@ -202,7 +202,7 @@ public class TextCustomerSide {
 		return line + recap + line;
 	}
 
-	/** Restituisce una stringa con i vari prodotti, per il riepilogo. */
+	/** @return una String con i vari prodotti, per il riepilogo. */
 	private static String textRecapProducts(Order order) {
 		StringBuilder prodotti = new StringBuilder("\n");
 		ArrayList<Pizza> elencate = new ArrayList<>();

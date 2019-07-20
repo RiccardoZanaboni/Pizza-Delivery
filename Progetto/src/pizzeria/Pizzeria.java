@@ -11,7 +11,7 @@ import static database.Database.openDatabase;
 import static database.UpdateDB.setLastUpdate;
 import static pizzeria.services.TimeServices.getMinutes;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings("ALL")
 
 public class Pizzeria {
 	private String name;
@@ -54,7 +54,7 @@ public class Pizzeria {
 		createMenu();
 		setDayOfTheWeek();
 		addDeliveryMan(new DeliveryMan("Musi", this));
-		//addDeliveryMan(new DeliveryMan("Zana", this)); per aggiungere un altro fattorino
+		//addDeliveryMan(new DeliveryMan("Zana", this)); 	// per aggiungere un altro fattorino
 		updatePizzeriaToday();
 	}
 
@@ -72,7 +72,7 @@ public class Pizzeria {
 		/* orari di apertura, da domenica a sabato */
 		this.openings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
 		this.openings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
-		//fixme rimettere lunedí chiuso
+		//fixme rimettere lunedí chiuso e orari dalle 19 alle 23
 		this.openings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
 		this.openings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
 		this.openings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(0,0), ChronoUnit.MINUTES);
@@ -81,7 +81,6 @@ public class Pizzeria {
 		/* orari di apertura, da domenica a sabato */
 		this.closings[0] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 		this.closings[1] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
-		// FIXME: 15/07/2019 rimettere lunedi chiuso
 		this.closings[2] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 		this.closings[3] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 		this.closings[4] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
@@ -89,7 +88,7 @@ public class Pizzeria {
 		this.closings[6] = LocalTime.MIN.plus(TimeServices.getMinutes(23,59), ChronoUnit.MINUTES);
 	}
 
-	/** Aggiorna il vettore "locale" degli ordini, sincronizzandolo con gli ordini salvati nel DB. */
+	/** Aggiorna la mappa degli ordini, sincronizzandola con gli ordini salvati nel DB. */
 	public HashMap<String,Order> getOrders() {
 		try {
 			this.orders = OrderDB.getOrders(this,this.orders);
@@ -111,7 +110,7 @@ public class Pizzeria {
 	/**
 	 * Aggiorna quotidianamente il menu e ripristina il vettore di infornate, ad ogni apertura della pizzeria.
 	 * Questo viene fatto confrontando la data odierna con la data di ultimo update, salvata nel DB:
-	 * se non corrispondono, allora è il primo accesso di oggi all'applicazione, pertanto occorre aggiornare.
+	 * se non corrispondono, allora questo è il primo accesso di oggi all'applicazione, pertanto occorre aggiornare.
 	 * */
 	public void updatePizzeriaToday() {
 		int closeMinutes = getMinutes(getClosingToday());
@@ -152,7 +151,7 @@ public class Pizzeria {
 		}
 	}
 
-	/** Crea un nuovo ordine e aggiorna il numero seriale degli ordini. */
+	/** @return un nuovo ordine e aggiorna il numero seriale degli ordini. */
 	public Order initializeNewOrder() {
 		Order order;
 		order = new Order(OrderDB.countOrdersDB());
@@ -160,7 +159,7 @@ public class Pizzeria {
 		return order;
 	}
 
-	/** Controlla che la pizzeria sia aperta in un determinato orario, nella giornata odierna. */
+	/** @return true se la pizzeria è aperta in un determinato orario, nella giornata odierna. */
 	public boolean isOpen(Date d){
 		int openTime = getMinutes(getOpeningToday());
 		int closeTime = getMinutes(getClosingToday());
@@ -169,24 +168,24 @@ public class Pizzeria {
 		return (requestTime >= openTime && requestTime < closeTime);
 	}
 
-	/** Ritorna l'indice della casella temporale (forno) desiderata. */
+	/** @return l'indice della casella temporale (forno) desiderata. */
 	public int findTimeBoxOven(int oraDesiderata, int minutiDesiderati){
 		return findTimeBox(oraDesiderata,minutiDesiderati,OVEN_MINUTES);
 	}
 
-	/** Ritorna l'indice della casella temporale (fattorino) desiderata. */
+	/** @return l'indice della casella temporale (fattorino) desiderata. */
 	public int findTimeBoxDeliveryMan(int oraDesiderata, int minutiDesiderati){
 		return findTimeBox(oraDesiderata,minutiDesiderati,DELIVERYMAN_MINUTES);
 	}
 
-	/** Restituisce l'indice della casella temporale desiderata, in base al parametro. */
+	/** @return l'indice della casella temporale desiderata, in base al parametro. */
 	private int findTimeBox(int oraDesiderata, int minutiDesiderati, int parameter){
 		int openMinutes = getMinutes(getOpeningToday());
 		int desiredMinutes = getMinutes(oraDesiderata,minutiDesiderati);
 		return (desiredMinutes - openMinutes)/parameter;
 	}
 
-	/** Restituisce il primo fattorino che risulta disponibile all'orario indicato. */
+	/** @return il primo fattorino che risulta disponibile all'orario indicato. */
 	public DeliveryMan aFreeDeliveryMan(int oraDesiderata, int minutiDesiderati){
 		for(DeliveryMan man : this.deliveryMen){
 			if(man.getDeliveryManTimes()[findTimeBoxDeliveryMan(oraDesiderata,minutiDesiderati)].isFree()){
@@ -196,7 +195,7 @@ public class Pizzeria {
 		return null;
 	}
 
-	/** Controlla che la pizzeria possa garantire la consegna di "tot" pizze all'orario "d",
+	/** Controlla che la pizzeria possa garantire la consegna di @param tot pizze all'orario @param d,
 	 * in base alla disponibilità di forno e fattorini. */
 	void updateOvenAndDeliveryMan(Date d, int tot) {
 		int disp = this.ovens[findTimeBoxOven(d.getHours(), d.getMinutes())].getAvailablePlaces();
@@ -210,7 +209,7 @@ public class Pizzeria {
 			aFreeDeliveryMan(d.getHours(), d.getMinutes()).assignDelivery(findTimeBoxDeliveryMan(d.getHours(), d.getMinutes()));
 	}
 
-	/** Verifica che sia possibile cuocere le pizze nell'infornata richiesta
+	/** @return true se risulta possibile cuocere le pizze nell'infornata richiesta
 	 * e, al massimo, in quella appena precedente. */
 	public boolean checkTimeBoxOven(int ora, int minuti, int tot) {
 		int postiDisponibiliQuestaInfornata = this.ovens[findTimeBoxOven(ora, minuti)].getAvailablePlaces();
@@ -270,6 +269,8 @@ public class Pizzeria {
 		return getToday(this.closings);
 	}
 
+	/** @return il valore odierno del
+	 * @param vector delle aperture/chiusure. */
 	private Date getToday(LocalTime[] vector){
 		Calendar cal = new GregorianCalendar();
 		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);  /* oggi */

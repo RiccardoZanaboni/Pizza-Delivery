@@ -22,7 +22,9 @@ import java.util.ArrayList;
 public class ShoppingCartPage {
 	private Stage window = new Stage();
 
-	/** Lo Stage mostra il carrello dell'ordine, con i prodotti fino ad allora selezionati. */
+	/** Lo Stage mostra il carrello dell'ordine, con i prodotti fino a qui selezionati.
+	 * La finestra è visualizzabile cliccando l'apposito bottone in alto alla OrderPage1.
+	 * Da qui è possibile eliminare eventuali pizze non più desiderate. */
 	public void display(Order order, Button shoppingCartButton) {
 		window.setTitle("Wolf of Pizza - Il tuo Carrello");
 
@@ -48,7 +50,7 @@ public class ShoppingCartPage {
 		window.show();
 	}
 
-	/** Crea tutti gli elementi necessari per la Scene del carrello e li riunisce nel GridPane. */
+	/** @return il GridPane con tutti gli elementi necessari per la Scene del carrello. */
 	private GridPane createGridPane(Button shoppingCartButton, Label total, Order order) {
 		GridPane gridPane = new GridPane();
 		ArrayList<Label> nomiLabels = new ArrayList<>();
@@ -73,7 +75,7 @@ public class ShoppingCartPage {
 				elencate.add(p);
 				for (int j = 0; j < order.getNumPizze(); j++) {
 					if (p.getName(false).equals(order.getOrderedPizze().get(j).getName(false)) && p.getToppings().equals(order.getOrderedPizze().get(j).getToppings()))
-						num++;		// di quel "tipo di pizza" ce n'è una in più
+						num++;		/* di quel "tipo di pizza" ce n'è una in più */
 				}
 
 				nomiLabels.add(numTipo, new Label(order.getOrderedPizze().get(i).getName(true)));
@@ -95,7 +97,7 @@ public class ShoppingCartPage {
 				GridPane.setConstraints(ingrLabels.get(numTipo), 3, numTipo + 1);
 				GridPane.setConstraints(buttonRmvPizzas.get(numTipo), 4, numTipo + 1);
 
-				numTipo++;		// ho un "tipo di pizza" in piu
+				numTipo++;		/* ho un "tipo di pizza" in più */
 			}
 		}
 		return gridPane;

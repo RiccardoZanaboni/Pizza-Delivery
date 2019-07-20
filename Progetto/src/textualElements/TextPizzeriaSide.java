@@ -26,7 +26,7 @@ public class TextPizzeriaSide {
 		whatDoesPizzeriaWantAnswers(textualInterface,risposta,pizzeria);
 	}
 
-	/** Gestisce l epossibili azioni che la pizzeria può intraprendere */
+	/** Gestisce le possibili azioni che la pizzeria può intraprendere */
 	private void whatDoesPizzeriaWantAnswers(TextualInterface textualInterface, String risposta, Pizzeria pizzeria) throws SQLException {
 		switch (risposta){
 			case "V":
@@ -46,7 +46,7 @@ public class TextPizzeriaSide {
 				break;
 			case "M":
 				/* Modifica il menu */
-				System.out.println(TextPizzeriaSide.modifyMenuPossibilities());
+				System.out.println(modifyMenuPossibilities());
 				System.out.print(TextColorServices.colorSystemOut("\t>> ", Color.YELLOW,false,false));
 				risposta = scan.nextLine().toUpperCase();
 				howModifyMenuAnswer(risposta,pizzeria,textualInterface);
@@ -143,7 +143,7 @@ public class TextPizzeriaSide {
 	}
 
 	/** Specifica alla Pizzeria in che modo essa può apportare modifiche al menu. */
-	private static String modifyMenuPossibilities() {
+	static String modifyMenuPossibilities() {
 		String intro = TextColorServices.colorSystemOut("\nQuesto è ciò che puoi fare:\n",Color.YELLOW,false,false);
 		String con = "\t- con '";
 		String add = TextColorServices.colorSystemOut("A", Color.ORANGE,true,false);
@@ -162,7 +162,7 @@ public class TextPizzeriaSide {
 	}
 
 	/** Gestisce le varie possibilità che la pizzeria ha di modificare il menu, in base alla risposta data. */
-	private void howModifyMenuAnswer(String risposta, Pizzeria pizzeria, TextualInterface textualInterface) throws SQLException {
+	void howModifyMenuAnswer(String risposta, Pizzeria pizzeria, TextualInterface textualInterface) throws SQLException {
 		switch (risposta){
 			case "A":	/* Aggiungere una pizza al menu */
 				putPizzaText(pizzeria);

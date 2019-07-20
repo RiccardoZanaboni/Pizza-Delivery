@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /** Il Recap grafico è presente in OrderPage3, LastOrderPage e in PizzeriaVisualizeOrdersPage. */
 public class GraphicRecap {
 
-	/** Riempie il GridPane con tutti gli elementi necessari (prezzo totale incluso) */
+	/** @return il GridPane con tutti gli elementi necessari (prezzo totale incluso) */
 	private static GridPane addEverythingToGridPane(Order order, ArrayList<Label> nomiLabels) {
 		HBox totalBox = new HBox();
 		Label label = new Label("Totale: ");
@@ -31,7 +31,7 @@ public class GraphicRecap {
 		return gridPane;
 	}
 
-	/** Costruisce le etichette per il Recap e restituisce il GridPane così completato. */
+	/** @return il GridPane completato, una volta aggiunte le etichette per il Recap. */
 	public static GridPane graphicRecap(ArrayList<Label> nomiLabels, Order order) {
 		GridPane gridPane = new GridPane();
 		ArrayList<Label> ingrLabels = new ArrayList<>();
@@ -80,6 +80,7 @@ public class GraphicRecap {
 		return gridPane;
 	}
 
+	/** @return il GridPane (riempito richiamando addEverything).*/
 	public static GridPane setGridPane(Order order, ArrayList<Label> nomiLabels){
 		GridPane gridPane = addEverythingToGridPane(order,nomiLabels);
 		gridPane.setPadding(new Insets(10, 10, 10, 10));
@@ -88,6 +89,7 @@ public class GraphicRecap {
 		return gridPane;
 	}
 
+	/** @return il Box con le informazioni principali dell'ordine. */
 	public static VBox setIntro(Order order) {
 		VBox recapBox = new VBox(20);
 		Label userLabel = new Label("USERNAME:\t" + order.getCustomer().getUsername().toLowerCase());

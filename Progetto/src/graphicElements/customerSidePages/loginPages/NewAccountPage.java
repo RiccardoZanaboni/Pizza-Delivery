@@ -27,6 +27,7 @@ public class NewAccountPage {
 	public void display(Stage window, Pizzeria pizzeria) {
 		window.setTitle("Wolf of Pizza - Nuovo Account");
 
+		/* Campo Username */
 		Label username = new Label(" Username:");
 		TextField nameInput = new TextField();
 		nameInput.setMinWidth(250);
@@ -36,6 +37,7 @@ public class NewAccountPage {
 		usernameBox.getChildren().addAll(username, nameInput);
 		usernameBox.setAlignment(Pos.CENTER);
 
+		/* Campo Password */
 		Label password = new Label(" Password: ");
 		PasswordField passwordInput = new PasswordField();
 		passwordInput.setMinWidth(250);
@@ -45,6 +47,7 @@ public class NewAccountPage {
 		passwordBox.getChildren().addAll(password, passwordInput);
 		passwordBox.setAlignment(Pos.CENTER);
 
+		/* Campo Verifica Password */
 		Label password2 = new Label(" Conferma: ");
 		PasswordField passwordInput2 = new PasswordField();
 		passwordInput2.setMinWidth(250);
@@ -54,6 +57,7 @@ public class NewAccountPage {
 		passwordBox2.getChildren().addAll(password2, passwordInput2);
 		passwordBox2.setAlignment(Pos.CENTER);
 
+		/* Campo indirizzo e-mail */
 		Label mail = new Label(" E-mail:\t  ");
 		TextField mailInput = new TextField();
 		mailInput.setMinWidth(250);
@@ -63,9 +67,11 @@ public class NewAccountPage {
 		mailBox.getChildren().addAll(mail, mailInput);
 		mailBox.setAlignment(Pos.CENTER);
 
+		/* Campo etichetta per informazioni */
 		Label insertErrorLabel = new Label("");
 		insertErrorLabel.setId("errorLabel");
 
+		/* Bottone di Conferma */
 		Button signUpButton = new Button("Registrati");
 		signUpButton.setMinSize(100, 35);
 		signUpButton.setOnAction(e->{
@@ -98,6 +104,7 @@ public class NewAccountPage {
 			}
 		});
 
+		/* Bottone per tornare alla pagina di login */
 		Button backButton = createBackButton(pizzeria, window);
         backButton.setMinHeight(35);
 
@@ -108,6 +115,7 @@ public class NewAccountPage {
 		vBox.getChildren().addAll(insertErrorLabel, buttonBox);
 		vBox.setAlignment(Pos.CENTER);
 
+		/* Layout */
 		VBox layout = new VBox(20);
 		layout.setAlignment(Pos.CENTER);
 		layout.getChildren().addAll(usernameBox, passwordBox, passwordBox2, mailBox, vBox);
@@ -125,7 +133,7 @@ public class NewAccountPage {
 		window.show();
 	}
 
-	/** Dafinisce il bottone per tornare alla pagina di Login. */
+	/** @return il bottone per tornare alla pagina di Login. */
 	private Button createBackButton(Pizzeria pizzeria, Stage window) {
 		Button backButton = new Button("← Torna indietro");
 		backButton.setId("backButton");

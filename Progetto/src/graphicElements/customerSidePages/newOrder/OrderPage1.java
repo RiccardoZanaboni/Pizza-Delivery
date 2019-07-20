@@ -33,7 +33,7 @@ public class OrderPage1 {
      * In alto viene visualizzato un contatore delle pizze ordinate, che funziona da bottone
      * per accedere al carrello.
      * Viene visualizzato un messaggio di errore se viene richiesto un numero complessivo di pizze
-     * maggiore del massimo consentito dalla pizzeria.
+     * pari a 0, oppure maggiore del massimo consentito dalla pizzeria.
      * Attraverso i bottoni in fondo pagina è possibile spostarsi alla OrderPage2 (Avanti) o annullare
      * l'ordine, tornando alla HomePage (Indietro).
      * */
@@ -150,7 +150,8 @@ public class OrderPage1 {
     }
 
     /** Riempie i vari HBoxes di Buttons. */
-    private static void fillVBoxesButtons(Pizzeria pizzeria, ArrayList<VBox> vBoxBottoni, ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons) {
+    private static void fillVBoxesButtons(Pizzeria pizzeria, ArrayList<VBox> vBoxBottoni,
+                                          ArrayList<ButtonAddPizza> addButtons, ArrayList<ButtonModPizza> modButtons) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
             vBoxBottoni.add(new VBox(5));
             vBoxBottoni.get(i).getChildren().addAll(addButtons.get(i), modButtons.get(i));
@@ -158,7 +159,8 @@ public class OrderPage1 {
     }
 
     /** Riempie i vari VBoxes di Labels. */
-    private static void fillVBoxesNomeAndIngr(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr, ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels) {
+    private static void fillVBoxesNomeAndIngr(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr,
+                                              ArrayList<Label> nomiLabels, ArrayList<Label> ingrLabels) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
             vBoxNomeDescr.add(new VBox(10));
             vBoxNomeDescr.get(i).getChildren().addAll(nomiLabels.get(i), ingrLabels.get(i));
@@ -166,15 +168,17 @@ public class OrderPage1 {
     }
 
     /** Riempie i vari HBoxes di Labels e Buttons. */
-    private static void fillHBoxesPrezzoAndBottoni(Pizzeria pizzeria, ArrayList<HBox> hBoxPrezzoBottoni, ArrayList<Label> prezziLabels, ArrayList<VBox> vBoxBottoni) {
+    private static void fillHBoxesPrezzoAndBottoni(Pizzeria pizzeria, ArrayList<HBox> hBoxPrezzoBottoni,
+                                                   ArrayList<Label> prezziLabels, ArrayList<VBox> vBoxBottoni) {
         for (int i = 0; i < pizzeria.getMenu().values().size(); i++) {
             hBoxPrezzoBottoni.add(new HBox(10));
             hBoxPrezzoBottoni.get(i).getChildren().addAll(prezziLabels.get(i), vBoxBottoni.get(i));
         }
     }
 
-    /** Riempie il GridPane con Labels e Buttons per ogni pizza del menu. */
-    private static GridPane setGridPaneContraints(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr, ArrayList<HBox> hBoxPrezzoBottoni) {
+    /** @return il GridPane con Labels e Buttons per ogni pizza del menu. */
+    private static GridPane setGridPaneContraints(Pizzeria pizzeria, ArrayList<VBox> vBoxNomeDescr,
+                                                  ArrayList<HBox> hBoxPrezzoBottoni) {
         int i;
         for (i = 0; i < pizzeria.getMenu().values().size(); i++) {
             GridPane.setConstraints(vBoxNomeDescr.get(i), 1, i + 1);
@@ -191,7 +195,7 @@ public class OrderPage1 {
         return gridPane;
     }
 
-    /** Costruisce il backButton */
+    /** @return il backButton */
     private Button createBackButton(Pizzeria pizzeria, Stage window, Customer customer) {
         backButton = new Button("← Annulla ordine");
         backButton.setId("backButton");
@@ -202,7 +206,7 @@ public class OrderPage1 {
         return backButton;
     }
 
-    /** Costruisce il bottone di conferma, che consente il passaggio ad OrderPage2 */
+    /** @return il bottone di conferma, che consente il passaggio ad OrderPage2 */
     private Button createConfirmButton(Customer customer, Stage window, Order order, Pizzeria pizzeria) {
         OrderPage2 orderPage2 = new OrderPage2();
         confirmButton = new Button("Prosegui →");

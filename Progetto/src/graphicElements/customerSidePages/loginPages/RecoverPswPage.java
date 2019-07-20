@@ -1,6 +1,6 @@
 package graphicElements.customerSidePages.loginPages;
 
-import database.Database;
+import database.CustomerDB;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,6 +23,7 @@ public class RecoverPswPage {
 	public void display(Stage window, Pizzeria pizzeria) {
 		window.setTitle("Wolf of Pizza - Recupero Password");
 
+		/* Campo indirizzo e-mail */
 		Label label = new Label(" Il tuo indirizzo e-mail:  ");
 		TextField mailInput = new TextField();
 		mailInput.setMinWidth(250);
@@ -32,16 +33,18 @@ public class RecoverPswPage {
 		usernameBox.getChildren().addAll(label, mailInput);
 		usernameBox.setAlignment(Pos.CENTER);
 
+		/* Etichetta per informazioni */
 		Label insertErrorLabel = new Label("");
 		insertErrorLabel.setId("errorLabel");
 
+		/* Bottone di Conferma */
 		Button recoverPswButton = new Button("Recupera Password");
 		recoverPswButton.setMinSize(100, 30);
 		recoverPswButton.setOnAction(e-> {
 			insertErrorLabel.setText("");
 			String mailAddress =  mailInput.getText();
 			SendJavaMail newMail = new SendJavaMail();
-			if(Database.checkMail(mailAddress)) {
+			if(CustomerDB.checkMail(mailAddress)) {
 				insertErrorLabel.setTextFill(Color.DARKRED);
 				insertErrorLabel.setText("E-mail di recupero inviata");
 				newMail.recoverPassword(mailAddress);
@@ -51,6 +54,7 @@ public class RecoverPswPage {
 			}
 		});
 
+		/* Bottone per tornare indietro */
 		Button backButton = new Button("← Torna indietro");
 		backButton.setId("backButton");
 		recoverPswButton.setMinSize(100, 30);
@@ -66,6 +70,7 @@ public class RecoverPswPage {
 		vBox.getChildren().addAll(insertErrorLabel, buttonBox);
 		vBox.setAlignment(Pos.CENTER);
 
+		/* Layout */
 		VBox layout = new VBox(20);
 		layout.setAlignment(Pos.CENTER);
 		layout.getChildren().addAll(usernameBox, vBox);

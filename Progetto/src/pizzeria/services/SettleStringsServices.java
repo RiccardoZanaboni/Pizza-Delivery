@@ -9,9 +9,8 @@ import java.util.StringTokenizer;
  * */
 public class SettleStringsServices {
 
-	/** Restituisce, da un double, una String con esattamente due cifre decimali. */
+	/** @return una String che rappresenta un prezzo double, con esattamente due cifre decimali. */
 	public static String settlePriceDecimal(double d){
-
 		DecimalFormatSymbols symb = new DecimalFormatSymbols();
 		symb.setDecimalSeparator('.');
 
@@ -34,7 +33,7 @@ public class SettleStringsServices {
 		return ingred;
 	}
 
-	/** Restituisce il nome della pizza, sistemato con tutte le iniziali maiuscole. */
+	/** @return il nome della pizza, sistemato con tutte le iniziali maiuscole. */
 	public static String getSettledName(String nome) {
 		nome = nome.charAt(0) + nome.substring(1).toLowerCase();
 		for(int i=1; i<nome.length(); i++){

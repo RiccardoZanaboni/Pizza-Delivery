@@ -19,14 +19,13 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Fornisce molteplici servizi, grafici o funzionali, alla pizzeria, in modo da supportare
+ * Fornisce molteplici servizi funzionali alla pizzeria, in modo da supportare
  * il buon funzionamento del programma (e tuttavia non direttamente imputabili
  * a nessuna delle classi fino ad ora definite).
  * */
-@SuppressWarnings("deprecation")
 public class PizzeriaServices {
 
-	/** Restituisce, come Stringa, il contenuto del file di testo History.txt
+	/** Restituisce, come Stringa, il contenuto del file di testo History.txt.
 	 * Funzionamento leggermente differente se la richiesta è fatta tramite interfaccia
 	 * testuale o grafica. */
 	public static String getHistory(boolean isGraphicRequest) {
@@ -51,7 +50,8 @@ public class PizzeriaServices {
 		return history.toString();
 	}
 
-	/** Effettua un ordinamento degli ordini, in ordine cronologico. */
+	/** Effettua un ordinamento degli ordini, in ordine cronologico.
+	 * @return gli ordini così ordinati.*/
 	public static HashMap<String, Order> sortOrders(HashMap<String, Order> orders) {
 		Set<Map.Entry<String, Order>> entries = orders.entrySet();
 		Comparator<Map.Entry<String, Order>> valueComparator = (o1, o2) -> {
@@ -72,7 +72,7 @@ public class PizzeriaServices {
 	}
 
 	/** Calcola l'ordine più recente effettuato dal cliente. */
-	public static Order CustomerLastOrder(Customer customer, Pizzeria pizzeria) {
+	public static Order customerLastOrder(Customer customer, Pizzeria pizzeria) {
 		Order last = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date;
@@ -99,7 +99,7 @@ public class PizzeriaServices {
 			if(newUser.length() > 2 && newPsw.length() > 2) {
 				/* se si registra correttamente, va bene */
 				try {
-					if (CustomerDB.getCustomer(newUser.toUpperCase(),newPsw) || Database.checkMail(mailAddress))
+					if (CustomerDB.getCustomer(newUser.toUpperCase(),newPsw) || CustomerDB.checkMail(mailAddress))
 						return AccountPossibilities.EXISTING;
 					else
 						return AccountPossibilities.OK;

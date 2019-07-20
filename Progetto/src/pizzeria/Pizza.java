@@ -34,7 +34,8 @@ public class Pizza {
         return "- " + nome + prezzo + SettleStringsServices.settlePriceDecimal(this.price) + " €" + ingr + descrizione;
     }
 
-    /** Restituisce il nome della pizza. Se è da visualizzare, allora vengono impiegati degli accorgimenti. */
+    /** @return il nome della pizza.
+     * @param isToVisualize: se è da visualizzare, allora vengono impiegati degli accorgimenti. */
     public String getName(boolean isToVisualize) {
         if(isToVisualize)
             return SettleStringsServices.getSettledName(this.name);
@@ -46,7 +47,7 @@ public class Pizza {
         return this.ingredients;
     }
 
-    /** Restituisce un'unica String che elenca gli ingredienti della pizza. */
+    /** @return un'unica String che elenca gli ingredienti della pizza. */
     public String getDescription() {
         String descrizione = "";
         for (String ingr: this.ingredients.values()) {
@@ -100,7 +101,7 @@ public class Pizza {
     }
 
     /** Override del metodo che viene usato da contains, in modo da non confrontare il puntatore,
-     * ma gli attributi dell'oggetto*/
+     * ma gli attributi dell'oggetto */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;

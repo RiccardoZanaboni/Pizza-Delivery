@@ -14,7 +14,7 @@ public class LastOrderPage {
 
     /** Lo Stage ospita la pagina di visualizzazione dell'ultimo ordine effettuato dal cliente.
      * Restituisce un avviso nel caso il cliente non abbia mai effettuato ordini.
-     * La costruzione del Recap avviene tramite GraphicRecap.addEverythingtToGridPane(). */
+     * La costruzione del Recap avviene tramite GraphicRecap. */
     public void display(Stage window, Order order, Pizzeria pizzeria, Customer customer) {
         window.setTitle("Wolf of Pizza - Ultimo Ordine");
 

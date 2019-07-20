@@ -17,6 +17,7 @@ public class PizzeriaHomePage {
 
     /** Lo Stage mostra la HomePage dal lato della Pizzeria, una volta che questa si sia
      * correttamente autenticata come tale. */
+
     public void display (Pizzeria pizzeria,Stage window) {
         window.setTitle("Wolf of Pizza - Home");
         Label label = new Label("PIZZERIA");

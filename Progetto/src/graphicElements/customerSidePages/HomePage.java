@@ -27,7 +27,7 @@ public class HomePage {
 	/**
 	 * Visualizza la Scene iniziale che rappresenta la "Home", con le varie possibilità
 	 * di utilizzo del programma, rappresentate dai 4 bottoni centrali.
-	 * Si attiva al "run" di GraphicInterface.
+	 * Si attiva una volta effettuato correttamente il login.
 	 */
 	public void display(Stage window, Pizzeria pizzeria, Customer customer) {
 		window.setTitle("Wolf of Pizza - Home");
@@ -36,7 +36,7 @@ public class HomePage {
 		usernameLabel.setText(customer.getUsername());
         HBox hBox = new HBox(20);
 
-        ImageView imageView1 = creatImageView("/graphicElements/images/logout-128.png",20,20);
+        ImageView imageView1 = createImageView("/graphicElements/images/logout-128.png",20,20);
 
         /* Bottone per il logout */
         Button logoutButton = new Button();
@@ -53,7 +53,7 @@ public class HomePage {
 		stackPane.getChildren().addAll(hBox);
 		stackPane.getStyleClass().add("stackpane");
 
-		ImageView imageView = creatImageView("/graphicElements/images/banner_pizza.jpg",150,880);
+		ImageView imageView = createImageView("/graphicElements/images/banner_pizza.jpg",150,880);
 
 		StackPane spazioPane = new StackPane();
 		spazioPane.setMinSize(800, 150);
@@ -61,7 +61,7 @@ public class HomePage {
 		spazioPane.setAlignment(Pos.CENTER);
 
 		/* Bottone "Nuovo ordine" */
-		Button makeOrderButton = creatMakeButton(pizzeria, window, customer) ;
+		Button makeOrderButton = createNewOrderButton(pizzeria, window, customer) ;
 
 		/* Bottone "Chi siamo" */
 		Button whoWeAreButton = new Button("Chi siamo");
@@ -73,7 +73,7 @@ public class HomePage {
         whoWeAreButton.prefHeightProperty().bind(window.heightProperty());
 
 		/* Bottone "Ultimo Ordine" */
-		Button lastOrderButton = creatLastOrderButton(pizzeria, window, customer);
+		Button lastOrderButton = createLastOrderButton(pizzeria, window, customer);
 
 		/* Bottone "Il tuo profilo" */
 		Button dataButton = new Button("Il tuo profilo");
@@ -107,8 +107,8 @@ public class HomePage {
 		window.show();
 	}
 
-
-	private Button creatMakeButton(Pizzeria pizzeria, Stage window,Customer customer){
+	/** @return il bottone per la creazione di un nuovo ordine. */
+	private Button createNewOrderButton(Pizzeria pizzeria, Stage window, Customer customer){
 	    Button button =new Button("Nuovo ordine");
         OpeningPossibilities checkOpen = TimeServices.checkTimeOrder(pizzeria);
         button.setOnAction(e -> {
@@ -132,8 +132,8 @@ public class HomePage {
         return button;
     }
 
-    private ImageView creatImageView ( @NamedArg("url") String url, double Height, double Width )
-    {
+    /** Utile per aggiungere un'immagine alla grafica del bottone. */
+    private ImageView createImageView(@NamedArg("url") String url, double Height, double Width) {
         Image image1 = new Image(url);
         ImageView imageView = new ImageView(image1);
         imageView.setFitHeight(Height);
@@ -142,12 +142,13 @@ public class HomePage {
         return imageView;
     }
 
-    private Button creatLastOrderButton(Pizzeria pizzeria, Stage window,Customer customer){
+    /** @return il bottone per accedere alla LastOrderPage. */
+    private Button createLastOrderButton(Pizzeria pizzeria, Stage window, Customer customer){
         Button button = new Button("Ultimo ordine");
         button.prefWidthProperty().bind(window.widthProperty());
         button.prefHeightProperty().bind(window.heightProperty());
         button.setOnAction(event -> {
-            Order last = PizzeriaServices.CustomerLastOrder(customer,pizzeria);
+            Order last = PizzeriaServices.customerLastOrder(customer,pizzeria);
             if(last != null) {
                 LastOrderPage lastOrderPage = new LastOrderPage();
                 lastOrderPage.display(window, last, pizzeria, customer);
@@ -155,5 +156,4 @@ public class HomePage {
         });
     return button;
     }
-
 }

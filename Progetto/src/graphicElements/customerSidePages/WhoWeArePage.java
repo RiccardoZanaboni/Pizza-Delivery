@@ -17,7 +17,7 @@ import pizzeria.services.PizzeriaServices;
 public class WhoWeArePage {
 
     /** Lo Stage mostra la pagina di History della Pizzeria, che racconta le origini e le peculiarità del locale.
-     * Il tutto è recuperato dal file di testo "history.txt". */
+     * Il tutto è recuperato dal file di testo "pizzeria.history.txt". */
     public void display(Stage window, Pizzeria pizzeria, Customer customer) {
         window.setTitle("Wolf of Pizza - Chi Siamo");
 
@@ -53,11 +53,11 @@ public class WhoWeArePage {
             }
         });
 
-        Scene scene5 = new Scene(layout,800,600);
+        Scene scene = new Scene(layout,800,600);
         layout.prefWidthProperty().bind(window.widthProperty());
         layout.prefHeightProperty().bind(window.heightProperty());
-        scene5.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage2.css").toExternalForm());
-        window.setScene(scene5);
+        scene.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage2.css").toExternalForm());
+        window.setScene(scene);
         window.show();
     }
 }

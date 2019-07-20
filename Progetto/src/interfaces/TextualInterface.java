@@ -28,7 +28,7 @@ import java.util.*;
 
 public class TextualInterface {
 
-	/** Richiama il costruttore della pizzeria. */
+	/** Chiama il costruttore della pizzeria. */
 	private Pizzeria wolf = new Pizzeria("Wolf Of Pizza", "Via della Mozzarella, Pavia");
 	private Scanner scan = new Scanner(System.in);
 
@@ -134,7 +134,7 @@ public class TextualInterface {
 				String recoverMailQuestion = TextColorServices.colorSystemOut("\n\tInserisci l'indirizzo e-mail dell'account:\t", Color.YELLOW, false, false);
 				System.out.print(recoverMailQuestion);
 				String recMail = scan.nextLine().toUpperCase();
-				if(Database.checkMail(recMail)) {
+				if(CustomerDB.checkMail(recMail)) {
 					/* Se l'indirizzo e-mail risulta presente nel DB */
 					SendJavaMail newMail = new SendJavaMail();
 					newMail.recoverPassword(recMail);
@@ -155,7 +155,8 @@ public class TextualInterface {
 		}
 	}
 
-	/** Dà il benvenuto al cliente, fornendo le informazioni essenziali della pizzeria. */
+	/** Dà il benvenuto al cliente.
+	 * @return le informazioni essenziali della pizzeria. */
 	private static String helloThere(Pizzeria pizzeria){
 		String opTime = TimeServices.timeStamp(pizzeria.getOpeningToday().getHours(), pizzeria.getOpeningToday().getMinutes());
 		String clTime = TimeServices.timeStamp(pizzeria.getClosingToday().getHours(), pizzeria.getClosingToday().getMinutes());
