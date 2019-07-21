@@ -1,6 +1,7 @@
 package graphicElements.pizzeriaSidePages;
 
 import graphicElements.customerSidePages.loginPages.LoginAccountPage;
+import javafx.beans.NamedArg;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,22 +21,8 @@ public class PizzeriaHomePage {
 
     public void display (Pizzeria pizzeria,Stage window) {
         window.setTitle("Wolf of Pizza - Home");
-        Label label = new Label("PIZZERIA");
-        Button logoutButton = new Button();
-        Image image = new Image("graphicElements/images/logout-128.png");
-        ImageView imageView1 = new ImageView(image);
-        imageView1.setFitHeight(20);
-        imageView1.setFitWidth(20);
 
-        /* Bottone di Logout */
-        logoutButton.setGraphic(imageView1);
-        logoutButton.setOnAction(e->{
-            LoginAccountPage loginAccountPage = new LoginAccountPage();
-            loginAccountPage.display(window,pizzeria);
-        });
-        HBox hBox = new HBox(10);
-        hBox.getChildren().addAll(label,logoutButton);
-        hBox.setAlignment(Pos.CENTER);
+        HBox hBox = createHbox(window, pizzeria);
 
         /* Bottone per visualizzare l'elenco degli ordini da evadere oggi */
         Button visualizeOrdersButton = new Button("Visualizza \n  Ordini");
@@ -76,4 +63,31 @@ public class PizzeriaHomePage {
         window.setScene(scene);
         window.show();
     }
+
+    private HBox createHbox(Stage window, Pizzeria pizzeria){
+        Label label = new Label("PIZZERIA");
+        Button logoutButton = new Button();
+
+        ImageView imageView1 = createImageView("graphicElements/images/logout-128.png");
+
+        /* Bottone di Logout */
+        logoutButton.setGraphic(imageView1);
+        logoutButton.setOnAction(e->{
+            LoginAccountPage loginAccountPage = new LoginAccountPage();
+            loginAccountPage.display(window,pizzeria);
+        });
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(label,logoutButton);
+        hBox.setAlignment(Pos.CENTER);
+        return hBox;
+    }
+    private ImageView createImageView(@NamedArg("url") String url) {
+        Image image1 = new Image(url);
+        ImageView imageView = new ImageView(image1);
+        imageView.setFitHeight((double) 20);
+        imageView.setFitWidth((double) 20);
+        imageView.autosize();
+        return imageView;
+    }
+
 }

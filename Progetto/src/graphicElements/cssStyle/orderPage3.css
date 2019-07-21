@@ -36,7 +36,7 @@
 }
 
 #backButton {
-    -fx-background-color: #cb810b; /* yellow */
+    -fx-background-color: #cb810b;
     -fx-color: white;
     -fx-border-style: solid;
     -fx-text-align: center;

@@ -55,11 +55,11 @@ public class OrderPage2 {
 
 		/* Campo Surname */
         TextField surnameInput = new TextField();
-		HBox usernameBox = createHBox(order,surnameInput," Cognome:  ","nomiLabel","Your Surname",customer,5);
+		HBox usernameBox = createHBox(order,surnameInput," Cognome:  ", "Your Surname",customer,5);
 
 		/* Campo Address */
         TextField addressInput = new TextField();
-		HBox addressBox = createHBox(order,addressInput," Indirizzo:    ","nomiLabel","Your Address",customer,6);
+		HBox addressBox = createHBox(order,addressInput," Indirizzo:    ", "Your Address",customer,6);
 
 		/* Campo TimeChoice */
 		Label timeChoiceLabel = new Label(" Orario:\t   ");
@@ -155,10 +155,10 @@ public class OrderPage2 {
     }
 
     /** @return gli HBoxes per l'inserimento dei dati per la consegna (cognome, indirizzo) */
-    private HBox createHBox (Order order,TextField textField ,String textLabel, String idLabel,
-							 String fieldText, Customer customer, int index){
+    private HBox createHBox(Order order, TextField textField, String textLabel,
+                            String fieldText, Customer customer, int index){
         Label label = new Label(textLabel);
-        label.setId(idLabel);
+        label.setId("nomiLabel");
         textField.setPromptText(fieldText);
         String string = null;
         switch (fieldText) {

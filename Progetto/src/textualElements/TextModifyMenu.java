@@ -1,7 +1,6 @@
 package textualElements;
 
 import exceptions.TryAgainExc;
-import interfaces.TextualInterface;
 import javafx.scene.paint.Color;
 import pizzeria.Pizza;
 import pizzeria.Pizzeria;

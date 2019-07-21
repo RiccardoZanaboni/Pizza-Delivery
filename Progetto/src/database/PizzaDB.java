@@ -56,7 +56,7 @@ public class PizzaDB {
 			StringTokenizer stAgg = new StringTokenizer(ingrediente);
 			while (stAgg.hasMoreTokens()) {
 				try {
-					String ingredienteAggiuntoString = SettleStringsServices.arrangeIngredientString(stAgg); // FIXME: 19/07/2019
+					String ingredienteAggiuntoString = SettleStringsServices.arrangeIngredientString(stAgg);
 					ingr.put(ingredienteAggiuntoString, ingredienteAggiuntoString);
 				} catch (Exception ignored) {/* continue */}
 			}

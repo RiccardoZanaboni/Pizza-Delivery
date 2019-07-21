@@ -44,10 +44,8 @@ public class GraphicInterface extends Application {
 		window.getIcons().add(new Image("/graphicElements/images/wolf_pizza.png"));
 		window.setTitle("Wolf of Pizza");
 
-		Image image = new Image("/graphicElements/images/wolf_pizza.png");
-		ImageView imageView = new ImageView(image);
-		imageView.setFitHeight(600);
-		imageView.setFitWidth(800);
+		ImageView imageView = createImageView();
+
 
 		StackPane stackPane = new StackPane();
 		stackPane.getChildren().addAll(imageView);
@@ -72,4 +70,12 @@ public class GraphicInterface extends Application {
 			loginAccountPage.display(window, wolf);
 		});
 	}
+    private ImageView createImageView() {
+        Image image1 = new Image("/graphicElements/images/wolf_pizza.png");
+        ImageView imageView = new ImageView(image1);
+        imageView.setFitHeight((double) 600);
+        imageView.setFitWidth((double) 800);
+        imageView.autosize();
+        return imageView;
+    }
 }

@@ -51,10 +51,7 @@ public class OrderPage1 {
         ArrayList<VBox> vBoxNomeDescr = new ArrayList<>();
         ArrayList<HBox> hBoxPrezzoBottoni = new ArrayList<>();
 
-        Image image = new Image("/graphicElements/images/shopping_cart.png");
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(20);
-        imageView.setFitWidth(20);
+        ImageView imageView = createImageView();
 
         /* Definizione del bottone per accedere al Carrello */
         Button shoppingCartButton = new Button();
@@ -77,7 +74,6 @@ public class OrderPage1 {
 
         /* Bottoni per lasciare la pagina (Avanti/Indietro). */
         confirmButton = createConfirmButton(customer, window, order, pizzeria);
-        confirmButton.setPrefHeight(35);
         backButton = createBackButton(pizzeria, window, customer);
         backButton.setPrefHeight(35);
 
@@ -203,6 +199,7 @@ public class OrderPage1 {
             HomePage homePage = new HomePage();
             homePage.display(window, pizzeria, customer);
         });
+        backButton.setPrefHeight(35);
         return backButton;
     }
 
@@ -217,6 +214,16 @@ public class OrderPage1 {
             else
                 GenericAlert.display("Attenzione: aggiungere almeno una pizza all'ordine!");
         });
+        confirmButton.setPrefHeight(35);
         return confirmButton;
+    }
+
+    private ImageView createImageView() {
+        Image image1 = new Image("/graphicElements/images/shopping_cart.png");
+        ImageView imageView = new ImageView(image1);
+        imageView.setFitHeight((double) 20);
+        imageView.setFitWidth((double) 20);
+        imageView.autosize();
+        return imageView;
     }
 }

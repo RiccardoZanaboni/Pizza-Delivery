@@ -2,7 +2,7 @@
 */
 
 #addpizza {                            /*colore iniziale del bottone*/
-  -fx-background-color: #555555;        /*Black*/
+  -fx-background-color: #555555;
   -fx-color: black;
   -fx-border-width: 2px;
   -fx-border-radius: 80%;
@@ -15,7 +15,7 @@
 }
 
 #rmvpizza {                    /*colore iniziale del bottone*/
-  -fx-background-color: #555555;    /*Black*/
+  -fx-background-color: #555555;
   -fx-color: black;
   -fx-border-width: 2px;
   -fx-border-radius: 50%;
@@ -28,7 +28,7 @@
 }
 
 #modPizza {                            /*colore iniziale del bottone*/
-  -fx-background-color: #555555;        /*Black*/
+  -fx-background-color: #555555;
   -fx-color: black;
   -fx-border-width: 2px;
   -fx-border-radius: 50%;
@@ -64,7 +64,7 @@
   }
 
 #confirmButton {
-  -fx-background-color: #4CAF50; /* Green */
+  -fx-background-color: #4CAF50;
   -fx-color: white;
   -fx-font-size: 12px;
   -fx-border-radius: 50%;

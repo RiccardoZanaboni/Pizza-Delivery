@@ -40,31 +40,23 @@ public class PizzeriaModifyMenuPage {
 		TableView<Pizza> table = new TableView<>();
 
         /* Name column */
-        TableColumn<Pizza, String> nameColumn = new TableColumn<>("PIZZAS");
-        nameColumn.setMinWidth(150);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));		/* richiama Pizza.getName() */
+        TableColumn<Pizza, ?> nameColumn = createColumn("PIZZAS","name", 150.);
+       	/* richiama Pizza.getName() */
 
         /* Topping column */
-        TableColumn<Pizza, String> toppingColumn = new TableColumn<>("TOPPINGS");
-        toppingColumn.setMinWidth(540);
-        toppingColumn.setCellValueFactory(new PropertyValueFactory<>("description"));	/* richiama Pizza.getDescription() */
+        TableColumn<Pizza, ?> toppingColumn = createColumn("TOPPINGS","description",540.);
+        /* richiama Pizza.getDescription() */
 
         /* Price column */
-        TableColumn<Pizza, Double> priceColumn = new TableColumn<>("PRICE");
-        priceColumn.setMinWidth(70);
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));	/* richiama Pizza.getPrice() */
+        TableColumn<Pizza, ?> priceColumn = createColumn("PRICE","price",70.);
+        /* richiama Pizza.getPrice() */
 
 		/* Campi di inserimento */
-        TextField nameInput = new TextField();
-        nameInput.setPromptText("New Pizza Name");
-        nameInput.setMinWidth(100);
+        TextField nameInput = createTextField("New Pizza Name");
 
-        TextField priceInput = new TextField();
-        priceInput.setPromptText("New Pizza Price");
+        TextField priceInput = createTextField("New Pizza Price");
 
-		TextField newToppingInput = new TextField();
-		newToppingInput.setPromptText("New Topping Name");
-		newToppingInput.setMinWidth(100);
+		TextField newToppingInput = createTextField("New Topping Name");
 
         ListView toppingsList = new ListView<>();
         toppingsList.getItems().addAll(pizzeria.getIngredientsPizzeria().values());
@@ -231,4 +223,18 @@ public class PizzeriaModifyMenuPage {
 			GenericAlert.display("Attenzione: selezionare un ingrediente da rimuovere.");
 		}
 	}
+
+	private  TableColumn<Pizza, ?> createColumn(String text, String propertyValueFactory, Double minWidth){
+        TableColumn<Pizza, ?> tableColumn= new TableColumn<>(text);
+        tableColumn.setMinWidth(minWidth);
+        tableColumn.setCellValueFactory(new PropertyValueFactory<>(propertyValueFactory));
+        return tableColumn;
+	}
+
+	private  TextField createTextField(String text) {
+        TextField textField = new TextField();
+        textField.setPromptText(text);
+        textField.setMinWidth(100);
+        return textField;
+    }
 }

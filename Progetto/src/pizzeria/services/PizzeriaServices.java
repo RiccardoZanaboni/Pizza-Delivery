@@ -71,7 +71,7 @@ public class PizzeriaServices {
 	}
 
 	/** Calcola l'ordine più recente effettuato dal cliente. */
-	public static Order customerLastOrder(Customer customer, HashMap<String,Order> orderP) { // FIXME: 20/07/2019
+	public static Order customerLastOrder(Customer customer, HashMap<String,Order> orderP) {
 		Order last = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date;

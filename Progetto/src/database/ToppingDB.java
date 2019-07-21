@@ -62,7 +62,7 @@ public class ToppingDB {
 
 	/** @return i toppings salvati sul Database. */
 	public static HashMap<String, String> getToppings(HashMap<String, String> ingredienti)  throws SQLException{
-		ResultSet rs = Database.getStatement("select * from sql2298759.Toppings"); // FIXME: 19/07/2019
+		ResultSet rs = Database.getStatement("select * from sql2298759.Toppings");
 		while (rs.next()) {
 			String ingrediente = rs.getString(1);
 			ingredienti.put(ingrediente,ingrediente);

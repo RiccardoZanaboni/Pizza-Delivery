@@ -1,5 +1,5 @@
 #backButton {
-    -fx-background-color: #cb810b; /* yellow */
+    -fx-background-color: #cb810b;
     -fx-color: white;
     -fx-font-size: 12px;
     -fx-border-style: solid;
@@ -15,7 +15,7 @@
 }
 
 #confirmButton {
-    -fx-background-color: #3d8c40; /* Green */
+    -fx-background-color: #3d8c40;
     -fx-color: white;
     -fx-font-size: 12px;
     -fx-border-style: solid;

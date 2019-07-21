@@ -33,27 +33,21 @@ public class OrderPage3 {
 
 		/* Definizione dei bottoni di fondo pagina */
 		Button backButton = new Button("← Torna indietro");
-		backButton.setId("backButton");
+		setButton(backButton,"backButton");
 		backButton.setOnAction(e ->
 			window.setScene(scene3)
 		);
-		backButton.setMaxHeight(35);
-		backButton.setMinHeight(35);
 
 		Button confirmButton = new Button("Conferma Ordine ✔");
-		confirmButton.setId("confirmButton");
+        setButton(confirmButton,"confirmButton");
 		confirmButton.setOnAction(e -> {
 			OrderDB.putOrder(order);
 			HomePage homePage = new HomePage();
 			homePage.display(window, pizzeria, customer);
 		});
-		confirmButton.setMaxHeight(35);
-		confirmButton.setMinHeight(35);
 
 		Button closeButton = new Button("Annulla Ordine ☓");
-		closeButton.setMaxHeight(35);
-        closeButton.setMinHeight(35);
-		closeButton.setId("closeButton");
+        setButton(closeButton,"closeButton");
 		closeButton.setOnAction(e -> {
 			HomePage home = new HomePage();
 			home.display(window,pizzeria,customer);
@@ -89,5 +83,11 @@ public class OrderPage3 {
 		layout.prefHeightProperty().bind(window.heightProperty());
 		scene4.getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage3.css").toExternalForm());
 		window.setScene(scene4);
+	}
+	private void setButton(Button button, String id){
+        button.setMaxHeight((double) 35);
+        button.setMinHeight((double) 35);
+        button.setId(id);
+
 	}
 }

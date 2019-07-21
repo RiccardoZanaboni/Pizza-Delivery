@@ -1,5 +1,6 @@
 package graphicElements.elements;
 
+import javafx.beans.NamedArg;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,11 +18,7 @@ public class ButtonRmvPizza extends Button {
 	 */
 
 	public ButtonRmvPizza(Label nomeLabels, Label toppingLabel, Label prezzoLabel, Button shoppingCartButton, Label total, Order order, Pizza pizza, Label countPizza) {
-		Image image1 = new Image("/graphicElements/images/cestino.png");
-		ImageView imageView = new ImageView(image1);
-		imageView.setFitHeight(20);
-		imageView.setFitWidth(20);
-		this.setGraphic(imageView);
+	    this.setGraphic(createImageView("/graphicElements/images/cestino.png",20,20));
 		setId("rmvpizza");
         getStylesheets().addAll(this.getClass().getResource("/graphicElements/cssStyle/orderPage1.css").toExternalForm());
 		this.setShape(new Circle(100000));
@@ -55,5 +52,13 @@ public class ButtonRmvPizza extends Button {
 		        this.setVisible(false);
 		    }
 		});
+    }
+    private ImageView createImageView(@NamedArg("url") String url, double Height, double Width) {
+        Image image1 = new Image(url);
+        ImageView imageView = new ImageView(image1);
+        imageView.setFitHeight(Height);
+        imageView.setFitWidth(Width);
+        imageView.autosize();
+        return imageView;
     }
 }
